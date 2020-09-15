@@ -123,13 +123,13 @@ ui <- list(
           fluidPage(
             tabsetPanel(
               id = "levels",
+              type = "hidden",
               #### Level 1 ----
               tabPanel("Level 1",
                 value = "b",
                 fluidPage(
-                  theme = "bootstrap.css", # css theme
-                  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "themestyle.css")), # link to your own css file
-                  # tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "webkit.css")),
+                  theme = "bootstrap.css",
+                  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "themestyle.css")),
                   titlePanel("Drag the variables into the categories they belong to. "),
                   fluidRow(
                     column(
@@ -168,8 +168,6 @@ ui <- list(
                     )
                   ),
                   br(),
-                  conditionalPanel(
-                    "input.go != 0", # Show everything only after the GO button is clicked
                     # Set up all dragUIs which are randomly chosen from the question bank
                     fluidRow(
                       wellPanel(dragUI(textOutput("disID1"), textOutput("disName1"), class = "drag dragelement"), class = "wellTransparent col-sm-12 col-md-6 col-lg-2"),
@@ -292,24 +290,24 @@ ui <- list(
                       column(1, bsButton("previous3", "<<Previous", style = "primary", size = "small")),
                       column(1,
                         offset = 4,
-                        conditionalPanel(
-                          "(input.drp1!='') & (input.drp2!='') & (input.drp3!='') & (input.drp4!='') &
-                                                                           (input.drp5!='') & (input.drp6!='') & (input.drp7!='') & (input.drp8!='') &
-                                                                           (input.drp9!='') & (input.drp10!='') & (input.drp11!='') & (input.drp12!='') &
-                                                                           (input.drp13!='') & (input.drp14!='') & (input.drp15!='') & (input.drp16!='')",
+                        conditionalPanel("TRUE",
+                          # TODO RE-ENABLE ##################################################################3
+                          #"(input.drp1!='') & (input.drp2!='') & (input.drp3!='') & (input.drp4!='') &
+                          # (input.drp5!='') & (input.drp6!='') & (input.drp7!='') & (input.drp8!='') &
+                          # (input.drp9!='') & (input.drp10!='') & (input.drp11!='') & (input.drp12!='') &
+                          # (input.drp13!='') & (input.drp14!='') & (input.drp15!='') & (input.drp16!='')",
                           bsButton("submitA", "Submit Answer", style = "primary", size = "small", class = "grow")
                         )
                       ),
                       column(1, offset = 5, bsButton("next2", "Next>>", style = "primary", size = "small", disabled = TRUE))
-                    ), br()
-                  ),
-                  conditionalPanel("input.submitA != 0", wellPanel(
+                    ),
+                  br(),
+                  conditionalPanel("input.submitA != 0",
+                                   wellPanel(
                     fluidPage(
                       fluidRow(
                         wellPanel(
-                          # div(style = "position:absolute; top;50em; left:1em",
                           h4("Please drag the wrong answers into this PENALTY box and click the CLEAR button to restart."),
-                          #   ),
                           dropUI("home1", class = "dropelement dropelementHome", col_n = 3),
                           class = "wellTransparent col-lg-8"
                         ),
@@ -320,7 +318,8 @@ ui <- list(
                         )
                       )
                     )
-                  ))
+                  )
+                  )
                 )
               ),
               #### Level 2 ----
@@ -372,7 +371,6 @@ ui <- list(
                       div(style = "position: relative; top:-15px;", dragUI("img1", "A", style = "width: 100px; height: 40px;", class = "drag dragelement dragelement2")),
                       class = "col-lg-6 col-md-12 wellBorder"
                     ),
-
                     wellPanel(div(style = "text-align:center", h4(textOutput("imgQ2"))),
                       uiOutput("image2", class = "picSize"),
                       div(style = "position: relative; top:-15px;", dragUI("img2", "B", style = "width: 100px; height: 40px;", class = "drag dragelement dragelement2")),
@@ -429,7 +427,8 @@ ui <- list(
                     column(1, offset = 5, bsButton("next3", "Next>>", style = "primary", size = "small", disabled = TRUE))
                   ),
                   hr(),
-                  conditionalPanel("input.submitB != 0", wellPanel(
+                  conditionalPanel("input.submitB != 0",
+                                   wellPanel(
                     fluidPage(
                       fluidRow(
                         wellPanel(
@@ -444,7 +443,8 @@ ui <- list(
                         )
                       )
                     )
-                  ))
+                  )
+                  )
                 )
               ),
               #### Level 3 ----
@@ -654,7 +654,6 @@ ui <- list(
                         style = "height:200px"
                       )
                     ),
-
                     conditionalPanel("input.check != 0", dataTableOutput("highscore")),
                     actionButton("weekhigh", "Show Weekly High Scores"),
                     actionButton("totalhigh", "Show All-Time High Scores")
@@ -701,39 +700,26 @@ ui <- list(
 
 # Define Server ----
 server <- function(input, output, session) {
-  #################################### Hide Menu bar###############################################
-  # observe({
-  #   if (input$go == 0) {
-  #     hide(selector = "#navMain li a[data-value=b]")
-  #   }
-  #   else {
-  #     show(selector = "#navMain li a[data-value=b]")
-  #   }
-  # })
-  # observe({
-  #   hide(selector = "#navMain li a[data-value=c]")
-  # })
-  # observeEvent(input$next2, {
-  #   show(selector = "#navMain li a[data-value=c]")
-  # })
-  # observe({
-  #   hide(selector = "#navMain li a[data-value=e]")
-  # })
-  # observeEvent(input$next3, {
-  #   show(selector = "#navMain li a[data-value=e]")
-  # })
-  # observe({
-  #   hide(selector = "#navMain li a[data-value=f]")
-  # })
-  # observeEvent(input$next4, {
-  #   show(selector = "#navMain li a[data-value=f]")
-  # })
-  # observe({
-  #   hide(selector = "#navMain li a[data-value=d]")
-  # })
-  # observeEvent(input$finish, {
-  #   show(selector = "#navMain li a[data-value=d]")
-  # })
+
+  ## Set timer with start, stop, restart, stop, and termination; and show the timer
+  time <- reactiveValues(inc = 0, timer = reactiveTimer(1000), started = FALSE)
+  
+  ## Setup questions and begin timer
+  startGame <- function() {
+
+    # Check if game has already been started
+    if(!time$started) {
+      
+      # Bank A
+      initBankA()
+      
+      # Bank B
+      initBankB()
+      
+      # Start timer
+      time$started <- TRUE
+    }
+  }
 
   ## Go button ----
   observeEvent(input$go, {
@@ -744,71 +730,40 @@ server <- function(input, output, session) {
     )
   })
 
-  # reload the app when the reset button is clicked
+  ## Reset Button ----
   observeEvent(input$reset_button, {
     js$reset()
   })
-
-  # Create six pagers
-  # observeEvent(input$go, {
-  #   updateNavbarPage(session = session, "navMain", selected = "b")
-  # })
-  # observeEvent(input$next2, {
-  #   updateNavbarPage(session = session, "navMain", selected = "c")
-  # })
-  # observeEvent(input$next3, {
-  #   updateNavbarPage(session = session, "navMain", selected = "e")
-  # })
-  # observeEvent(input$next4, {
-  #   updateNavbarPage(session = session, "navMain", selected = "f")
-  # })
-  # observeEvent(input$finish, {
-  #   updateNavbarPage(session = session, "navMain", selected = "d")
-  # })
-  # observeEvent(input$previous1, {
-  #   updateNavbarPage(session = session, "navMain", selected = "c")
-  # })
-  # observeEvent(input$previous2, {
-  #   updateNavbarPage(session = session, "navMain", selected = "b")
-  # })
-  #
-  # observeEvent(input$previous3, {
-  #   updateNavbarPage(session = session, "navMain", selected = "a")
-  # })
-  # observeEvent(input$previous4, {
-  #   updateNavbarPage(session = session, "navMain", selected = "c")
-  # })
-  # observeEvent(input$previous5, {
-  #   updateNavbarPage(session = session, "navMain", selected = "e")
-  # })
-
-  ## Set timer with start, stop, restart, stop, and termination; and show the timer
-  time <- reactiveValues(inc = 0, timer = reactiveTimer(1000), started = FALSE)
-
-  observeEvent(input$go, {
-    time$started <- TRUE
-  })
+  
+  ## Time Tracking ----
   observeEvent(input$submitA, {
     time$started <- FALSE
   })
+  
   observeEvent(input$next2, {
     time$started <- TRUE
   })
+  
   observeEvent(input$submitB, {
     time$started <- FALSE
   })
+  
   observeEvent(input$next3, {
     time$started <- TRUE
   })
+  
   observeEvent(input$new, {
     time$started <- TRUE
   })
+  
   observeEvent(input$submitC, {
     time$started <- FALSE
   })
+  
   observeEvent(input$next4, {
     time$started <- TRUE
   })
+  
   observeEvent(input$finish, {
     time$timer <- reactiveTimer(Inf)
   })
@@ -819,7 +774,7 @@ server <- function(input, output, session) {
       time$inc <- isolate(time$inc) + 1
     }
   })
-  # show the timer
+  
   observeEvent(input$bt1 == TRUE, {
     toggle("timer1h")
     output$timer1 <- renderPrint({
@@ -855,7 +810,6 @@ server <- function(input, output, session) {
     })
   })
 
-
   output$timer1 <- renderPrint({
     cat("you have used:", time$inc, "secs")
   })
@@ -875,168 +829,191 @@ server <- function(input, output, session) {
   output$timer5 <- renderPrint({
     cat("you have used:", time$inc, "secs")
   })
-  ################################### Bank A ###############################################################
-  numbers <- reactiveValues(dis = c(), cont = c(), nom = c(), ord = c())
-
-  observeEvent(input$go, {
+  
+  ## Init Bank A ----
+  initBankA <- function() {
+    numbers <- reactiveValues(dis = c(), cont = c(), nom = c(), ord = c())
+    
     numbers$dis <- sample(1:10, 4)
     numbers$cont <- sample(11:36, 4)
     numbers$nom <- sample(37:56, 4)
     numbers$ord <- sample(57:71, 4)
-  })
+    
+    output$disID1 <- renderText({
+      bank[numbers$dis[1], 2]
+    })
+    
+    output$disID2 <- renderText({
+      bank[numbers$dis[2], 2]
+    })
+    
+    output$disID3 <- renderText({
+      bank[numbers$dis[3], 2]
+    })
+    
+    output$disID4 <- renderText({
+      bank[numbers$dis[4], 2]
+    })
+    
+    output$disName1 <- renderText({
+      bank[numbers$dis[1], 3]
+    })
+    
+    output$disName2 <- renderText({
+      bank[numbers$dis[2], 3]
+    })
+    
+    output$disName3 <- renderText({
+      bank[numbers$dis[3], 3]
+    })
+    
+    output$disName4 <- renderText({
+      bank[numbers$dis[4], 3]
+    })
+    
+    output$contID1 <- renderText({
+      bank[numbers$cont[1], 2]
+    })
+    
+    output$contID2 <- renderText({
+      bank[numbers$cont[2], 2]
+    })
+    
+    output$contID3 <- renderText({
+      bank[numbers$cont[3], 2]
+    })
+    
+    output$contID4 <- renderText({
+      bank[numbers$cont[4], 2]
+    })
+    
+    output$contName1 <- renderText({
+      bank[numbers$cont[1], 3]
+    })
+    
+    output$contName2 <- renderText({
+      bank[numbers$cont[2], 3]
+    })
+    
+    output$contName3 <- renderText({
+      bank[numbers$cont[3], 3]
+    })
+    
+    output$contName4 <- renderText({
+      bank[numbers$cont[4], 3]
+    })
+    
+    output$nomID1 <- renderText({
+      bank[numbers$nom[1], 2]
+    })
+    
+    output$nomID2 <- renderText({
+      bank[numbers$nom[2], 2]
+    })
+    
+    output$nomID3 <- renderText({
+      bank[numbers$nom[3], 2]
+    })
+    
+    output$nomID4 <- renderText({
+      bank[numbers$nom[4], 2]
+    })
+    
+    output$nomName1 <- renderText({
+      bank[numbers$nom[1], 3]
+    })
+    
+    output$nomName2 <- renderText({
+      bank[numbers$nom[2], 3]
+    })
+    
+    output$nomName3 <- renderText({
+      bank[numbers$nom[3], 3]
+    })
+    
+    output$nomName4 <- renderText({
+      bank[numbers$nom[4], 3]
+    })
 
-  output$disID1 <- renderText({
-    bank[numbers$dis[1], 2]
-  })
-  output$disID2 <- renderText({
-    bank[numbers$dis[2], 2]
-  })
-  output$disID3 <- renderText({
-    bank[numbers$dis[3], 2]
-  })
-  output$disID4 <- renderText({
-    bank[numbers$dis[4], 2]
-  })
-
-  output$disName1 <- renderText({
-    bank[numbers$dis[1], 3]
-  })
-  output$disName2 <- renderText({
-    bank[numbers$dis[2], 3]
-  })
-  output$disName3 <- renderText({
-    bank[numbers$dis[3], 3]
-  })
-  output$disName4 <- renderText({
-    bank[numbers$dis[4], 3]
-  })
-
-
-  output$contID1 <- renderText({
-    bank[numbers$cont[1], 2]
-  })
-  output$contID2 <- renderText({
-    bank[numbers$cont[2], 2]
-  })
-  output$contID3 <- renderText({
-    bank[numbers$cont[3], 2]
-  })
-  output$contID4 <- renderText({
-    bank[numbers$cont[4], 2]
-  })
-
-  output$contName1 <- renderText({
-    bank[numbers$cont[1], 3]
-  })
-  output$contName2 <- renderText({
-    bank[numbers$cont[2], 3]
-  })
-  output$contName3 <- renderText({
-    bank[numbers$cont[3], 3]
-  })
-  output$contName4 <- renderText({
-    bank[numbers$cont[4], 3]
-  })
-
-
-
-  output$nomID1 <- renderText({
-    bank[numbers$nom[1], 2]
-  })
-  output$nomID2 <- renderText({
-    bank[numbers$nom[2], 2]
-  })
-  output$nomID3 <- renderText({
-    bank[numbers$nom[3], 2]
-  })
-  output$nomID4 <- renderText({
-    bank[numbers$nom[4], 2]
-  })
-
-  output$nomName1 <- renderText({
-    bank[numbers$nom[1], 3]
-  })
-  output$nomName2 <- renderText({
-    bank[numbers$nom[2], 3]
-  })
-  output$nomName3 <- renderText({
-    bank[numbers$nom[3], 3]
-  })
-  output$nomName4 <- renderText({
-    bank[numbers$nom[4], 3]
-  })
-
-
-
-  output$ordID1 <- renderText({
-    bank[numbers$ord[1], 2]
-  })
-  output$ordID2 <- renderText({
-    bank[numbers$ord[2], 2]
-  })
-  output$ordID3 <- renderText({
-    bank[numbers$ord[3], 2]
-  })
-  output$ordID4 <- renderText({
-    bank[numbers$ord[4], 2]
-  })
-
-  output$ordName1 <- renderText({
-    bank[numbers$ord[1], 3]
-  })
-  output$ordName2 <- renderText({
-    bank[numbers$ord[2], 3]
-  })
-  output$ordName3 <- renderText({
-    bank[numbers$ord[3], 3]
-  })
-  output$ordName4 <- renderText({
-    bank[numbers$ord[4], 3]
-  })
-  ######################################  Bank B #############################################################
-  numbersB <- reactiveValues(disB = c(), contB = c(), nomB = c(), ordB = c(), indexB = c(), questionB = data.frame())
-
-  observeEvent(input$go, {
+    output$ordID1 <- renderText({
+      bank[numbers$ord[1], 2]
+    })
+    
+    output$ordID2 <- renderText({
+      bank[numbers$ord[2], 2]
+    })
+    
+    output$ordID3 <- renderText({
+      bank[numbers$ord[3], 2]
+    })
+    
+    output$ordID4 <- renderText({
+      bank[numbers$ord[4], 2]
+    })
+    
+    output$ordName1 <- renderText({
+      bank[numbers$ord[1], 3]
+    })
+    
+    output$ordName2 <- renderText({
+      bank[numbers$ord[2], 3]
+    })
+    
+    output$ordName3 <- renderText({
+      bank[numbers$ord[3], 3]
+    })
+    
+    output$ordName4 <- renderText({
+      bank[numbers$ord[4], 3]
+    })
+  }
+  
+  ## Init Bank B ----
+  initBankB <- function() {
+    numbersB <- reactiveValues(disB = c(), contB = c(), nomB = c(), ordB = c(), indexB = c(), questionB = data.frame())
+    
     numbersB$disB <- sample(1:13, 1)
     numbersB$contB <- sample(14:39, 1)
     numbersB$nomB <- sample(40:58, 1)
     numbersB$ordB <- sample(59:74, 1)
-
+    
     numbersB$indexB <- sample(c("A", "B", "C", "D"), 4)
     numbersB$questionB <- cbind(bankB[c(numbersB$disB, numbersB$contB, numbersB$nomB, numbersB$ordB), ], numbersB$indexB)
-  })
-  output$imgQ1 <- renderText({
-    paste("A.", numbersB$questionB[numbersB$questionB[5] == "A", 4])
-  })
+    
+    output$imgQ1 <- renderText({
+      paste("A.", numbersB$questionB[numbersB$questionB[5] == "A", 4])
+    })
+    
+    output$image1 <- renderUI({
+      img(src = numbersB$questionB[numbersB$questionB[5] == "A", 3], width = "95%", height = "95%", style = "text-align: center")
+    })
+    
+    output$imgQ2 <- renderText({
+      paste("B.", numbersB$questionB[numbersB$questionB[5] == "B", 4])
+    })
+    
+    output$image2 <- renderUI({
+      img(src = numbersB$questionB[numbersB$questionB[5] == "B", 3], width = "95%", height = "95%")
+    })
+    
+    output$imgQ3 <- renderText({
+      paste("C.", numbersB$questionB[numbersB$questionB[5] == "C", 4])
+    })
+    
+    output$image3 <- renderUI({
+      img(src = numbersB$questionB[numbersB$questionB[5] == "C", 3], width = "95%", height = "95%")
+    })
+    
+    output$imgQ4 <- renderText({
+      paste("D.", numbersB$questionB[numbersB$questionB[5] == "D", 4])
+    })
+    
+    output$image4 <- renderUI({
+      img(src = numbersB$questionB[numbersB$questionB[5] == "D", 3], width = "95%", height = "95%")
+    })
+  }
 
-  output$image1 <- renderUI({
-    img(src = numbersB$questionB[numbersB$questionB[5] == "A", 3], width = "95%", height = "95%", style = "text-align: center")
-  })
-  output$imgQ2 <- renderText({
-    paste("B.", numbersB$questionB[numbersB$questionB[5] == "B", 4])
-  })
-
-  output$image2 <- renderUI({
-    img(src = numbersB$questionB[numbersB$questionB[5] == "B", 3], width = "95%", height = "95%")
-  })
-  output$imgQ3 <- renderText({
-    paste("C.", numbersB$questionB[numbersB$questionB[5] == "C", 4])
-  })
-  output$image3 <- renderUI({
-    img(src = numbersB$questionB[numbersB$questionB[5] == "C", 3], width = "95%", height = "95%")
-  })
-  output$imgQ4 <- renderText({
-    paste("D.", numbersB$questionB[numbersB$questionB[5] == "D", 4])
-  })
-  output$image4 <- renderUI({
-    img(src = numbersB$questionB[numbersB$questionB[5] == "D", 3], width = "95%", height = "95%")
-  })
-
-
-
-  ################################# Bank C #######################
-
-
+  ## Init Bank C ----
   index <- reactiveValues(index = 18)
 
   index_list <- reactiveValues(listc = sample(1:17, 17, replace = FALSE))
@@ -1059,7 +1036,6 @@ server <- function(input, output, session) {
   })
 
   key1 <- as.matrix(bankC[1:36, 1])
-
 
   output$questionC <- renderUI({
     if (index$index == 1) {
@@ -1102,8 +1078,7 @@ server <- function(input, output, session) {
       h3(bankC[35, 5])
     }
   })
-
-
+  
   output$varEXP <- renderUI({
     if (index$index == 1) {
       h3(bankC[1, 4])
@@ -1192,13 +1167,10 @@ server <- function(input, output, session) {
     }
   })
 
-  ##################################### Bank D#####################################################
-
+  ## Init Bank D ----
   index2 <- reactiveValues(index2 = 9)
 
-
   index_listD <- reactiveValues(listD = sample(1:8, 8, replace = FALSE))
-
 
   observeEvent(input$previous5, {
     index_listD$listD <- c(index_listD$listD, sample(1:8, 8, replace = FALSE))
@@ -1247,6 +1219,7 @@ server <- function(input, output, session) {
       h3(bankD[25, 4])
     }
   })
+  
   output$varEXPD <- renderUI({
     if (index2$index2 == 1) {
       h3(bankD[1, 3])
@@ -1327,17 +1300,20 @@ server <- function(input, output, session) {
       h3(bankD[27, 3])
     }
   })
-  ################################################################################################
-
+  
+  ## Submit Observers ----
   observeEvent(input$submitA, {
     updateButton(session, "submitA", disabled = TRUE)
   })
+  
   observeEvent(input$clear, {
     updateButton(session, "submitA", disabled = FALSE)
   })
+  
   observeEvent(input$submitB, {
     updateButton(session, "submitB", disabled = TRUE)
   })
+  
   observeEvent(input$clearB, {
     updateButton(session, "submitB", disabled = FALSE)
   })
@@ -1345,9 +1321,7 @@ server <- function(input, output, session) {
   observeEvent(input$submitC, {
     updateButton(session, "submitC", disabled = TRUE)
   })
-
-
-
+  
   observe({
     if (length(index_list$listc) == 1) {
       updateButton(session, "new", disabled = TRUE)
@@ -1363,7 +1337,6 @@ server <- function(input, output, session) {
       shinyalert("Oops!", "You have used up all the tries. Please click 'previous' then click 'next' to re-enter this level to try again", type = "error")
     }
   })
-
 
   observeEvent(input$submitC, {
     updateButton(session, "new", disabled = FALSE)
@@ -1400,256 +1373,9 @@ server <- function(input, output, session) {
   observeEvent(input$new2, {
     updateButton(session, "new2", disabled = TRUE)
   })
-  ## try for level3
-
-
-
-  observeEvent(input$submitC, {
-    observeEvent(input$new, {
-      output$markc1 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-
-    observe({
-      output$markc1 <- renderUI({
-        if (!is.null(input$explC)) {
-          if (any(input$explC == key1[index$exp_index, 1])) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-
-  observeEvent(input$submitC, {
-    observeEvent(input$new, {
-      output$markc2 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$markc2 <- renderUI({
-        if (!is.null(input$respC)) {
-          if (any(input$respC == key1[index$res_index, 1])) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-
-  observeEvent(input$new, {
-    reset("explC")
-    reset("respC")
-    reset("submit")
-  })
-
-
-  ######################### check marks for level 4####################################
-  observeEvent(input$submitD, {
-    observeEvent(input$new2, {
-      output$markd1 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-
-    observe({
-      output$markd1 <- renderUI({
-        if (!is.null(input$expla)) {
-          if (any(input$expla == key2[index2$explan, 1])) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-
-  observeEvent(input$submitD, {
-    observeEvent(input$new2, {
-      output$markd2 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$markd2 <- renderUI({
-        if (!is.null(input$resp)) {
-          if (any(input$resp == key2[index2$respon, 1])) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-
-  observeEvent(input$submitD, {
-    observeEvent(input$new2, {
-      output$markd3 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$markd3 <- renderUI({
-        if (!is.null(input$conf)) {
-          if (any(input$conf == key2[index2$confou, 1])) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-
-  observeEvent(input$submitD, {
-    observeEvent(input$new2, {
-      output$markd3 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$markd3 <- renderUI({
-        if (!is.null(input$conf)) {
-          if (any(input$conf == key2[index2$confou, 1])) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-  observeEvent(input$new2, {
-    reset("expla")
-    reset("resp")
-    reset("conf")
-  })
-
-
-  ######################## account for correct answers level 3##########################
-
-
-  summationC <- reactiveValues(correct1 = c(0), started = FALSE)
-
-
-
-  observeEvent(input$next3, {
-    summationC$started <- TRUE
-  })
-  observeEvent(input$new, {
-    summationC$started <- TRUE
-  })
-  observeEvent(input$submitC, {
-    summationC$started <- TRUE
-  })
-
-  observeEvent(input$submitC, {
-    for (i in c(input$explC)) {
-      if (any(input$explC == key1[index$exp_index, 1]) & any(input$respC == key1[index$res_index, 1])) {
-        summationC$correct1 <- c(summationC$correct1, 1)
-      } else {
-        summationC$correct1 <- c(summationC$correct1, 0)
-      }
-    }
-    # for (i in c(input$respC)){
-    #   if (any(i == 'Response')){
-    #     summationC$correct2 = c(summationC$correct2,1)
-    #   }else{
-    #     summationC$correct2 = c(summationC$correct2,0)
-    #   }
-    # }
-
-
-    summation$summationC[input$submitC] <- sum(c(summationC$correct1))
-  })
-
-  output$correctC <- renderPrint({
-    if (sum(c(summationC$correct1)) == 0) {
-      cat("You have earned 0 points")
-    }
-    else {
-      cat("You have earned", summation$summationC[input$submitC], "points")
-    }
-  })
-
-
-  observeEvent(input$submitC, {
-    if (summation$summationC[input$submitC] >= 5) {
-      updateButton(session, "next4", disabled = FALSE)
-      updateButton(session, "new", disabled = TRUE)
-    }
-  })
-
-  ################################## Counting Right and Wrong answers in level 4##################3
-  summationD <- reactiveValues(correct1D = c(0), started = FALSE)
-  test <- reactiveValues(A = FALSE, B = FALSE, C = TRUE)
-
-
-
-  observeEvent(input$next4, {
-    time$started <- TRUE
-  })
-  observeEvent(input$new2, {
-    time$started <- TRUE
-  })
-  observeEvent(input$submitD, {
-    time$started <- TRUE
-  })
-
-  observeEvent(input$submitD, {
-    for (x in c(input$expla)) {
-      if (any(input$expla == key2[index2$explan, 1]) & any(input$resp == key2[index2$respon, 1]) & any(input$conf == key2[index2$confou, 1])) {
-        summationD$correct1D <- c(summationD$correct1D, 1)
-      } else {
-        summationD$correct1D <- c(summationD$correct1D, 0)
-      }
-    }
-    # for (i in c(input$resp)){
-    #   if (any(i == 'response')){
-    #     summationD$correct2D = c(summationD$correct2D,1)
-    #   }else{
-    #     summationD$correct2D = c(summationD$correct2D,0)
-    #   }
-    # }
-    # for (i in c(input$conf)){
-    #   if (any(i == 'confounding')){
-    #     summationD$correct3D = c(summationD$correct3D,1)
-    #   }else{
-    #     summationD$correct3D = c(summationD$correct3D,0)
-    #   }
-    # }
-  })
-
-
-
-  output$correctD <- renderPrint({
-    if (sum(c(summationD$correct1D)) == 0) {
-      cat("You have earned 0 points")
-    }
-    else {
-      cat("You have earned", sum(c(summationD$correct1D)), "points")
-    }
-  })
-
-
-  observeEvent(input$submitD, {
-    if (sum(c(summationD$correct1D)) >= 5) {
-      updateButton(session, "finish", disabled = FALSE)
-      updateButton(session, "new2", disabled = FALSE)
-    }
-  })
-
-
-  ################################## CHECK MARK IN LEVEL 1 AND 2##########################
-
+  
+  ## Begin Validation ----
+  ### Validate Level 1 ----
   observeEvent(input$submitA, {
     observeEvent(input$clear, {
       output$answer1 <- renderUI({
@@ -1659,7 +1385,8 @@ server <- function(input, output, session) {
     observe({
       output$answer1 <- renderUI({
         if (!is.null(input$drp1)) {
-          if (any(input$drp1 == paste("\n                  ", bank[c(1:10), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp1) == bank[c(1:10), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1668,7 +1395,7 @@ server <- function(input, output, session) {
       })
     })
   })
-
+  
   observeEvent(input$submitA, {
     observeEvent(input$clear, {
       output$answer2 <- renderUI({
@@ -1939,6 +1666,8 @@ server <- function(input, output, session) {
       })
     })
   })
+  
+  ### Validate Level 2 ----
   observeEvent(input$submitB, {
     observeEvent(input$clearB, {
       output$answer17 <- renderUI({
@@ -2011,16 +1740,16 @@ server <- function(input, output, session) {
       })
     })
   })
-
-
-  ####################################################################
+  
   summation <- reactiveValues(summationA = c(rep(0, 20)), summationB = c(rep(0, 20)), summationC = c(rep(0, 20)), summationD = c(rep(0, 20)), summationScore = c(rep(0, 20)))
-
+  
   observeEvent(input$submitA, {
+    
     score1 <- c()
     score2 <- c()
     score3 <- c()
     score4 <- c()
+    
     for (i in c(input$drp1, input$drp2, input$drp3, input$drp4)) {
       if (any(i == paste("\n                  ", bank[c(1:10), 3], "\n                ", sep = ""))) {
         score1 <- c(score1, 2.5)
@@ -2049,14 +1778,13 @@ server <- function(input, output, session) {
         score4 <- c(score4, -1.5)
       }
     }
-
-    # summation$summationA <- c(summation$summationA, sum(c(score1,score2,score3,score4)))
+    
     summation$summationA[input$submitA] <- sum(c(score1, score2, score3, score4))
   })
-
+  
   observeEvent(input$submitB, {
     score5 <- c()
-
+    
     for (i in input$drop1) {
       if (i == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
         score5 <- c(score5, 5)
@@ -2085,8 +1813,7 @@ server <- function(input, output, session) {
         score5 <- c(score5, -3)
       }
     }
-
-    # summation$summationB <- c(summation$summationB, sum(score5))
+    
     summation$summationB[input$submitB] <- sum(score5)
   })
   values <- reactiveValues(
@@ -2095,28 +1822,237 @@ server <- function(input, output, session) {
   observeEvent(input$submitA, {
     if (summation$summationA[input$submitA] == 40) {
       updateButton(session, "next2", disabled = FALSE)
-      # values$count = values$count + 40
     }
   })
   observeEvent(input$submitB, {
     if (summation$summationB[input$submitB] == 20) {
       updateButton(session, "next3", disabled = FALSE)
-      # values$count = values$count + 20
     }
     else {
       updateButton(session, "next3", disabled = TRUE)
     }
   })
-
-
+  
   output$scoreA <- renderPrint({
     cat("Current score of this level is", summation$summationA[input$submitA])
   })
+  
   output$scoreB <- renderPrint({
     cat("Current score of this level is", max(summation$summationB))
   })
+  
+  ### Validate Level 3 ----
+  observeEvent(input$submitC, {
+    observeEvent(input$new, {
+      output$markc1 <- renderUI({
+        img(src = NULL, width = 30)
+      })
+    })
 
+    observe({
+      output$markc1 <- renderUI({
+        if (!is.null(input$explC)) {
+          if (any(input$explC == key1[index$exp_index, 1])) {
+            img(src = "check.PNG", width = 30)
+          } else {
+            img(src = "cross.PNG", width = 30)
+          }
+        }
+      })
+    })
+  })
 
+  observeEvent(input$submitC, {
+    observeEvent(input$new, {
+      output$markc2 <- renderUI({
+        img(src = NULL, width = 30)
+      })
+    })
+    observe({
+      output$markc2 <- renderUI({
+        if (!is.null(input$respC)) {
+          if (any(input$respC == key1[index$res_index, 1])) {
+            img(src = "check.PNG", width = 30)
+          } else {
+            img(src = "cross.PNG", width = 30)
+          }
+        }
+      })
+    })
+  })
+
+  observeEvent(input$new, {
+    reset("explC")
+    reset("respC")
+    reset("submit")
+  })
+  
+  summationC <- reactiveValues(correct1 = c(0), started = FALSE)
+  
+  observeEvent(input$next3, {
+    summationC$started <- TRUE
+  })
+  
+  observeEvent(input$new, {
+    summationC$started <- TRUE
+  })
+  
+  observeEvent(input$submitC, {
+    summationC$started <- TRUE
+  })
+  
+  observeEvent(input$submitC, {
+    for (i in c(input$explC)) {
+      if (any(input$explC == key1[index$exp_index, 1]) & any(input$respC == key1[index$res_index, 1])) {
+        summationC$correct1 <- c(summationC$correct1, 1)
+      } else {
+        summationC$correct1 <- c(summationC$correct1, 0)
+      }
+    }
+    
+    summation$summationC[input$submitC] <- sum(c(summationC$correct1))
+  })
+  
+  output$correctC <- renderPrint({
+    if (sum(c(summationC$correct1)) == 0) {
+      cat("You have earned 0 points")
+    }
+    else {
+      cat("You have earned", summation$summationC[input$submitC], "points")
+    }
+  })
+  
+  observeEvent(input$submitC, {
+    if (summation$summationC[input$submitC] >= 5) {
+      updateButton(session, "next4", disabled = FALSE)
+      updateButton(session, "new", disabled = TRUE)
+    }
+  })
+
+  ### Validate Level 4 ----
+  observeEvent(input$submitD, {
+    observeEvent(input$new2, {
+      output$markd1 <- renderUI({
+        img(src = NULL, width = 30)
+      })
+    })
+
+    observe({
+      output$markd1 <- renderUI({
+        if (!is.null(input$expla)) {
+          if (any(input$expla == key2[index2$explan, 1])) {
+            img(src = "check.PNG", width = 30)
+          } else {
+            img(src = "cross.PNG", width = 30)
+          }
+        }
+      })
+    })
+  })
+
+  observeEvent(input$submitD, {
+    observeEvent(input$new2, {
+      output$markd2 <- renderUI({
+        img(src = NULL, width = 30)
+      })
+    })
+    observe({
+      output$markd2 <- renderUI({
+        if (!is.null(input$resp)) {
+          if (any(input$resp == key2[index2$respon, 1])) {
+            img(src = "check.PNG", width = 30)
+          } else {
+            img(src = "cross.PNG", width = 30)
+          }
+        }
+      })
+    })
+  })
+
+  observeEvent(input$submitD, {
+    observeEvent(input$new2, {
+      output$markd3 <- renderUI({
+        img(src = NULL, width = 30)
+      })
+    })
+    observe({
+      output$markd3 <- renderUI({
+        if (!is.null(input$conf)) {
+          if (any(input$conf == key2[index2$confou, 1])) {
+            img(src = "check.PNG", width = 30)
+          } else {
+            img(src = "cross.PNG", width = 30)
+          }
+        }
+      })
+    })
+  })
+
+  observeEvent(input$submitD, {
+    observeEvent(input$new2, {
+      output$markd3 <- renderUI({
+        img(src = NULL, width = 30)
+      })
+    })
+    observe({
+      output$markd3 <- renderUI({
+        if (!is.null(input$conf)) {
+          if (any(input$conf == key2[index2$confou, 1])) {
+            img(src = "check.PNG", width = 30)
+          } else {
+            img(src = "cross.PNG", width = 30)
+          }
+        }
+      })
+    })
+  })
+  
+  observeEvent(input$new2, {
+    reset("expla")
+    reset("resp")
+    reset("conf")
+  })
+
+  summationD <- reactiveValues(correct1D = c(0), started = FALSE)
+  test <- reactiveValues(A = FALSE, B = FALSE, C = TRUE)
+
+  observeEvent(input$next4, {
+    time$started <- TRUE
+  })
+  
+  observeEvent(input$new2, {
+    time$started <- TRUE
+  })
+  
+  observeEvent(input$submitD, {
+    time$started <- TRUE
+  })
+
+  observeEvent(input$submitD, {
+    for (x in c(input$expla)) {
+      if (any(input$expla == key2[index2$explan, 1]) & any(input$resp == key2[index2$respon, 1]) & any(input$conf == key2[index2$confou, 1])) {
+        summationD$correct1D <- c(summationD$correct1D, 1)
+      } else {
+        summationD$correct1D <- c(summationD$correct1D, 0)
+      }
+    }
+  })
+
+  output$correctD <- renderPrint({
+    if (sum(c(summationD$correct1D)) == 0) {
+      cat("You have earned 0 points")
+    }
+    else {
+      cat("You have earned", sum(c(summationD$correct1D)), "points")
+    }
+  })
+
+  observeEvent(input$submitD, {
+    if (sum(c(summationD$correct1D)) >= 5) {
+      updateButton(session, "finish", disabled = FALSE)
+      updateButton(session, "new2", disabled = FALSE)
+    }
+  })
 
   observeEvent(input$finish, {
     summation$summationA[which(summation$summationA == 0)] <- summation$summationA[input$submitA]
@@ -2135,12 +2071,15 @@ server <- function(input, output, session) {
   })
 
   final <- reactiveValues(final = 0)
+  
   observeEvent(input$finish, {
+    
     score1 <- c()
     score2 <- c()
     score3 <- c()
     score4 <- c()
     score5 <- c()
+    
     for (i in c(input$drp1, input$drp2, input$drp3, input$drp4)) {
       if (any(i == paste("\n                  ", bank[c(1:10), 3], "\n                ", sep = ""))) {
         score1 <- c(score1, 2.5)
@@ -2197,6 +2136,7 @@ server <- function(input, output, session) {
         score5 <- c(score5, -3)
       }
     }
+    
     final$final <- sum(c(score1, score2, score3, score4, score5)) + 40
   })
 
@@ -2208,7 +2148,7 @@ server <- function(input, output, session) {
     cat("Total", "\n", round(as.numeric(summation$summationScore[1]) * (2 / 3) + as.numeric(final$final) * (1 / 3), digits = 1))
   })
 
-  ######## train ###########
+  ##### Train 1 ----
   observe(
     if (sum(c(summationC$correct1)) == 1) {
       output$train1 <- renderUI({
@@ -2237,7 +2177,7 @@ server <- function(input, output, session) {
     }
   )
 
-  ###################################### Train 2##################################################
+  ##### Train 2 ----
   observe(
     if (sum(c(summationD$correct1D)) == 1) {
       output$trainB <- renderUI({
@@ -2265,106 +2205,19 @@ server <- function(input, output, session) {
       })
     }
   )
-  ######################################################################################
-
+  #### End Validation ----
+  
+  # Check button
   observeEvent(input$check, {
     updateButton(session, "check", disabled = TRUE)
   })
-  #
-  # output$badge = renderUI({
-  #   score = round(summation$summationScore[1] * (2/3) + final$final * (1/3))
-  #   if(is.null(input$name) == T){
-  #     place = 0
-  #   }
-  #   else{
-  #     # for(i in 1:3)
-  #     #   {
-  #     #   if(data2()[i, 1] == input$initials){
-  #     #     place = i
-  #     #   }
-  #     # }
-  #     if(score > data2()[3,4]){
-  #
-  #       if(score > data2()[2,4]){
-  #         if(score > data2()[1,4]){
-  #           place = 1
-  #         }
-  #         else if (score == data2()[1,4]){
-  #           if (time$inc < data2()[1,5]){
-  #             place = 1
-  #           }else if (time$inc >= data2()[1,5]){
-  #             place = 2
-  #           }
-  #         }else{
-  #           place = 2
-  #         }
-  #       }
-  #       else if(score == data2()[2,4]){
-  #         if(time$inc > data2()[2,5]){
-  #           place = 3
-  #         }
-  #         else{
-  #           place = 2
-  #         }
-  #       }
-  #       else{
-  #         place = 3
-  #       }
-  #     }
-  #     else if(score == data2()[3,4]){
-  #       if(time$inc > data2()[3,5]){
-  #         place = 0
-  #       }
-  #       else{
-  #         if(time$inc == data2()[3,5]){
-  #           place = 3
-  #         }
-  #         else{
-  #           if(time$inc < data2()[2,5]){
-  #             if(time$inc < data2()[1.5]){
-  #               place = 1
-  #             }
-  #             else{
-  #               place = 2
-  #             }
-  #           }
-  #           else if(time$inc == data2()[2,5]){
-  #             place = 2
-  #           }
-  #           else{
-  #             place = 3
-  #           }
-  #         }
-  #
-  #       }
-  #     }
-  #     else{
-  #       place = 0
-  #     }
-  #   }
-  #
-  #
-  #
-  #
-  #   if(place == 1){
-  #     # 1st place image
-  #     img(src = "trophy1st.PNG",width = 600)
-  #   }
-  #
-  #   else if(place == 2){
-  #     # 2nd place
-  #     img(src = "trophy2nd.PNG",width = 600)
-  #   }
-  #
-  #   else if(place == 3){
-  #     # 3rd place
-  #     img(src = "trophy3rd.PNG",width = 600)
-  #   }
-  #   else{
-  #     ""
-  #   }
-  #   #else if(values$count == data2()[1,2] && time$inc <= )
-  # })
+  
+  # Listen for game start events
+  observeEvent(input$tabs, {
+    if(input$tabs == "challenge") {
+      startGame()
+    }
+  })
 }
 
 boastUtils::boastApp(ui = ui, server = server)
