@@ -16,34 +16,10 @@ APP_DESCP <<- paste(
 # End App Meta Data------------------------------------------------------------
 
 # Load Question Banks ----
-bank <- read.csv(
-  file = "questionBank.csv",
-  header = TRUE,
-  stringsAsFactors = FALSE
-)
-
-bank <- data.frame(lapply(bank, as.character), stringsAsFactors = FALSE)
-
-bankB <- read.csv("questionBankB.csv",
-  header = TRUE,
-  stringsAsFactors = FALSE
-)
-
-bankB <- data.frame(lapply(bankB, as.character), stringsAsFactors = FALSE)
-
-bankC <- read.csv("questionBankC.csv",
-  header = TRUE,
-  stringsAsFactors = FALSE
-)
-
-bankC <- data.frame(lapply(bankC, as.character), stringsAsFactors = FALSE)
-
-bankD <- read.csv("questionbankD.csv",
-  header = TRUE,
-  stringsAsFactors = FALSE
-)
-
-bankD <- data.frame(lapply(bankD, as.character), stringsAsFactors = FALSE)
+bank <- read.csv(file = "questionBank.csv", stringsAsFactors = FALSE)
+bankB <- read.csv(file = "questionBankB.csv", stringsAsFactors = FALSE)
+bankC <- read.csv(file = "questionBankC.csv", stringsAsFactors = FALSE)
+bankD <- read.csv(file = "questionBankD.csv", stringsAsFactors = FALSE)
 
 # Define UI ----
 ui <- list(
@@ -290,16 +266,15 @@ ui <- list(
                       column(1, bsButton("previous3", "<<Previous", style = "primary", size = "small")),
                       column(1,
                         offset = 4,
-                        conditionalPanel("TRUE",
-                          # TODO RE-ENABLE ##################################################################3
-                          #"(input.drp1!='') & (input.drp2!='') & (input.drp3!='') & (input.drp4!='') &
-                          # (input.drp5!='') & (input.drp6!='') & (input.drp7!='') & (input.drp8!='') &
-                          # (input.drp9!='') & (input.drp10!='') & (input.drp11!='') & (input.drp12!='') &
-                          # (input.drp13!='') & (input.drp14!='') & (input.drp15!='') & (input.drp16!='')",
+                        conditionalPanel(
+                          "(input.drp1!='') & (input.drp2!='') & (input.drp3!='') & (input.drp4!='') &
+                           (input.drp5!='') & (input.drp6!='') & (input.drp7!='') & (input.drp8!='') &
+                           (input.drp9!='') & (input.drp10!='') & (input.drp11!='') & (input.drp12!='') &
+                           (input.drp13!='') & (input.drp14!='') & (input.drp15!='') & (input.drp16!='')",
                           bsButton("submitA", "Submit Answer", style = "primary", size = "small", class = "grow")
                         )
                       ),
-                      column(1, offset = 5, bsButton("next2", "Next>>", style = "primary", size = "small", disabled = TRUE))
+                      column(1, offset = 5, bsButton("next2", "Next >>", style = "primary", size = "small", disabled = TRUE))
                     ),
                   br(),
                   conditionalPanel("input.submitA != 0",
@@ -424,7 +399,7 @@ ui <- list(
                       "(input.drop1!='') & (input.drop2!='') & (input.drop3!='') & (input.drop4!='') & (input.drop5!='')",
                       bsButton("submitB", "Submit Answer", style = "primary", class = "grow", size = "small")
                     )),
-                    column(1, offset = 5, bsButton("next3", "Next>>", style = "primary", size = "small", disabled = TRUE))
+                    column(1, offset = 5, bsButton("next3", "Next >>", style = "primary", size = "small", disabled = TRUE))
                   ),
                   hr(),
                   conditionalPanel("input.submitB != 0",
@@ -449,7 +424,8 @@ ui <- list(
               ),
               #### Level 3 ----
               tabPanel(
-                title = "Level 3", value = "e",
+                title = "Level 3",
+                value = "e",
                 titlePanel("Explanatory and Response Variables"),
                 fluidRow(h4("You must get both answers correct to earn 1 point and get 5 points before moving to the next level"), style = "margin-left:15px"),
                 fluidRow(h4("Once you have made your choices hit submit answer, then click new question for the next question"), style = "margin-left:15px"),
@@ -525,7 +501,7 @@ ui <- list(
                       bsButton("submitC", "Submit Answer", style = "primary", class = "grow", size = "small")
                     )),
                     column(1, offset = 2, bsButton("new", "New Question", size = "small", style = "primary", disabled = TRUE)),
-                    column(1, offset = 2, bsButton("next4", "Next>>", size = "small", style = "primary", disabled = TRUE))
+                    column(1, offset = 2, bsButton("next4", "Next >>", size = "small", style = "primary", disabled = TRUE))
                   ),
                   hr()
                 ),
@@ -535,7 +511,8 @@ ui <- list(
               ),
               #### Level 4 ----
               tabPanel(
-                title = "Level 4", value = "f",
+                title = "Level 4",
+                value = "f",
                 titlePanel(h1("This level will add in the concepts of confounding variables")),
                 fluidRow(h4("You must answer 5 correct choices before completing the level"), style = "margin-left:15px"),
                 fluidRow(h4("Once you have made your choices hit submit answer, then click new question for the next question"), style = "margin-left:15px"),
@@ -621,7 +598,7 @@ ui <- list(
                       bsButton("submitD", "Submit Answer", style = "primary", class = "grow", size = "small")
                     )),
                     column(1, offset = 2, bsButton("new2", "New Question", size = "small", style = "primary", disabled = TRUE)),
-                    column(1, offset = 2, bsButton("finish", "Stop>>", style = "danger", disabled = TRUE, size = "small"))
+                    column(1, offset = 2, bsButton("finish", "Stop >>", style = "danger", disabled = TRUE, size = "small"))
                   ),
                   hr()
                 ),
@@ -631,7 +608,8 @@ ui <- list(
               ),
               #### Results ----
               tabPanel(
-                title = "Results", value = "d",
+                title = "Results",
+                value = "d",
                 titlePanel(h1("Congratulations! You finished the game.")),
                 fluidRow(column(3, offset = 9, textOutput("timer5"))), br(), br(),
                 fluidPage(
@@ -742,6 +720,7 @@ server <- function(input, output, session) {
   
   observeEvent(input$next2, {
     time$started <- TRUE
+    updateTabsetPanel(session, "levels", selected = "c")
   })
   
   observeEvent(input$submitB, {
@@ -750,6 +729,7 @@ server <- function(input, output, session) {
   
   observeEvent(input$next3, {
     time$started <- TRUE
+    updateTabsetPanel(session, "levels", selected = "e")
   })
   
   observeEvent(input$new, {
@@ -762,10 +742,12 @@ server <- function(input, output, session) {
   
   observeEvent(input$next4, {
     time$started <- TRUE
+    updateTabsetPanel(session, "levels", selected = "f")
   })
   
   observeEvent(input$finish, {
     time$timer <- reactiveTimer(Inf)
+    updateTabsetPanel(session, "levels", selected = "d")
   })
 
   observe({
@@ -831,9 +813,9 @@ server <- function(input, output, session) {
   })
   
   ## Init Bank A ----
+  numbers <- reactiveValues(dis = c(), cont = c(), nom = c(), ord = c())
   initBankA <- function() {
-    numbers <- reactiveValues(dis = c(), cont = c(), nom = c(), ord = c())
-    
+
     numbers$dis <- sample(1:10, 4)
     numbers$cont <- sample(11:36, 4)
     numbers$nom <- sample(37:56, 4)
@@ -969,9 +951,8 @@ server <- function(input, output, session) {
   }
   
   ## Init Bank B ----
+  numbersB <- reactiveValues(disB = c(), contB = c(), nomB = c(), ordB = c(), indexB = c(), questionB = data.frame())
   initBankB <- function() {
-    numbersB <- reactiveValues(disB = c(), contB = c(), nomB = c(), ordB = c(), indexB = c(), questionB = data.frame())
-    
     numbersB$disB <- sample(1:13, 1)
     numbersB$contB <- sample(14:39, 1)
     numbersB$nomB <- sample(40:58, 1)
@@ -1405,7 +1386,8 @@ server <- function(input, output, session) {
     observe({
       output$answer2 <- renderUI({
         if (!is.null(input$drp2)) {
-          if (any(input$drp2 == paste("\n                  ", bank[c(1:10), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp2) == bank[c(1:10), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1423,7 +1405,8 @@ server <- function(input, output, session) {
     observe({
       output$answer3 <- renderUI({
         if (!is.null(input$drp3)) {
-          if (any(input$drp3 == paste("\n                  ", bank[c(1:10), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp3) == bank[c(1:10), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1441,7 +1424,8 @@ server <- function(input, output, session) {
     observe({
       output$answer4 <- renderUI({
         if (!is.null(input$drp4)) {
-          if (any(input$drp4 == paste("\n                  ", bank[c(1:10), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp4) == bank[c(1:10), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1459,7 +1443,8 @@ server <- function(input, output, session) {
     observe({
       output$answer5 <- renderUI({
         if (!is.null(input$drp5)) {
-          if (any(input$drp5 == paste("\n                  ", bank[c(11:36), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp5) == bank[c(11:36), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1477,7 +1462,8 @@ server <- function(input, output, session) {
     observe({
       output$answer6 <- renderUI({
         if (!is.null(input$drp6)) {
-          if (any(input$drp6 == paste("\n                  ", bank[c(11:36), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp6) == bank[c(11:36), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1495,7 +1481,8 @@ server <- function(input, output, session) {
     observe({
       output$answer7 <- renderUI({
         if (!is.null(input$drp7)) {
-          if (any(input$drp7 == paste("\n                  ", bank[c(11:36), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp7) == bank[c(11:36), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1513,7 +1500,8 @@ server <- function(input, output, session) {
     observe({
       output$answer8 <- renderUI({
         if (!is.null(input$drp8)) {
-          if (any(input$drp8 == paste("\n                  ", bank[c(11:36), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp8) == bank[c(11:36), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1531,7 +1519,8 @@ server <- function(input, output, session) {
     observe({
       output$answer9 <- renderUI({
         if (!is.null(input$drp9)) {
-          if (any(input$drp9 == paste("\n                  ", bank[c(37:56), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp9) == bank[c(37:56), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1549,7 +1538,8 @@ server <- function(input, output, session) {
     observe({
       output$answer10 <- renderUI({
         if (!is.null(input$drp10)) {
-          if (any(input$drp10 == paste("\n                  ", bank[c(37:56), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp10) == bank[c(37:56), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1567,7 +1557,8 @@ server <- function(input, output, session) {
     observe({
       output$answer11 <- renderUI({
         if (!is.null(input$drp11)) {
-          if (any(input$drp11 == paste("\n                  ", bank[c(37:56), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp11) == bank[c(37:56), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1585,7 +1576,8 @@ server <- function(input, output, session) {
     observe({
       output$answer12 <- renderUI({
         if (!is.null(input$drp12)) {
-          if (any(input$drp12 == paste("\n                  ", bank[c(37:56), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp12) == bank[c(37:56), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1603,7 +1595,8 @@ server <- function(input, output, session) {
     observe({
       output$answer13 <- renderUI({
         if (!is.null(input$drp13)) {
-          if (any(input$drp13 == paste("\n                  ", bank[c(57:71), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp13) == bank[c(57:71), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1621,7 +1614,8 @@ server <- function(input, output, session) {
     observe({
       output$answer14 <- renderUI({
         if (!is.null(input$drp14)) {
-          if (any(input$drp14 == paste("\n                  ", bank[c(57:71), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp14) == bank[c(57:71), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1639,7 +1633,8 @@ server <- function(input, output, session) {
     observe({
       output$answer15 <- renderUI({
         if (!is.null(input$drp15)) {
-          if (any(input$drp15 == paste("\n                  ", bank[c(57:71), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp15) == bank[c(57:71), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1657,7 +1652,8 @@ server <- function(input, output, session) {
     observe({
       output$answer16 <- renderUI({
         if (!is.null(input$drp16)) {
-          if (any(input$drp16 == paste("\n                  ", bank[c(57:71), 3], "\n                ", sep = ""))) {
+          valid <- any(trimws(input$drp16) == bank[c(57:71), 3])
+          if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1751,28 +1747,28 @@ server <- function(input, output, session) {
     score4 <- c()
     
     for (i in c(input$drp1, input$drp2, input$drp3, input$drp4)) {
-      if (any(i == paste("\n                  ", bank[c(1:10), 3], "\n                ", sep = ""))) {
+      if (any(trimws(i) == bank[c(1:10), 3])) {
         score1 <- c(score1, 2.5)
       } else {
         score1 <- c(score1, -1.5)
       }
     }
     for (i in c(input$drp5, input$drp6, input$drp7, input$drp8)) {
-      if (any(i == paste("\n                  ", bank[c(11:36), 3], "\n                ", sep = ""))) {
+      if (any(trimws(i) == bank[c(11:36), 3])) {
         score2 <- c(score2, 2.5)
       } else {
         score2 <- c(score2, -1.5)
       }
     }
     for (i in c(input$drp9, input$drp10, input$drp11, input$drp12)) {
-      if (any(i == paste("\n                  ", bank[c(37:56), 3], "\n                ", sep = ""))) {
+      if (any(trimws(i) == bank[c(37:56), 3])) {
         score3 <- c(score3, 2.5)
       } else {
         score3 <- c(score3, -1.5)
       }
     }
     for (i in c(input$drp13, input$drp14, input$drp15, input$drp16)) {
-      if (any(i == paste("\n                  ", bank[c(57:71), 3], "\n                ", sep = ""))) {
+      if (any(trimws(i) == bank[c(57:71), 3])) {
         score4 <- c(score4, 2.5)
       } else {
         score4 <- c(score4, -1.5)
@@ -2081,28 +2077,28 @@ server <- function(input, output, session) {
     score5 <- c()
     
     for (i in c(input$drp1, input$drp2, input$drp3, input$drp4)) {
-      if (any(i == paste("\n                  ", bank[c(1:10), 3], "\n                ", sep = ""))) {
+      if (any(trimws(i) == bank[c(1:10), 3])) {
         score1 <- c(score1, 2.5)
       } else {
         score1 <- c(score1, -1.5)
       }
     }
     for (i in c(input$drp5, input$drp6, input$drp7, input$drp8)) {
-      if (any(i == paste("\n                  ", bank[c(11:36), 3], "\n                ", sep = ""))) {
+      if (any(trimws(i) == bank[c(11:36), 3])) {
         score2 <- c(score2, 2.5)
       } else {
         score2 <- c(score2, -1.5)
       }
     }
     for (i in c(input$drp9, input$drp10, input$drp11, input$drp12)) {
-      if (any(i == paste("\n                  ", bank[c(37:56), 3], "\n                ", sep = ""))) {
+      if (any(trimws(i) == bank[c(37:56), 3])) {
         score3 <- c(score3, 2.5)
       } else {
         score3 <- c(score3, -1.5)
       }
     }
     for (i in c(input$drp13, input$drp14, input$drp15, input$drp16)) {
-      if (any(i == paste("\n                  ", bank[c(57:71), 3], "\n                ", sep = ""))) {
+      if (any(trimws(i) == bank[c(57:71), 3])) {
         score4 <- c(score4, 2.5)
       } else {
         score4 <- c(score4, -1.5)
