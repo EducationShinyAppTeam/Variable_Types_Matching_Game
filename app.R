@@ -263,7 +263,7 @@ ui <- list(
                     hr(),
                     # Submit button and pagination button
                     fluidRow(
-                      column(1, bsButton("previous3", "<<Previous", style = "primary", size = "small")),
+                      column(1, bsButton("previous3", "<< Previous", style = "primary", size = "small")),
                       column(1,
                         offset = 4,
                         conditionalPanel(
@@ -394,7 +394,7 @@ ui <- list(
                     )
                   ),
                   fluidRow(
-                    column(1, bsButton("previous2", "<<Previous", style = "primary", size = "small")),
+                    column(1, bsButton("previous2", "<< Previous", style = "primary", size = "small")),
                     column(1, offset = 4, conditionalPanel(
                       "(input.drop1!='') & (input.drop2!='') & (input.drop3!='') & (input.drop4!='') & (input.drop5!='')",
                       bsButton("submitB", "Submit Answer", style = "primary", class = "grow", size = "small")
@@ -495,7 +495,7 @@ ui <- list(
                 conditionalPanel(
                   "input.next3 != 0",
                   fluidRow(
-                    column(1, offset = 1, bsButton("previous4", "<<Previous", style = "primary", size = "small")),
+                    column(1, offset = 1, bsButton("previous4", "<< Previous", style = "primary", size = "small")),
                     column(1, offset = 1, conditionalPanel(
                       "(input.explC!='') & (input.respC!='')",
                       bsButton("submitC", "Submit Answer", style = "primary", class = "grow", size = "small")
@@ -592,7 +592,7 @@ ui <- list(
                 conditionalPanel(
                   "input.next4 != 0",
                   fluidRow(
-                    column(1, offset = 1, bsButton("previous5", "<<Previous", style = "primary", size = "small")),
+                    column(1, offset = 1, bsButton("previous5", "<< Previous", style = "primary", size = "small")),
                     column(1, offset = 1, conditionalPanel(
                       "(input.expla!='') & (input.resp!='') & (input.conf!='')",
                       bsButton("submitD", "Submit Answer", style = "primary", class = "grow", size = "small")
@@ -618,23 +618,6 @@ ui <- list(
                     wellPanel(verbatimTextOutput("init"), class = "wellScore col-lg-4 col-md-6 col-sm-12"),
                     wellPanel(verbatimTextOutput("end"), class = "wellScore col-lg-4 col-md-6 col-sm-12"),
                     wellPanel(verbatimTextOutput("totalScore"), class = "wellScore col-lg-4 col-md-6 col-sm-12")
-                  ), br(),
-                  conditionalPanel(
-                    "input.finish != 0",
-                    fluidRow(
-                      wellPanel(
-                        wellPanel(textInput("name", h4("Please type in your nickname to submit the score:"), placeholder = "Nickname", width = 600),
-                          textOutput("checkName"),
-                          class = "col-lg-8 col-md-9 col-sm-10 col-xs-9"
-                        ),
-
-                        wellPanel(div(style = "position:absolute; top:60px", bsButton("check", "Submit", style = "danger", size = "large")), class = "col-lg-2 col-md-2 col-sm-1 col-xs-1"),
-                        style = "height:200px"
-                      )
-                    ),
-                    conditionalPanel("input.check != 0", dataTableOutput("highscore")),
-                    actionButton("weekhigh", "Show Weekly High Scores"),
-                    actionButton("totalhigh", "Show All-Time High Scores")
                   )
                 )
               )
@@ -718,6 +701,10 @@ server <- function(input, output, session) {
     time$started <- FALSE
   })
   
+  observeEvent(input$previous2, {
+    updateTabsetPanel(session, "levels", selected = "b")
+  })
+  
   observeEvent(input$next2, {
     time$started <- TRUE
     updateTabsetPanel(session, "levels", selected = "c")
@@ -725,6 +712,10 @@ server <- function(input, output, session) {
   
   observeEvent(input$submitB, {
     time$started <- FALSE
+  })
+  
+  observeEvent(input$previous3, {
+    updateTabsetPanel(session, "levels", selected = "c")
   })
   
   observeEvent(input$next3, {
@@ -746,6 +737,17 @@ server <- function(input, output, session) {
   })
   
   observeEvent(input$finish, {
+    
+    stmt <- boastUtils::generateStatement(
+      session,
+      verb = "completed",
+      object = "shiny-tab-challenge",
+      description = "Challenge completed",
+      completion = TRUE
+    )
+    
+    boastUtils::storeStatement(session, stmt)
+    
     time$timer <- reactiveTimer(Inf)
     updateTabsetPanel(session, "levels", selected = "d")
   })
@@ -1000,6 +1002,7 @@ server <- function(input, output, session) {
   index_list <- reactiveValues(listc = sample(1:17, 17, replace = FALSE))
 
   observeEvent(input$previous4, {
+    updateTabsetPanel(session, "levels", selected = "e")
     index_list$listc <- c(index_list$listc, sample(1:17, 17, replace = FALSE))
   })
 
@@ -1154,6 +1157,7 @@ server <- function(input, output, session) {
   index_listD <- reactiveValues(listD = sample(1:8, 8, replace = FALSE))
 
   observeEvent(input$previous5, {
+    updateTabsetPanel(session, "levels", selected = "f")
     index_listD$listD <- c(index_listD$listD, sample(1:8, 8, replace = FALSE))
   })
 
@@ -1775,42 +1779,89 @@ server <- function(input, output, session) {
       }
     }
     
-    summation$summationA[input$submitA] <- sum(c(score1, score2, score3, score4))
+    total <- sum(c(score1, score2, score3, score4))
+    
+    response <- list(
+      "Quantitative_Discrete" = c(trimws(input$drp1), trimws(input$drp2), trimws(input$drp3), trimws(input$drp4)),
+      "Quantitative_Continuous" = c(trimws(input$drp5), trimws(input$drp6), trimws(input$drp7), trimws(input$drp8)),
+      "Qualitative_Nominal" = c(trimws(input$drp9), trimws(input$drp10), trimws(input$drp11), trimws(input$drp12)),
+      "Qualitative_Ordinal" = c(trimws(input$drp13), trimws(input$drp14), trimws(input$drp15), trimws(input$drp16))
+    )
+    
+    stmt <- boastUtils::generateStatement(
+      session,
+      verb = "answered",
+      object = "level1",
+      description = "Drag the variables into the categories they belong to.",
+      interactionType = "matching",
+      response = jsonlite::toJSON(response),
+      success = total == 40
+    )
+    
+    boastUtils::storeStatement(session, stmt)
+    
+    summation$summationA[input$submitA] <- total
   })
   
   observeEvent(input$submitB, {
+    image1 <- numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]
+    image2 <- numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]
+    image3 <- numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]
+    image4 <- numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]
+    
     score5 <- c()
     
     for (i in input$drop1) {
-      if (i == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
+      if (i == image1) {
         score5 <- c(score5, 5)
       } else {
         score5 <- c(score5, -3)
       }
     }
     for (i in input$drop2) {
-      if (i == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
+      if (i == image2) {
         score5 <- c(score5, 5)
       } else {
         score5 <- c(score5, -3)
       }
     }
     for (i in input$drop3) {
-      if (i == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
+      if (i == image3) {
         score5 <- c(score5, 5)
       } else {
         score5 <- c(score5, -3)
       }
     }
     for (i in input$drop4) {
-      if (i == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
+      if (i == image4) {
         score5 <- c(score5, 5)
       } else {
         score5 <- c(score5, -3)
       }
     }
     
-    summation$summationB[input$submitB] <- sum(score5)
+    total <- sum(score5)
+    
+    response <- list(
+      "Quantitative_Discrete" = c(image1, input$drop1),
+      "Quantitative_Continuous" = c(image2, input$drop2),
+      "Qualitative_Nominal" = c(image3, input$drop3),
+      "Qualitative_Ordinal" = c(image4, input$drop4)
+    )
+    
+    stmt <- boastUtils::generateStatement(
+      session,
+      verb = "answered",
+      object = "level2",
+      description = "Identify in Plots",
+      interactionType = "matching",
+      response = jsonlite::toJSON(response),
+      success = total == 20
+    )
+    
+    boastUtils::storeStatement(session, stmt)
+    
+    summation$summationB[input$submitB] <- total
   })
   values <- reactiveValues(
     count = 0
@@ -1898,15 +1949,36 @@ server <- function(input, output, session) {
   })
   
   observeEvent(input$submitC, {
+    success <- FALSE
     for (i in c(input$explC)) {
-      if (any(input$explC == key1[index$exp_index, 1]) & any(input$respC == key1[index$res_index, 1])) {
+      success <- any(input$explC == key1[index$exp_index, 1]) & any(input$respC == key1[index$res_index, 1])
+      if (success) {
         summationC$correct1 <- c(summationC$correct1, 1)
       } else {
         summationC$correct1 <- c(summationC$correct1, 0)
       }
     }
     
-    summation$summationC[input$submitC] <- sum(c(summationC$correct1))
+    total <- sum(c(summationC$correct1))
+      
+    response <- list(
+      "Explanatory" = input$explC,
+      "Response" = input$respC
+    )
+    
+    stmt <- boastUtils::generateStatement(
+      session,
+      verb = "answered",
+      object = "level3",
+      description = "Explanatory and Response Variables",
+      interactionType = "choice",
+      response = jsonlite::toJSON(response),
+      success = success
+    )
+    
+    boastUtils::storeStatement(session, stmt)
+    
+    summation$summationC[input$submitC] <- total
   })
   
   output$correctC <- renderPrint({
@@ -2025,13 +2097,38 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$submitD, {
+    success <- FALSE
     for (x in c(input$expla)) {
-      if (any(input$expla == key2[index2$explan, 1]) & any(input$resp == key2[index2$respon, 1]) & any(input$conf == key2[index2$confou, 1])) {
+
+      success <- (any(input$expla == key2[index2$explan,1])& any(input$resp== key2[index2$respon,1])&any(input$conf== key2[index2$confou,1]))
+      
+      if (success) {
         summationD$correct1D <- c(summationD$correct1D, 1)
       } else {
         summationD$correct1D <- c(summationD$correct1D, 0)
       }
     }
+    
+    total <- sum(c(summationD$correct1D))
+    
+    ## TODO: FIX INPUT$CONF & INPUT$RESP VALUES ARE SWITCHED
+    response <- list(
+      "Explanatory" = input$expla,
+      "Response" = input$conf,
+      "Confounding" = input$resp
+    )
+    
+    stmt <- boastUtils::generateStatement(
+      session,
+      verb = "answered",
+      object = "level4",
+      description = "This level will add in the concepts of confounding variables.",
+      interactionType = "choice",
+      response = jsonlite::toJSON(response),
+      success = success
+    )
+    
+    boastUtils::storeStatement(session, stmt)
   })
 
   output$correctD <- renderPrint({
