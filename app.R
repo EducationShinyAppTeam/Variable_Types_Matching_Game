@@ -9,7 +9,7 @@ library(boastUtils)
 # App Meta Data----------------------------------------------------------------
 APP_TITLE <<- "Variable Types Matching Game"
 APP_DESCP <<- paste(
-  "Identify variable types by nature of measurement [Quantitative (numeric) discrete variables, 
+  "Identify variable types by nature of measurement [Quantitative (numeric) discrete variables,
   Quantitative continuous variables, Qualitative (categorical) nominal variables, and Qualitative
   ordinal variables] and by role in the analysis [explanatory versus response versus confounding]."
 )
@@ -652,7 +652,11 @@ ui <- list(
                       McPherson, J. (2020). shiny: Web Application Framework for
                       R. R package version 1.5.0. Available from
                       https://CRAN.R-project.org/package=shiny"
-          )
+          ),
+          br(),
+          br(),
+          br(),
+          boastUtils::copyrightInfo()
         )
       )
     )
@@ -664,19 +668,19 @@ server <- function(input, output, session) {
 
   ## Set timer with start, stop, restart, stop, and termination; and show the timer
   time <- reactiveValues(inc = 0, timer = reactiveTimer(1000), started = FALSE)
-  
+
   ## Setup questions and begin timer
   startGame <- function() {
 
     # Check if game has already been started
     if(!time$started) {
-      
+
       # Bank A
       initBankA()
-      
+
       # Bank B
       initBankB()
-      
+
       # Start timer
       time$started <- TRUE
     }
@@ -695,49 +699,49 @@ server <- function(input, output, session) {
   observeEvent(input$reset_button, {
     js$reset()
   })
-  
+
   ## Time Tracking ----
   observeEvent(input$submitA, {
     time$started <- FALSE
   })
-  
+
   observeEvent(input$previous2, {
     updateTabsetPanel(session, "levels", selected = "b")
   })
-  
+
   observeEvent(input$next2, {
     time$started <- TRUE
     updateTabsetPanel(session, "levels", selected = "c")
   })
-  
+
   observeEvent(input$submitB, {
     time$started <- FALSE
   })
-  
+
   observeEvent(input$previous3, {
     updateTabsetPanel(session, "levels", selected = "c")
   })
-  
+
   observeEvent(input$next3, {
     time$started <- TRUE
     updateTabsetPanel(session, "levels", selected = "e")
   })
-  
+
   observeEvent(input$new, {
     time$started <- TRUE
   })
-  
+
   observeEvent(input$submitC, {
     time$started <- FALSE
   })
-  
+
   observeEvent(input$next4, {
     time$started <- TRUE
     updateTabsetPanel(session, "levels", selected = "f")
   })
-  
+
   observeEvent(input$finish, {
-    
+
     stmt <- boastUtils::generateStatement(
       session,
       verb = "completed",
@@ -745,9 +749,9 @@ server <- function(input, output, session) {
       description = "Challenge completed",
       completion = TRUE
     )
-    
+
     boastUtils::storeStatement(session, stmt)
-    
+
     time$timer <- reactiveTimer(Inf)
     updateTabsetPanel(session, "levels", selected = "d")
   })
@@ -758,7 +762,7 @@ server <- function(input, output, session) {
       time$inc <- isolate(time$inc) + 1
     }
   })
-  
+
   observeEvent(input$bt1 == TRUE, {
     toggle("timer1h")
     output$timer1 <- renderPrint({
@@ -813,7 +817,7 @@ server <- function(input, output, session) {
   output$timer5 <- renderPrint({
     cat("you have used:", time$inc, "secs")
   })
-  
+
   ## Init Bank A ----
   numbers <- reactiveValues(dis = c(), cont = c(), nom = c(), ord = c())
   initBankA <- function() {
@@ -822,99 +826,99 @@ server <- function(input, output, session) {
     numbers$cont <- sample(11:36, 4)
     numbers$nom <- sample(37:56, 4)
     numbers$ord <- sample(57:71, 4)
-    
+
     output$disID1 <- renderText({
       bank[numbers$dis[1], 2]
     })
-    
+
     output$disID2 <- renderText({
       bank[numbers$dis[2], 2]
     })
-    
+
     output$disID3 <- renderText({
       bank[numbers$dis[3], 2]
     })
-    
+
     output$disID4 <- renderText({
       bank[numbers$dis[4], 2]
     })
-    
+
     output$disName1 <- renderText({
       bank[numbers$dis[1], 3]
     })
-    
+
     output$disName2 <- renderText({
       bank[numbers$dis[2], 3]
     })
-    
+
     output$disName3 <- renderText({
       bank[numbers$dis[3], 3]
     })
-    
+
     output$disName4 <- renderText({
       bank[numbers$dis[4], 3]
     })
-    
+
     output$contID1 <- renderText({
       bank[numbers$cont[1], 2]
     })
-    
+
     output$contID2 <- renderText({
       bank[numbers$cont[2], 2]
     })
-    
+
     output$contID3 <- renderText({
       bank[numbers$cont[3], 2]
     })
-    
+
     output$contID4 <- renderText({
       bank[numbers$cont[4], 2]
     })
-    
+
     output$contName1 <- renderText({
       bank[numbers$cont[1], 3]
     })
-    
+
     output$contName2 <- renderText({
       bank[numbers$cont[2], 3]
     })
-    
+
     output$contName3 <- renderText({
       bank[numbers$cont[3], 3]
     })
-    
+
     output$contName4 <- renderText({
       bank[numbers$cont[4], 3]
     })
-    
+
     output$nomID1 <- renderText({
       bank[numbers$nom[1], 2]
     })
-    
+
     output$nomID2 <- renderText({
       bank[numbers$nom[2], 2]
     })
-    
+
     output$nomID3 <- renderText({
       bank[numbers$nom[3], 2]
     })
-    
+
     output$nomID4 <- renderText({
       bank[numbers$nom[4], 2]
     })
-    
+
     output$nomName1 <- renderText({
       bank[numbers$nom[1], 3]
     })
-    
+
     output$nomName2 <- renderText({
       bank[numbers$nom[2], 3]
     })
-    
+
     output$nomName3 <- renderText({
       bank[numbers$nom[3], 3]
     })
-    
+
     output$nomName4 <- renderText({
       bank[numbers$nom[4], 3]
     })
@@ -922,36 +926,36 @@ server <- function(input, output, session) {
     output$ordID1 <- renderText({
       bank[numbers$ord[1], 2]
     })
-    
+
     output$ordID2 <- renderText({
       bank[numbers$ord[2], 2]
     })
-    
+
     output$ordID3 <- renderText({
       bank[numbers$ord[3], 2]
     })
-    
+
     output$ordID4 <- renderText({
       bank[numbers$ord[4], 2]
     })
-    
+
     output$ordName1 <- renderText({
       bank[numbers$ord[1], 3]
     })
-    
+
     output$ordName2 <- renderText({
       bank[numbers$ord[2], 3]
     })
-    
+
     output$ordName3 <- renderText({
       bank[numbers$ord[3], 3]
     })
-    
+
     output$ordName4 <- renderText({
       bank[numbers$ord[4], 3]
     })
   }
-  
+
   ## Init Bank B ----
   numbersB <- reactiveValues(disB = c(), contB = c(), nomB = c(), ordB = c(), indexB = c(), questionB = data.frame())
   initBankB <- function() {
@@ -959,38 +963,38 @@ server <- function(input, output, session) {
     numbersB$contB <- sample(14:39, 1)
     numbersB$nomB <- sample(40:58, 1)
     numbersB$ordB <- sample(59:74, 1)
-    
+
     numbersB$indexB <- sample(c("A", "B", "C", "D"), 4)
     numbersB$questionB <- cbind(bankB[c(numbersB$disB, numbersB$contB, numbersB$nomB, numbersB$ordB), ], numbersB$indexB)
-    
+
     output$imgQ1 <- renderText({
       paste("A.", numbersB$questionB[numbersB$questionB[5] == "A", 4])
     })
-    
+
     output$image1 <- renderUI({
       img(src = numbersB$questionB[numbersB$questionB[5] == "A", 3], width = "95%", height = "95%", style = "text-align: center")
     })
-    
+
     output$imgQ2 <- renderText({
       paste("B.", numbersB$questionB[numbersB$questionB[5] == "B", 4])
     })
-    
+
     output$image2 <- renderUI({
       img(src = numbersB$questionB[numbersB$questionB[5] == "B", 3], width = "95%", height = "95%")
     })
-    
+
     output$imgQ3 <- renderText({
       paste("C.", numbersB$questionB[numbersB$questionB[5] == "C", 4])
     })
-    
+
     output$image3 <- renderUI({
       img(src = numbersB$questionB[numbersB$questionB[5] == "C", 3], width = "95%", height = "95%")
     })
-    
+
     output$imgQ4 <- renderText({
       paste("D.", numbersB$questionB[numbersB$questionB[5] == "D", 4])
     })
-    
+
     output$image4 <- renderUI({
       img(src = numbersB$questionB[numbersB$questionB[5] == "D", 3], width = "95%", height = "95%")
     })
@@ -1062,7 +1066,7 @@ server <- function(input, output, session) {
       h3(bankC[35, 5])
     }
   })
-  
+
   output$varEXP <- renderUI({
     if (index$index == 1) {
       h3(bankC[1, 4])
@@ -1204,7 +1208,7 @@ server <- function(input, output, session) {
       h3(bankD[25, 4])
     }
   })
-  
+
   output$varEXPD <- renderUI({
     if (index2$index2 == 1) {
       h3(bankD[1, 3])
@@ -1285,20 +1289,20 @@ server <- function(input, output, session) {
       h3(bankD[27, 3])
     }
   })
-  
+
   ## Submit Observers ----
   observeEvent(input$submitA, {
     updateButton(session, "submitA", disabled = TRUE)
   })
-  
+
   observeEvent(input$clear, {
     updateButton(session, "submitA", disabled = FALSE)
   })
-  
+
   observeEvent(input$submitB, {
     updateButton(session, "submitB", disabled = TRUE)
   })
-  
+
   observeEvent(input$clearB, {
     updateButton(session, "submitB", disabled = FALSE)
   })
@@ -1306,7 +1310,7 @@ server <- function(input, output, session) {
   observeEvent(input$submitC, {
     updateButton(session, "submitC", disabled = TRUE)
   })
-  
+
   observe({
     if (length(index_list$listc) == 1) {
       updateButton(session, "new", disabled = TRUE)
@@ -1358,7 +1362,7 @@ server <- function(input, output, session) {
   observeEvent(input$new2, {
     updateButton(session, "new2", disabled = TRUE)
   })
-  
+
   ## Begin Validation ----
   ### Validate Level 1 ----
   observeEvent(input$submitA, {
@@ -1380,7 +1384,7 @@ server <- function(input, output, session) {
       })
     })
   })
-  
+
   observeEvent(input$submitA, {
     observeEvent(input$clear, {
       output$answer2 <- renderUI({
@@ -1666,7 +1670,7 @@ server <- function(input, output, session) {
       })
     })
   })
-  
+
   ### Validate Level 2 ----
   observeEvent(input$submitB, {
     observeEvent(input$clearB, {
@@ -1740,16 +1744,16 @@ server <- function(input, output, session) {
       })
     })
   })
-  
+
   summation <- reactiveValues(summationA = c(rep(0, 20)), summationB = c(rep(0, 20)), summationC = c(rep(0, 20)), summationD = c(rep(0, 20)), summationScore = c(rep(0, 20)))
-  
+
   observeEvent(input$submitA, {
-    
+
     score1 <- c()
     score2 <- c()
     score3 <- c()
     score4 <- c()
-    
+
     for (i in c(input$drp1, input$drp2, input$drp3, input$drp4)) {
       if (any(trimws(i) == bank[c(1:10), 3])) {
         score1 <- c(score1, 2.5)
@@ -1778,16 +1782,16 @@ server <- function(input, output, session) {
         score4 <- c(score4, -1.5)
       }
     }
-    
+
     total <- sum(c(score1, score2, score3, score4))
-    
+
     response <- list(
       "Quantitative_Discrete" = c(trimws(input$drp1), trimws(input$drp2), trimws(input$drp3), trimws(input$drp4)),
       "Quantitative_Continuous" = c(trimws(input$drp5), trimws(input$drp6), trimws(input$drp7), trimws(input$drp8)),
       "Qualitative_Nominal" = c(trimws(input$drp9), trimws(input$drp10), trimws(input$drp11), trimws(input$drp12)),
       "Qualitative_Ordinal" = c(trimws(input$drp13), trimws(input$drp14), trimws(input$drp15), trimws(input$drp16))
     )
-    
+
     stmt <- boastUtils::generateStatement(
       session,
       verb = "answered",
@@ -1797,20 +1801,20 @@ server <- function(input, output, session) {
       response = jsonlite::toJSON(response),
       success = total == 40
     )
-    
+
     boastUtils::storeStatement(session, stmt)
-    
+
     summation$summationA[input$submitA] <- total
   })
-  
+
   observeEvent(input$submitB, {
     image1 <- numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]
     image2 <- numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]
     image3 <- numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]
     image4 <- numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]
-    
+
     score5 <- c()
-    
+
     for (i in input$drop1) {
       if (i == image1) {
         score5 <- c(score5, 5)
@@ -1839,16 +1843,16 @@ server <- function(input, output, session) {
         score5 <- c(score5, -3)
       }
     }
-    
+
     total <- sum(score5)
-    
+
     response <- list(
       "Quantitative_Discrete" = c(image1, input$drop1),
       "Quantitative_Continuous" = c(image2, input$drop2),
       "Qualitative_Nominal" = c(image3, input$drop3),
       "Qualitative_Ordinal" = c(image4, input$drop4)
     )
-    
+
     stmt <- boastUtils::generateStatement(
       session,
       verb = "answered",
@@ -1858,9 +1862,9 @@ server <- function(input, output, session) {
       response = jsonlite::toJSON(response),
       success = total == 20
     )
-    
+
     boastUtils::storeStatement(session, stmt)
-    
+
     summation$summationB[input$submitB] <- total
   })
   values <- reactiveValues(
@@ -1879,15 +1883,15 @@ server <- function(input, output, session) {
       updateButton(session, "next3", disabled = TRUE)
     }
   })
-  
+
   output$scoreA <- renderPrint({
     cat("Current score of this level is", summation$summationA[input$submitA])
   })
-  
+
   output$scoreB <- renderPrint({
     cat("Current score of this level is", max(summation$summationB))
   })
-  
+
   ### Validate Level 3 ----
   observeEvent(input$submitC, {
     observeEvent(input$new, {
@@ -1933,21 +1937,21 @@ server <- function(input, output, session) {
     reset("respC")
     reset("submit")
   })
-  
+
   summationC <- reactiveValues(correct1 = c(0), started = FALSE)
-  
+
   observeEvent(input$next3, {
     summationC$started <- TRUE
   })
-  
+
   observeEvent(input$new, {
     summationC$started <- TRUE
   })
-  
+
   observeEvent(input$submitC, {
     summationC$started <- TRUE
   })
-  
+
   observeEvent(input$submitC, {
     success <- FALSE
     for (i in c(input$explC)) {
@@ -1958,14 +1962,14 @@ server <- function(input, output, session) {
         summationC$correct1 <- c(summationC$correct1, 0)
       }
     }
-    
+
     total <- sum(c(summationC$correct1))
-      
+
     response <- list(
       "Explanatory" = input$explC,
       "Response" = input$respC
     )
-    
+
     stmt <- boastUtils::generateStatement(
       session,
       verb = "answered",
@@ -1975,12 +1979,12 @@ server <- function(input, output, session) {
       response = jsonlite::toJSON(response),
       success = success
     )
-    
+
     boastUtils::storeStatement(session, stmt)
-    
+
     summation$summationC[input$submitC] <- total
   })
-  
+
   output$correctC <- renderPrint({
     if (sum(c(summationC$correct1)) == 0) {
       cat("You have earned 0 points")
@@ -1989,7 +1993,7 @@ server <- function(input, output, session) {
       cat("You have earned", summation$summationC[input$submitC], "points")
     }
   })
-  
+
   observeEvent(input$submitC, {
     if (summation$summationC[input$submitC] >= 5) {
       updateButton(session, "next4", disabled = FALSE)
@@ -2074,7 +2078,7 @@ server <- function(input, output, session) {
       })
     })
   })
-  
+
   observeEvent(input$new2, {
     reset("expla")
     reset("resp")
@@ -2087,11 +2091,11 @@ server <- function(input, output, session) {
   observeEvent(input$next4, {
     time$started <- TRUE
   })
-  
+
   observeEvent(input$new2, {
     time$started <- TRUE
   })
-  
+
   observeEvent(input$submitD, {
     time$started <- TRUE
   })
@@ -2101,23 +2105,23 @@ server <- function(input, output, session) {
     for (x in c(input$expla)) {
 
       success <- (any(input$expla == key2[index2$explan,1])& any(input$resp== key2[index2$respon,1])&any(input$conf== key2[index2$confou,1]))
-      
+
       if (success) {
         summationD$correct1D <- c(summationD$correct1D, 1)
       } else {
         summationD$correct1D <- c(summationD$correct1D, 0)
       }
     }
-    
+
     total <- sum(c(summationD$correct1D))
-    
+
     ## TODO: FIX INPUT$CONF & INPUT$RESP VALUES ARE SWITCHED
     response <- list(
       "Explanatory" = input$expla,
       "Response" = input$conf,
       "Confounding" = input$resp
     )
-    
+
     stmt <- boastUtils::generateStatement(
       session,
       verb = "answered",
@@ -2127,7 +2131,7 @@ server <- function(input, output, session) {
       response = jsonlite::toJSON(response),
       success = success
     )
-    
+
     boastUtils::storeStatement(session, stmt)
   })
 
@@ -2164,15 +2168,15 @@ server <- function(input, output, session) {
   })
 
   final <- reactiveValues(final = 0)
-  
+
   observeEvent(input$finish, {
-    
+
     score1 <- c()
     score2 <- c()
     score3 <- c()
     score4 <- c()
     score5 <- c()
-    
+
     for (i in c(input$drp1, input$drp2, input$drp3, input$drp4)) {
       if (any(trimws(i) == bank[c(1:10), 3])) {
         score1 <- c(score1, 2.5)
@@ -2229,7 +2233,7 @@ server <- function(input, output, session) {
         score5 <- c(score5, -3)
       }
     }
-    
+
     final$final <- sum(c(score1, score2, score3, score4, score5)) + 40
   })
 
@@ -2299,12 +2303,12 @@ server <- function(input, output, session) {
     }
   )
   #### End Validation ----
-  
+
   # Check button
   observeEvent(input$check, {
     updateButton(session, "check", disabled = TRUE)
   })
-  
+
   # Listen for game start events
   observeEvent(input$tabs, {
     if(input$tabs == "challenge") {
