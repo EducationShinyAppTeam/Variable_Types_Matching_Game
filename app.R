@@ -1,19 +1,13 @@
 # Load Required Packages
 library(shiny)
+library(shinydashboard)
 library(shinyDND)
 library(shinyjs)
 library(shinyBS)
 library(shinyalert)
 library(boastUtils)
 
-# App Meta Data----------------------------------------------------------------
-APP_TITLE <<- "Variable Types Matching Game"
-APP_DESCP <<- paste(
-  "Identify variable types by nature of measurement [Quantitative (numeric) discrete variables,
-  Quantitative continuous variables, Qualitative (categorical) nominal variables, and Qualitative
-  ordinal variables] and by role in the analysis [explanatory versus response versus confounding]."
-)
-# End App Meta Data------------------------------------------------------------
+source("variableFlowChart.R")
 
 # Load Question Banks ----
 bank <- read.csv(file = "questionBank.csv", stringsAsFactors = FALSE)
@@ -34,6 +28,10 @@ ui <- list(
       tags$li(class = "dropdown", actionLink("info", icon("info"))),
       tags$li(
         class = "dropdown",
+        boastUtils::surveyLink(name = "Variable_Types_Matching_Game")
+      ),
+      tags$li(
+        class = "dropdown",
         tags$a(
           href = "https://shinyapps.science.psu.edu/",
           icon("home")
@@ -44,9 +42,9 @@ ui <- list(
     dashboardSidebar(
       width = 250,
       sidebarMenu(
-        id = "tabs",
+        id = "pages",
         menuItem("Overview", tabName = "overview", icon = icon("tachometer-alt")),
-        menuItem("Challenge", tabName = "challenge", icon = icon("cog")),
+        menuItem("Game", tabName = "game", icon = icon("gamepad")),
         menuItem("References", tabName = "references", icon = icon("leanpub"))
       ),
       tags$div(
@@ -63,23 +61,26 @@ ui <- list(
           h1("Variable Types Matching Game"),
           p("Level 1 and 2: Identify four different variable types: Quantitative (numeric) discrete variables, Quantitative continuous variables,
           Qualitative (categorical) nominal variables, and Qualitative ordinal variables."),
-          img(src = "variable-types.PNG", alt = "Variable types decision tree"),
+          div(
+            style = "text-align: center;",
+            variableFlowChart
+          ),
           p("Level 3 and 4: Identify the explanatory and response variables in level 3. Then in level 4 you will also
           be required to identify the confounding variable."),
           br(),
           h2("Instructions"),
           tags$ol(
-            tags$li("Click GO! button to start the game."),
+            tags$li("Click the Go! button to start the game."),
             tags$li("Drag the variable names to the boxes by the variable types."),
             tags$li("Submit your answer only after finishing all the questions."),
             tags$li("You may go to the next level only when you correct your answers for level 1 and 2. For level 3 and 4 you must get 5 correct problems on each level to finish the game and get your final score."),
             tags$li("The score you get after the first trial and the revised score you get after correct all answers will be weighted to generate your final score.")
           ),
           div(
-            style = "text-align: center",
+            style = "text-align: center;",
             bsButton(
               inputId = "go",
-              label = "Go to Challenge",
+              label = "Go!",
               icon = icon("bolt"),
               size = "large",
             )
@@ -88,14 +89,24 @@ ui <- list(
           br(),
           h2("Acknowledgements"),
           p(
-            "This app was developed and coded by Yuxin Zhang, Luxin Wang, & Thomas McIntyre. Special thanks to Robert P. Carey III and Alex Chen for help on some programming issues.",
-            div(class = "updated", "Last Update: 9/14/2020 by RPC.")
+            "This app was developed and coded by Yuxin Zhang, Luxin Wang, &
+            Thomas McIntyre. Special thanks to Robert P. Carey III and
+            Alex Chen for help on some programming issues. We'd also like to
+            thank Mike Fleck for help with the flow diagram.",
+            br(),
+            br(),
+            "Cite this app as:",
+            br(),
+            boastUtils::citeApp(),
+            br(),
+            br(),
+            div(class = "updated", "Last Update: 9/15/2021 by NJH.")
           )
         ),
         tabItem(
           ### Challenge ----
-          tabName = "challenge",
-          h2("Challenge Yourself!"),
+          tabName = "game",
+          h2("Play the Game!"),
           fluidPage(
             tabsetPanel(
               id = "levels",
@@ -690,8 +701,8 @@ server <- function(input, output, session) {
   observeEvent(input$go, {
     updateTabItems(
       session = session,
-      inputId = "tabs",
-      selected = "challenge"
+      inputId = "pages",
+      selected = "game"
     )
   })
 
@@ -2310,8 +2321,8 @@ server <- function(input, output, session) {
   })
 
   # Listen for game start events
-  observeEvent(input$tabs, {
-    if(input$tabs == "challenge") {
+  observeEvent(input$pages, {
+    if(input$pages == "game") {
       startGame()
     }
   })

@@ -1,0 +1,26 @@
+Title: Variable Types Matching Game
+ShortName: Variable Types
+Date: 2021-09-15
+Lifecycle: questioning
+Authors@R: c(
+    person(given = "Yuxin", family = "Zhang", role = c("cre", "aut")),
+    person(given = "Luxin", family = "Wang", role = c("cre", "aut")),
+    person(given = "Thomas", family = "McIntyre", role = c("cre", "aut")),
+    person(given = "Alex", family = "Chen", role = c("ctb")),
+    person(given = "Robert", family = "Carey", email = "rpc5102@psu.edu", role = c("ctb")),
+    person(given = "Mike", family = "Fleck", role = c("ctb")),
+    person(given = "Dennis", family = "Pearl", role = c("aut")),
+    person(given = "Neil", family = "Hatfield", role = c("aut"))
+  )
+Chapter: Data Gathering
+Description: Identify variable types by nature of measurement [Quantitative (numeric) discrete variables, Quantitative continuous variables, Qualitative (categorical) nominal variables, and Qualitative ordinal variables] and by role in the analysis [explanatory versus response versus confounding].
+LearningObjectives: c(
+    "The student will learn to understand Concept A in way z.",
+    "The student will learn to understand Concept B as description y."
+  )
+DisplayMode: Normal
+URL: https://psu-eberly.shinyapps.io/Variable_Types_Matching_Game
+BugReports: https://github.com/EducationShinyAppTeam/Variable_Types_Matching_Game/issues
+License: CC-BY-NC-SA-4.0
+Tags: simulation
+Type: Shiny
