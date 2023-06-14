@@ -5,6 +5,7 @@ library(shinyDND)
 library(shinyjs)
 library(shinyBS)
 library(shinyalert)
+library(shinyWidgets)
 library(boastUtils)
 
 source("variableFlowChart.R")
@@ -17,8 +18,6 @@ bankD <- read.csv(file = "questionBankD.csv", stringsAsFactors = FALSE)
 
 # Define UI ----
 ui <- list(
-  useShinyalert(),
-  useShinyjs(),
   dashboardPage(
     skin = "red",
     ## Header ----
@@ -44,12 +43,13 @@ ui <- list(
       sidebarMenu(
         id = "pages",
         menuItem("Overview", tabName = "overview", icon = icon("tachometer-alt")),
+        menuItem("Prerequisites", tabName = "prerequisite", icon = icon("book")),
         menuItem("Game", tabName = "game", icon = icon("gamepad")),
         menuItem("References", tabName = "references", icon = icon("leanpub"))
       ),
       tags$div(
         class = "sidebar-logo",
-        boastUtils::psu_eberly_logo("reversed")
+        boastUtils::sidebarFooter()
       )
     ),
     ## Body ----
@@ -59,27 +59,26 @@ ui <- list(
           ### Overview ----
           tabName = "overview",
           h1("Variable Types Matching Game"),
-          p("Level 1 and 2: Identify four different variable types: Quantitative (numeric) discrete variables, Quantitative continuous variables,
-          Qualitative (categorical) nominal variables, and Qualitative ordinal variables."),
-          div(
-            style = "text-align: center;",
-            variableFlowChart
-          ),
-          p("Level 3 and 4: Identify the explanatory and response variables in level 3. Then in level 4 you will also
-          be required to identify the confounding variable."),
-          br(),
+          p("Identify variable types by nature of measurement [Quantitative (numeric) 
+            discrete variables, Quantitative continuous variables, Qualitative (categorical)
+            nominal variables, and Qualitative ordinal variables] and by role in 
+            the analysis [explanatory versus response versus confounding]."),
           h2("Instructions"),
           tags$ol(
-            tags$li("Click the Go! button to start the game."),
-            tags$li("Drag the variable names to the boxes by the variable types."),
+            tags$li("View as prerequisites as needed on the prerequsities tab. "),
+            tags$li("Go to the game to complete 4 levels of variable deciphering"),
             tags$li("Submit your answer only after finishing all the questions."),
-            tags$li("You may go to the next level only when you correct your answers for level 1 and 2. For level 3 and 4 you must get 5 correct problems on each level to finish the game and get your final score."),
-            tags$li("The score you get after the first trial and the revised score you get after correct all answers will be weighted to generate your final score.")
+            tags$li("You may go to the next level only when you correct your answers 
+                    for level 1 and 2. For level 3 and 4 you must get 5 correct 
+                    problems on each level to finish the game and get your final score."),
+            tags$li("The score you get after the first trial and the revised score
+                    you get after correct all answers will be weighted to generate 
+                    your final score.")
           ),
           div(
             style = "text-align: center;",
             bsButton(
-              inputId = "go",
+              inputId = "goToGame",
               label = "Go!",
               icon = icon("bolt"),
               size = "large",
@@ -100,11 +99,46 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 9/15/2021 by NJH.")
+            div(class = "updated", "Last Update: 6/15/2021 by TM.")
           )
         ),
+        ### Prerequisites ----
         tabItem(
-          ### Challenge ----
+          tabName = "prerequisite",
+          withMathJax(),
+          box(
+            title = strong("Types of Variables"),
+            status = "primary",
+            collapsible = TRUE,
+            collapsed = FALSE,
+            width = "100%",
+            tags$ul(
+              tags$li("Nominal Variables are qualitative variables that do not 
+                      require a specific ordering"),
+              tags$li("Ordinal Variables are qualitative variables that require 
+                      a specific ordering "),
+              tags$li("Discrete Variables are quantitative variables that are whole 
+                      numbers."),
+              tags$li("Continuous Variables are quantitative variables that are 
+                      are continuous, they do not need to be fixed values.")
+            ),
+            br(),
+            p("In the figure below you can see that it looks like ice cream sales 
+              is impact the number of shark attacks. This is because the confounding variable 
+              is making it look like there is a relationship."),
+            tags$figure(
+              class = "center-figure",
+              tags$img(
+                src = "ercChart.png",
+                width = "100%",
+                alt = "flow chart that describes explanatory, response, and confounding
+                  variables"
+              )
+            )
+          )
+        ),
+        ### Challenge ----
+        tabItem(
           tabName = "game",
           h2("Play the Game!"),
           fluidPage(
@@ -641,28 +675,46 @@ ui <- list(
           h2("References"),
           p(
             class = "hangingindent",
-            "Bailey, E. (2015). shinyBS: Twitter Bootstrap Components
-                      for Shiny. R package version 0.61. Available from
-                      https://CRAN.R-project.org/package=shinyBS"
+            "Attali, D. (2021). shinyjs: Easily Improve the User Experience of Your 
+            Shiny Apps in Seconds. (v2.1). [R Package]. Avaliable from
+            https://cran.r-project.org/package=shinyjs"
           ),
           p(
             class = "hangingindent",
-            "Carey, R. and Hatfield, N. (2020). boastUtils:
-                      BOAST Utilities. R package version 0.1.6.3. Available from
-                      https://github.com/EducationShinyAppTeam/boastUtils"
+            "Attali, D (2021). shintalert: Easily create pretty popup messages (modals),
+            in Shiny. (v3.0). [R Package]. Avaliable from
+            https://cran.r-project.org/web/packages/shinyalert/index.html"
           ),
           p(
             class = "hangingindent",
-            "Chang, W. and Borges Ribeiro, B. (2018). shinydashboard:
-                      Create Dashboards with 'Shiny'. R package version 0.7.1.
-                      Available from https://CRAN.R-project.org/package=shinydashboard"
+            "Bailey, E. (2015). shinyBS: Twitter bootstrap components for shiny.
+            (v0.61). [R package]. Available from
+            https://CRAN.R-project.org/package=shinyBS"
           ),
           p(
             class = "hangingindent",
-            "Chang, W., Cheng, J., Allaire, J., Xie, Y., and
-                      McPherson, J. (2020). shiny: Web Application Framework for
-                      R. R package version 1.5.0. Available from
-                      https://CRAN.R-project.org/package=shiny"
+            "Carey, R. and Hatfield, N.J. (2023). boastUtils: BOAST utilities. 
+            (v0.1.11.2). [R Package]. Avaliable from 
+            https://github.com/EducationShinyappTeam/boastUtils"
+          ),
+          p(
+            class = "hangingindent",
+            "Chang, W. and Borges Ribeio (2021). shinydashboard: Create dashboards
+            with 'Shiny.' (v0.7.2). Avaliable from
+            https://CRAN.R-project.org/package=shinydashboard"
+          ),
+          p(
+            class = "hangingindent",
+            "Chang W, Cheng J, Allaire J, Sievert C, Schloerke B, Xie Y, Allen J, 
+            McPherson J, Dipert A, Borges B (2023). shiny: Web Application Framework 
+            for R. R package version 1.7.4.9002. Avaliable from 
+            https://CRAN.R-project.org/package=shiny"
+          ),
+          p(
+            class = "hangingindent",
+            "Perrier, V., Meyer, F., Granjon, D. (2023) shinyWidgets: Custom Input
+            Widgets for Shiny. (v0.7.6). Avaliable from 
+            https://cran.r-project.org/web/packages/shinyWidgets/index.html"
           ),
           br(),
           br(),
@@ -684,7 +736,7 @@ server <- function(input, output, session) {
   startGame <- function() {
 
     # Check if game has already been started
-    if(!time$started) {
+    if (!time$started) {
 
       # Bank A
       initBankA()
@@ -698,7 +750,7 @@ server <- function(input, output, session) {
   }
 
   ## Go button ----
-  observeEvent(input$go, {
+  observeEvent(input$goToGame, {
     updateTabItems(
       session = session,
       inputId = "pages",
@@ -2322,7 +2374,7 @@ server <- function(input, output, session) {
 
   # Listen for game start events
   observeEvent(input$pages, {
-    if(input$pages == "game") {
+    if (input$pages == "game") {
       startGame()
     }
   })

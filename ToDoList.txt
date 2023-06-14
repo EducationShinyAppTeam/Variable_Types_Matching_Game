@@ -3,7 +3,8 @@
 2. Fix score
 3. Next level button on level 2
 4. Take new ss
-5. 
+5. Add info to icon
+7. Get rid of all shiny DND related code (refernce not currently in)
 
 # Ideas for Future Development
 - 
