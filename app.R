@@ -388,51 +388,66 @@ ui <- list(
                   fluidRow(
                     wellPanel(div(style = "text-align:center", h4(textOutput("imgQ1"))),
                       uiOutput("image1", class = "picSize"),
-                      div(style = "position: relative; top:-15px;", dragUI("img1", "A", style = "width: 100px; height: 40px;", class = "drag dragelement dragelement2")),
+                      div(style = "position: relative; top:-15px;"),
                       class = "col-lg-6 col-md-12 wellBorder"
                     ),
                     wellPanel(div(style = "text-align:center", h4(textOutput("imgQ2"))),
                       uiOutput("image2", class = "picSize"),
-                      div(style = "position: relative; top:-15px;", dragUI("img2", "B", style = "width: 100px; height: 40px;", class = "drag dragelement dragelement2")),
+                      div(style = "position: relative; top:-15px;"),
                       class = "col-lg-6 col-md-12 wellBorder"
                     )
                   ),
-                  fluidRow(
+                  br(),
+                  wellPanel(
                     fluidRow(
-                      wellPanel(
-                        dropUI("drop1", class = "dropelement dropelement2"),
-                        div(style = "position: absolute; top:0;left:1em", h5("Quantitative & Discrete")),
-                        div(style = "position: absolute; top:20%; right:8%;", htmlOutput("answer17")),
-                        class = "wellTransparent2 col-lg-3 col-md-6 col-sm-6 col-xs-12"
+                      column(
+                        width = 6,
+                        selectInput(
+                          inputId = "match1",
+                          label = "Quantitative and Discrete",
+                          choices = c("A", "B", "C", "D")
+                        ),
+                        uiOutput(outputId = "answer17")
                       ),
-                      wellPanel(
-                        dropUI("drop2", class = "dropelement dropelement2"),
-                        div(style = "position: absolute; top:0;left:1em", h5("Quantitative & Continuous")),
-                        div(style = "position: absolute; top:20%; right:8%;", htmlOutput("answer18")),
-                        class = "wellTransparent2 col-lg-3 col-md-6 col-sm-6 col-xs-12"
+                      column(
+                        width = 6,
+                        selectInput(
+                          inputId = "match2",
+                          label = "Quantitative and Continuous",
+                          choices = c("A", "B", "C", "D")
+                        ),
+                        uiOutput(outputId = "answer18")
+                      )
+                    ),
+                    fluidRow(
+                      column(
+                        width = 6,
+                        selectInput(
+                          inputId = "match3",
+                          label = "Qualitative and Nominal",
+                          choices = c("A", "B", "C", "D")
+                        ),
+                        uiOutput(outputId = "answer19")
                       ),
-                      wellPanel(
-                        dropUI("drop3", class = "dropelement dropelement2"),
-                        div(style = "position: absolute; top:0; left:1em", h5("Qualitative & Nominal")),
-                        div(style = "position: absolute; top:20%; right:8%;", htmlOutput("answer19")),
-                        class = "wellTransparent2 col-lg-3 col-md-6 col-sm-6 col-xs-12"
-                      ),
-                      wellPanel(
-                        dropUI("drop4", class = "dropelement dropelement2"),
-                        div(style = "position: absolute; top:0; left:1em", h5("Qualitative & Ordinal")),
-                        div(style = "position: absolute; top:20%; right:8%;", htmlOutput("answer20")),
-                        class = "wellTransparent2 col-lg-3 col-md-6 col-sm-6 col-xs-12"
+                      column(
+                        width = 6,
+                        selectInput(
+                          inputId = "match4",
+                          label = "Qualitative and Ordinal",
+                          choices = c("A", "B", "C", "D")
+                        ),
+                        uiOutput(outputId = "answer20")
                       )
                     )
                   ),
                   br(),
                   fluidRow(
-                    wellPanel(div(style = "position: relative; top:-5px;", dragUI("img3", "C", style = "width: 100px; height: 40px;", class = "drag dragelement dragelement2")),
+                    wellPanel(div(style = "position: relative; top:-5px;"),
                       div(style = "position:relative; text-align:center; top: -15px;", h4(textOutput("imgQ3"))),
                       div(style = "position:relative; top: -15px;", uiOutput("image3", class = "picSize")),
                       class = "col-lg-6 col-md-12 wellBorder"
                     ),
-                    wellPanel(div(style = "position: relative; top:-5px;", dragUI("img4", "D", style = "width: 100px; height: 40px;", class = "drag dragelement dragelement2")),
+                    wellPanel(div(style = "position: relative; top:-5px;"),
                       div(style = "position:relative; text-align:center; top: -15px;", h4(textOutput("imgQ4"))),
                       div(style = "position:relative; top: -15px;", uiOutput("image4", class = "picSize")),
                       class = "col-lg-6 col-md-12 wellBorder"
@@ -1743,8 +1758,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer17 <- renderUI({
-        if (!is.null(input$drop1)) {
-          if (input$drop1 == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
+        if (!is.null(input$match1)) {
+          if (input$match1 == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1761,8 +1776,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer18 <- renderUI({
-        if (!is.null(input$drop2)) {
-          if (input$drop2 == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
+        if (!is.null(input$match2)) {
+          if (input$match2 == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1779,8 +1794,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer19 <- renderUI({
-        if (!is.null(input$drop3)) {
-          if (input$drop3 == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
+        if (!is.null(input$match3)) {
+          if (input$match3 == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -1797,8 +1812,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer20 <- renderUI({
-        if (!is.null(input$drop4)) {
-          if (input$drop4 == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
+        if (!is.null(input$match4)) {
+          if (input$match4 == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
