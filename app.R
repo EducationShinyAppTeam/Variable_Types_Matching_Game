@@ -65,21 +65,18 @@ ui <- list(
             the analysis [explanatory versus response versus confounding]."),
           h2("Instructions"),
           tags$ol(
-            tags$li("View as prerequisites as needed on the prerequsities tab. "),
-            tags$li("Go to the game to complete 4 levels of variable deciphering"),
+            tags$li("View prerequisites as needed on the prerequsities tab."),
+            tags$li("Go to the game tab to complete levels of variable deciphering"),
             tags$li("Submit your answer only after finishing all the questions."),
-            tags$li("You may go to the next level only when you correct your answers 
+            tags$li("You may go to the next level once all of your answers are correct 
                     for level 1 and 2. For level 3 and 4 you must get 5 correct 
-                    problems on each level to finish the game and get your final score."),
-            tags$li("The score you get after the first trial and the revised score
-                    you get after correct all answers will be weighted to generate 
-                    your final score.")
+                    problems on each level to finish the levels.")
           ),
           div(
             style = "text-align: center;",
             bsButton(
               inputId = "goToGame",
-              label = "Go!",
+              label = "Game!",
               icon = icon("bolt"),
               size = "large",
             )
@@ -122,6 +119,24 @@ ui <- list(
               tags$li("Continuous Variables are quantitative variables that are 
                       are continuous, they do not need to be fixed values.")
             ),
+            div(
+              style = "text-align: center;",
+              variableFlowChart
+            ),
+          ),
+          box(
+            title = strong("Types of Variables"),
+            status = "primary",
+            collapsible = TRUE,
+            collapsed = FALSE,
+            width = "100%",          
+            tags$ul(
+              tags$li("Explanatory/Independent Variables are what is changed in 
+                      a relationship to see its effects on the response variable"),
+              tags$li("Response/Dependent Variables are what is being measured."),
+              tags$li("Confounding Variables are variables not in an experiment, 
+                      but impacts the relationship between explanatory and response.")
+            ),
             br(),
             p("In the figure below you can see that it looks like ice cream sales 
               is impact the number of shark attacks. This is because the confounding variable 
@@ -140,85 +155,164 @@ ui <- list(
         ### Game ----
         tabItem(
           tabName = "game",
-          h2("Play the Game!"),
+          h2("Level 1"),
           tabsetPanel(
             id = "levels",
             type = "hidden",
             #### Level 1 ----
             tabPanel("Level 1",
                      value = "b",
+                     p("Correctly identify the variable type of each variable."),
+                     hr(),
                      fluidRow(
                        column(
-                         3,
-                         div(
-                           style = "display: inline-block;vertical-align:top;",
-                           tags$a(href = "https://shinyapps.science.psu.edu/", tags$img(src = "homebut.PNG", width = 30)),
-                           bsButton("ins1", "", icon = icon("info", class = "iconi fa-fw"), type = "toggle", class = "butt"),
-                           bsButton("bq1", "", icon = icon("question", class = "iconq fa-fw"), type = "toggle", class = "butt"),
-                           bsButton("bt1", "", icon = icon("time", lib = "glyphicon", class = "icont fa-fw"), type = "toggle", class = "butt")
-                         ),
-                         div(
-                           id = "plot-container",
-                           conditionalPanel(
-                             "input.bq1 != 0",
-                             tags$img(
-                               src = "variable-types.PNG",
-                               id = "hint"
-                             )
+                         width = 4,
+                         radioGroupButtons(
+                           inputId = "group1",
+                           label = textOutput("disID1"),
+                           choices = c("Qualitative and Ordinal","Qualitative and 
+                                       Nominal", "Quantitative and Discrete", "
+                                       Quantitative and Continuous"),
+                           direction = "vertical",
+                           justified = TRUE,
+                           checkIcon = list(
+                             yes = icon("ok", 
+                                        lib = "glyphicon")
                            )
-                         ),
-                         div(
-                           style = "display: inline-block;vertical-align:top;",
-                           conditionalPanel(
-                             "input.ins1 != 0",
-                             box(
-                               title = "Instruction:", status = "danger", solidHeader = TRUE, width = 12,
-                               "Drag variable names to correct variable type."
-                             )
+                         )
+                      ),
+                      column(
+                        width = 4,
+                        radioGroupButtons(
+                          inputId = "group2",
+                          label = "Variable Name",
+                          choices = c("Qualitative and Ordinal","Qualitative and 
+                                       Nominal", "Quantitative and Discrete", "
+                                       Quantitative and Continuous"),
+                          direction = "vertical",
+                          justified = TRUE,
+                          checkIcon = list(
+                            yes = icon("ok", 
+                                       lib = "glyphicon")
+                          )
+                        )
+                      ),
+                      column(
+                        width = 4,
+                        radioGroupButtons(
+                          inputId = "group3",
+                          label = "Variable Name",
+                          choices = c("Qualitative and Ordinal","Qualitative and 
+                                       Nominal", "Quantitative and Discrete", "
+                                       Quantitative and Continuous"),
+                          direction = "vertical",
+                          justified = TRUE,
+                          checkIcon = list(
+                            yes = icon("ok", 
+                                       lib = "glyphicon")
+                          )
+                        )
+                      )
+                     ),
+                     fluidRow(
+                       column(
+                         width = 4,
+                         radioGroupButtons(
+                           inputId = "group4",
+                           label = "Variable Name",
+                           choices = c("Qualitative and Ordinal","Qualitative and 
+                                       Nominal", "Quantitative and Discrete", "
+                                       Quantitative and Continuous"),
+                           direction = "vertical",
+                           justified = TRUE,
+                           checkIcon = list(
+                             yes = icon("ok", 
+                                        lib = "glyphicon")
                            )
                          )
                        ),
                        column(
-                         width = 3,
-                         offset = 6,
-                         hidden(div(id = "timer1h", textOutput("timer1")))
+                         width = 4,
+                         radioGroupButtons(
+                           inputId = "group5",
+                           label = "Variable Name",
+                           choices = c("Qualitative and Ordinal","Qualitative and 
+                                       Nominal", "Quantitative and Discrete", "
+                                       Quantitative and Continuous"),
+                           direction = "vertical",
+                           justified = TRUE,
+                           checkIcon = list(
+                             yes = icon("ok", 
+                                        lib = "glyphicon")
+                           )
+                         )
+                       ),
+                       column(
+                         width = 4,
+                         radioGroupButtons(
+                           inputId = "group6",
+                           label = "Variable Name",
+                           choices = c("Qualitative and Ordinal","Qualitative and 
+                                       Nominal", "Quantitative and Discrete", "
+                                       Quantitative and Continuous"),
+                           direction = "vertical",
+                           justified = TRUE,
+                           checkIcon = list(
+                             yes = icon("ok", 
+                                        lib = "glyphicon")
+                           )
+                         )
                        )
                      ),
-                     br(),
-                     radioGroupButtons(
-                       inputId = "group1",
-                       label = "Variable Name",
-                       choices = c("Ordinal","Nominal", "Discrete", "Continuous"),
-                       justified = TRUE,
-                       checkIcon = list(yes = icon("ok", lib = "glyphicon"))
-                     ),
-                     radioGroupButtons(
-                       inputId = "group2",
-                       label = "Variable Name",
-                       choices = c("Ordinal","Nominal", "Discrete", "Continuous"),
-                       justified = TRUE,
-                       checkIcon = list(yes = icon("ok", lib = "glyphicon"))
-                     ),
-                     radioGroupButtons(
-                       inputId = "group3",
-                       label = "Variable Name",
-                       choices = c("Ordinal","Nominal", "Discrete", "Continuous"),
-                       justified = TRUE,
-                       checkIcon = list(yes = icon("ok", lib = "glyphicon"))
-                     ),
-                     radioGroupButtons(
-                       inputId = "group4",
-                       label = "Variable Name",
-                       choices = c("Ordinal","Nominal", "Discrete", "Continuous"),
-                       justified = TRUE,
-                       checkIcon = list(yes = icon("ok", lib = "glyphicon"))
-                     ),
-                     radioGroupButtons(
-                       inputId = "group5",
-                       label = "Variable Name",
-                       choices = c("Ordinal","Nominal", "Discrete", "Continuous"),
-                       justified = TRUE,
-                       checkIcon = list(yes = icon("ok", lib = "glyphicon"))
+                     fluidRow(
+                       column(
+                         width = 4,
+                         radioGroupButtons(
+                           inputId = "group7",
+                           label = "Variable Name",
+                           choices = c("Qualitative and Ordinal","Qualitative and 
+                                       Nominal", "Quantitative and Discrete", "
+                                       Quantitative and Continuous"),
+                           direction = "vertical",
+                           justified = TRUE,
+                           checkIcon = list(
+                             yes = icon("ok", 
+                                        lib = "glyphicon")
+                           )
+                         )
+                       ),
+                       column(
+                         width = 4,
+                         radioGroupButtons(
+                           inputId = "group8",
+                           label = "Variable Name",
+                           choices = c("Qualitative and Ordinal","Qualitative and 
+                                       Nominal", "Quantitative and Discrete", "
+                                       Quantitative and Continuous"),
+                           direction = "vertical",
+                           justified = TRUE,
+                           checkIcon = list(
+                             yes = icon("ok", 
+                                        lib = "glyphicon")
+                           )
+                         )
+                       ),
+                       column(
+                         width = 4,
+                         radioGroupButtons(
+                           inputId = "group9",
+                           label = "Variable Name",
+                           choices = c("Qualitative and Ordinal","Qualitative and 
+                                       Nominal", "Quantitative and Discrete", "
+                                       Quantitative and Continuous"),
+                           direction = "vertical",
+                           justified = TRUE,
+                           checkIcon = list(
+                             yes = icon("ok", 
+                                        lib = "glyphicon")
+                           )
+                         )
+                       )
                      ),
                      hr(),
                      # Buttons
@@ -231,10 +325,9 @@ ui <- list(
                          width = 1,
                          offset = 4,
                          conditionalPanel(
-                           "(input.drp1!='') & (input.drp2!='') & (input.drp3!='') & (input.drp4!='') &
-                           (input.drp5!='') & (input.drp6!='') & (input.drp7!='') & (input.drp8!='') &
-                           (input.drp9!='') & (input.drp10!='') & (input.drp11!='') & (input.drp12!='') &
-                           (input.drp13!='') & (input.drp14!='') & (input.drp15!='') & (input.drp16!='')",
+                           "(input.group1!='') & (input.group2!='') & (input.group3!='')
+                           & (input.group4!='') & (input.group5!='') & (input.group6!='')
+                           & (input.group7!='') & (input.group8!='') & (input.group9!='')",
                            bsButton( inputId = "submitA", label = "Submit Answer")
                          )
                        ),
@@ -1388,8 +1481,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer1 <- renderUI({
-        if (!is.null(input$drp1)) {
-          valid <- any(trimws(input$drp1) == bank[c(1:10), 3])
+        if (!is.null(input$group1)) {
+          valid <- any(trimws(input$group1) == bank[c(1:10), 3])
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1408,8 +1501,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer2 <- renderUI({
-        if (!is.null(input$drp2)) {
-          valid <- any(trimws(input$drp2) == bank[c(1:10), 3])
+        if (!is.null(input$group2)) {
+          valid <- any(trimws(input$group2) == bank[c(1:10), 3])
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1427,8 +1520,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer3 <- renderUI({
-        if (!is.null(input$drp3)) {
-          valid <- any(trimws(input$drp3) == bank[c(1:10), 3])
+        if (!is.null(input$group3)) {
+          valid <- any(trimws(input$group3) == bank[c(1:10), 3])
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1446,8 +1539,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer4 <- renderUI({
-        if (!is.null(input$drp4)) {
-          valid <- any(trimws(input$drp4) == bank[c(1:10), 3])
+        if (!is.null(input$group4)) {
+          valid <- any(trimws(input$group4) == bank[c(1:10), 3])
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1465,8 +1558,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer5 <- renderUI({
-        if (!is.null(input$drp5)) {
-          valid <- any(trimws(input$drp5) == bank[c(11:36), 3])
+        if (!is.null(input$group5)) {
+          valid <- any(trimws(input$group5) == bank[c(11:36), 3])
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1484,8 +1577,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer6 <- renderUI({
-        if (!is.null(input$drp6)) {
-          valid <- any(trimws(input$drp6) == bank[c(11:36), 3])
+        if (!is.null(input$group6)) {
+          valid <- any(trimws(input$group6) == bank[c(11:36), 3])
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1503,8 +1596,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer7 <- renderUI({
-        if (!is.null(input$drp7)) {
-          valid <- any(trimws(input$drp7) == bank[c(11:36), 3])
+        if (!is.null(input$group7)) {
+          valid <- any(trimws(input$group7) == bank[c(11:36), 3])
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1522,8 +1615,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer8 <- renderUI({
-        if (!is.null(input$drp8)) {
-          valid <- any(trimws(input$drp8) == bank[c(11:36), 3])
+        if (!is.null(input$group8)) {
+          valid <- any(trimws(input$group8) == bank[c(11:36), 3])
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1541,141 +1634,8 @@ server <- function(input, output, session) {
     })
     observe({
       output$answer9 <- renderUI({
-        if (!is.null(input$drp9)) {
-          valid <- any(trimws(input$drp9) == bank[c(37:56), 3])
-          if (valid) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-  observeEvent(input$submitA, {
-    observeEvent(input$clear, {
-      output$answer10 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$answer10 <- renderUI({
-        if (!is.null(input$drp10)) {
-          valid <- any(trimws(input$drp10) == bank[c(37:56), 3])
-          if (valid) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-  observeEvent(input$submitA, {
-    observeEvent(input$clear, {
-      output$answer11 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$answer11 <- renderUI({
-        if (!is.null(input$drp11)) {
-          valid <- any(trimws(input$drp11) == bank[c(37:56), 3])
-          if (valid) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-  observeEvent(input$submitA, {
-    observeEvent(input$clear, {
-      output$answer12 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$answer12 <- renderUI({
-        if (!is.null(input$drp12)) {
-          valid <- any(trimws(input$drp12) == bank[c(37:56), 3])
-          if (valid) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-  observeEvent(input$submitA, {
-    observeEvent(input$clear, {
-      output$answer13 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$answer13 <- renderUI({
-        if (!is.null(input$drp13)) {
-          valid <- any(trimws(input$drp13) == bank[c(57:71), 3])
-          if (valid) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-  observeEvent(input$submitA, {
-    observeEvent(input$clear, {
-      output$answer14 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$answer14 <- renderUI({
-        if (!is.null(input$drp14)) {
-          valid <- any(trimws(input$drp14) == bank[c(57:71), 3])
-          if (valid) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-  observeEvent(input$submitA, {
-    observeEvent(input$clear, {
-      output$answer15 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$answer15 <- renderUI({
-        if (!is.null(input$drp15)) {
-          valid <- any(trimws(input$drp15) == bank[c(57:71), 3])
-          if (valid) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-  observeEvent(input$submitA, {
-    observeEvent(input$clear, {
-      output$answer16 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$answer16 <- renderUI({
-        if (!is.null(input$drp16)) {
-          valid <- any(trimws(input$drp16) == bank[c(57:71), 3])
+        if (!is.null(input$group9)) {
+          valid <- any(trimws(input$group9) == bank[c(37:56), 3])
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1769,42 +1729,36 @@ server <- function(input, output, session) {
     score3 <- c()
     score4 <- c()
 
-    for (i in c(input$drp1, input$drp2, input$drp3, input$drp4)) {
+    for (i in c(input$group1, input$group2, input$group3, input$group4)) {
       if (any(trimws(i) == bank[c(1:10), 3])) {
         score1 <- c(score1, 2.5)
       } else {
         score1 <- c(score1, -1.5)
       }
     }
-    for (i in c(input$drp5, input$drp6, input$drp7, input$drp8)) {
+    for (i in c(input$group5, input$group6, input$group7, input$group8)) {
       if (any(trimws(i) == bank[c(11:36), 3])) {
         score2 <- c(score2, 2.5)
       } else {
         score2 <- c(score2, -1.5)
       }
     }
-    for (i in c(input$drp9, input$drp10, input$drp11, input$drp12)) {
+    for (i in c(input$group9)) {
       if (any(trimws(i) == bank[c(37:56), 3])) {
         score3 <- c(score3, 2.5)
       } else {
         score3 <- c(score3, -1.5)
       }
     }
-    for (i in c(input$drp13, input$drp14, input$drp15, input$drp16)) {
-      if (any(trimws(i) == bank[c(57:71), 3])) {
-        score4 <- c(score4, 2.5)
-      } else {
-        score4 <- c(score4, -1.5)
-      }
-    }
+
 
     total <- sum(c(score1, score2, score3, score4))
 
     response <- list(
-      "Quantitative_Discrete" = c(trimws(input$drp1), trimws(input$drp2), trimws(input$drp3), trimws(input$drp4)),
-      "Quantitative_Continuous" = c(trimws(input$drp5), trimws(input$drp6), trimws(input$drp7), trimws(input$drp8)),
-      "Qualitative_Nominal" = c(trimws(input$drp9), trimws(input$drp10), trimws(input$drp11), trimws(input$drp12)),
-      "Qualitative_Ordinal" = c(trimws(input$drp13), trimws(input$drp14), trimws(input$drp15), trimws(input$drp16))
+      "Quantitative_Discrete" = c(trimws(input$group1), trimws(input$group2), trimws(input$group3)),
+      "Quantitative_Continuous" = c(trimws(input$group4), trimws(input$group5)),
+      "Qualitative_Nominal" = c(trimws(input$group6), trimws(input$group7)),
+      "Qualitative_Ordinal" = c(trimws(input$group8), trimws(input$group9))
     )
 
     stmt <- boastUtils::generateStatement(
@@ -2119,7 +2073,7 @@ server <- function(input, output, session) {
     success <- FALSE
     for (x in c(input$expla)) {
 
-      success <- (any(input$expla == key2[index2$explan,1])& any(input$resp== key2[index2$respon,1])&any(input$conf== key2[index2$confou,1]))
+      success <- (any(input$expla == key2[index2$explan,1]) & any(input$resp== key2[index2$respon,1])&any(input$conf== key2[index2$confou,1]))
 
       if (success) {
         summationD$correct1D <- c(summationD$correct1D, 1)

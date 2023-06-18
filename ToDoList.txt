@@ -1,10 +1,18 @@
 # Things Needed for This Version
-1. Redo level 1
+1. Redo level 1 (check)
 2. Fix score
-3. Next level button on level 2
+3. Fix buttons for level 1 and 2 
 4. Take new ss
-5. Add info to icon
-7. Get rid of all shiny DND related code (refernce not currently in)
+5. Add info to icon (check)
+7. Get rid of all shinyDND related code (reference not currently in)
+8. Level 3 & 4 replace with progress bar instead of train 
+9. Get rid of panel for level 1 and 2
+10. Generalize coding (big differences btwn level 1/2 and 3/4)
+
+# Things To Consider 
+1. Scoring 
+2. Feedback 
+3. 
 
 # Ideas for Future Development
 - 
