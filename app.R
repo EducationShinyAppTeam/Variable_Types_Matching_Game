@@ -486,10 +486,18 @@ ui <- list(
                   )
                 ),
                 column(
+                  width = 1,
+                  offset = 2,
+                  bsButton(
+                    inputId = "clearB",
+                    label = "Retry"
+                  )
+                ),
+                column(
                   width = 1, 
-                  offset = 4, 
+                  offset = 2, 
                   conditionalPanel(
-                    "(input.match1!='') & (input.match2!='') & (input.match3!='') & (input.match5!='') & (input.drop5!='')",
+                    "(input.match1!='') & (input.match2!='') & (input.match3!='') & (input.match4!='')",
                     bsButton(
                       inputId = "submitB", 
                       label = "Submit Answer")
@@ -506,26 +514,14 @@ ui <- list(
                 )
               ),
               hr(),
-              conditionalPanel("input.submitB != 0",
-                               wellPanel(
-                                 fluidPage(
-                                   fluidRow(
-                                     wellPanel(
-                                       div(style = "position:absolute;top:9em; left:1em", h4("Please drag the wrong answers into this box and click the CLEAR to restart.")),
-                                       dropUI("home2", class = "dropelement dropelementHome2", row_n = 2, col_n = 2),
-                                       div(style = "position:absolute; top:8em; right:3em", bsButton("clearB", "CLEAR", style = "danger")),
-                                       class = "wellTransparent col-lg-8"
-                                     ),
-                                     wellPanel(h3("Full score is 20 for level B."),
-                                               verbatimTextOutput("scoreB"),
-                                               class = "wellTransparent col-lg-4"
-                                     )
-                                   )
-                                 )
-                               )
+              conditionalPanel(
+                "input.submitB != 0",
+                wellPanel(h3("Full score is 20 for level B."),
+                          verbatimTextOutput("scoreB"),
+                          class = "wellTransparent col-lg-4"
+                )
               )
-            
-          ),
+              ),
             #### Level 3 ----
             tabPanel(
               title = "Level 3",
@@ -828,124 +824,6 @@ server <- function(input, output, session) {
     js$reset()
   })
 
-  ## Time Tracking ----
-  observeEvent(input$submitA, {
-    time$started <- FALSE
-  })
-
-  observeEvent(input$previous2, {
-    updateTabsetPanel(session, "levels", selected = "b")
-  })
-
-  observeEvent(input$next2, {
-    time$started <- TRUE
-    updateTabsetPanel(session, "levels", selected = "c")
-  })
-
-  observeEvent(input$submitB, {
-    time$started <- FALSE
-  })
-
-  observeEvent(input$previous3, {
-    updateTabsetPanel(session, "levels", selected = "c")
-  })
-
-  observeEvent(input$next3, {
-    time$started <- TRUE
-    updateTabsetPanel(session, "levels", selected = "e")
-  })
-
-  observeEvent(input$new, {
-    time$started <- TRUE
-  })
-
-  observeEvent(input$submitC, {
-    time$started <- FALSE
-  })
-
-  observeEvent(input$next4, {
-    time$started <- TRUE
-    updateTabsetPanel(session, "levels", selected = "f")
-  })
-
-  observeEvent(input$finish, {
-
-    stmt <- boastUtils::generateStatement(
-      session,
-      verb = "completed",
-      object = "shiny-tab-challenge",
-      description = "Challenge completed",
-      completion = TRUE
-    )
-
-    boastUtils::storeStatement(session, stmt)
-
-    time$timer <- reactiveTimer(Inf)
-    updateTabsetPanel(session, "levels", selected = "d")
-  })
-
-  observe({
-    time$timer()
-    if (isolate(time$started)) {
-      time$inc <- isolate(time$inc) + 1
-    }
-  })
-
-  observeEvent(input$bt1 == TRUE, {
-    toggle("timer1h")
-    output$timer1 <- renderPrint({
-      cat("you have used:", time$inc, "secs")
-    })
-  })
-
-  observeEvent(input$bt2 == TRUE, {
-    toggle("timer2h")
-    output$timer2 <- renderPrint({
-      cat("you have used:", time$inc, "secs")
-    })
-  })
-
-  observeEvent(input$bt3 == TRUE, {
-    toggle("timer3h")
-    output$timer3 <- renderPrint({
-      cat("you have used:", time$inc, "secs")
-    })
-  })
-
-  observeEvent(input$bt4 == TRUE, {
-    toggle("timer4h")
-    output$timer4 <- renderPrint({
-      cat("you have used:", time$inc, "secs")
-    })
-  })
-
-  observeEvent(input$bt5 == TRUE, {
-    toggle("timer5")
-    output$timer5 <- renderPrint({
-      cat("you have used:", time$inc, "secs")
-    })
-  })
-
-  output$timer1 <- renderPrint({
-    cat("you have used:", time$inc, "secs")
-  })
-
-  output$timer2 <- renderPrint({
-    cat("you have used:", time$inc, "secs")
-  })
-
-  output$timer3 <- renderPrint({
-    cat("you have used:", time$inc, "secs")
-  })
-
-  output$timer4 <- renderPrint({
-    cat("you have used:", time$inc, "secs")
-  })
-
-  output$timer5 <- renderPrint({
-    cat("you have used:", time$inc, "secs")
-  })
-
   ## Init Bank A ----
   numbers <- reactiveValues(dis = c(), cont = c(), nom = c(), ord = c())
   initBankA <- function() {
@@ -992,7 +870,6 @@ server <- function(input, output, session) {
       bank[numbers$cont[3], 2]
     })
 
-
     output$contName1 <- renderText({
       bank[numbers$cont[1], 3]
     })
@@ -1004,7 +881,6 @@ server <- function(input, output, session) {
     output$contName3 <- renderText({
       bank[numbers$cont[3], 3]
     })
-
 
     output$nomID1 <- renderText({
       bank[numbers$nom[1], 2]
@@ -1018,7 +894,6 @@ server <- function(input, output, session) {
       bank[numbers$nom[3], 2]
     })
 
-
     output$nomName1 <- renderText({
       bank[numbers$nom[1], 3]
     })
@@ -1030,8 +905,6 @@ server <- function(input, output, session) {
     output$nomName3 <- renderText({
       bank[numbers$nom[3], 3]
     })
-
-
 
     output$ordID1 <- renderText({
       bank[numbers$ord[1], 2]
@@ -1045,7 +918,6 @@ server <- function(input, output, session) {
       bank[numbers$ord[3], 2]
     })
 
-
     output$ordName1 <- renderText({
       bank[numbers$ord[1], 3]
     })
@@ -1057,8 +929,6 @@ server <- function(input, output, session) {
     output$ordName3 <- renderText({
       bank[numbers$ord[3], 3]
     })
-
-
   }
 
   ## Init Bank B ----
@@ -1110,23 +980,32 @@ server <- function(input, output, session) {
 
   index_list <- reactiveValues(listc = sample(1:17, 17, replace = FALSE))
 
-  observeEvent(input$previous4, {
-    updateTabsetPanel(session, "levels", selected = "e")
+  observeEvent(
+    eventExpr = input$previous4, 
+    handlerExpr = {
+    updateTabsetPanel(
+      session = session, 
+      inputId = "levels", 
+      selected = "e")
     index_list$listc <- c(index_list$listc, sample(1:17, 17, replace = FALSE))
   })
 
-  observeEvent(input$next3, {
-    index$index <- 18
-    index$exp_index <- 2 * index$index - 1
-    index$res_index <- 2 * index$index
-  })
+  observeEvent(
+    eventExpr = input$next3,
+    handlerExpr = {
+      index$index <- 18
+      index$exp_index <- 2 * index$index - 1
+      index$res_index <- 2 * index$index
+    })
 
-  observeEvent(input$new, {
-    index_list$listc <- index_list$listc[-1]
-    index$index <- index_list$listc[1]
-    index$exp_index <- 2 * index$index - 1
-    index$res_index <- 2 * index$index
-  })
+  observeEvent(
+    eventExpr = input$new,
+    handlerExpr = {
+      index_list$listc <- index_list$listc[-1]
+      index$index <- index_list$listc[1]
+      index$exp_index <- 2 * index$index - 1
+      index$res_index <- 2 * index$index
+    })
 
   key1 <- as.matrix(bankC[1:36, 1])
 
@@ -1265,25 +1144,34 @@ server <- function(input, output, session) {
 
   index_listD <- reactiveValues(listD = sample(1:8, 8, replace = FALSE))
 
-  observeEvent(input$previous5, {
-    updateTabsetPanel(session, "levels", selected = "f")
-    index_listD$listD <- c(index_listD$listD, sample(1:8, 8, replace = FALSE))
-  })
+  observeEvent(
+    eventExpr = input$previous5, 
+    handlerExpr = {
+      updateTabsetPanel(
+        session = session, 
+        inputId = "levels", 
+        selected = "f")
+      index_listD$listD <- c(index_listD$listD, sample(1:8, 8, replace = FALSE))
+    })
 
-  observeEvent(input$next4, {
-    index2$index2 <- 9
-    index2$explan <- 3 * index2$index2 - 2
-    index2$respon <- 3 * index2$index2 - 1
-    index2$confou <- 3 * index2$index2
-  })
+  observeEvent(
+    eventExpr = input$next4,
+    handlerExpr = {
+      index2$index2 <- 9
+      index2$explan <- 3 * index2$index2 - 2
+      index2$respon <- 3 * index2$index2 - 1
+      index2$confou <- 3 * index2$index2
+    })
 
-  observeEvent(input$new2, {
-    index_listD$listD <- index_listD$listD[-1]
-    index2$index2 <- index_listD$listD[1]
-    index2$explan <- 3 * index2$index2 - 2
-    index2$respon <- 3 * index2$index2 - 1
-    index2$confou <- 3 * index2$index2
-  })
+  observeEvent(
+    eventExpr = input$new2,
+    handlerExpr = {
+      index_listD$listD <- index_listD$listD[-1]
+      index2$index2 <- index_listD$listD[1]
+      index2$explan <- 3 * index2$index2 - 2
+      index2$respon <- 3 * index2$index2 - 1
+      index2$confou <- 3 * index2$index2
+    })
 
   key2 <- as.matrix(bankD[1:27, 1])
 
@@ -1895,75 +1783,97 @@ server <- function(input, output, session) {
   })
 
   ### Validate Level 3 ----
-  observeEvent(input$submitC, {
-    observeEvent(input$new, {
-      output$markc1 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-
-    observe({
-      output$markc1 <- renderUI({
-        if (!is.null(input$explC)) {
-          if (any(input$explC == key1[index$exp_index, 1])) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
+  observeEvent(
+    eventExpr = input$submitC,
+    handlerExpr = {
+      observeEvent(
+        eventExpr = input$new,
+        handlerExpr = {
+          output$markc1 <- renderUI(
+            img(src = NULL,width = 30)
+          )
+        })
+      observe({
+        eventExpr = output$markc1 <- renderUI(expr = {
+          if (!is.null(input$explC)) {
+            if (any(input$explC == key1[index$exp_index,1])) {
+              img(src = "check.PNG", width = 30)
+            } else {
+              img(src = "cross.PNG", width = 30)
+            }
           }
-        }
+        })
       })
     })
-  })
-
-  observeEvent(input$submitC, {
-    observeEvent(input$new, {
-      output$markc2 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$markc2 <- renderUI({
-        if (!is.null(input$respC)) {
-          if (any(input$respC == key1[index$res_index, 1])) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
+  
+  observeEvent(
+    eventExpr = input$submitC,
+    handlerExpr = {
+      observeEvent(
+        eventExpr = input$new,
+        handlerExpr = {
+          output$markc2 <- renderUI(
+            img(src = NULL,width = 30)
+          )
+        })
+      observe({
+        eventExpr = output$markc2 <- renderUI(expr = {
+          if (!is.null(input$respC)) {
+            if (any(input$respC == key1[index$res_index,1])) {
+              img(src = "check.PNG", width = 30)
+            } else {
+              img(src = "cross.PNG", width = 30)
+            }
           }
-        }
+        })
       })
     })
-  })
+  
+  observeEvent(
+    eventExpr = input$new3,
+    handlerExpr = {
+      reset(id = "expl3")
+      reset(id = "resp3")
+      reset(id ="submit")
+    }
+  )
 
-  observeEvent(input$new, {
-    reset("explC")
-    reset("respC")
-    reset("submit")
-  })
-
+  ##### Scoring 
   summationC <- reactiveValues(correct1 = c(0), started = FALSE)
 
-  observeEvent(input$next3, {
-    summationC$started <- TRUE
-  })
-
-  observeEvent(input$new, {
-    summationC$started <- TRUE
-  })
-
-  observeEvent(input$submitC, {
-    summationC$started <- TRUE
-  })
-
-  observeEvent(input$submitC, {
-    success <- FALSE
-    for (i in c(input$explC)) {
-      success <- any(input$explC == key1[index$exp_index, 1]) & any(input$respC == key1[index$res_index, 1])
-      if (success) {
-        summationC$correct1 <- c(summationC$correct1, 1)
-      } else {
-        summationC$correct1 <- c(summationC$correct1, 0)
-      }
+  observeEvent(
+    eventExpr = input$next3, 
+    handlerExpr = {
+      summationC$started <- TRUE
     }
+  )
+
+  observeEvent(
+    eventExpr = input$new, 
+    handlerExpr = {
+      summationC$started <- TRUE
+    }
+  )
+
+  observeEvent(
+    eventExpr = input$submitC, 
+    handlerExpr = {
+      summationC$started <- TRUE
+    }
+  )
+
+  observeEvent(
+    eventExpr = input$submitC,
+    handlerExpr = {
+      success <- FALSE
+      for (i in c(input$explC)) {
+        success <- any(input$explC == key1[index$exp_index, 1]) & any(input$respC == key1[index$res_index, 1])
+        if (success) {
+          summationC$correct1 <- c(summationC$correct1, 1)
+        } else {
+          summationC$correct1 <- c(summationC$correct1, 0)
+        }
+      }
 
     total <- sum(c(summationC$correct1))
 
@@ -1996,25 +1906,36 @@ server <- function(input, output, session) {
     }
   })
 
-  observeEvent(input$submitC, {
-    if (summation$summationC[input$submitC] >= 5) {
-      updateButton(session, "next4", disabled = FALSE)
-      updateButton(session, "new", disabled = TRUE)
-    }
-  })
+  observeEvent(
+    eventExpr = input$submitC,
+    handlerExpr = {
+      if (summation$summationC[input$submitC] >= 5) {
+        updateButton(
+          session = session, 
+          inputId = "next4", 
+          disabled = FALSE)
+        updateButton(
+          session = session,
+          inputId = "new",
+          disabled = TRUE)
+      }
+    })
 
   ### Validate Level 4 ----
-  observeEvent(input$submitD, {
-    observeEvent(input$new2, {
-      output$markd1 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-
+  observeEvent(
+    eventExpr = input$submitD,
+    handlerExpr = {
+      observeEvent(
+        eventExpr = input$new2,
+        handlerExpr = {
+          output$markd1 <- renderUI(
+            img(src = NULL, width = 30)
+          )
+        })
     observe({
-      output$markd1 <- renderUI({
+      eventExpr = output$markd1 <- renderUI(expr = {
         if (!is.null(input$expla)) {
-          if (any(input$expla == key2[index2$explan, 1])) {
+          if (any(input$expa == key2[index$explan,1])) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
@@ -2024,62 +1945,53 @@ server <- function(input, output, session) {
     })
   })
 
-  observeEvent(input$submitD, {
-    observeEvent(input$new2, {
-      output$markd2 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$markd2 <- renderUI({
-        if (!is.null(input$resp)) {
-          if (any(input$resp == key2[index2$respon, 1])) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
+  observeEvent(
+    eventExpr = input$submitD,
+    handlerExpr = {
+      observeEvent(
+        eventExpr = input$new2,
+        handlerExpr = {
+          output$markd2 <- renderUI(
+            img(src = NULL,width = 30)
+          )
+        })
+      observe({
+        eventExpr = output$markd2 <- renderUI(expr = {
+          if (!is.null(input$resp)) {
+            if (any(input$resp == key2[index$respon,1])) {
+              img(src = "check.PNG", width = 30)
+            } else {
+              img(src = "cross.PNG", width = 30)
+            }
           }
-        }
+        })
       })
     })
-  })
+  
+  observeEvent(
+    eventExpr = input$submitD,
+    handlerExpr = {
+      observeEvent(
+        eventExpr = input$new2,
+        handlerExpr = {
+          output$markd3 <- renderUI(
+            img(src = NULL,width =30)
+          )
+        })
+      observe({
+        eventExpr = output$markd3 <- renderUI(expr = {
+          if (!is.null(input$conf)) {
+            if (any(input$conf == key2[index$confou,1])) {
+              img(src = "check.PNG", width = 30)
+            } else {
+              img(src = "cross.PNG", width = 30)
+            }
+          }
+        })
+      })
+    })
+  
 
-  observeEvent(input$submitD, {
-    observeEvent(input$new2, {
-      output$markd3 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$markd3 <- renderUI({
-        if (!is.null(input$conf)) {
-          if (any(input$conf == key2[index2$confou, 1])) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
-
-  observeEvent(input$submitD, {
-    observeEvent(input$new2, {
-      output$markd3 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$markd3 <- renderUI({
-        if (!is.null(input$conf)) {
-          if (any(input$conf == key2[index2$confou, 1])) {
-            img(src = "check.PNG", width = 30)
-          } else {
-            img(src = "cross.PNG", width = 30)
-          }
-        }
-      })
-    })
-  })
 
   observeEvent(input$new2, {
     reset("expla")
