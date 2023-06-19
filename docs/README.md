@@ -5,4 +5,4 @@
 ![App Screenshot](../docs/screenshot.png)
 
 # App Description
-Identify variable types by nature of measurement [Quantitative (numeric) discrete variables, Quantitative continuous variables, Qualitative (categorical) nominal variables, and Qualitative ordinal variables] and by role in the analysis [explanatory versus response versus confounding].
+Identify variable types by nature of measurement (quantitative (numeric) discrete, quantitative continuous, qualitative (categorical) nominal, and qualitative ordinal variables) and by role in the analysis (explanatory, response, and confounding).

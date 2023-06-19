@@ -13,7 +13,7 @@ Authors@R: c(
     person(given = "Neil", family = "Hatfield", role = c("aut"))
   )
 Chapter: Data Gathering
-Description: Identify variable types by nature of measurement [Quantitative (numeric) discrete variables, Quantitative continuous variables, Qualitative (categorical) nominal variables, and Qualitative ordinal variables] and by role in the analysis [explanatory versus response versus confounding].
+Description: Identify variable types by nature of measurement (quantitative (numeric) discrete, quantitative continuous, qualitative (categorical) nominal, and qualitative ordinal variables) and by role in the analysis (explanatory, response, and confounding).
 LearningObjectives: c(
     "The student will learn to identify variable types by nature of measurement",
     "The student will learn to identify variables by their role in analysis."

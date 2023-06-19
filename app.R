@@ -59,18 +59,18 @@ ui <- list(
           ### Overview ----
           tabName = "overview",
           h1("Variable Types Matching Game"),
-          p("Identify variable types by nature of measurement [Quantitative (numeric) 
-            discrete variables, Quantitative continuous variables, Qualitative (categorical)
-            nominal variables, and Qualitative ordinal variables] and by role in 
-            the analysis [explanatory versus response versus confounding]."),
+          p("Identify variable types by nature of measurement (quantitative (numeric) 
+            discrete, quantitative continuous, qualitative (categorical)
+            nominal, and qualitative ordinal variables) and by role in 
+            the analysis (explanatory, response, and confounding)."),
           h2("Instructions"),
           tags$ol(
             tags$li("View prerequisites as needed on the prerequsities tab."),
-            tags$li("Go to the game tab to complete levels of variable deciphering"),
+            tags$li("Then go to the game tab to start the game."),
             tags$li("Submit your answer only after finishing all the questions."),
             tags$li("You may go to the next level once all of your answers are correct 
                     for level 1 and 2. For level 3 and 4 you must get 5 correct 
-                    problems on each level to finish the levels.")
+                    problems on each level to move on.")
           ),
           div(
             style = "text-align: center;",
@@ -104,20 +104,21 @@ ui <- list(
           tabName = "prerequisite",
           withMathJax(),
           box(
-            title = strong("Types of Variables"),
+            title = strong("Quantitative and Qualitative Variables"),
             status = "primary",
             collapsible = TRUE,
-            collapsed = FALSE,
+            collapsed = TRUE,
             width = "100%",
             tags$ul(
-              tags$li("Nominal Variables are qualitative variables that do not 
-                      require a specific ordering"),
+              tags$li("Nominal Variables are qualitative (categorical) variables 
+                      that do not require a specific order or rank"),
               tags$li("Ordinal Variables are qualitative variables that require 
-                      a specific ordering "),
-              tags$li("Discrete Variables are quantitative variables that are whole 
-                      numbers."),
-              tags$li("Continuous Variables are quantitative variables that are 
-                      are continuous, they do not need to be fixed values.")
+                      a specific order or rank "),
+              tags$li("Discrete Variables are quantitative (numerical) variables 
+                      that are whole numbers."),
+              tags$li("Continuous Variables are quantitative variables that can take on
+                      an unlimited number of values within a range, they do not need 
+                      to be fixed.")
             ),
             div(
               style = "text-align: center;",
@@ -125,22 +126,23 @@ ui <- list(
             ),
           ),
           box(
-            title = strong("Types of Variables"),
+            title = strong("Explanatory, Response, and Confounding Variables"),
             status = "primary",
             collapsible = TRUE,
-            collapsed = FALSE,
+            collapsed = TRUE,
             width = "100%",          
             tags$ul(
-              tags$li("Explanatory/Independent Variables are what is changed in 
-                      a relationship to see its effects on the response variable"),
+              tags$li("Explanatory/Independent Variables are what is being changed 
+                      to see its effects on the response variable"),
               tags$li("Response/Dependent Variables are what is being measured."),
               tags$li("Confounding Variables are variables not in an experiment, 
                       but impacts the relationship between explanatory and response.")
             ),
             br(),
             p("In the figure below you can see that it looks like ice cream sales 
-              is impact the number of shark attacks. This is because the confounding variable 
-              is making it look like there is a relationship."),
+              impacts the number of shark attacks. This is because the confounding variable 
+              has an impact on both the explanatory and response, making it look 
+              like there is a relationship."),
             tags$figure(
               class = "center-figure",
               tags$img(
@@ -155,7 +157,7 @@ ui <- list(
         ### Game ----
         tabItem(
           tabName = "game",
-          h2("Level 1"),
+          h2("Game"),
           tabsetPanel(
             id = "levels",
             #type = "hidden",
@@ -163,7 +165,13 @@ ui <- list(
             tabPanel(
               title = "Level 1",
                value = "b",
-              p("Correctly identify the variable type of each variable."),
+              titlePanel("Matching Variable Types"),
+              fluidRow(
+                p("Correctly match the variable type to each variable."),
+                p("To move onto the next level, you need correctly match all 12 variables.
+                If you get one wrong, click retry to try again."),
+                style = "margin-left:15px",
+              ),
               hr(),
               fluidRow(
                 column(
@@ -370,34 +378,39 @@ ui <- list(
               fluidRow(
                 column(
                   width = 1,
+                  offset = 1,
                   bsButton(
-                    inputId = "Reset1",
-                    label = "Reset"
+                    inputId = "clearA",
+                    label = "Retry"
                   )
                 ),
                 column(
                   width = 1,
-                  offset = 4,
-                  conditionalPanel(
-                    "(input.group1!='') & (input.group2!='') & (input.group3!='')
-                           & (input.group4!='') & (input.group5!='') & (input.group6!='')
-                           & (input.group7!='') & (input.group8!='') & (input.group9!='')",
-                    bsButton(
-                      inputId = "submitA",
-                      label = "Submit"
-                    )
+                  offset = 3,
+                  bsButton(
+                    inputId = "submitA",
+                    label = "Submit"
                   )
                 ),
                 column(
                   width = 1,
-                  offset = 4,
+                  offset = 3,
                   bsButton(
                     inputId = "toLvl2",
                     label = "Next Level",
                     disabled = FALSE
                   )
                 ),
-                br()
+                hr(),
+                conditionalPanel(
+                  "input.submitA != 0",
+                  fluidRow(
+                    wellPanel(h3("You must score 20 points to move onto the next level."),
+                              verbatimTextOutput("scoreA"),
+                              class = "wellTransparent col-lg-4"
+                    )
+                  )
+                )
               )
             ),
             #### Level 2 ----
@@ -405,8 +418,13 @@ ui <- list(
               title = "Level 2",
               value = "c",
               titlePanel("Identify in Plots"),
-              p("Match the variable defined in the instructions of each plot
+              fluidRow(
+                p("Match the variable defined in the instructions of each plot
                        to the variable type."),
+                p("To move onto the next level, you need to get all 4 questions correct.
+                If you get one wrong, click retry to try again."),
+                style = "margin-left:15px",
+              ),
               hr(),
               fluidRow(
                 wellPanel(div(style = "text-align:center", h4(textOutput("imgQ1"))),
@@ -430,7 +448,7 @@ ui <- list(
                       label = "Quantitative and Discrete",
                       choices = c("A", "B", "C", "D")
                     ),
-                    uiOutput(outputId = "answer17")
+                    uiOutput(outputId = "answer13")
                   ),
                   column(
                     width = 6,
@@ -439,7 +457,7 @@ ui <- list(
                       label = "Quantitative and Continuous",
                       choices = c("A", "B", "C", "D")
                     ),
-                    uiOutput(outputId = "answer18")
+                    uiOutput(outputId = "answer14")
                   )
                 ),
                 fluidRow(
@@ -450,7 +468,7 @@ ui <- list(
                       label = "Qualitative and Nominal",
                       choices = c("A", "B", "C", "D")
                     ),
-                    uiOutput(outputId = "answer19")
+                    uiOutput(outputId = "answer15")
                   ),
                   column(
                     width = 6,
@@ -459,7 +477,7 @@ ui <- list(
                       label = "Qualitative and Ordinal",
                       choices = c("A", "B", "C", "D")
                     ),
-                    uiOutput(outputId = "answer20")
+                    uiOutput(outputId = "answer16")
                   )
                 )
               ),
@@ -500,7 +518,7 @@ ui <- list(
                     "(input.match1!='') & (input.match2!='') & (input.match3!='') & (input.match4!='')",
                     bsButton(
                       inputId = "submitB", 
-                      label = "Submit Answer")
+                      label = "Submit")
                   )
                 ),
                 column(
@@ -516,19 +534,27 @@ ui <- list(
               hr(),
               conditionalPanel(
                 "input.submitB != 0",
-                wellPanel(h3("Full score is 20 for level B."),
-                          verbatimTextOutput("scoreB"),
-                          class = "wellTransparent col-lg-4"
+                fluidRow(
+                  wellPanel(h3("You must score 20 points to move onto the next level."),
+                            verbatimTextOutput("scoreB"),
+                            class = "wellTransparent col-lg-4"
+                  )
                 )
               )
-              ),
+            ),
             #### Level 3 ----
             tabPanel(
               title = "Level 3",
               value = "e",
               titlePanel("Explanatory and Response Variables"),
-              fluidRow(h4("You must get both answers correct to earn 1 point and get 5 points before moving to the next level"), style = "margin-left:15px"),
-              fluidRow(h4("Once you have made your choices hit submit answer, then click new question for the next question"), style = "margin-left:15px"),
+              fluidRow(
+                p("Correctly identify the variables to each variable type depending on
+                  the context given."),
+                p("You must get both answers correct to earn 1 point and get 5 points 
+                  before moving to the next level."), 
+                p("Once you have made your choices hit submit answer, then 
+                         click new question for the next question"),
+                style = "margin-left:15px"),
               hr(),
               wellPanel(
                 fluidRow(uiOutput("questionC"), br())
@@ -616,9 +642,17 @@ ui <- list(
             tabPanel(
               title = "Level 4",
               value = "f",
-              titlePanel(h1("This level will add in the concepts of confounding variables")),
-              fluidRow(h4("You must answer 5 correct choices before completing the level"), style = "margin-left:15px"),
-              fluidRow(h4("Once you have made your choices hit submit answer, then click new question for the next question"), style = "margin-left:15px"),
+              titlePanel(h1("Including Confounding Variables")),
+              
+              fluidRow(
+                p("Correctly identify the variables to each variable type 
+                  depending on the context given."),
+                p("You must get both answers correct to earn 1 point and get 5 points 
+                  before moving to the next level."), 
+                p("Once you have made your choices hit submit answer, then 
+                  click new question for the next question."),
+                style = "margin-left:15px"
+                ),
               hr(),
               wellPanel(
                 fluidRow(uiOutput("questionD"))
@@ -1371,7 +1405,7 @@ server <- function(input, output, session) {
     updateButton(session, "submitA", disabled = TRUE)
   })
 
-  observeEvent(input$clear, {
+  observeEvent(input$clearA, {
     updateButton(session, "submitA", disabled = FALSE)
   })
 
@@ -1442,7 +1476,7 @@ server <- function(input, output, session) {
   ## Begin Validation ----
   ### Validate Level 1 ----
   observeEvent(input$submitA, {
-    observeEvent(input$clear, {
+    observeEvent(input$clearA, {
       output$answer1 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1462,7 +1496,7 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$submitA, {
-    observeEvent(input$clear, {
+    observeEvent(input$clearA, {
       output$answer2 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1481,7 +1515,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clear, {
+    observeEvent(input$clearA, {
       output$answer3 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1500,7 +1534,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clear, {
+    observeEvent(input$clearA, {
       output$answer4 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1519,7 +1553,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clear, {
+    observeEvent(input$clearA, {
       output$answer5 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1538,7 +1572,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clear, {
+    observeEvent(input$clearA, {
       output$answer6 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1557,7 +1591,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clear, {
+    observeEvent(input$clearA, {
       output$answer7 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1576,7 +1610,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clear, {
+    observeEvent(input$clearA, {
       output$answer8 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1595,7 +1629,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clear, {
+    observeEvent(input$clearA, {
       output$answer9 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1653,12 +1687,12 @@ server <- function(input, output, session) {
   ### Validate Level 2 ----
   observeEvent(input$submitB, {
     observeEvent(input$clearB, {
-      output$answer17 <- renderUI({
+      output$answer13 <- renderUI({
         img(src = NULL, width = 30)
       })
     })
     observe({
-      output$answer17 <- renderUI({
+      output$answer13 <- renderUI({
         if (!is.null(input$match1)) {
           if (input$match1 == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
             img(src = "check.PNG", width = 30)
@@ -1671,12 +1705,12 @@ server <- function(input, output, session) {
   })
   observeEvent(input$submitB, {
     observeEvent(input$clearB, {
-      output$answer18 <- renderUI({
+      output$answer14 <- renderUI({
         img(src = NULL, width = 30)
       })
     })
     observe({
-      output$answer18 <- renderUI({
+      output$answer14 <- renderUI({
         if (!is.null(input$match2)) {
           if (input$match2 == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
             img(src = "check.PNG", width = 30)
@@ -1689,12 +1723,12 @@ server <- function(input, output, session) {
   })
   observeEvent(input$submitB, {
     observeEvent(input$clearB, {
-      output$answer19 <- renderUI({
+      output$answer15 <- renderUI({
         img(src = NULL, width = 30)
       })
     })
     observe({
-      output$answer19 <- renderUI({
+      output$answer15 <- renderUI({
         if (!is.null(input$match3)) {
           if (input$match3 == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
             img(src = "check.PNG", width = 30)
@@ -1707,12 +1741,12 @@ server <- function(input, output, session) {
   })
   observeEvent(input$submitB, {
     observeEvent(input$clearB, {
-      output$answer20 <- renderUI({
+      output$answer16 <- renderUI({
         img(src = NULL, width = 30)
       })
     })
     observe({
-      output$answer20 <- renderUI({
+      output$answer16 <- renderUI({
         if (!is.null(input$match4)) {
           if (input$match4 == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
             img(src = "check.PNG", width = 30)
