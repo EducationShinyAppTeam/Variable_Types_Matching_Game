@@ -562,8 +562,8 @@ ui <- list(
               ),
               br(),
               ##### Buttons ----
-              conditionalPanel(
-                "input.next3 != 0",
+              #conditionalPanel(
+                #"input.next3 != 0",
                 fluidRow(
                   column(
                     width = 1, 
@@ -579,10 +579,11 @@ ui <- list(
                     conditionalPanel(
                       "(input.explC!='') & (input.respC!='')",
                       bsButton(
-                        inputId = "submit3",
+                        inputId = "submitC",
                         label = "Submit",
                       )
-                    )),
+                    )
+                  ),
                   column(
                     width = 1,
                     offset = 2,
@@ -601,10 +602,14 @@ ui <- list(
                     )
                   )
                 ),
-                hr()
-              ),
+                hr(),
+              #),
               fluidRow(
-                column(width = 3, offset = 4, uiOutput("train1"))
+                progressBar(
+                  id = "barLevel3",
+                  value = 0,
+                  display_pct = TRUE
+                )
               )
             ),
             #### Level 4 ----
@@ -658,8 +663,8 @@ ui <- list(
               ),
               br(),
               ##### Buttons ----
-              conditionalPanel(
-                "input.next4 != 0",
+              #conditionalPanel(
+                #"input.next4 != 0",
                 fluidRow(
                   column(
                     width = 1, 
@@ -690,14 +695,19 @@ ui <- list(
                     offset = 2,
                     bsButton(
                       inputId = "finish",
-                      label = "Results"
+                      label = "Results",
+                      disabled = TRUE
                     )
                   )
                 ),
-                hr()
-              ),
+                hr(),
+              #),
               fluidRow(
-                column(width = 3, offset = 4, uiOutput("trainB"))
+                progressBar(
+                  id = "barLevel4",
+                  value = 0,
+                  display_pct = TRUE
+                )
               )
             ),
             #### Results ----
@@ -1975,7 +1985,7 @@ server <- function(input, output, session) {
         eventExpr = input$new2,
         handlerExpr = {
           output$markd3 <- renderUI(
-            img(src = NULL,width =30)
+            img(src = NULL,width = 30)
           )
         })
       observe({
@@ -1991,64 +2001,77 @@ server <- function(input, output, session) {
       })
     })
   
+  observeEvent(
+    eventExpr = input$submitD,
+    handlerExpr = {
+      observeEvent(
+        eventExpr = input$new2,
+        handlerExpr = {
+          output$markd3 <- renderUI(
+            img(src = NULL,width = 30)
+          )
+        })
+      observe({
+        eventExpr = output$markd3 <- renderUI(expr = {
+          if (!is.null(input$conf)) {
+            if (any(input$conf == key2[index$confou,1])) {
+              img(src = "check.PNG", width = 30)
+            } else {
+              img(src = "cross.PNG", width = 30)
+            }
+          }
+        })
+      })
+    })
 
-
-  observeEvent(input$new2, {
-    reset("expla")
-    reset("resp")
-    reset("conf")
-  })
-
+  observeEvent(
+    eventExpr = input$new2,
+    handlerExpr = {
+      reset(id = "expla")
+      reset(id = "resp")
+      reset(id = "conf")
+    }
+  )
   summationD <- reactiveValues(correct1D = c(0), started = FALSE)
   test <- reactiveValues(A = FALSE, B = FALSE, C = TRUE)
 
-  observeEvent(input$next4, {
-    time$started <- TRUE
-  })
-
-  observeEvent(input$new2, {
-    time$started <- TRUE
-  })
-
-  observeEvent(input$submitD, {
-    time$started <- TRUE
-  })
-
-  observeEvent(input$submitD, {
-    success <- FALSE
-    for (x in c(input$expla)) {
-
-      success <- (any(input$expla == key2[index2$explan,1]) & any(input$resp== key2[index2$respon,1])&any(input$conf== key2[index2$confou,1]))
-
-      if (success) {
-        summationD$correct1D <- c(summationD$correct1D, 1)
-      } else {
-        summationD$correct1D <- c(summationD$correct1D, 0)
+  observeEvent(
+    eventExpr = input$submitD, 
+    handlerExpr = {
+      success <- FALSE
+      for (x in c(input$expla)) {
+        
+        success <- (any(input$expla == key2[index2$explan,1]) & any(input$resp == key2[index2$respon,1])&any(input$conf== key2[index2$confou,1]))
+        
+        if (success) {
+          summationD$correct1D <- c(summationD$correct1D, 1)
+        } else {
+          summationD$correct1D <- c(summationD$correct1D, 0)
+        }
       }
-    }
-
-    total <- sum(c(summationD$correct1D))
-
-    ## TODO: FIX INPUT$CONF & INPUT$RESP VALUES ARE SWITCHED
-    response <- list(
-      "Explanatory" = input$expla,
-      "Response" = input$conf,
-      "Confounding" = input$resp
-    )
-
-    stmt <- boastUtils::generateStatement(
-      session,
-      verb = "answered",
-      object = "level4",
-      description = "This level will add in the concepts of confounding variables.",
-      interactionType = "choice",
-      response = jsonlite::toJSON(response),
-      success = success
-    )
-
-    boastUtils::storeStatement(session, stmt)
-  })
-
+      
+      total <- sum(c(summationD$correct1D))
+      
+      ## TODO: FIX INPUT$CONF & INPUT$RESP VALUES ARE SWITCHED
+      response <- list(
+        "Explanatory" = input$expla,
+        "Response" = input$conf,
+        "Confounding" = input$resp
+      )
+      
+      stmt <- boastUtils::generateStatement(
+        session,
+        verb = "answered",
+        object = "level4",
+        description = "This level will add in the concepts of confounding variables.",
+        interactionType = "choice",
+        response = jsonlite::toJSON(response),
+        success = success
+      )
+      
+      boastUtils::storeStatement(session, stmt)
+    })
+  
   output$correctD <- renderPrint({
     if (sum(c(summationD$correct1D)) == 0) {
       cat("You have earned 0 points")
@@ -2057,27 +2080,28 @@ server <- function(input, output, session) {
       cat("You have earned", sum(c(summationD$correct1D)), "points")
     }
   })
-
+  
   observeEvent(input$submitD, {
     if (sum(c(summationD$correct1D)) >= 5) {
       updateButton(session, "finish", disabled = FALSE)
       updateButton(session, "new2", disabled = FALSE)
     }
   })
-
+  
+  ### Finish ----
   observeEvent(input$finish, {
     summation$summationA[which(summation$summationA == 0)] <- summation$summationA[input$submitA]
     summation$summationB[which(summation$summationB == 0)] <- summation$summationB[input$submitB]
     summation$summationScore <- summation$summationA + summation$summationB + 40
   })
-
+  
   output$init <- renderPrint({
     if (any(summation$summationA != 0) & any(summation$summationB != 0)) {
       initialScore <- summation$summationScore[which(summation$summationScore != 0)][1]
     } else {
       initialScore <- 0
     }
-
+    
     cat("Initial", "\n", initialScore)
   })
 
@@ -2159,76 +2183,96 @@ server <- function(input, output, session) {
     cat("Total", "\n", round(as.numeric(summation$summationScore[1]) * (2 / 3) + as.numeric(final$final) * (1 / 3), digits = 1))
   })
 
-  ##### Train 1 ----
+  ##### Progress Bar Level 3 ----
   observe(
     if (sum(c(summationC$correct1)) == 1) {
-      output$train1 <- renderUI({
-        img(src = "train1.PNG", width = "20%", height = "20%")
-      })
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = 20
+      )
     }
     else if (sum(c(summationC$correct1)) == 2) {
-      output$train1 <- renderUI({
-        img(src = "train2.gif", width = "40%", height = "40%")
-      })
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = 40
+      )
     }
     else if (sum(c(summationC$correct1)) == 3) {
-      output$train1 <- renderUI({
-        img(src = "train3.gif", width = "60%", height = "60%")
-      })
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = 60
+      )
     }
     else if (sum(c(summationC$correct1)) == 4) {
-      output$train1 <- renderUI({
-        img(src = "train4.gif", width = "80%", height = "80%")
-      })
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = "80"
+      )
     }
     else if (sum(c(summationC$correct1)) == 5) {
-      output$train1 <- renderUI({
-        img(src = "train_f_02.PNG", width = "110%", height = "110%")
-      })
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = 100
+      )
     }
   )
 
-  ##### Train 2 ----
+  ##### Progress Bar Level 4 ----
   observe(
     if (sum(c(summationD$correct1D)) == 1) {
-      output$trainB <- renderUI({
-        img(src = "train1B.PNG", width = "20%", height = "20%")
-      })
+      output$barLevel4 <- updateProgressBar(
+        id = "barLevel4",
+        value = 20
+      )
     }
     else if (sum(c(summationD$correct1D)) == 2) {
-      output$trainB <- renderUI({
-        img(src = "train2B.gif", width = "40%", height = "40%")
-      })
+      output$barLevel4 <- updateProgressBar(
+        id = "barLevel4",
+        value = 40
+      )
     }
     else if (sum(c(summationD$correct1D)) == 3) {
-      output$trainB <- renderUI({
-        img(src = "train3B.gif", width = "60%", height = "60%")
-      })
+      output$barLevel4 <- updateProgressBar(
+        id = "barLevel4",
+        value = 60
+      )
     }
     else if (sum(c(summationD$correct1D)) == 4) {
-      output$trainB <- renderUI({
-        img(src = "train4B.gif", width = "80%", height = "80%")
-      })
+      output$barLevel4 <- updateProgressBar(
+        id = "barLevel4",
+        value = 80
+      )
     }
     else if (sum(c(summationD$correct1D)) == 5) {
-      output$trainB <- renderUI({
-        img(src = "train_f_02.PNG", width = "110%", height = "110%")
-      })
+      output$barLevel4 <- updateProgressBar(
+        id = "barLevel4",
+        value = 100
+      )
     }
   )
   #### End Validation ----
 
   # Check button
-  observeEvent(input$check, {
-    updateButton(session, "check", disabled = TRUE)
-  })
+  observeEvent(
+    eventExpr = input$check,
+    handlerExpr = {
+      updateButton(
+        session = session,
+        inputId = "check",
+        disabled = TRUE
+      )
+    }
+  )
 
   # Listen for game start events
-  observeEvent(input$pages, {
-    if (input$pages == "game") {
-      startGame()
+  observeEvent(
+    eventExpr = input$pages,
+    handlerExpr = {
+      if (input$pages == "game") {
+        startGame()
+      }
     }
-  })
+  )
 }
 
 boastUtils::boastApp(ui = ui, server = server)
