@@ -160,237 +160,245 @@ ui <- list(
             id = "levels",
             #type = "hidden",
             #### Level 1 ----
-            tabPanel("Level 1",
-                     value = "b",
-                     p("Correctly identify the variable type of each variable."),
-                     hr(),
-                     fluidRow(
-                       column(
-                         width = 4,
-                         radioGroupButtons(
-                           inputId = "group1",
-                           label = textOutput("disName1"),
-                           choices = c("Qualitative and Ordinal","Qualitative and 
+            tabPanel(
+              title ="Level 1",
+               value = "b",
+              p("Correctly identify the variable type of each variable."),
+              hr(),
+              fluidRow(
+                column(
+                  width = 4,
+                  radioGroupButtons(
+                    inputId = "group1",
+                    label = textOutput("disName1"),
+                    choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
-                           direction = "vertical",
-                           justified = TRUE,
-                           checkIcon = list(
-                             yes = icon("ok", 
-                                        lib = "glyphicon")
-                           )
-                         )
-                      ),
-                      column(
-                        width = 4,
-                        radioGroupButtons(
-                          inputId = "group2",
-                          label = textOutput("disName2"),
-                          choices = c("Qualitative and Ordinal","Qualitative and 
+                    direction = "vertical",
+                    justified = TRUE,
+                    checkIcon = list(
+                      yes = icon("ok", 
+                                 lib = "glyphicon")
+                    )
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioGroupButtons(
+                    inputId = "group2",
+                    label = textOutput("disName2"),
+                    choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
-                          direction = "vertical",
-                          justified = TRUE,
-                          checkIcon = list(
-                            yes = icon("ok", 
-                                       lib = "glyphicon")
-                          )
-                        )
-                      ),
-                      column(
-                        width = 4,
-                        radioGroupButtons(
-                          inputId = "group3",
-                          label = textOutput("nomName1"),
-                          choices = c("Qualitative and Ordinal","Qualitative and 
+                    direction = "vertical",
+                    justified = TRUE,
+                    checkIcon = list(
+                      yes = icon("ok", 
+                                 lib = "glyphicon")
+                    )
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioGroupButtons(
+                    inputId = "group3",
+                    label = textOutput("nomName1"),
+                    choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
-                          direction = "vertical",
-                          justified = TRUE,
-                          checkIcon = list(
-                            yes = icon("ok", 
-                                       lib = "glyphicon")
-                          )
-                        )
-                      )
-                     ),
-                     fluidRow(
-                       column(
-                         width = 4,
-                         radioGroupButtons(
-                           inputId = "group4",
-                           label = textOutput("contName1"),
-                           choices = c("Qualitative and Ordinal","Qualitative and 
+                    direction = "vertical",
+                    justified = TRUE,
+                    checkIcon = list(
+                      yes = icon("ok", 
+                                 lib = "glyphicon")
+                    )
+                  )
+                )
+              ),
+              fluidRow(
+                column(
+                  width = 4,
+                  radioGroupButtons(
+                    inputId = "group4",
+                    label = textOutput("contName1"),
+                    choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
-                           direction = "vertical",
-                           justified = TRUE,
-                           checkIcon = list(
-                             yes = icon("ok", 
-                                        lib = "glyphicon")
-                           )
-                         )
-                       ),
-                       column(
-                         width = 4,
-                         radioGroupButtons(
-                           inputId = "group5",
-                           label = textOutput("disName3"),
-                           choices = c("Qualitative and Ordinal","Qualitative and 
+                    direction = "vertical",
+                    justified = TRUE,
+                    checkIcon = list(
+                      yes = icon("ok", 
+                                 lib = "glyphicon")
+                    )
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioGroupButtons(
+                    inputId = "group5",
+                    label = textOutput("disName3"),
+                    choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
-                           direction = "vertical",
-                           justified = TRUE,
-                           checkIcon = list(
-                             yes = icon("ok", 
-                                        lib = "glyphicon")
-                           )
-                         )
-                       ),
-                       column(
-                         width = 4,
-                         radioGroupButtons(
-                           inputId = "group6",
-                           label = textOutput("contName2"),
-                           choices = c("Qualitative and Ordinal","Qualitative and 
+                    direction = "vertical",
+                    justified = TRUE,
+                    checkIcon = list(
+                      yes = icon("ok", 
+                                 lib = "glyphicon")
+                    )
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioGroupButtons(
+                    inputId = "group6",
+                    label = textOutput("contName2"),
+                    choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
-                           direction = "vertical",
-                           justified = TRUE,
-                           checkIcon = list(
-                             yes = icon("ok", 
-                                        lib = "glyphicon")
-                           )
-                         )
-                       )
-                     ),
-                     fluidRow(
-                       column(
-                         width = 4,
-                         radioGroupButtons(
-                           inputId = "group7",
-                           label = textOutput("nomName2"),
-                           choices = c("Qualitative and Ordinal","Qualitative and 
+                    direction = "vertical",
+                    justified = TRUE,
+                    checkIcon = list(
+                      yes = icon("ok", 
+                                 lib = "glyphicon")
+                    )
+                  )
+                )
+              ),
+              fluidRow(
+                column(
+                  width = 4,
+                  radioGroupButtons(
+                    inputId = "group7",
+                    label = textOutput("nomName2"),
+                    choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
-                           direction = "vertical",
-                           justified = TRUE,
-                           checkIcon = list(
-                             yes = icon("ok", 
-                                        lib = "glyphicon")
-                           )
-                         )
-                       ),
-                       column(
-                         width = 4,
-                         radioGroupButtons(
-                           inputId = "group8",
-                           label = textOutput("ordName1"),
-                           choices = c("Qualitative and Ordinal","Qualitative and 
+                    direction = "vertical",
+                    justified = TRUE,
+                    checkIcon = list(
+                      yes = icon("ok", 
+                                 lib = "glyphicon")
+                    )
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioGroupButtons(
+                    inputId = "group8",
+                    label = textOutput("ordName1"),
+                    choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
-                           direction = "vertical",
-                           justified = TRUE,
-                           checkIcon = list(
-                             yes = icon("ok", 
-                                        lib = "glyphicon")
-                           )
-                         )
-                       ),
-                       column(
-                         width = 4,
-                         radioGroupButtons(
-                           inputId = "group9",
-                           label = textOutput("contName3"),
-                           choices = c("Qualitative and Ordinal","Qualitative and 
+                    direction = "vertical",
+                    justified = TRUE,
+                    checkIcon = list(
+                      yes = icon("ok", 
+                                 lib = "glyphicon")
+                    )
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioGroupButtons(
+                    inputId = "group9",
+                    label = textOutput("contName3"),
+                    choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
-                           direction = "vertical",
-                           justified = TRUE,
-                           checkIcon = list(
-                             yes = icon("ok", 
-                                        lib = "glyphicon")
-                           )
-                         )
-                       )
-                     ),
-                     fluidRow(
-                       column(
-                         width = 4,
-                         radioGroupButtons(
-                           inputId = "group10",
-                           label = textOutput("ordName2"),
-                           choices = c("Qualitative and Ordinal","Qualitative and 
+                    direction = "vertical",
+                    justified = TRUE,
+                    checkIcon = list(
+                      yes = icon("ok", 
+                                 lib = "glyphicon")
+                    )
+                  )
+                )
+              ),
+              fluidRow(
+                column(
+                  width = 4,
+                  radioGroupButtons(
+                    inputId = "group10",
+                    label = textOutput("ordName2"),
+                    choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
-                           direction = "vertical",
-                           justified = TRUE,
-                           checkIcon = list(
-                             yes = icon("ok", 
-                                        lib = "glyphicon")
-                           )
-                         )
-                       ),
-                       column(
-                         width = 4,
-                         radioGroupButtons(
-                           inputId = "group11",
-                           label = textOutput("nomName3"),
-                           choices = c("Qualitative and Ordinal","Qualitative and 
+                    direction = "vertical",
+                    justified = TRUE,
+                    checkIcon = list(
+                      yes = icon("ok", 
+                                 lib = "glyphicon")
+                    )
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioGroupButtons(
+                    inputId = "group11",
+                    label = textOutput("nomName3"),
+                    choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
-                           direction = "vertical",
-                           justified = TRUE,
-                           checkIcon = list(
-                             yes = icon("ok", 
-                                        lib = "glyphicon")
-                           )
-                         )
-                       ),
-                       column(
-                         width = 4,
-                         radioGroupButtons(
-                           inputId = "group12",
-                           label = textOutput("ordName3"),
-                           choices = c("Qualitative and Ordinal","Qualitative and 
+                    direction = "vertical",
+                    justified = TRUE,
+                    checkIcon = list(
+                      yes = icon("ok", 
+                                 lib = "glyphicon")
+                    )
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioGroupButtons(
+                    inputId = "group12",
+                    label = textOutput("ordName3"),
+                    choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
-                           direction = "vertical",
-                           justified = TRUE,
-                           checkIcon = list(
-                             yes = icon("ok", 
-                                        lib = "glyphicon")
-                           )
-                         )
-                       )
-                     ),
-                     
-                     hr(),
-                     # Buttons
-                     fluidRow(
-                       column(
-                         width = 1,
-                         bsButton(inputId = "Reset1", label = "Reset")
-                       ),
-                       column(
-                         width = 1,
-                         offset = 4,
-                         conditionalPanel(
-                           "(input.group1!='') & (input.group2!='') & (input.group3!='')
+                    direction = "vertical",
+                    justified = TRUE,
+                    checkIcon = list(
+                      yes = icon("ok", 
+                                 lib = "glyphicon")
+                    )
+                  )
+                )
+              ),
+              hr(),
+              ##### Buttons ----
+              fluidRow(
+                column(
+                  width = 1,
+                  bsButton(
+                    inputId = "Reset1",
+                    label = "Reset"
+                  )
+                ),
+                column(
+                  width = 1,
+                  offset = 4,
+                  conditionalPanel(
+                    "(input.group1!='') & (input.group2!='') & (input.group3!='')
                            & (input.group4!='') & (input.group5!='') & (input.group6!='')
                            & (input.group7!='') & (input.group8!='') & (input.group9!='')",
-                           bsButton( inputId = "submitA", label = "Submit Answer")
-                         )
-                       ),
-                       column(
-                         width = 1,
-                         offset = 5, 
-                         bsButton(
-                           inputId = "next2",
-                           label = "Next >>",
-                           disabled = TRUE))
-                     ),
-                     br(),
+                    bsButton(
+                      inputId = "submitA",
+                      label = "Submit"
+                    )
+                  )
+                ),
+                column(
+                  width = 1,
+                  offset = 4,
+                  bsButton(
+                    inputId = "next2",
+                    label = "Next Level",
+                    disabled = FALSE
+                  )
+                ),
+                br()
+              )
             ),
             #### Level 2 ----
             tabPanel(
@@ -468,27 +476,34 @@ ui <- list(
                           class = "col-lg-6 col-md-12 wellBorder"
                 )
               ),
+              ##### Buttons ----
               fluidRow(
                 column(
-                  width =1, 
-                  bsButton(inputId = "previous2", 
-                           label = "<< Previous")),
+                  width = 1,
+                  bsButton(
+                    inputId = "previous2",
+                    label = "Previous Level"
+                  )
+                ),
                 column(
                   width = 1, 
                   offset = 4, 
                   conditionalPanel(
                     "(input.match1!='') & (input.match2!='') & (input.match3!='') & (input.match5!='') & (input.drop5!='')",
-                    bsButton(inputId = "submitB", 
-                             label = "Submit Answer",
-                             style = "primary")
-                  )),
+                    bsButton(
+                      inputId = "submitB", 
+                      label = "Submit Answer")
+                  )
+                ),
                 column(
                   width = 1,
-                  offset = 5, 
+                  offset = 4,
                   bsButton(
                     inputId = "next3",
-                    label = "Next >>",
-                    disabled = TRUE))
+                    label = "Next Level",
+                    disabled = TRUE 
+                  )
+                )
               ),
               hr(),
               conditionalPanel("input.submitB != 0",
@@ -524,41 +539,76 @@ ui <- list(
               ),
               hr(),
               fluidRow(
-                column(3,
-                       offset = 1,
-                       selectInput("explC", uiOutput("varEXP"), c(
-                         "", "Neither", "Explanatory",
-                         "Response"
-                       )), uiOutput("markc1")
+                column(
+                  width = 3,
+                  offset = 1,
+                  selectInput(
+                    inputId = "explC",
+                    label = uiOutput("varEXP"),
+                    c("", "Neither", "Explanatory", "Response")
+                  ), 
+                  uiOutput("markc1")
                 ),
-                column(3,
-                       offset = 3,
-                       selectInput("respC", uiOutput("varRES"), c(
-                         "", "Neither", "Explanatory",
-                         "Response"
-                       )), uiOutput("markc2")
+                column(
+                  width = 3,
+                  offset = 3,
+                  selectInput(
+                    inputId = "respC",
+                    label = uiOutput("varRES"),
+                    c("", "Neither", "Explanatory", "Response")
+                    ), 
+                  uiOutput("markc2")
                 )
               ),
               br(),
               fluidRow(
-                column(4, offset = 3, textOutput("correctC"))
+                column(width = 4, offset = 3, textOutput("correctC"))
               ),
               br(),
+              ##### Buttons ----
               conditionalPanel(
                 "input.next3 != 0",
                 fluidRow(
-                  column(1, offset = 1, bsButton("previous4", "<< Previous", style = "primary", size = "small")),
-                  column(1, offset = 1, conditionalPanel(
-                    "(input.explC!='') & (input.respC!='')",
-                    bsButton("submitC", "Submit Answer", style = "primary", class = "grow", size = "small")
-                  )),
-                  column(1, offset = 2, bsButton("new", "New Question", size = "small", style = "primary", disabled = TRUE)),
-                  column(1, offset = 2, bsButton("next4", "Next >>", size = "small", style = "primary", disabled = TRUE))
+                  column(
+                    width = 1, 
+                    offset = 1,
+                    bsButton(
+                      inputId = "previous4",
+                      label = "Previous Level",
+                    )
+                  ),
+                  column(
+                    width = 1, 
+                    offset = 1,
+                    conditionalPanel(
+                      "(input.explC!='') & (input.respC!='')",
+                      bsButton(
+                        inputId = "submit3",
+                        label = "Submit",
+                      )
+                    )),
+                  column(
+                    width = 1,
+                    offset = 2,
+                    bsButton(
+                      inputId = "new",
+                      label = "New Question"
+                    )
+                  ),
+                  column(
+                    width = 1,
+                    offset = 2,
+                    bsButton(
+                      inputId = "next4",
+                      label = "Next Level",
+                      disabled = TRUE
+                    )
+                  )
                 ),
                 hr()
               ),
               fluidRow(
-                column(3, offset = 4, uiOutput("train1"))
+                column(width = 3, offset = 4, uiOutput("train1"))
               )
             ),
             #### Level 4 ----
@@ -573,53 +623,85 @@ ui <- list(
                 fluidRow(uiOutput("questionD"))
               ),
               fluidRow(
-                column(5,
-                       offset = 1,
-                       selectInput("resp", uiOutput("varRESD"), c(
-                         "", "Explanatory",
-                         "Response",
-                         "Confounding",
-                         "None of the above"
-                       )), uiOutput("markd2")
+                column(
+                  width = 5,
+                  offset = 1,
+                  selectInput(
+                    inputId = "resp", 
+                    label = uiOutput("varRESD"), 
+                    c( "", "Explanatory", "Response", "Confounding",
+                       "None of the above")
+                  ),
+                  uiOutput("markd2")
                 ),
-                column(4,
-                       offset = 1,
-                       selectInput("conf", uiOutput("varCOND"), c(
-                         "", "Explanatory",
-                         "Response",
-                         "Confounding",
-                         "None of the above"
-                       )), uiOutput("markd3")
+                column( 
+                  width = 4,
+                  offset = 1,
+                  selectInput(
+                    inputId = "conf", 
+                    label = uiOutput("varCOND"), 
+                    c("", "Explanatory", "Response", "Confounding",
+                      "None of the above")
+                  ), 
+                  uiOutput("markd3")
                 ),
-                column(4,
-                       offset = 1,
-                       selectInput("expla", uiOutput("varEXPD"), c(
-                         "", "Explanatory",
-                         "Response",
-                         "Confounding",
-                         "None of the above"
-                       )), uiOutput("markd1")
+                column(
+                  width = 4,
+                  offset = 1,
+                  selectInput(
+                    inputId = "expla",
+                    label = uiOutput("varEXPD"),
+                    c("", "Explanatory", "Response", "Confounding",
+                      "None of the above")
+                  ), 
+                  uiOutput("markd1")
                 )
               ),
               fluidRow(
-                column(3, offset = 3, textOutput("correctD"))
+                column(width = 3, offset = 3, textOutput("correctD"))
               ),
               br(),
+              ##### Buttons ----
               conditionalPanel(
                 "input.next4 != 0",
                 fluidRow(
-                  column(1, offset = 1, bsButton("previous5", "<< Previous", style = "primary", size = "small")),
-                  column(1, offset = 1, conditionalPanel(
-                    "(input.expla!='') & (input.resp!='') & (input.conf!='')",
-                    bsButton("submitD", "Submit Answer", style = "primary", class = "grow", size = "small")
-                  )),
-                  column(1, offset = 2, bsButton("new2", "New Question", size = "small", style = "primary", disabled = TRUE)),
-                  column(1, offset = 2, bsButton("finish", "Stop >>", style = "danger", disabled = TRUE, size = "small"))
+                  column(
+                    width = 1, 
+                    offset = 1,
+                    bsButton(
+                      inputId = "previous5",
+                      label = "Previous Level",
+                    )
+                  ),
+                  column(
+                    width = 1, 
+                    offset = 1, 
+                    conditionalPanel(
+                      "(input.expla!='') & (input.resp!='') & (input.conf!='')",
+                      bsButton(inputId = "submitD", label = "Submit")
+                    )
+                  ),
+                  column(
+                    width = 1,
+                    offset = 2,
+                    bsButton(
+                      inputId = "new2",
+                      label = "New Question"
+                    )
+                  ),
+                  column(
+                    width = 1,
+                    offset = 2,
+                    bsButton(
+                      inputId = "finish",
+                      label = "Results"
+                    )
+                  )
                 ),
                 hr()
               ),
               fluidRow(
-                column(3, offset = 4, uiOutput("trainB"))
+                column(width = 3, offset = 4, uiOutput("trainB"))
               )
             ),
             #### Results ----
