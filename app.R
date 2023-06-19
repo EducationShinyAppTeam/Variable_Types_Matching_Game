@@ -158,7 +158,7 @@ ui <- list(
           h2("Level 1"),
           tabsetPanel(
             id = "levels",
-            type = "hidden",
+            #type = "hidden",
             #### Level 1 ----
             tabPanel("Level 1",
                      value = "b",
@@ -169,7 +169,7 @@ ui <- list(
                          width = 4,
                          radioGroupButtons(
                            inputId = "group1",
-                           label = textOutput("disID1"),
+                           label = textOutput("disName1"),
                            choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
@@ -185,7 +185,7 @@ ui <- list(
                         width = 4,
                         radioGroupButtons(
                           inputId = "group2",
-                          label = "Variable Name",
+                          label = textOutput("disName2"),
                           choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
@@ -201,7 +201,7 @@ ui <- list(
                         width = 4,
                         radioGroupButtons(
                           inputId = "group3",
-                          label = "Variable Name",
+                          label = textOutput("nomName1"),
                           choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
@@ -219,7 +219,7 @@ ui <- list(
                          width = 4,
                          radioGroupButtons(
                            inputId = "group4",
-                           label = "Variable Name",
+                           label = textOutput("contName1"),
                            choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
@@ -235,7 +235,7 @@ ui <- list(
                          width = 4,
                          radioGroupButtons(
                            inputId = "group5",
-                           label = "Variable Name",
+                           label = textOutput("disName3"),
                            choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
@@ -251,7 +251,7 @@ ui <- list(
                          width = 4,
                          radioGroupButtons(
                            inputId = "group6",
-                           label = "Variable Name",
+                           label = textOutput("contName2"),
                            choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
@@ -269,7 +269,7 @@ ui <- list(
                          width = 4,
                          radioGroupButtons(
                            inputId = "group7",
-                           label = "Variable Name",
+                           label = textOutput("nomName2"),
                            choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
@@ -285,7 +285,7 @@ ui <- list(
                          width = 4,
                          radioGroupButtons(
                            inputId = "group8",
-                           label = "Variable Name",
+                           label = textOutput("ordName1"),
                            choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
@@ -301,7 +301,7 @@ ui <- list(
                          width = 4,
                          radioGroupButtons(
                            inputId = "group9",
-                           label = "Variable Name",
+                           label = textOutput("contName3"),
                            choices = c("Qualitative and Ordinal","Qualitative and 
                                        Nominal", "Quantitative and Discrete", "
                                        Quantitative and Continuous"),
@@ -314,6 +314,57 @@ ui <- list(
                          )
                        )
                      ),
+                     fluidRow(
+                       column(
+                         width = 4,
+                         radioGroupButtons(
+                           inputId = "group10",
+                           label = textOutput("ordName2"),
+                           choices = c("Qualitative and Ordinal","Qualitative and 
+                                       Nominal", "Quantitative and Discrete", "
+                                       Quantitative and Continuous"),
+                           direction = "vertical",
+                           justified = TRUE,
+                           checkIcon = list(
+                             yes = icon("ok", 
+                                        lib = "glyphicon")
+                           )
+                         )
+                       ),
+                       column(
+                         width = 4,
+                         radioGroupButtons(
+                           inputId = "group11",
+                           label = textOutput("nomName3"),
+                           choices = c("Qualitative and Ordinal","Qualitative and 
+                                       Nominal", "Quantitative and Discrete", "
+                                       Quantitative and Continuous"),
+                           direction = "vertical",
+                           justified = TRUE,
+                           checkIcon = list(
+                             yes = icon("ok", 
+                                        lib = "glyphicon")
+                           )
+                         )
+                       ),
+                       column(
+                         width = 4,
+                         radioGroupButtons(
+                           inputId = "group12",
+                           label = textOutput("ordName3"),
+                           choices = c("Qualitative and Ordinal","Qualitative and 
+                                       Nominal", "Quantitative and Discrete", "
+                                       Quantitative and Continuous"),
+                           direction = "vertical",
+                           justified = TRUE,
+                           checkIcon = list(
+                             yes = icon("ok", 
+                                        lib = "glyphicon")
+                           )
+                         )
+                       )
+                     ),
+                     
                      hr(),
                      # Buttons
                      fluidRow(
@@ -340,166 +391,126 @@ ui <- list(
                            disabled = TRUE))
                      ),
                      br(),
-                     conditionalPanel("input.submitA != 0",
-                                      wellPanel(
-                                        fluidPage(
-                                          fluidRow(
-                                            wellPanel(
-                                              h4("Please drag the wrong answers into this PENALTY box and click the CLEAR button to restart."),
-                                              dropUI("home1", class = "dropelement dropelementHome", col_n = 3),
-                                              class = "wellTransparent col-lg-8"
-                                            ),
-                                            wellPanel(h3("Full score is 40 for level A."),
-                                                      div(style = "position:absolute; top:8em; right:2em", bsButton("clear", "CLEAR", style = "danger")),
-                                                      verbatimTextOutput("scoreA"),
-                                                      class = "wellTransparent col-lg-4"
-                                            )
-                                          )
-                                        )
-                                      )
-                     )
-                     
             ),
             #### Level 2 ----
-            tabPanel("Level 2",
-                     value = "c",
-                     titlePanel("Identify in Plots"),
-                     fluidRow(
-                       column(
-                         3,
-                         div(
-                           style = "display: inline-block;vertical-align:top;",
-                           tags$a(href = "https://shinyapps.science.psu.edu/", tags$img(src = "homebut.PNG", width = 30)),
-                           bsButton("ins2", "", icon = icon("info", class = "iconi fa-fw"), type = "toggle", class = "butt"),
-                           bsButton("bq2", "", icon = icon("question", class = "iconq fa-fw"), type = "toggle", class = "butt"),
-                           bsButton("bt2", "", icon = icon("time", lib = "glyphicon", class = "icont fa-fw"), type = "toggle", class = "butt")
-                         ),
-                         div(
-                           id = "plot-container2",
-                           conditionalPanel(
-                             "input.bq2 != 0",
-                             tags$img(
-                               src = "variable-types.PNG",
-                               id = "hint"
-                             )
-                           )
-                         ),
-                         div(
-                           style = "display: inline-block;vertical-align:top;",
-                           conditionalPanel(
-                             "input.ins2 != 0",
-                             box(
-                               title = "Instruction:", status = "danger", solidHeader = TRUE, width = 12,
-                               "Drag letters below graphs to correct variable type."
-                             )
-                           )
-                         )
-                       ),
-                       column(3,
-                              offset = 6,
-                              hidden(div(id = "timer2h", textOutput("timer2")))
-                       )
-                     ),
-                     br(),
-                     conditionalPanel(
-                       "input.next2 != 0",
-                       fluidRow(
-                         wellPanel(div(style = "text-align:center", h4(textOutput("imgQ1"))),
-                                   uiOutput("image1", class = "picSize"),
-                                   div(style = "position: relative; top:-15px;"),
-                                   class = "col-lg-6 col-md-12 wellBorder"
-                         ),
-                         wellPanel(div(style = "text-align:center", h4(textOutput("imgQ2"))),
-                                   uiOutput("image2", class = "picSize"),
-                                   div(style = "position: relative; top:-15px;"),
-                                   class = "col-lg-6 col-md-12 wellBorder"
-                         )
-                       ),
-                       br(),
-                       wellPanel(
-                         fluidRow(
-                           column(
-                             width = 6,
-                             selectInput(
-                               inputId = "match1",
-                               label = "Quantitative and Discrete",
-                               choices = c("A", "B", "C", "D")
-                             ),
-                             uiOutput(outputId = "answer17")
-                           ),
-                           column(
-                             width = 6,
-                             selectInput(
-                               inputId = "match2",
-                               label = "Quantitative and Continuous",
-                               choices = c("A", "B", "C", "D")
-                             ),
-                             uiOutput(outputId = "answer18")
-                           )
-                         ),
-                         fluidRow(
-                           column(
-                             width = 6,
-                             selectInput(
-                               inputId = "match3",
-                               label = "Qualitative and Nominal",
-                               choices = c("A", "B", "C", "D")
-                             ),
-                             uiOutput(outputId = "answer19")
-                           ),
-                           column(
-                             width = 6,
-                             selectInput(
-                               inputId = "match4",
-                               label = "Qualitative and Ordinal",
-                               choices = c("A", "B", "C", "D")
-                             ),
-                             uiOutput(outputId = "answer20")
-                           )
-                         )
-                       ),
-                       br(),
-                       fluidRow(
-                         wellPanel(div(style = "position: relative; top:-5px;"),
-                                   div(style = "position:relative; text-align:center; top: -15px;", h4(textOutput("imgQ3"))),
-                                   div(style = "position:relative; top: -15px;", uiOutput("image3", class = "picSize")),
-                                   class = "col-lg-6 col-md-12 wellBorder"
-                         ),
-                         wellPanel(div(style = "position: relative; top:-5px;"),
-                                   div(style = "position:relative; text-align:center; top: -15px;", h4(textOutput("imgQ4"))),
-                                   div(style = "position:relative; top: -15px;", uiOutput("image4", class = "picSize")),
-                                   class = "col-lg-6 col-md-12 wellBorder"
-                         )
-                       ),
-                       fluidRow(
-                         column(1, bsButton("previous2", "<< Previous", style = "primary", size = "small")),
-                         column(1, offset = 4, conditionalPanel(
-                           "(input.drop1!='') & (input.drop2!='') & (input.drop3!='') & (input.drop4!='') & (input.drop5!='')",
-                           bsButton("submitB", "Submit Answer", style = "primary", class = "grow", size = "small")
-                         )),
-                         column(1, offset = 5, bsButton("next3", "Next >>", style = "primary", size = "small", disabled = TRUE))
-                       ),
-                       hr(),
-                       conditionalPanel("input.submitB != 0",
-                                        wellPanel(
-                                          fluidPage(
-                                            fluidRow(
-                                              wellPanel(
-                                                div(style = "position:absolute;top:9em; left:1em", h4("Please drag the wrong answers into this box and click the CLEAR to restart.")),
-                                                dropUI("home2", class = "dropelement dropelementHome2", row_n = 2, col_n = 2),
-                                                div(style = "position:absolute; top:8em; right:3em", bsButton("clearB", "CLEAR", style = "danger")),
-                                                class = "wellTransparent col-lg-8"
-                                              ),
-                                              wellPanel(h3("Full score is 20 for level B."),
-                                                        verbatimTextOutput("scoreB"),
-                                                        class = "wellTransparent col-lg-4"
-                                              )
-                                            )
-                                          )
-                                        )
-                       )
-                     )
-            ),
+            tabPanel(
+              title = "Level 2",
+              value = "c",
+              titlePanel("Identify in Plots"),
+              p("Match the variable defined in the instructions of each plot
+                       to the variable type."),
+              hr(),
+              fluidRow(
+                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ1"))),
+                          uiOutput("image1", class = "picSize"),
+                          div(style = "position: relative; top:-15px;"),
+                          class = "col-lg-6 col-md-12 wellBorder"
+                ),
+                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ2"))),
+                          uiOutput("image2", class = "picSize"),
+                          div(style = "position: relative; top:-15px;"),
+                          class = "col-lg-6 col-md-12 wellBorder"
+                )
+              ),
+              br(),
+              wellPanel(
+                fluidRow(
+                  column(
+                    width = 6,
+                    selectInput(
+                      inputId = "match1",
+                      label = "Quantitative and Discrete",
+                      choices = c("A", "B", "C", "D")
+                    ),
+                    uiOutput(outputId = "answer17")
+                  ),
+                  column(
+                    width = 6,
+                    selectInput(
+                      inputId = "match2",
+                      label = "Quantitative and Continuous",
+                      choices = c("A", "B", "C", "D")
+                    ),
+                    uiOutput(outputId = "answer18")
+                  )
+                ),
+                fluidRow(
+                  column(
+                    width = 6,
+                    selectInput(
+                      inputId = "match3",
+                      label = "Qualitative and Nominal",
+                      choices = c("A", "B", "C", "D")
+                    ),
+                    uiOutput(outputId = "answer19")
+                  ),
+                  column(
+                    width = 6,
+                    selectInput(
+                      inputId = "match4",
+                      label = "Qualitative and Ordinal",
+                      choices = c("A", "B", "C", "D")
+                    ),
+                    uiOutput(outputId = "answer20")
+                  )
+                )
+              ),
+              br(),
+              fluidRow(
+                wellPanel(div(style = "position: relative; top:-5px;"),
+                          div(style = "position:relative; text-align:center; top: -15px;", h4(textOutput("imgQ3"))),
+                          div(style = "position:relative; top: -15px;", uiOutput("image3", class = "picSize")),
+                          class = "col-lg-6 col-md-12 wellBorder"
+                ),
+                wellPanel(div(style = "position: relative; top:-5px;"),
+                          div(style = "position:relative; text-align:center; top: -15px;", h4(textOutput("imgQ4"))),
+                          div(style = "position:relative; top: -15px;", uiOutput("image4", class = "picSize")),
+                          class = "col-lg-6 col-md-12 wellBorder"
+                )
+              ),
+              fluidRow(
+                column(
+                  width =1, 
+                  bsButton(inputId = "previous2", 
+                           label = "<< Previous")),
+                column(
+                  width = 1, 
+                  offset = 4, 
+                  conditionalPanel(
+                    "(input.match1!='') & (input.match2!='') & (input.match3!='') & (input.match5!='') & (input.drop5!='')",
+                    bsButton(inputId = "submitB", 
+                             label = "Submit Answer",
+                             style = "primary")
+                  )),
+                column(
+                  width = 1,
+                  offset = 5, 
+                  bsButton(
+                    inputId = "next3",
+                    label = "Next >>",
+                    disabled = TRUE))
+              ),
+              hr(),
+              conditionalPanel("input.submitB != 0",
+                               wellPanel(
+                                 fluidPage(
+                                   fluidRow(
+                                     wellPanel(
+                                       div(style = "position:absolute;top:9em; left:1em", h4("Please drag the wrong answers into this box and click the CLEAR to restart.")),
+                                       dropUI("home2", class = "dropelement dropelementHome2", row_n = 2, col_n = 2),
+                                       div(style = "position:absolute; top:8em; right:3em", bsButton("clearB", "CLEAR", style = "danger")),
+                                       class = "wellTransparent col-lg-8"
+                                     ),
+                                     wellPanel(h3("Full score is 20 for level B."),
+                                               verbatimTextOutput("scoreB"),
+                                               class = "wellTransparent col-lg-4"
+                                     )
+                                   )
+                                 )
+                               )
+              )
+            
+          ),
             #### Level 3 ----
             tabPanel(
               title = "Level 3",
@@ -507,44 +518,7 @@ ui <- list(
               titlePanel("Explanatory and Response Variables"),
               fluidRow(h4("You must get both answers correct to earn 1 point and get 5 points before moving to the next level"), style = "margin-left:15px"),
               fluidRow(h4("Once you have made your choices hit submit answer, then click new question for the next question"), style = "margin-left:15px"),
-              fluidRow(
-                column(
-                  3,
-                  div(
-                    style = "display: inline-block;vertical-align:top;",
-                    tags$a(href = "https://shinyapps.science.psu.edu/", tags$img(src = "homebut.PNG", width = 30)),
-                    bsButton("ins3", "", icon = icon("info", class = "iconi fa-fw"), type = "toggle", class = "butt"),
-                    bsButton("bq3", "", icon = icon("question", class = "iconq fa-fw"), type = "toggle", class = "butt"),
-                    bsButton("bt3", "", icon = icon("time", lib = "glyphicon", class = "icont fa-fw"), type = "toggle", class = "butt")
-                  ),
-                  div(
-                    id = "plot-container3",
-                    conditionalPanel(
-                      "input.bq3 != 0",
-                      tags$img(
-                        src = "HINT3.PNG",
-                        id = "hint3"
-                      )
-                    )
-                  ),
-                  div(
-                    style = "display: inline-block;vertical-align:top;",
-                    conditionalPanel(
-                      "input.ins3 != 0",
-                      box(
-                        title = "Instruction:", status = "danger", solidHeader = TRUE, width = 12,
-                        "Choose variable types from dropdown menus."
-                      )
-                    )
-                  )
-                ),
-                column(3,
-                       offset = 6,
-                       hidden(div(id = "timer3h", textOutput("timer3")))
-                ),
-                br()
-              ),
-              br(),
+              hr(),
               wellPanel(
                 fluidRow(uiOutput("questionC"), br())
               ),
@@ -594,42 +568,6 @@ ui <- list(
               titlePanel(h1("This level will add in the concepts of confounding variables")),
               fluidRow(h4("You must answer 5 correct choices before completing the level"), style = "margin-left:15px"),
               fluidRow(h4("Once you have made your choices hit submit answer, then click new question for the next question"), style = "margin-left:15px"),
-              fluidRow(
-                column(
-                  3,
-                  div(
-                    style = "display: inline-block;vertical-align:top;",
-                    tags$a(href = "https://shinyapps.science.psu.edu/", tags$img(src = "homebut.PNG", width = 30)),
-                    bsButton("ins4", "", icon = icon("info", class = "iconi fa-fw"), type = "toggle", class = "butt"),
-                    bsButton("bq4", "", icon = icon("question", class = "iconq fa-fw"), type = "toggle", class = "butt"),
-                    bsButton("bt4", "", icon = icon("time", lib = "glyphicon", class = "icont fa-fw"), type = "toggle", class = "butt")
-                  ),
-                  div(
-                    id = "plot-container4",
-                    conditionalPanel(
-                      "input.bq4 != 0",
-                      tags$img(
-                        src = "HINT4.PNG",
-                        id = "hint4"
-                      )
-                    )
-                  ),
-                  div(
-                    style = "display: inline-block;vertical-align:top;",
-                    conditionalPanel(
-                      "input.ins4 != 0",
-                      box(
-                        title = "Instruction:", status = "danger", solidHeader = TRUE, width = 12,
-                        "Choose variable types from dropdown menus."
-                      )
-                    )
-                  )
-                ),
-                column(3,
-                       offset = 6,
-                       hidden(div(id = "timer4h", textOutput("timer4")))
-                ), br() # print the timer)
-              ),
               hr(),
               wellPanel(
                 fluidRow(uiOutput("questionD"))
@@ -947,10 +885,6 @@ server <- function(input, output, session) {
       bank[numbers$dis[3], 2]
     })
 
-    output$disID4 <- renderText({
-      bank[numbers$dis[4], 2]
-    })
-
     output$disName1 <- renderText({
       bank[numbers$dis[1], 3]
     })
@@ -963,9 +897,6 @@ server <- function(input, output, session) {
       bank[numbers$dis[3], 3]
     })
 
-    output$disName4 <- renderText({
-      bank[numbers$dis[4], 3]
-    })
 
     output$contID1 <- renderText({
       bank[numbers$cont[1], 2]
@@ -979,9 +910,6 @@ server <- function(input, output, session) {
       bank[numbers$cont[3], 2]
     })
 
-    output$contID4 <- renderText({
-      bank[numbers$cont[4], 2]
-    })
 
     output$contName1 <- renderText({
       bank[numbers$cont[1], 3]
@@ -995,9 +923,6 @@ server <- function(input, output, session) {
       bank[numbers$cont[3], 3]
     })
 
-    output$contName4 <- renderText({
-      bank[numbers$cont[4], 3]
-    })
 
     output$nomID1 <- renderText({
       bank[numbers$nom[1], 2]
@@ -1011,9 +936,6 @@ server <- function(input, output, session) {
       bank[numbers$nom[3], 2]
     })
 
-    output$nomID4 <- renderText({
-      bank[numbers$nom[4], 2]
-    })
 
     output$nomName1 <- renderText({
       bank[numbers$nom[1], 3]
@@ -1027,9 +949,7 @@ server <- function(input, output, session) {
       bank[numbers$nom[3], 3]
     })
 
-    output$nomName4 <- renderText({
-      bank[numbers$nom[4], 3]
-    })
+
 
     output$ordID1 <- renderText({
       bank[numbers$ord[1], 2]
@@ -1043,9 +963,6 @@ server <- function(input, output, session) {
       bank[numbers$ord[3], 2]
     })
 
-    output$ordID4 <- renderText({
-      bank[numbers$ord[4], 2]
-    })
 
     output$ordName1 <- renderText({
       bank[numbers$ord[1], 3]
@@ -1059,9 +976,7 @@ server <- function(input, output, session) {
       bank[numbers$ord[3], 3]
     })
 
-    output$ordName4 <- renderText({
-      bank[numbers$ord[4], 3]
-    })
+
   }
 
   ## Init Bank B ----
@@ -1644,6 +1559,42 @@ server <- function(input, output, session) {
         }
       })
     })
+    observe({
+      output$answer10 <- renderUI({
+        if (!is.null(input$group10)) {
+          valid <- any(trimws(input$group10) == bank[c(37:56), 3])
+          if (valid) {
+            img(src = "check.PNG", width = 30)
+          } else {
+            img(src = "cross.PNG", width = 30)
+          }
+        }
+      })
+    })
+    observe({
+      output$answer11 <- renderUI({
+        if (!is.null(input$group11)) {
+          valid <- any(trimws(input$group11) == bank[c(37:56), 3])
+          if (valid) {
+            img(src = "check.PNG", width = 30)
+          } else {
+            img(src = "cross.PNG", width = 30)
+          }
+        }
+      })
+    })
+    observe({
+      output$answer12 <- renderUI({
+        if (!is.null(input$group12)) {
+          valid <- any(trimws(input$group12) == bank[c(37:56), 3])
+          if (valid) {
+            img(src = "check.PNG", width = 30)
+          } else {
+            img(src = "cross.PNG", width = 30)
+          }
+        }
+      })
+    })
   })
 
   ### Validate Level 2 ----
@@ -1784,28 +1735,28 @@ server <- function(input, output, session) {
 
     score5 <- c()
 
-    for (i in input$drop1) {
+    for (i in input$match1) {
       if (i == image1) {
         score5 <- c(score5, 5)
       } else {
         score5 <- c(score5, -3)
       }
     }
-    for (i in input$drop2) {
+    for (i in input$match2) {
       if (i == image2) {
         score5 <- c(score5, 5)
       } else {
         score5 <- c(score5, -3)
       }
     }
-    for (i in input$drop3) {
+    for (i in input$match3) {
       if (i == image3) {
         score5 <- c(score5, 5)
       } else {
         score5 <- c(score5, -3)
       }
     }
-    for (i in input$drop4) {
+    for (i in input$match5) {
       if (i == image4) {
         score5 <- c(score5, 5)
       } else {
@@ -1816,10 +1767,10 @@ server <- function(input, output, session) {
     total <- sum(score5)
 
     response <- list(
-      "Quantitative_Discrete" = c(image1, input$drop1),
-      "Quantitative_Continuous" = c(image2, input$drop2),
-      "Qualitative_Nominal" = c(image3, input$drop3),
-      "Qualitative_Ordinal" = c(image4, input$drop4)
+      "Quantitative_Discrete" = c(image1, input$match1),
+      "Quantitative_Continuous" = c(image2, input$match2),
+      "Qualitative_Nominal" = c(image3, input$match3),
+      "Qualitative_Ordinal" = c(image4, input$match5)
     )
 
     stmt <- boastUtils::generateStatement(
@@ -2146,7 +2097,7 @@ server <- function(input, output, session) {
     score4 <- c()
     score5 <- c()
 
-    for (i in c(input$drp1, input$drp2, input$drp3, input$drp4)) {
+    for (i in c(input$match1, input$drp2, input$drp3, input$drp4)) {
       if (any(trimws(i) == bank[c(1:10), 3])) {
         score1 <- c(score1, 2.5)
       } else {
@@ -2160,42 +2111,42 @@ server <- function(input, output, session) {
         score2 <- c(score2, -1.5)
       }
     }
-    for (i in c(input$drp9, input$drp10, input$drp11, input$drp12)) {
+    for (i in c(input$drp9, input$match10, input$match11, input$match12)) {
       if (any(trimws(i) == bank[c(37:56), 3])) {
         score3 <- c(score3, 2.5)
       } else {
         score3 <- c(score3, -1.5)
       }
     }
-    for (i in c(input$drp13, input$drp14, input$drp15, input$drp16)) {
+    for (i in c(input$match13, input$match14, input$match15, input$match16)) {
       if (any(trimws(i) == bank[c(57:71), 3])) {
         score4 <- c(score4, 2.5)
       } else {
         score4 <- c(score4, -1.5)
       }
     }
-    for (i in input$drop1) {
+    for (i in input$match1) {
       if (i == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
         score5 <- c(score5, 5)
       } else {
         score5 <- c(score5, -3)
       }
     }
-    for (i in input$drop2) {
+    for (i in input$match2) {
       if (i == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
         score5 <- c(score5, 5)
       } else {
         score5 <- c(score5, -3)
       }
     }
-    for (i in input$drop3) {
+    for (i in input$match3) {
       if (i == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
         score5 <- c(score5, 5)
       } else {
         score5 <- c(score5, -3)
       }
     }
-    for (i in input$drop4) {
+    for (i in input$match5) {
       if (i == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
         score5 <- c(score5, 5)
       } else {
