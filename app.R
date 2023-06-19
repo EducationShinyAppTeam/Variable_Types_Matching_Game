@@ -161,7 +161,7 @@ ui <- list(
             #type = "hidden",
             #### Level 1 ----
             tabPanel(
-              title ="Level 1",
+              title = "Level 1",
                value = "b",
               p("Correctly identify the variable type of each variable."),
               hr(),
@@ -392,7 +392,7 @@ ui <- list(
                   width = 1,
                   offset = 4,
                   bsButton(
-                    inputId = "next2",
+                    inputId = "toLvl2",
                     label = "Next Level",
                     disabled = FALSE
                   )
@@ -482,7 +482,7 @@ ui <- list(
                   width = 1,
                   bsButton(
                     inputId = "previous2",
-                    label = "Previous Level"
+                    label = "Previous"
                   )
                 ),
                 column(
@@ -507,7 +507,7 @@ ui <- list(
                   width = 1,
                   offset = 4,
                   bsButton(
-                    inputId = "next3",
+                    inputId = "toLvl3",
                     label = "Next Level",
                     disabled = TRUE 
                   )
@@ -562,15 +562,15 @@ ui <- list(
               ),
               br(),
               ##### Buttons ----
-              #conditionalPanel(
-                #"input.next3 != 0",
+              conditionalPanel(
+                "input.toLvl3 != 0",
                 fluidRow(
                   column(
                     width = 1, 
                     offset = 1,
                     bsButton(
                       inputId = "previous4",
-                      label = "Previous Level",
+                      label = "Previous",
                     )
                   ),
                   column(
@@ -588,7 +588,7 @@ ui <- list(
                     width = 1,
                     offset = 2,
                     bsButton(
-                      inputId = "new",
+                      inputId = "newQLvl3",
                       label = "New Question"
                     )
                   ),
@@ -596,14 +596,14 @@ ui <- list(
                     width = 1,
                     offset = 2,
                     bsButton(
-                      inputId = "next4",
+                      inputId = "toLvl4",
                       label = "Next Level",
                       disabled = TRUE
                     )
                   )
                 ),
                 hr(),
-              #),
+              ),
               fluidRow(
                 progressBar(
                   id = "barLevel3",
@@ -663,15 +663,15 @@ ui <- list(
               ),
               br(),
               ##### Buttons ----
-              #conditionalPanel(
-                #"input.next4 != 0",
+              conditionalPanel(
+                "input.toLvl4 != 0",
                 fluidRow(
                   column(
                     width = 1, 
                     offset = 1,
                     bsButton(
                       inputId = "previous5",
-                      label = "Previous Level",
+                      label = "Previous",
                     )
                   ),
                   column(
@@ -686,7 +686,7 @@ ui <- list(
                     width = 1,
                     offset = 2,
                     bsButton(
-                      inputId = "new2",
+                      inputId = "newQLvl4",
                       label = "New Question"
                     )
                   ),
@@ -700,8 +700,8 @@ ui <- list(
                     )
                   )
                 ),
-                hr(),
-              #),
+                hr()
+              ),
               fluidRow(
                 progressBar(
                   id = "barLevel4",
@@ -807,7 +807,7 @@ server <- function(input, output, session) {
     }
   }
 
-  ## Go button ----
+  ## Buttons  ----
   observeEvent(input$goToGame, {
     updateTabItems(
       session = session,
@@ -816,7 +816,6 @@ server <- function(input, output, session) {
     )
   })
   
-  ##Info button ----
   observeEvent(
     eventExpr = input$info,
     handlerExpr = {
@@ -829,12 +828,86 @@ server <- function(input, output, session) {
     }
   )
 
-  ## Reset Button ----
   observeEvent(input$reset_button, {
     js$reset()
   })
 
-  ## Init Bank A ----
+  observeEvent(
+    eventExpr = input$previous2,
+    handlerExpr = {
+      updateTabsetPanel(
+        session = session,
+        inputId = "levels",
+        selected = 'b'
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$toLvl2,
+    handlerExpr = {
+      updateTabsetPanel(
+        session = session,
+        inputId = "levels",
+        selected = 'c'
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$previous3,
+    handlerExpr = {
+      updateTabsetPanel(
+        session = session,
+        inputId = "levels",
+        selected = 'c'
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$toLvl3,
+    handlerExpr = {
+      updateTabsetPanel(
+        session = session,
+        inputId = "levels",
+        selected = 'e'
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$toLvl4,
+    handlerExpr = {
+      updateTabsetPanel(
+        session = session,
+        inputId = "levels",
+        selected = 'f'
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$finish, 
+    handlerExpr = {
+      
+      stmt <- boastUtils::generateStatement(
+        session,
+        verb = "completed",
+        object = "shiny-tab-challenge",
+        description = "Challenge completed",
+        completion = TRUE
+      )
+      
+      boastUtils::storeStatement(session, stmt)
+      
+      updateTabsetPanel(
+        session = session, 
+        inputId = "levels",
+        selected = "d")
+    })
+  
+    ## Init Bank A ----
   numbers <- reactiveValues(dis = c(), cont = c(), nom = c(), ord = c())
   initBankA <- function() {
 
@@ -1001,7 +1074,7 @@ server <- function(input, output, session) {
   })
 
   observeEvent(
-    eventExpr = input$next3,
+    eventExpr = input$toLvl3,
     handlerExpr = {
       index$index <- 18
       index$exp_index <- 2 * index$index - 1
@@ -1009,7 +1082,7 @@ server <- function(input, output, session) {
     })
 
   observeEvent(
-    eventExpr = input$new,
+    eventExpr = input$newQLvl3,
     handlerExpr = {
       index_list$listc <- index_list$listc[-1]
       index$index <- index_list$listc[1]
@@ -1165,7 +1238,7 @@ server <- function(input, output, session) {
     })
 
   observeEvent(
-    eventExpr = input$next4,
+    eventExpr = input$toLvl4,
     handlerExpr = {
       index2$index2 <- 9
       index2$explan <- 3 * index2$index2 - 2
@@ -1174,7 +1247,7 @@ server <- function(input, output, session) {
     })
 
   observeEvent(
-    eventExpr = input$new2,
+    eventExpr = input$newQLvl4,
     handlerExpr = {
       index_listD$listD <- index_listD$listD[-1]
       index2$index2 <- index_listD$listD[1]
@@ -1316,7 +1389,7 @@ server <- function(input, output, session) {
 
   observe({
     if (length(index_list$listc) == 1) {
-      updateButton(session, "new", disabled = TRUE)
+      updateButton(session, "newQLvl3", disabled = TRUE)
       updateButton(session, "submitC", disabled = TRUE)
       shinyalert("Oops!", "You have used up all the tries. Please click 'previous' then click 'next' to re-enter this level to try again", type = "error")
     }
@@ -1324,26 +1397,26 @@ server <- function(input, output, session) {
 
   observe({
     if (length(index_listD$listD) == 1) {
-      updateButton(session, "new2", disabled = TRUE)
+      updateButton(session, "newQLvl4", disabled = TRUE)
       updateButton(session, "submitD", disabled = TRUE)
       shinyalert("Oops!", "You have used up all the tries. Please click 'previous' then click 'next' to re-enter this level to try again", type = "error")
     }
   })
 
   observeEvent(input$submitC, {
-    updateButton(session, "new", disabled = FALSE)
+    updateButton(session, "newQLvl3", disabled = FALSE)
   })
 
   observeEvent(input$previous4, {
     updateButton(session, "submitC", disabled = FALSE)
   })
 
-  observeEvent(input$new, {
+  observeEvent(input$newQLvl3, {
     updateButton(session, "submitC", disabled = FALSE)
   })
 
-  observeEvent(input$new, {
-    updateButton(session, "new", disabled = TRUE)
+  observeEvent(input$newQLvl3, {
+    updateButton(session, "newQLvl3", disabled = TRUE)
   })
 
   observeEvent(input$submitD, {
@@ -1351,19 +1424,19 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$submitD, {
-    updateButton(session, "new2", disabled = FALSE)
+    updateButton(session, "newQLvl4", disabled = FALSE)
   })
 
   observeEvent(input$previous5, {
     updateButton(session, "submitD", disabled = FALSE)
   })
 
-  observeEvent(input$new2, {
+  observeEvent(input$newQLvl4, {
     updateButton(session, "submitD", disabled = FALSE)
   })
 
-  observeEvent(input$new2, {
-    updateButton(session, "new2", disabled = TRUE)
+  observeEvent(input$newQLvl4, {
+    updateButton(session, "newQLvl4", disabled = TRUE)
   })
 
   ## Begin Validation ----
@@ -1660,22 +1733,29 @@ server <- function(input, output, session) {
     score3 <- c()
     score4 <- c()
 
-    for (i in c(input$group1, input$group2, input$group3, input$group4)) {
+    for (i in c(input$group1, input$group2, input$group3)) {
       if (any(trimws(i) == bank[c(1:10), 3])) {
         score1 <- c(score1, 2.5)
       } else {
         score1 <- c(score1, -1.5)
       }
     }
-    for (i in c(input$group5, input$group6, input$group7, input$group8)) {
+    for (i in c(input$group4, input$group5, input$group6)) {
       if (any(trimws(i) == bank[c(11:36), 3])) {
         score2 <- c(score2, 2.5)
       } else {
         score2 <- c(score2, -1.5)
       }
     }
-    for (i in c(input$group9)) {
+    for (i in c(input$group7, input$group8, input$group9)) {
       if (any(trimws(i) == bank[c(37:56), 3])) {
+        score3 <- c(score3, 2.5)
+      } else {
+        score3 <- c(score3, -1.5)
+      }
+    }
+    for (i in c(input$group10, input$group11, input$group12)) {
+      if (any(trimws(i) == bank[c(57:71), 3])) {
         score3 <- c(score3, 2.5)
       } else {
         score3 <- c(score3, -1.5)
@@ -1687,9 +1767,9 @@ server <- function(input, output, session) {
 
     response <- list(
       "Quantitative_Discrete" = c(trimws(input$group1), trimws(input$group2), trimws(input$group3)),
-      "Quantitative_Continuous" = c(trimws(input$group4), trimws(input$group5)),
-      "Qualitative_Nominal" = c(trimws(input$group6), trimws(input$group7)),
-      "Qualitative_Ordinal" = c(trimws(input$group8), trimws(input$group9))
+      "Quantitative_Continuous" = c(trimws(input$group4), trimws(input$group5), trimws(input$group6)),
+      "Qualitative_Nominal" = c(trimws(input$group7), trimws(input$group8), trimws(input$group9)),
+      "Qualitative_Ordinal" = c(trimws(input$group10), trimws(input$group11), trimws(input$group12))
     )
 
     stmt <- boastUtils::generateStatement(
@@ -1736,7 +1816,7 @@ server <- function(input, output, session) {
         score5 <- c(score5, -3)
       }
     }
-    for (i in input$match5) {
+    for (i in input$match4) {
       if (i == image4) {
         score5 <- c(score5, 5)
       } else {
@@ -1750,7 +1830,7 @@ server <- function(input, output, session) {
       "Quantitative_Discrete" = c(image1, input$match1),
       "Quantitative_Continuous" = c(image2, input$match2),
       "Qualitative_Nominal" = c(image3, input$match3),
-      "Qualitative_Ordinal" = c(image4, input$match5)
+      "Qualitative_Ordinal" = c(image4, input$match4)
     )
 
     stmt <- boastUtils::generateStatement(
@@ -1772,15 +1852,15 @@ server <- function(input, output, session) {
   )
   observeEvent(input$submitA, {
     if (summation$summationA[input$submitA] == 40) {
-      updateButton(session, "next2", disabled = FALSE)
+      updateButton(session, "toLvl2", disabled = FALSE)
     }
   })
   observeEvent(input$submitB, {
     if (summation$summationB[input$submitB] == 20) {
-      updateButton(session, "next3", disabled = FALSE)
+      updateButton(session, "toLvl3", disabled = FALSE)
     }
     else {
-      updateButton(session, "next3", disabled = TRUE)
+      updateButton(session, "toLvl3", disabled = TRUE)
     }
   })
 
@@ -1797,7 +1877,7 @@ server <- function(input, output, session) {
     eventExpr = input$submitC,
     handlerExpr = {
       observeEvent(
-        eventExpr = input$new,
+        eventExpr = input$newQLvl3,
         handlerExpr = {
           output$markc1 <- renderUI(
             img(src = NULL,width = 30)
@@ -1820,7 +1900,7 @@ server <- function(input, output, session) {
     eventExpr = input$submitC,
     handlerExpr = {
       observeEvent(
-        eventExpr = input$new,
+        eventExpr = input$newQLvl3,
         handlerExpr = {
           output$markc2 <- renderUI(
             img(src = NULL,width = 30)
@@ -1840,11 +1920,11 @@ server <- function(input, output, session) {
     })
   
   observeEvent(
-    eventExpr = input$new3,
+    eventExpr = input$newQLvl3,
     handlerExpr = {
       reset(id = "expl3")
       reset(id = "resp3")
-      reset(id ="submit")
+      reset(id = "submit")
     }
   )
 
@@ -1852,14 +1932,14 @@ server <- function(input, output, session) {
   summationC <- reactiveValues(correct1 = c(0), started = FALSE)
 
   observeEvent(
-    eventExpr = input$next3, 
+    eventExpr = input$toLvl3, 
     handlerExpr = {
       summationC$started <- TRUE
     }
   )
 
   observeEvent(
-    eventExpr = input$new, 
+    eventExpr = input$newQLvl3, 
     handlerExpr = {
       summationC$started <- TRUE
     }
@@ -1922,11 +2002,11 @@ server <- function(input, output, session) {
       if (summation$summationC[input$submitC] >= 5) {
         updateButton(
           session = session, 
-          inputId = "next4", 
+          inputId = "toLvl4", 
           disabled = FALSE)
         updateButton(
           session = session,
-          inputId = "new",
+          inputId = "newQLvl3",
           disabled = TRUE)
       }
     })
@@ -1936,7 +2016,7 @@ server <- function(input, output, session) {
     eventExpr = input$submitD,
     handlerExpr = {
       observeEvent(
-        eventExpr = input$new2,
+        eventExpr = input$newQLvl4,
         handlerExpr = {
           output$markd1 <- renderUI(
             img(src = NULL, width = 30)
@@ -1959,7 +2039,7 @@ server <- function(input, output, session) {
     eventExpr = input$submitD,
     handlerExpr = {
       observeEvent(
-        eventExpr = input$new2,
+        eventExpr = input$newQLvl4,
         handlerExpr = {
           output$markd2 <- renderUI(
             img(src = NULL,width = 30)
@@ -1982,7 +2062,7 @@ server <- function(input, output, session) {
     eventExpr = input$submitD,
     handlerExpr = {
       observeEvent(
-        eventExpr = input$new2,
+        eventExpr = input$newQLvl4,
         handlerExpr = {
           output$markd3 <- renderUI(
             img(src = NULL,width = 30)
@@ -2005,7 +2085,7 @@ server <- function(input, output, session) {
     eventExpr = input$submitD,
     handlerExpr = {
       observeEvent(
-        eventExpr = input$new2,
+        eventExpr = input$newQLvl4,
         handlerExpr = {
           output$markd3 <- renderUI(
             img(src = NULL,width = 30)
@@ -2025,13 +2105,15 @@ server <- function(input, output, session) {
     })
 
   observeEvent(
-    eventExpr = input$new2,
+    eventExpr = input$newQLvl4,
     handlerExpr = {
       reset(id = "expla")
       reset(id = "resp")
       reset(id = "conf")
     }
   )
+  
+  ### Scoring 
   summationD <- reactiveValues(correct1D = c(0), started = FALSE)
   test <- reactiveValues(A = FALSE, B = FALSE, C = TRUE)
 
@@ -2084,7 +2166,7 @@ server <- function(input, output, session) {
   observeEvent(input$submitD, {
     if (sum(c(summationD$correct1D)) >= 5) {
       updateButton(session, "finish", disabled = FALSE)
-      updateButton(session, "new2", disabled = FALSE)
+      updateButton(session, "newQLvl4", disabled = FALSE)
     }
   })
   
