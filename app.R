@@ -160,7 +160,7 @@ ui <- list(
           h2("Game"),
           tabsetPanel(
             id = "levels",
-            #type = "hidden",
+            type = "hidden",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
@@ -179,16 +179,16 @@ ui <- list(
                   radioGroupButtons(
                     inputId = "group1",
                     label = textOutput("disName1"),
-                    choices = c("Qualitative and Ordinal","Qualitative and 
-                                       Nominal", "Quantitative and Discrete", "
-                                       Quantitative and Continuous"),
+                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
+                                "Quantitative and Discrete", "Quantitative and Continuous"),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
                       yes = icon("ok", 
                                  lib = "glyphicon")
                     )
-                  )
+                  ),
+                  uiOutput(outputId = "answer1")
                 ),
                 column(
                   width = 4,
@@ -204,23 +204,24 @@ ui <- list(
                       yes = icon("ok", 
                                  lib = "glyphicon")
                     )
-                  )
+                  ),
+                  uiOutput(outputId = "answer2")
                 ),
                 column(
                   width = 4,
                   radioGroupButtons(
                     inputId = "group3",
                     label = textOutput("nomName1"),
-                    choices = c("Qualitative and Ordinal","Qualitative and 
-                                       Nominal", "Quantitative and Discrete", "
-                                       Quantitative and Continuous"),
+                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
+                                "Quantitative and Discrete", "Quantitative and Continuous"),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
                       yes = icon("ok", 
                                  lib = "glyphicon")
                     )
-                  )
+                  ),
+                  uiOutput(outputId = "answer3")
                 )
               ),
               fluidRow(
@@ -238,7 +239,8 @@ ui <- list(
                       yes = icon("ok", 
                                  lib = "glyphicon")
                     )
-                  )
+                  ),
+                  uiOutput(outputId = "answer4")
                 ),
                 column(
                   width = 4,
@@ -254,7 +256,8 @@ ui <- list(
                       yes = icon("ok", 
                                  lib = "glyphicon")
                     )
-                  )
+                  ),
+                  uiOutput(outputId = "answer5")
                 ),
                 column(
                   width = 4,
@@ -270,7 +273,8 @@ ui <- list(
                       yes = icon("ok", 
                                  lib = "glyphicon")
                     )
-                  )
+                  ),
+                  uiOutput(outputId = "answer6")
                 )
               ),
               fluidRow(
@@ -279,16 +283,16 @@ ui <- list(
                   radioGroupButtons(
                     inputId = "group7",
                     label = textOutput("nomName2"),
-                    choices = c("Qualitative and Ordinal","Qualitative and 
-                                       Nominal", "Quantitative and Discrete", "
-                                       Quantitative and Continuous"),
+                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
+                                "Quantitative and Discrete", "Quantitative and Continuous"),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
                       yes = icon("ok", 
                                  lib = "glyphicon")
                     )
-                  )
+                  ),
+                  uiOutput(outputId = "answer7")
                 ),
                 column(
                   width = 4,
@@ -304,7 +308,8 @@ ui <- list(
                       yes = icon("ok", 
                                  lib = "glyphicon")
                     )
-                  )
+                  ),
+                  uiOutput(outputId = "answer8")
                 ),
                 column(
                   width = 4,
@@ -320,7 +325,8 @@ ui <- list(
                       yes = icon("ok", 
                                  lib = "glyphicon")
                     )
-                  )
+                  ),
+                  uiOutput(outputId = "answer9")
                 )
               ),
               fluidRow(
@@ -338,49 +344,50 @@ ui <- list(
                       yes = icon("ok", 
                                  lib = "glyphicon")
                     )
-                  )
+                  ),
+                  uiOutput(outputId = "answer10")
                 ),
                 column(
                   width = 4,
                   radioGroupButtons(
                     inputId = "group11",
                     label = textOutput("nomName3"),
-                    choices = c("Qualitative and Ordinal","Qualitative and 
-                                       Nominal", "Quantitative and Discrete", "
-                                       Quantitative and Continuous"),
+                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
+                                "Quantitative and Discrete", "Quantitative and Continuous"),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
                       yes = icon("ok", 
                                  lib = "glyphicon")
                     )
-                  )
+                  ),
+                  uiOutput(outputId = "answer11")
                 ),
                 column(
                   width = 4,
                   radioGroupButtons(
                     inputId = "group12",
                     label = textOutput("ordName3"),
-                    choices = c("Qualitative and Ordinal","Qualitative and 
-                                       Nominal", "Quantitative and Discrete", "
-                                       Quantitative and Continuous"),
+                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
+                                "Quantitative and Discrete", "Quantitative and Continuous"),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
                       yes = icon("ok", 
                                  lib = "glyphicon")
                     )
-                  )
+                  ),
+                  uiOutput(outputId = "answer12")
                 )
               ),
-              hr(),
+              br(),
               ##### Buttons ----
               fluidRow(
                 column(
                   width = 1,
                   offset = 1,
                   bsButton(
-                    inputId = "clearA",
+                    inputId = "retryA",
                     label = "Retry"
                   )
                 ),
@@ -398,17 +405,16 @@ ui <- list(
                   bsButton(
                     inputId = "toLvl2",
                     label = "Next Level",
-                    disabled = FALSE
+                    disabled = TRUE
                   )
-                ),
-                hr(),
-                conditionalPanel(
-                  "input.submitA != 0",
-                  fluidRow(
-                    wellPanel(h3("You must score 20 points to move onto the next level."),
-                              verbatimTextOutput("scoreA"),
-                              class = "wellTransparent col-lg-4"
-                    )
+                )
+              ),
+              hr(),
+              conditionalPanel(
+                "input.submitA != 0",
+                fluidRow(
+                  wellPanel(h3("You must score 30 points to move onto the next level."),
+                            verbatimTextOutput("scoreA")
                   )
                 )
               )
@@ -525,7 +531,7 @@ ui <- list(
                   width = 1,
                   offset = 4,
                   bsButton(
-                    inputId = "toLvl3",
+                    inputId = "toBtwnLvls",
                     label = "Next Level",
                     disabled = TRUE 
                   )
@@ -537,7 +543,40 @@ ui <- list(
                 fluidRow(
                   wellPanel(h3("You must score 20 points to move onto the next level."),
                             verbatimTextOutput("scoreB"),
-                            class = "wellTransparent col-lg-4"
+                  )
+                )
+              )
+            ),
+            #### Page In Between Concepts 
+            tabPanel(
+              title = "Concept Seperator",
+              value = "d",
+              titlePanel("Upcoming Levels"),
+              fluidRow(
+                h3("Congrats on completing levels 1 and 2! Levels 1 and 2 were all about
+                   qualitative and quantitative variables. There are two more levels 
+                   after this that go over explanatory, response, and confounding variables.
+                   If you feel ready, press 'Next Level' to continue onto Level 3 and 4.
+                   If not, press 'Finish")
+              ),
+              br(),
+              br(),
+              br(),
+              fluidRow(
+                column(
+                  width = 1,
+                  offset = 4,
+                  bsButton(
+                    inputId = "finishLvl1and2",
+                    label = "Finish"
+                  )
+                ),
+                column(
+                  width = 1,
+                  offset = 1,
+                  bsButton(
+                    inputId = "toLvl3",
+                    label = "Next Level"
                   )
                 )
               )
@@ -589,7 +628,7 @@ ui <- list(
               br(),
               ##### Buttons ----
               conditionalPanel(
-                "input.toLvl3 != 0",
+                "input.toBtwnLvls != 0",
                 fluidRow(
                   column(
                     width = 1, 
@@ -744,23 +783,20 @@ ui <- list(
                 )
               )
             ),
-            #### Results ----
+            #### Results in Total ----
             tabPanel(
               title = "Results",
-              value = "d",
-              titlePanel(h1("Congratulations! You finished the game.")),
-              fluidRow(column(3, offset = 9, textOutput("timer5"))), br(), br(),
-              fluidPage(
-                fluidRow(h3("Your scores:")),
-                fluidRow(
-                  wellPanel(verbatimTextOutput("init"), class = "wellScore col-lg-4 col-md-6 col-sm-12"),
-                  wellPanel(verbatimTextOutput("end"), class = "wellScore col-lg-4 col-md-6 col-sm-12"),
-                  wellPanel(verbatimTextOutput("totalScore"), class = "wellScore col-lg-4 col-md-6 col-sm-12")
-                )
-              )
-            )
-          )
-        ),
+              value = "g",
+              titlePanel(h1("Congratulations! You finished the entire game!")),
+            ),
+        #### Results Level 1 and 2 Only ----
+        tabPanel(
+          title = "Results",
+          value = "h",
+          titlePanel(h1("Congratulations! You finished levels one and two!.")),
+        )
+      )
+    ),
         tabItem(
           ### References ----
           tabName = "references",
@@ -900,12 +936,34 @@ server <- function(input, output, session) {
   )
   
   observeEvent(
+    eventExpr = input$toBtwnLvls,
+    handlerExpr = {
+      updateTabsetPanel(
+        session = session,
+        inputId = "levels",
+        selected = 'd'
+      )
+    }
+  )
+  
+  observeEvent(
     eventExpr = input$toLvl3,
     handlerExpr = {
       updateTabsetPanel(
         session = session,
         inputId = "levels",
         selected = 'e'
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$finishLvl1and2,
+    handlerExpr = {
+      updateTabsetPanel(
+        session = session,
+        inputId = "levels",
+        selected = 'h'
       )
     }
   )
@@ -938,7 +996,7 @@ server <- function(input, output, session) {
       updateTabsetPanel(
         session = session, 
         inputId = "levels",
-        selected = "d")
+        selected = "g")
     })
   
     ## Init Bank A ----
@@ -1108,7 +1166,7 @@ server <- function(input, output, session) {
   })
 
   observeEvent(
-    eventExpr = input$toLvl3,
+    eventExpr = input$toBtwnLvls,
     handlerExpr = {
       index$index <- 18
       index$exp_index <- 2 * index$index - 1
@@ -1405,7 +1463,7 @@ server <- function(input, output, session) {
     updateButton(session, "submitA", disabled = TRUE)
   })
 
-  observeEvent(input$clearA, {
+  observeEvent(input$retryA, {
     updateButton(session, "submitA", disabled = FALSE)
   })
 
@@ -1475,8 +1533,14 @@ server <- function(input, output, session) {
 
   ## Begin Validation ----
   ### Validate Level 1 ----
+  
+  quanDis <- "Quantitative and Discrete"
+  quanCont <- "Quantitative and Continuous"
+  qualOrd <- "Qualitative and Ordinal"
+  qualNom <- "Qualitative and Nominal"
+  
   observeEvent(input$submitA, {
-    observeEvent(input$clearA, {
+    observeEvent(input$retryA, {
       output$answer1 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1484,7 +1548,7 @@ server <- function(input, output, session) {
     observe({
       output$answer1 <- renderUI({
         if (!is.null(input$group1)) {
-          valid <- any(trimws(input$group1) == bank[c(1:10), 3])
+          valid <- any(trimws(input$group1) == quanDis)
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1496,7 +1560,7 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$submitA, {
-    observeEvent(input$clearA, {
+    observeEvent(input$retryA, {
       output$answer2 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1504,7 +1568,7 @@ server <- function(input, output, session) {
     observe({
       output$answer2 <- renderUI({
         if (!is.null(input$group2)) {
-          valid <- any(trimws(input$group2) == bank[c(1:10), 3])
+          valid <- any(trimws(input$group2) == quanDis)
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1515,7 +1579,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clearA, {
+    observeEvent(input$retryA, {
       output$answer3 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1523,7 +1587,7 @@ server <- function(input, output, session) {
     observe({
       output$answer3 <- renderUI({
         if (!is.null(input$group3)) {
-          valid <- any(trimws(input$group3) == bank[c(1:10), 3])
+          valid <- any(trimws(input$group3) == qualNom)
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1534,7 +1598,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clearA, {
+    observeEvent(input$retryA, {
       output$answer4 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1542,7 +1606,7 @@ server <- function(input, output, session) {
     observe({
       output$answer4 <- renderUI({
         if (!is.null(input$group4)) {
-          valid <- any(trimws(input$group4) == bank[c(1:10), 3])
+          valid <- any(trimws(input$group4) == quanCont)
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1553,7 +1617,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clearA, {
+    observeEvent(input$retryA, {
       output$answer5 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1561,7 +1625,7 @@ server <- function(input, output, session) {
     observe({
       output$answer5 <- renderUI({
         if (!is.null(input$group5)) {
-          valid <- any(trimws(input$group5) == bank[c(11:36), 3])
+          valid <- any(trimws(input$group5) == quanDis)
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1572,7 +1636,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clearA, {
+    observeEvent(input$retryA, {
       output$answer6 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1580,7 +1644,7 @@ server <- function(input, output, session) {
     observe({
       output$answer6 <- renderUI({
         if (!is.null(input$group6)) {
-          valid <- any(trimws(input$group6) == bank[c(11:36), 3])
+          valid <- any(trimws(input$group6) == quanCont)
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1591,7 +1655,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clearA, {
+    observeEvent(input$retryA, {
       output$answer7 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1599,7 +1663,7 @@ server <- function(input, output, session) {
     observe({
       output$answer7 <- renderUI({
         if (!is.null(input$group7)) {
-          valid <- any(trimws(input$group7) == bank[c(11:36), 3])
+          valid <- any(trimws(input$group7) == qualNom)
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1610,7 +1674,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clearA, {
+    observeEvent(input$retryA, {
       output$answer8 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1618,7 +1682,7 @@ server <- function(input, output, session) {
     observe({
       output$answer8 <- renderUI({
         if (!is.null(input$group8)) {
-          valid <- any(trimws(input$group8) == bank[c(11:36), 3])
+          valid <- any(trimws(input$group8) == qualOrd)
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1629,7 +1693,7 @@ server <- function(input, output, session) {
     })
   })
   observeEvent(input$submitA, {
-    observeEvent(input$clearA, {
+    observeEvent(input$retryA, {
       output$answer9 <- renderUI({
         img(src = NULL, width = 30)
       })
@@ -1637,43 +1701,64 @@ server <- function(input, output, session) {
     observe({
       output$answer9 <- renderUI({
         if (!is.null(input$group9)) {
-          valid <- any(trimws(input$group9) == bank[c(37:56), 3])
+          valid <- any(trimws(input$group9) == quanCont)
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
           }
         }
+      })
+    })
+  })
+  observeEvent(input$submitA, {
+    observeEvent(input$retryA, {
+      output$answer10 <- renderUI({
+        img(src = NULL, width = 30)
       })
     })
     observe({
       output$answer10 <- renderUI({
         if (!is.null(input$group10)) {
-          valid <- any(trimws(input$group10) == bank[c(37:56), 3])
+          valid <- any(trimws(input$group10) == qualOrd)
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
           }
         }
+      })
+    })
+  })
+  observeEvent(input$submitA, {
+    observeEvent(input$retryA, {
+      output$answer11 <- renderUI({
+        img(src = NULL, width = 30)
       })
     })
     observe({
       output$answer11 <- renderUI({
         if (!is.null(input$group11)) {
-          valid <- any(trimws(input$group11) == bank[c(37:56), 3])
+          valid <- any(trimws(input$group11) == qualNom)
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
             img(src = "cross.PNG", width = 30)
           }
         }
+      })
+    })
+  })
+  observeEvent(input$submitA, {
+    observeEvent(input$retryA, {
+      output$answer12 <- renderUI({
+        img(src = NULL, width = 30)
       })
     })
     observe({
       output$answer12 <- renderUI({
         if (!is.null(input$group12)) {
-          valid <- any(trimws(input$group12) == bank[c(37:56), 3])
+          valid <- any(trimws(input$group12) == qualOrd)
           if (valid) {
             img(src = "check.PNG", width = 30)
           } else {
@@ -1682,6 +1767,69 @@ server <- function(input, output, session) {
         }
       })
     })
+  })
+  
+  #### Scoring 
+  summation <- reactiveValues(summationA = c(rep(0, 20)), summationB = c(rep(0, 20)), summationC = c(rep(0, 20)), summationD = c(rep(0, 20)), summationScore = c(rep(0, 20)))
+  
+  observeEvent(input$submitA, {
+    
+    score1 <- c()
+    score2 <- c()
+    score3 <- c()
+    score4 <- c()
+    
+    for (i in c(input$group1, input$group2, input$group5)) {
+      if (any(trimws(i) == quanDis)) {
+        score1 <- c(score1, 2.5)
+      } else {
+        score1 <- c(score1, 0)
+      }
+    }
+    for (i in c(input$group4, input$group6, input$group9)) {
+      if (any(trimws(i) == quanCont)) {
+        score2 <- c(score2, 2.5)
+      } else {
+        score2 <- c(score2, 0)
+      }
+    }
+    for (i in c(input$group8, input$group10, input$group12)) {
+      if (any(trimws(i) == qualOrd)) {
+        score3 <- c(score3, 2.5)
+      } else {
+        score3 <- c(score3, 0)
+      }
+    }
+    for (i in c(input$group3, input$group7, input$group11)) {
+      if (any(trimws(i) == qualNom)) {
+        score4 <- c(score4, 2.5)
+      } else {
+        score4 <- c(score4, 0)
+      }
+    }
+    
+    total <- sum(c(score1, score2, score3, score4))
+    
+    response <- list(
+      "Quantitative_Discrete" = c(trimws(input$group1), trimws(input$group2), trimws(input$group5)),
+      "Quantitative_Continuous" = c(trimws(input$group4), trimws(input$group9), trimws(input$group6)),
+      "Qualitative_Nominal" = c(trimws(input$group7), trimws(input$group3), trimws(input$group11)),
+      "Qualitative_Ordinal" = c(trimws(input$group10), trimws(input$group8), trimws(input$group12))
+    )
+    
+    stmt <- boastUtils::generateStatement(
+      session,
+      verb = "answered",
+      object = "level1",
+      description = "Drag the variables into the categories they belong to.",
+      interactionType = "matching",
+      response = jsonlite::toJSON(response),
+      success = total == 30
+    )
+    
+    boastUtils::storeStatement(session, stmt)
+    
+    summation$summationA[input$submitA] <- total
   })
 
   ### Validate Level 2 ----
@@ -1758,69 +1906,6 @@ server <- function(input, output, session) {
     })
   })
 
-  summation <- reactiveValues(summationA = c(rep(0, 20)), summationB = c(rep(0, 20)), summationC = c(rep(0, 20)), summationD = c(rep(0, 20)), summationScore = c(rep(0, 20)))
-
-  observeEvent(input$submitA, {
-
-    score1 <- c()
-    score2 <- c()
-    score3 <- c()
-    score4 <- c()
-
-    for (i in c(input$group1, input$group2, input$group3)) {
-      if (any(trimws(i) == bank[c(1:10), 3])) {
-        score1 <- c(score1, 2.5)
-      } else {
-        score1 <- c(score1, -1.5)
-      }
-    }
-    for (i in c(input$group4, input$group5, input$group6)) {
-      if (any(trimws(i) == bank[c(11:36), 3])) {
-        score2 <- c(score2, 2.5)
-      } else {
-        score2 <- c(score2, -1.5)
-      }
-    }
-    for (i in c(input$group7, input$group8, input$group9)) {
-      if (any(trimws(i) == bank[c(37:56), 3])) {
-        score3 <- c(score3, 2.5)
-      } else {
-        score3 <- c(score3, -1.5)
-      }
-    }
-    for (i in c(input$group10, input$group11, input$group12)) {
-      if (any(trimws(i) == bank[c(57:71), 3])) {
-        score3 <- c(score3, 2.5)
-      } else {
-        score3 <- c(score3, -1.5)
-      }
-    }
-
-
-    total <- sum(c(score1, score2, score3, score4))
-
-    response <- list(
-      "Quantitative_Discrete" = c(trimws(input$group1), trimws(input$group2), trimws(input$group3)),
-      "Quantitative_Continuous" = c(trimws(input$group4), trimws(input$group5), trimws(input$group6)),
-      "Qualitative_Nominal" = c(trimws(input$group7), trimws(input$group8), trimws(input$group9)),
-      "Qualitative_Ordinal" = c(trimws(input$group10), trimws(input$group11), trimws(input$group12))
-    )
-
-    stmt <- boastUtils::generateStatement(
-      session,
-      verb = "answered",
-      object = "level1",
-      description = "Drag the variables into the categories they belong to.",
-      interactionType = "matching",
-      response = jsonlite::toJSON(response),
-      success = total == 40
-    )
-
-    boastUtils::storeStatement(session, stmt)
-
-    summation$summationA[input$submitA] <- total
-  })
-
   observeEvent(input$submitB, {
     image1 <- numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]
     image2 <- numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]
@@ -1885,16 +1970,16 @@ server <- function(input, output, session) {
     count = 0
   )
   observeEvent(input$submitA, {
-    if (summation$summationA[input$submitA] == 40) {
+    if (summation$summationA[input$submitA] >= 30) {
       updateButton(session, "toLvl2", disabled = FALSE)
     }
   })
   observeEvent(input$submitB, {
     if (summation$summationB[input$submitB] == 20) {
-      updateButton(session, "toLvl3", disabled = FALSE)
+      updateButton(session, "toBtwnLvls", disabled = FALSE)
     }
     else {
-      updateButton(session, "toLvl3", disabled = TRUE)
+      updateButton(session, "toBtwnLvls", disabled = TRUE)
     }
   })
 
@@ -1966,7 +2051,7 @@ server <- function(input, output, session) {
   summationC <- reactiveValues(correct1 = c(0), started = FALSE)
 
   observeEvent(
-    eventExpr = input$toLvl3, 
+    eventExpr = input$toBtwnLvls, 
     handlerExpr = {
       summationC$started <- TRUE
     }
@@ -2044,6 +2129,40 @@ server <- function(input, output, session) {
           disabled = TRUE)
       }
     })
+  
+  ##### Progress Bar ----
+  observe(
+    if (sum(c(summationC$correct1)) == 1) {
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = 20
+      )
+    }
+    else if (sum(c(summationC$correct1)) == 2) {
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = 40
+      )
+    }
+    else if (sum(c(summationC$correct1)) == 3) {
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = 60
+      )
+    }
+    else if (sum(c(summationC$correct1)) == 4) {
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = "80"
+      )
+    }
+    else if (sum(c(summationC$correct1)) == 5) {
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = 100
+      )
+    }
+  )
 
   ### Validate Level 4 ----
   observeEvent(
@@ -2157,7 +2276,7 @@ server <- function(input, output, session) {
       success <- FALSE
       for (x in c(input$expla)) {
         
-        success <- (any(input$expla == key2[index2$explan,1]) & any(input$resp == key2[index2$respon,1])&any(input$conf== key2[index2$confou,1]))
+        success <- (any(input$expla == key2[index2$explan,1]) & any(input$resp == key2[index2$respon,1]) & any(input$conf == key2[index2$confou,1]))
         
         if (success) {
           summationD$correct1D <- c(summationD$correct1D, 1)
@@ -2204,136 +2323,7 @@ server <- function(input, output, session) {
     }
   })
   
-  ### Finish ----
-  observeEvent(input$finish, {
-    summation$summationA[which(summation$summationA == 0)] <- summation$summationA[input$submitA]
-    summation$summationB[which(summation$summationB == 0)] <- summation$summationB[input$submitB]
-    summation$summationScore <- summation$summationA + summation$summationB + 40
-  })
-  
-  output$init <- renderPrint({
-    if (any(summation$summationA != 0) & any(summation$summationB != 0)) {
-      initialScore <- summation$summationScore[which(summation$summationScore != 0)][1]
-    } else {
-      initialScore <- 0
-    }
-    
-    cat("Initial", "\n", initialScore)
-  })
-
-  final <- reactiveValues(final = 0)
-
-  observeEvent(input$finish, {
-
-    score1 <- c()
-    score2 <- c()
-    score3 <- c()
-    score4 <- c()
-    score5 <- c()
-
-    for (i in c(input$match1, input$drp2, input$drp3, input$drp4)) {
-      if (any(trimws(i) == bank[c(1:10), 3])) {
-        score1 <- c(score1, 2.5)
-      } else {
-        score1 <- c(score1, -1.5)
-      }
-    }
-    for (i in c(input$drp5, input$drp6, input$drp7, input$drp8)) {
-      if (any(trimws(i) == bank[c(11:36), 3])) {
-        score2 <- c(score2, 2.5)
-      } else {
-        score2 <- c(score2, -1.5)
-      }
-    }
-    for (i in c(input$drp9, input$match10, input$match11, input$match12)) {
-      if (any(trimws(i) == bank[c(37:56), 3])) {
-        score3 <- c(score3, 2.5)
-      } else {
-        score3 <- c(score3, -1.5)
-      }
-    }
-    for (i in c(input$match13, input$match14, input$match15, input$match16)) {
-      if (any(trimws(i) == bank[c(57:71), 3])) {
-        score4 <- c(score4, 2.5)
-      } else {
-        score4 <- c(score4, -1.5)
-      }
-    }
-    for (i in input$match1) {
-      if (i == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
-        score5 <- c(score5, 5)
-      } else {
-        score5 <- c(score5, -3)
-      }
-    }
-    for (i in input$match2) {
-      if (i == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
-        score5 <- c(score5, 5)
-      } else {
-        score5 <- c(score5, -3)
-      }
-    }
-    for (i in input$match3) {
-      if (i == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
-        score5 <- c(score5, 5)
-      } else {
-        score5 <- c(score5, -3)
-      }
-    }
-    for (i in input$match5) {
-      if (i == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
-        score5 <- c(score5, 5)
-      } else {
-        score5 <- c(score5, -3)
-      }
-    }
-
-    final$final <- sum(c(score1, score2, score3, score4, score5)) + 40
-  })
-
-  output$end <- renderPrint({
-    cat("Improved", "\n", final$final)
-  })
-
-  output$totalScore <- renderPrint({
-    cat("Total", "\n", round(as.numeric(summation$summationScore[1]) * (2 / 3) + as.numeric(final$final) * (1 / 3), digits = 1))
-  })
-
-  ##### Progress Bar Level 3 ----
-  observe(
-    if (sum(c(summationC$correct1)) == 1) {
-      output$barLevel3 <- updateProgressBar(
-        id = "barLevel3",
-        value = 20
-      )
-    }
-    else if (sum(c(summationC$correct1)) == 2) {
-      output$barLevel3 <- updateProgressBar(
-        id = "barLevel3",
-        value = 40
-      )
-    }
-    else if (sum(c(summationC$correct1)) == 3) {
-      output$barLevel3 <- updateProgressBar(
-        id = "barLevel3",
-        value = 60
-      )
-    }
-    else if (sum(c(summationC$correct1)) == 4) {
-      output$barLevel3 <- updateProgressBar(
-        id = "barLevel3",
-        value = "80"
-      )
-    }
-    else if (sum(c(summationC$correct1)) == 5) {
-      output$barLevel3 <- updateProgressBar(
-        id = "barLevel3",
-        value = 100
-      )
-    }
-  )
-
-  ##### Progress Bar Level 4 ----
+  ##### Progress Bar ----
   observe(
     if (sum(c(summationD$correct1D)) == 1) {
       output$barLevel4 <- updateProgressBar(
@@ -2366,6 +2356,102 @@ server <- function(input, output, session) {
       )
     }
   )
+  
+  ### Finish ----
+  observeEvent(input$finish, {
+    summation$summationA[which(summation$summationA == 0)] <- summation$summationA[input$submitA]
+    summation$summationB[which(summation$summationB == 0)] <- summation$summationB[input$submitB]
+    summation$summationScore <- summation$summationA + summation$summationB + 50
+  })
+  
+  output$init <- renderPrint({
+    if (any(summation$summationA != 0) & any(summation$summationB != 0)) {
+      initialScore <- summation$summationScore[which(summation$summationScore != 0)][1]
+    } else {
+      initialScore <- 0
+    }
+    
+    cat("Initial", "\n", initialScore)
+  })
+
+  final <- reactiveValues(final = 0)
+
+  observeEvent(input$finish, {
+
+    score1 <- c()
+    score2 <- c()
+    score3 <- c()
+    score4 <- c()
+    score5 <- c()
+
+    for (i in c(input$group1, input$group2, input$group5)) {
+      if (any(trimws(i) == quanDis)) {
+        score1 <- c(score1, 2.5)
+      } else {
+        score1 <- c(score1, 0)
+      }
+    }
+    for (i in c(input$group4, input$group6, input$group9)) {
+      if (any(trimws(i) == quanCont)) {
+        score2 <- c(score2, 2.5)
+      } else {
+        score2 <- c(score2, 0)
+      }
+    }
+    for (i in c(input$group8, input$group10, input$group12)) {
+      if (any(trimws(i) == qualOrd)) {
+        score3 <- c(score3, 2.5)
+      } else {
+        score3 <- c(score3, 0)
+      }
+    }
+    for (i in c(input$group3, input$group7, input$group11)) {
+      if (any(trimws(i) == qualNom)) {
+        score4 <- c(score4, 2.5)
+      } else {
+        score4 <- c(score4, 0)
+      }
+    }
+    for (i in input$match1) {
+      if (i == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
+        score5 <- c(score5, 5)
+      } else {
+        score5 <- c(score5, -3)
+      }
+    }
+    for (i in input$match2) {
+      if (i == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
+        score5 <- c(score5, 5)
+      } else {
+        score5 <- c(score5, -3)
+      }
+    }
+    for (i in input$match3) {
+      if (i == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
+        score5 <- c(score5, 5)
+      } else {
+        score5 <- c(score5, -3)
+      }
+    }
+    for (i in input$match4) {
+      if (i == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
+        score5 <- c(score5, 5)
+      } else {
+        score5 <- c(score5, -3)
+      }
+    }
+
+    final$final <- sum(c(score1, score2, score3, score4, score5)) + 50
+  })
+
+  output$end <- renderPrint({
+    cat("Improved", "\n", final$final)
+  })
+
+  output$totalScore <- renderPrint({
+    cat("Total", "\n", round(as.numeric(summation$summationScore[1]) * (2 / 3) + as.numeric(final$final) * (1 / 3), digits = 1))
+  })
+
   #### End Validation ----
 
   # Check button
