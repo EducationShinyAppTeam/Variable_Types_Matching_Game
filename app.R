@@ -888,6 +888,13 @@ server <- function(input, output, session) {
 
   ## Set timer with start, stop, restart, stop, and termination; and show the timer
   time <- reactiveValues(inc = 0, timer = reactiveTimer(1000), started = FALSE)
+  
+  attempts <- reactiveValues(
+    level1 = 0,
+    level2 = 0,
+    level3 = 0,
+    level4 = 0
+  )
 
   ## Setup questions and begin timer
   startGame <- function() {
@@ -1042,14 +1049,13 @@ server <- function(input, output, session) {
   
   ### Add labels 
   observeEvent(
-    eventExpr = input$retryA,
+    eventExpr = c(input$retryA, input$retryB),
     handlerExpr = {
       updateRadioButtons(
         session = session,
         inputId = "level1Q1",
         label = subsetBankA()$Variable[1]
       )
-      
     }
   )
   
@@ -1057,6 +1063,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
       if (input$level1Q1 == subsetBankA()$Type[1]) {
         print("success")
       } else {
