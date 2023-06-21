@@ -7,8 +7,12 @@ library(shinyBS)
 library(shinyalert)
 library(shinyWidgets)
 library(boastUtils)
+library(dplyr)
 
 source("variableFlowChart.R")
+
+level1Choices <- c("Qualitative and Ordinal","Qualitative and Nominal", 
+                   "Quantitative and Discrete", "Quantitative and Continuous")
 
 # Load Question Banks ----
 bank <- read.csv(file = "questionBank.csv", stringsAsFactors = FALSE)
@@ -176,18 +180,31 @@ ui <- list(
               fluidRow(
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
+                    inputId = "level1Q1",
+                    label = "TBG",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                )
+              ),
+              hr(),
+              h1("OLD"),
+              fluidRow(
+                column(
+                  width = 4,
+                  radioButtons(
                     inputId = "group1",
                     label = textOutput("disName1"), 
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
                     selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
+                    # direction = "vertical",
+                    # justified = TRUE,
+                    # checkIcon = list(
+                    #   yes = icon("ok", 
+                    #              lib = "glyphicon")
+                    # )
                   ),
                   uiOutput(outputId = "answer1"),
                 ),
@@ -1011,6 +1028,43 @@ server <- function(input, output, session) {
         selected = "g")
     })
   
+  ## New Level 1 Server Code ----
+  subsetBankA <- reactiveVal(
+    value = {
+      subsetBankA <- bank %>%
+        group_by(Type) %>%
+        slice_sample(n = 4)
+      
+      randOrderL1 <- sample(x = 1:16, size = 16, replace = FALSE)
+      subsetBankA[randOrderL1,]
+    }
+  )
+  
+  ### Add labels 
+  observeEvent(
+    eventExpr = input$retryA,
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q1",
+        label = subsetBankA()$Variable[1]
+      )
+      
+    }
+  )
+  
+  ### Check Answers 
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (input$level1Q1 == subsetBankA()$Type[1]) {
+        print("success")
+      } else {
+        print("failure")
+      }
+    }
+  )
+  
     ## Init Bank A ----
   numbers <- reactiveValues(dis = c(), cont = c(), nom = c(), ord = c())
   initBankA <- function() {
@@ -1019,6 +1073,8 @@ server <- function(input, output, session) {
     numbers$cont <- sample(11:36, 4)
     numbers$nom <- sample(37:56, 4)
     numbers$ord <- sample(57:71, 4)
+    
+    
 
     output$disID1 <- renderText({
       bank[numbers$dis[1], 2]
