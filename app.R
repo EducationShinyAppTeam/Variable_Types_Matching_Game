@@ -160,12 +160,12 @@ ui <- list(
           h2("Game"),
           tabsetPanel(
             id = "levels",
-            type = "hidden",
+            #type = "hidden",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
                value = "b",
-              titlePanel("Matching Variable Types"),
+              titlePanel("Matching Qualitative and Quantitaive Variables"),
               fluidRow(
                 p("Correctly match the variable type to each variable."),
                 p("To move onto the next level, you need correctly match all 12 variables.
@@ -178,9 +178,10 @@ ui <- list(
                   width = 4,
                   radioGroupButtons(
                     inputId = "group1",
-                    label = textOutput("disName1"),
+                    label = textOutput("disName1"), 
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
+                    selected = character(0),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
@@ -188,16 +189,16 @@ ui <- list(
                                  lib = "glyphicon")
                     )
                   ),
-                  uiOutput(outputId = "answer1")
+                  uiOutput(outputId = "answer1"),
                 ),
                 column(
                   width = 4,
                   radioGroupButtons(
                     inputId = "group2",
                     label = textOutput("disName2"),
-                    choices = c("Qualitative and Ordinal","Qualitative and 
-                                       Nominal", "Quantitative and Discrete", "
-                                       Quantitative and Continuous"),
+                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
+                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    selected = character(0),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
@@ -214,6 +215,7 @@ ui <- list(
                     label = textOutput("nomName1"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
+                    selected = character(0),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
@@ -230,9 +232,9 @@ ui <- list(
                   radioGroupButtons(
                     inputId = "group4",
                     label = textOutput("contName1"),
-                    choices = c("Qualitative and Ordinal","Qualitative and 
-                                       Nominal", "Quantitative and Discrete", "
-                                       Quantitative and Continuous"),
+                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
+                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    selected = character(0),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
@@ -247,9 +249,9 @@ ui <- list(
                   radioGroupButtons(
                     inputId = "group5",
                     label = textOutput("disName3"),
-                    choices = c("Qualitative and Ordinal","Qualitative and 
-                                       Nominal", "Quantitative and Discrete", "
-                                       Quantitative and Continuous"),
+                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
+                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    selected = character(0),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
@@ -264,9 +266,9 @@ ui <- list(
                   radioGroupButtons(
                     inputId = "group6",
                     label = textOutput("contName2"),
-                    choices = c("Qualitative and Ordinal","Qualitative and 
-                                       Nominal", "Quantitative and Discrete", "
-                                       Quantitative and Continuous"),
+                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
+                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    selected = character(0),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
@@ -285,6 +287,7 @@ ui <- list(
                     label = textOutput("nomName2"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
+                    selected = character(0),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
@@ -299,9 +302,9 @@ ui <- list(
                   radioGroupButtons(
                     inputId = "group8",
                     label = textOutput("ordName1"),
-                    choices = c("Qualitative and Ordinal","Qualitative and 
-                                       Nominal", "Quantitative and Discrete", "
-                                       Quantitative and Continuous"),
+                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
+                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    selected = character(0),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
@@ -316,9 +319,9 @@ ui <- list(
                   radioGroupButtons(
                     inputId = "group9",
                     label = textOutput("contName3"),
-                    choices = c("Qualitative and Ordinal","Qualitative and 
-                                       Nominal", "Quantitative and Discrete", "
-                                       Quantitative and Continuous"),
+                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
+                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    selected = character(0),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
@@ -335,9 +338,9 @@ ui <- list(
                   radioGroupButtons(
                     inputId = "group10",
                     label = textOutput("ordName2"),
-                    choices = c("Qualitative and Ordinal","Qualitative and 
-                                       Nominal", "Quantitative and Discrete", "
-                                       Quantitative and Continuous"),
+                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
+                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    selected = character(0),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
@@ -354,6 +357,7 @@ ui <- list(
                     label = textOutput("nomName3"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
+                    selected = character(0),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
@@ -370,6 +374,7 @@ ui <- list(
                     label = textOutput("ordName3"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
+                    selected = character(0),
                     direction = "vertical",
                     justified = TRUE,
                     checkIcon = list(
@@ -423,7 +428,7 @@ ui <- list(
             tabPanel(
               title = "Level 2",
               value = "c",
-              titlePanel("Identify in Plots"),
+              titlePanel("Quantitative and Qualitative Variables in Plots"),
               fluidRow(
                 p("Match the variable defined in the instructions of each plot
                        to the variable type."),
@@ -452,7 +457,8 @@ ui <- list(
                     selectInput(
                       inputId = "match1",
                       label = "Quantitative and Discrete",
-                      choices = c("A", "B", "C", "D")
+                      choices = c("A", "B", "C", "D"),
+                      selected = character(0)
                     ),
                     uiOutput(outputId = "answer13")
                   ),
@@ -461,7 +467,8 @@ ui <- list(
                     selectInput(
                       inputId = "match2",
                       label = "Quantitative and Continuous",
-                      choices = c("A", "B", "C", "D")
+                      choices = c("A", "B", "C", "D"),
+                      selected = character(0)
                     ),
                     uiOutput(outputId = "answer14")
                   )
@@ -472,7 +479,8 @@ ui <- list(
                     selectInput(
                       inputId = "match3",
                       label = "Qualitative and Nominal",
-                      choices = c("A", "B", "C", "D")
+                      choices = c("A", "B", "C", "D"),
+                      selected = character(0)
                     ),
                     uiOutput(outputId = "answer15")
                   ),
@@ -481,7 +489,8 @@ ui <- list(
                     selectInput(
                       inputId = "match4",
                       label = "Qualitative and Ordinal",
-                      choices = c("A", "B", "C", "D")
+                      choices = c("A", "B", "C", "D"),
+                      selected = character(0)
                     ),
                     uiOutput(outputId = "answer16")
                   )
@@ -553,11 +562,13 @@ ui <- list(
               value = "d",
               titlePanel("Upcoming Levels"),
               fluidRow(
-                h3("Congrats on completing levels 1 and 2! Levels 1 and 2 were all about
-                   qualitative and quantitative variables. There are two more levels 
-                   after this that go over explanatory, response, and confounding variables.
-                   If you feel ready, press 'Next Level' to continue onto Level 3 and 4.
-                   If not, press 'Finish")
+                h3("Congrats on completing levels 1 and 2!"),
+                p("Levels 1 and 2 were all about qualitative and quantitative variables. 
+                  There are two more levels after this that go over explanatory,
+                  response, and confounding variables. If you feel ready, press 
+                  'Next Level' to continue onto Level 3 and 4. If not, press 'Finish' 
+                  to go back to the overview page."),
+                style = "margin-left:15px"
               ),
               br(),
               br(),
@@ -567,7 +578,7 @@ ui <- list(
                   width = 1,
                   offset = 4,
                   bsButton(
-                    inputId = "finishLvl1and2",
+                    inputId = "splitToFinish",
                     label = "Finish"
                   )
                 ),
@@ -681,8 +692,7 @@ ui <- list(
             tabPanel(
               title = "Level 4",
               value = "f",
-              titlePanel(h1("Including Confounding Variables")),
-              
+              titlePanel("Explanatory, Response, and Confounding Variables"),
               fluidRow(
                 p("Correctly identify the variables to each variable type 
                   depending on the context given."),
@@ -787,16 +797,18 @@ ui <- list(
             tabPanel(
               title = "Results",
               value = "g",
-              titlePanel(h1("Congratulations! You finished the entire game!")),
-            ),
-        #### Results Level 1 and 2 Only ----
-        tabPanel(
-          title = "Results",
-          value = "h",
-          titlePanel(h1("Congratulations! You finished levels one and two!.")),
-        )
-      )
-    ),
+              titlePanel("Congratulations! You finished the game."),
+              fluidPage(
+                fluidRow(h3("Your scores:")),
+                fluidRow(
+                  wellPanel(verbatimTextOutput("init"), class = "wellScore col-lg-4 col-md-6 col-sm-12"),
+                  wellPanel(verbatimTextOutput("end"), class = "wellScore col-lg-4 col-md-6 col-sm-12"),
+                  wellPanel(verbatimTextOutput("totalScore"), class = "wellScore col-lg-4 col-md-6 col-sm-12")
+                )
+              )
+            )
+          )
+        ),
         tabItem(
           ### References ----
           tabName = "references",
@@ -958,12 +970,12 @@ server <- function(input, output, session) {
   )
   
   observeEvent(
-    eventExpr = input$finishLvl1and2,
+    eventExpr = input$splitToFinish,
     handlerExpr = {
       updateTabsetPanel(
         session = session,
-        inputId = "levels",
-        selected = 'h'
+        inputId = "pages",
+        selected = "overview"
       )
     }
   )
@@ -1550,9 +1562,9 @@ server <- function(input, output, session) {
         if (!is.null(input$group1)) {
           valid <- any(trimws(input$group1) == quanDis)
           if (valid) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1570,9 +1582,9 @@ server <- function(input, output, session) {
         if (!is.null(input$group2)) {
           valid <- any(trimws(input$group2) == quanDis)
           if (valid) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1589,9 +1601,9 @@ server <- function(input, output, session) {
         if (!is.null(input$group3)) {
           valid <- any(trimws(input$group3) == qualNom)
           if (valid) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1608,9 +1620,9 @@ server <- function(input, output, session) {
         if (!is.null(input$group4)) {
           valid <- any(trimws(input$group4) == quanCont)
           if (valid) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1627,9 +1639,9 @@ server <- function(input, output, session) {
         if (!is.null(input$group5)) {
           valid <- any(trimws(input$group5) == quanDis)
           if (valid) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1646,9 +1658,9 @@ server <- function(input, output, session) {
         if (!is.null(input$group6)) {
           valid <- any(trimws(input$group6) == quanCont)
           if (valid) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1665,9 +1677,9 @@ server <- function(input, output, session) {
         if (!is.null(input$group7)) {
           valid <- any(trimws(input$group7) == qualNom)
           if (valid) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1684,9 +1696,9 @@ server <- function(input, output, session) {
         if (!is.null(input$group8)) {
           valid <- any(trimws(input$group8) == qualOrd)
           if (valid) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1703,9 +1715,9 @@ server <- function(input, output, session) {
         if (!is.null(input$group9)) {
           valid <- any(trimws(input$group9) == quanCont)
           if (valid) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1722,9 +1734,9 @@ server <- function(input, output, session) {
         if (!is.null(input$group10)) {
           valid <- any(trimws(input$group10) == qualOrd)
           if (valid) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1741,9 +1753,9 @@ server <- function(input, output, session) {
         if (!is.null(input$group11)) {
           valid <- any(trimws(input$group11) == qualNom)
           if (valid) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1760,9 +1772,9 @@ server <- function(input, output, session) {
         if (!is.null(input$group12)) {
           valid <- any(trimws(input$group12) == qualOrd)
           if (valid) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1843,9 +1855,9 @@ server <- function(input, output, session) {
       output$answer13 <- renderUI({
         if (!is.null(input$match1)) {
           if (input$match1 == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1861,9 +1873,9 @@ server <- function(input, output, session) {
       output$answer14 <- renderUI({
         if (!is.null(input$match2)) {
           if (input$match2 == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1879,9 +1891,9 @@ server <- function(input, output, session) {
       output$answer15 <- renderUI({
         if (!is.null(input$match3)) {
           if (input$match3 == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -1897,9 +1909,9 @@ server <- function(input, output, session) {
       output$answer16 <- renderUI({
         if (!is.null(input$match4)) {
           if (input$match4 == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -2006,9 +2018,9 @@ server <- function(input, output, session) {
         eventExpr = output$markc1 <- renderUI(expr = {
           if (!is.null(input$explC)) {
             if (any(input$explC == key1[index$exp_index,1])) {
-              img(src = "check.PNG", width = 30)
+              renderIcon(icon = "correct", width = 30)
             } else {
-              img(src = "cross.PNG", width = 30)
+              renderIcon(icon = "incorrect", width = 30)
             }
           }
         })
@@ -2029,9 +2041,9 @@ server <- function(input, output, session) {
         eventExpr = output$markc2 <- renderUI(expr = {
           if (!is.null(input$respC)) {
             if (any(input$respC == key1[index$res_index,1])) {
-              img(src = "check.PNG", width = 30)
+              renderIcon(icon = "correct", width = 30)
             } else {
-              img(src = "cross.PNG", width = 30)
+              renderIcon(icon = "incorrect", width = 30)
             }
           }
         })
@@ -2179,9 +2191,9 @@ server <- function(input, output, session) {
       eventExpr = output$markd1 <- renderUI(expr = {
         if (!is.null(input$expla)) {
           if (any(input$expa == key2[index$explan,1])) {
-            img(src = "check.PNG", width = 30)
+            renderIcon(icon = "correct", width = 30)
           } else {
-            img(src = "cross.PNG", width = 30)
+            renderIcon(icon = "incorrect", width = 30)
           }
         }
       })
@@ -2202,9 +2214,9 @@ server <- function(input, output, session) {
         eventExpr = output$markd2 <- renderUI(expr = {
           if (!is.null(input$resp)) {
             if (any(input$resp == key2[index$respon,1])) {
-              img(src = "check.PNG", width = 30)
+              renderIcon(icon = "correct", width = 30)
             } else {
-              img(src = "cross.PNG", width = 30)
+              renderIcon(icon = "incorrect", width = 30)
             }
           }
         })
@@ -2225,9 +2237,9 @@ server <- function(input, output, session) {
         eventExpr = output$markd3 <- renderUI(expr = {
           if (!is.null(input$conf)) {
             if (any(input$conf == key2[index$confou,1])) {
-              img(src = "check.PNG", width = 30)
+              renderIcon(icon = "correct", width = 30)
             } else {
-              img(src = "cross.PNG", width = 30)
+              renderIcon(icon = "incorrect", width = 30)
             }
           }
         })
@@ -2248,9 +2260,9 @@ server <- function(input, output, session) {
         eventExpr = output$markd3 <- renderUI(expr = {
           if (!is.null(input$conf)) {
             if (any(input$conf == key2[index$confou,1])) {
-              img(src = "check.PNG", width = 30)
+              renderIcon(icon = "correct", width = 30)
             } else {
-              img(src = "cross.PNG", width = 30)
+              renderIcon(icon = "incorrect", width = 30)
             }
           }
         })
@@ -2388,28 +2400,28 @@ server <- function(input, output, session) {
       if (any(trimws(i) == quanDis)) {
         score1 <- c(score1, 2.5)
       } else {
-        score1 <- c(score1, 0)
+        score1 <- c(score1, -1.5)
       }
     }
     for (i in c(input$group4, input$group6, input$group9)) {
       if (any(trimws(i) == quanCont)) {
         score2 <- c(score2, 2.5)
       } else {
-        score2 <- c(score2, 0)
+        score2 <- c(score2, -1.5)
       }
     }
     for (i in c(input$group8, input$group10, input$group12)) {
       if (any(trimws(i) == qualOrd)) {
         score3 <- c(score3, 2.5)
       } else {
-        score3 <- c(score3, 0)
+        score3 <- c(score3, -1.5)
       }
     }
     for (i in c(input$group3, input$group7, input$group11)) {
       if (any(trimws(i) == qualNom)) {
         score4 <- c(score4, 2.5)
       } else {
-        score4 <- c(score4, 0)
+        score4 <- c(score4, -1.5)
       }
     }
     for (i in input$match1) {
