@@ -10,11 +10,13 @@ library(boastUtils)
 
 source("variableFlowChart.R")
 
-# Load Question Banks ----
+# Load Question Banks and Choices ----
 bank <- read.csv(file = "questionBank.csv", stringsAsFactors = FALSE)
 bankB <- read.csv(file = "questionBankB.csv", stringsAsFactors = FALSE)
 bankC <- read.csv(file = "questionBankC.csv", stringsAsFactors = FALSE)
 bankD <- read.csv(file = "questionBankD.csv", stringsAsFactors = FALSE)
+level1Choices <- c("Qualitative and Ordinal","Qualitative and Nominal", 
+                   "Quantitative and Discrete", "Quantitative and Continuous")
 
 # Define UI ----
 ui <- list(
@@ -179,8 +181,7 @@ ui <- list(
                   radioButtons(
                     inputId = "group1",
                     label = textOutput("disName1"), 
-                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
-                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    choices = level1Choices,
                     selected = character(0)
                   ),
                   uiOutput(outputId = "answer1"),
@@ -190,8 +191,7 @@ ui <- list(
                   radioButtons(
                     inputId = "group2",
                     label = textOutput("disName2"),
-                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
-                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    choices = level1Choices,
                     selected = character(0),
                   ),
                   uiOutput(outputId = "answer2")
@@ -201,8 +201,7 @@ ui <- list(
                   radioButtons(
                     inputId = "group3",
                     label = textOutput("nomName1"),
-                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
-                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    choices = level1Choices,
                     selected = character(0),
                   ),
                   uiOutput(outputId = "answer3")
@@ -214,8 +213,7 @@ ui <- list(
                   radioButtons(
                     inputId = "group4",
                     label = textOutput("contName1"),
-                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
-                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    choices = level1Choices,
                     selected = character(0),
                   ),
                   uiOutput(outputId = "answer4")
@@ -225,8 +223,7 @@ ui <- list(
                   radioButtons(
                     inputId = "group5",
                     label = textOutput("disName3"),
-                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
-                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    choices = level1Choices,
                     selected = character(0),
                   ),
                   uiOutput(outputId = "answer5")
@@ -236,8 +233,7 @@ ui <- list(
                   radioButtons(
                     inputId = "group6",
                     label = textOutput("contName2"),
-                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
-                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    choices = level1Choices,
                     selected = character(0),
                   ),
                   uiOutput(outputId = "answer6")
@@ -249,8 +245,7 @@ ui <- list(
                   radioButtons(
                     inputId = "group7",
                     label = textOutput("nomName2"),
-                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
-                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    choices = level1Choices,
                     selected = character(0),
                   ),
                   uiOutput(outputId = "answer7")
@@ -260,8 +255,7 @@ ui <- list(
                   radioButtons(
                     inputId = "group8",
                     label = textOutput("ordName1"),
-                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
-                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    choices = level1Choices,
                     selected = character(0),
                   ),
                   uiOutput(outputId = "answer8")
@@ -271,8 +265,7 @@ ui <- list(
                   radioButtons(
                     inputId = "group9",
                     label = textOutput("contName3"),
-                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
-                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    choices = level1Choices,
                     selected = character(0),
                   ),
                   uiOutput(outputId = "answer9")
@@ -284,8 +277,7 @@ ui <- list(
                   radioButtons(
                     inputId = "group10",
                     label = textOutput("ordName2"),
-                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
-                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    choices = level1Choices,
                     selected = character(0),
                   ),
                   uiOutput(outputId = "answer10")
@@ -295,8 +287,7 @@ ui <- list(
                   radioButtons(
                     inputId = "group11",
                     label = textOutput("nomName3"),
-                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
-                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    choices = level1Choices,
                     selected = character(0),
                   ),
                   uiOutput(outputId = "answer11")
@@ -306,8 +297,7 @@ ui <- list(
                   radioButtons(
                     inputId = "group12",
                     label = textOutput("ordName3"),
-                    choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
-                                "Quantitative and Discrete", "Quantitative and Continuous"),
+                    choices = level1Choices,
                     selected = character(0),
                   ),
                   uiOutput(outputId = "answer12")
@@ -484,7 +474,7 @@ ui <- list(
                 )
               )
             ),
-            #### Page In Between Concepts 
+            #### Page In Between Concepts ----
             tabPanel(
               title = "Concept Seperator",
               value = "d",
@@ -499,6 +489,13 @@ ui <- list(
                 style = "margin-left:15px"
               ),
               br(),
+              fluidRow(
+                wellPanel(
+                  h3("Results:"),
+                  verbatimTextOutput("level1Score"),
+                  verbatimTextOutput("level2Score"),
+                )
+              ),
               br(),
               br(),
               fluidRow(
@@ -721,7 +718,7 @@ ui <- list(
                 )
               )
             ),
-            #### Results in Total ----
+            #### Results ----
             tabPanel(
               title = "Results",
               value = "g",
@@ -733,7 +730,18 @@ ui <- list(
                   wellPanel(verbatimTextOutput("end"), class = "wellScore col-lg-4 col-md-6 col-sm-12"),
                   wellPanel(verbatimTextOutput("totalScore"), class = "wellScore col-lg-4 col-md-6 col-sm-12")
                 )
-              )
+              ),
+              br(),
+              fluidRow(
+                wellPanel(
+                  h3("Results:"),
+                  # Adding level 1 and 2 breaks it? Maybe because it is already else where
+                  #verbatimTextOutput("level1Score"),
+                  #verbatimTextOutput("level2Score"),
+                  verbatimTextOutput("level3Score"),
+                  verbatimTextOutput("level4Score"),
+                )
+              ),
             )
           )
         ),
@@ -1708,7 +1716,19 @@ server <- function(input, output, session) {
       })
     })
   })
-  
+  ### Below is me trying to figure out how to not get the icons changed 
+  observeEvent(
+    eventExpr = input$submitA, 
+    handlerExpr = {
+      observeEvent(
+        eventExpr = c(input$group1,input$group2,input$group3,input$group4,input$group5,input$group6,input$group7,input$group8,input$group9,input$group10,input$group11,input$group12),
+        handlerExpr = {
+          output$answer12 <- renderUI({
+            img(src = NULL, width = 30)
+          })
+        })
+    })
+      
   #### Scoring 
   summation <- reactiveValues(summationA = c(rep(0, 20)), summationB = c(rep(0, 20)), summationC = c(rep(0, 20)), summationD = c(rep(0, 20)), summationScore = c(rep(0, 20)))
   
@@ -2298,6 +2318,26 @@ server <- function(input, output, session) {
   )
   
   ### Finish ----
+  attempts <- reactiveValues(
+    level1 = 0,
+    level2 = 0,
+    level3 = 0,
+    level4 = 0
+  )
+  
+  output$level1Score <- renderPrint({
+    cat("It took", max(attempts$level1), "attempts to complete level 1.")
+  })
+  output$level2Score <- renderPrint({
+    cat("It took", max(attempts$level2), "attempts to complete level 2.")
+  })
+  output$level3Score <- renderPrint({
+    cat("It took", max(attempts$level3), "questions to complete level 3")
+  })
+  output$level4Score <- renderPrint({
+    cat("It took", max(attempts$level4), "questions to complete level 4.")
+  })
+  
   observeEvent(input$finish, {
     summation$summationA[which(summation$summationA == 0)] <- summation$summationA[input$submitA]
     summation$summationB[which(summation$summationB == 0)] <- summation$summationB[input$submitB]
