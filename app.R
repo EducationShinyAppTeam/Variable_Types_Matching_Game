@@ -7,6 +7,7 @@ library(shinyBS)
 library(shinyalert)
 library(shinyWidgets)
 library(boastUtils)
+library(dplyr)
 
 source("variableFlowChart.R")
 
@@ -173,6 +174,123 @@ ui <- list(
                 p("To move onto the next level, you need correctly match all 12 variables.
                 If you get one wrong, click retry to try again."),
                 style = "margin-left:15px",
+              ),
+              hr(),
+              fluidRow(
+                column(
+                  width = 4,
+                  radioButtons(
+                    inputId = "level1Q1",
+                    label = " ",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioButtons(
+                    inputId = "level1Q2",
+                    label = " ",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioButtons(
+                    inputId = "level1Q3",
+                    label = " ",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                )
+              ),
+              fluidRow(
+                column(
+                  width = 4,
+                  radioButtons(
+                    inputId = "level1Q4",
+                    label = " ",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioButtons(
+                    inputId = "level1Q5",
+                    label = " ",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioButtons(
+                    inputId = "level1Q6",
+                    label = " ",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                )
+              ),
+              fluidRow(
+                column(
+                  width = 4,
+                  radioButtons(
+                    inputId = "level1Q7",
+                    label = " ",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioButtons(
+                    inputId = "level1Q8",
+                    label = " ",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioButtons(
+                    inputId = "level1Q9",
+                    label = " ",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                )
+              ),
+              fluidRow(
+                column(
+                  width = 4,
+                  radioButtons(
+                    inputId = "level1Q10",
+                    label = " ",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioButtons(
+                    inputId = "level1Q11",
+                    label = " ",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                ),
+                column(
+                  width = 4,
+                  radioButtons(
+                    inputId = "level1Q12",
+                    label = " ",
+                    choices = level1Choices,
+                    selected = character(0)
+                  )
+                )
               ),
               hr(),
               fluidRow(
@@ -946,6 +1064,275 @@ server <- function(input, output, session) {
         inputId = "levels",
         selected = "g")
     })
+  
+  ## New Level 1 Server Code ----
+  # Move this to correct location when done
+  subsetBankA <- reactiveVal(
+    value = {
+      subsetBankA <- bank %>%
+        group_by(Type) %>%
+        slice_sample(n = 4)
+      
+      randOrderL1 <- sample(x = 1:16, size = 16, replace = FALSE)
+      subsetBankA[randOrderL1,]
+    }
+  )
+  
+  ### Add labels 
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q1",
+        label = subsetBankA()$Variable[1]
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q2",
+        label = subsetBankA()$Variable[2]
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q3",
+        label = subsetBankA()$Variable[3]
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q4",
+        label = subsetBankA()$Variable[4]
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q5",
+        label = subsetBankA()$Variable[5]
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q6",
+        label = subsetBankA()$Variable[6]
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q7",
+        label = subsetBankA()$Variable[7]
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q8",
+        label = subsetBankA()$Variable[8]
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q9",
+        label = subsetBankA()$Variable[9]
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q10",
+        label = subsetBankA()$Variable[10]
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q11",
+        label = subsetBankA()$Variable[11]
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "level1Q12",
+        label = subsetBankA()$Variable[12]
+      )
+    }
+  )
+  
+  ### Check Answers 
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (input$level1Q1 == subsetBankA()$Type[1]) {
+        renderIcon(icon = "correct", width = 30)
+      } else {
+        renderIcon(icon = "incorrect", width = 30)
+      }
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (input$level1Q2 == subsetBankA()$Type[2]) {
+        renderIcon(icon = "correct", width = 30)
+      } else {
+        renderIcon(icon = "incorrect", width = 30)
+      }
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (input$level1Q3 == subsetBankA()$Type[3]) {
+        renderIcon(icon = "correct", width = 30)
+      } else {
+        renderIcon(icon = "incorrect", width = 30)
+      }
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (input$level1Q4 == subsetBankA()$Type[4]) {
+        renderIcon(icon = "correct", width = 30)
+      } else {
+        renderIcon(icon = "incorrect", width = 30)
+      }
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (input$level1Q5 == subsetBankA()$Type[5]) {
+        renderIcon(icon = "correct", width = 30)
+      } else {
+        renderIcon(icon = "incorrect", width = 30)
+      }
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (input$level1Q6 == subsetBankA()$Type[6]) {
+        renderIcon(icon = "correct", width = 30)
+      } else {
+        renderIcon(icon = "incorrect", width = 30)
+      }
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (input$level1Q7 == subsetBankA()$Type[7]) {
+        renderIcon(icon = "correct", width = 30)
+      } else {
+        renderIcon(icon = "incorrect", width = 30)
+      }
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (input$level1Q8 == subsetBankA()$Type[8]) {
+        renderIcon(icon = "correct", width = 30)
+      } else {
+        renderIcon(icon = "incorrect", width = 30)
+      }
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (input$level1Q9 == subsetBankA()$Type[9]) {
+        renderIcon(icon = "correct", width = 30)
+      } else {
+        renderIcon(icon = "incorrect", width = 30)
+      }
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (input$level1Q10 == subsetBankA()$Type[10]) {
+        renderIcon(icon = "correct", width = 30)
+      } else {
+        renderIcon(icon = "incorrect", width = 30)
+      }
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (input$level1Q11 == subsetBankA()$Type[11]) {
+        renderIcon(icon = "correct", width = 30)
+      } else {
+        renderIcon(icon = "incorrect", width = 30)
+      }
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (input$level1Q12 == subsetBankA()$Type[12]) {
+        renderIcon(icon = "correct", width = 30)
+      } else {
+        renderIcon(icon = "incorrect", width = 30)
+      }
+    }
+  )
   
     ## Init Bank A ----
   numbers <- reactiveValues(dis = c(), cont = c(), nom = c(), ord = c())
