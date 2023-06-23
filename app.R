@@ -176,52 +176,34 @@ ui <- list(
               fluidRow(
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
                     inputId = "group1",
                     label = textOutput("disName1"), 
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
-                    selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
+                    selected = character(0)
                   ),
                   uiOutput(outputId = "answer1"),
                 ),
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
                     inputId = "group2",
                     label = textOutput("disName2"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
                     selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
                   ),
                   uiOutput(outputId = "answer2")
                 ),
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
                     inputId = "group3",
                     label = textOutput("nomName1"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
                     selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
                   ),
                   uiOutput(outputId = "answer3")
                 )
@@ -229,52 +211,34 @@ ui <- list(
               fluidRow(
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
                     inputId = "group4",
                     label = textOutput("contName1"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
                     selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
                   ),
                   uiOutput(outputId = "answer4")
                 ),
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
                     inputId = "group5",
                     label = textOutput("disName3"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
                     selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
                   ),
                   uiOutput(outputId = "answer5")
                 ),
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
                     inputId = "group6",
                     label = textOutput("contName2"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
                     selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
                   ),
                   uiOutput(outputId = "answer6")
                 )
@@ -282,52 +246,34 @@ ui <- list(
               fluidRow(
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
                     inputId = "group7",
                     label = textOutput("nomName2"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
                     selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
                   ),
                   uiOutput(outputId = "answer7")
                 ),
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
                     inputId = "group8",
                     label = textOutput("ordName1"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
                     selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
                   ),
                   uiOutput(outputId = "answer8")
                 ),
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
                     inputId = "group9",
                     label = textOutput("contName3"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
                     selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
                   ),
                   uiOutput(outputId = "answer9")
                 )
@@ -335,52 +281,34 @@ ui <- list(
               fluidRow(
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
                     inputId = "group10",
                     label = textOutput("ordName2"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
                     selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
                   ),
                   uiOutput(outputId = "answer10")
                 ),
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
                     inputId = "group11",
                     label = textOutput("nomName3"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
                     selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
                   ),
                   uiOutput(outputId = "answer11")
                 ),
                 column(
                   width = 4,
-                  radioGroupButtons(
+                  radioButtons(
                     inputId = "group12",
                     label = textOutput("ordName3"),
                     choices = c("Qualitative and Ordinal","Qualitative and Nominal", 
                                 "Quantitative and Discrete", "Quantitative and Continuous"),
                     selected = character(0),
-                    direction = "vertical",
-                    justified = TRUE,
-                    checkIcon = list(
-                      yes = icon("ok", 
-                                 lib = "glyphicon")
-                    )
                   ),
                   uiOutput(outputId = "answer12")
                 )
