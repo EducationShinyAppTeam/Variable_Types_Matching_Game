@@ -1,8 +1,8 @@
 # Things Needed for This Version
-Fix scores 
+Fix scores (SCORING LEVEL 1!!!!!!)
 Fix button layouts
+Previous button issue
 Fix icons after submit
-Fix headings/words
 Take new ss
 Get rid of all shiny DND code (reference not in)
 Add alt text!
