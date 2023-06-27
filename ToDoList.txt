@@ -2,18 +2,12 @@
 Fix scores 
 Fix button layouts
 Fix icons after submit
+Level 4 icons
 Fix headings/words
 Take new ss
 Get rid of all shiny DND code (reference not in)
-Rotate options for level 1? 
 Add alt text!
 Continue to generalize/write out code
-
-# Ask Prof Hatfield abt how I changed the validate level 1 to make it work and feedback
-
-Take new ss
-Get rid of all shinyDND related code (reference not currently in)
-
 
 # Ideas for Future Development
 - 
