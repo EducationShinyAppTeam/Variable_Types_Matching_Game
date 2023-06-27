@@ -305,7 +305,6 @@ ui <- list(
                   uiOutput(outputId = "level1A12")
                 )
               ),
-              hr(),
               br(),
               ##### Buttons ----
               fluidRow(
@@ -951,411 +950,7 @@ server <- function(input, output, session) {
         selected = "g")
     })
   
-  ## New Level 1 Server Code ----
-  # Move this to correct location when done
-  subsetBankA <- reactiveVal(
-    value = {
-      subsetBankA <- bank %>%
-        group_by(Type) %>%
-        slice_sample(n = 4)
-      
-      randOrderL1 <- sample(x = 1:16, size = 16, replace = FALSE)
-      subsetBankA[randOrderL1,]
-    }
-  )
-  
-  ### Add labels ----
-  observeEvent(
-    eventExpr = c(input$retryA),
-    handlerExpr = {
-      updateRadioButtons(
-        session = session,
-        inputId = "level1Q1",
-        label = subsetBankA()$Variable[1]
-      )
-    }
-  )
-  observeEvent(
-    eventExpr = c(input$retryA),
-    handlerExpr = {
-      updateRadioButtons(
-        session = session,
-        inputId = "level1Q2",
-        label = subsetBankA()$Variable[2]
-      )
-    }
-  )
-  observeEvent(
-    eventExpr = c(input$retryA),
-    handlerExpr = {
-      updateRadioButtons(
-        session = session,
-        inputId = "level1Q3",
-        label = subsetBankA()$Variable[3]
-      )
-    }
-  )
-  observeEvent(
-    eventExpr = c(input$retryA),
-    handlerExpr = {
-      updateRadioButtons(
-        session = session,
-        inputId = "level1Q4",
-        label = subsetBankA()$Variable[4]
-      )
-    }
-  )
-  observeEvent(
-    eventExpr = c(input$retryA),
-    handlerExpr = {
-      updateRadioButtons(
-        session = session,
-        inputId = "level1Q5",
-        label = subsetBankA()$Variable[5]
-      )
-    }
-  )
-  observeEvent(
-    eventExpr = c(input$retryA),
-    handlerExpr = {
-      updateRadioButtons(
-        session = session,
-        inputId = "level1Q6",
-        label = subsetBankA()$Variable[6]
-      )
-    }
-  )
-  observeEvent(
-    eventExpr = c(input$retryA),
-    handlerExpr = {
-      updateRadioButtons(
-        session = session,
-        inputId = "level1Q7",
-        label = subsetBankA()$Variable[7]
-      )
-    }
-  )
-  observeEvent(
-    eventExpr = c(input$retryA),
-    handlerExpr = {
-      updateRadioButtons(
-        session = session,
-        inputId = "level1Q8",
-        label = subsetBankA()$Variable[8]
-      )
-    }
-  )
-  observeEvent(
-    eventExpr = c(input$retryA),
-    handlerExpr = {
-      updateRadioButtons(
-        session = session,
-        inputId = "level1Q9",
-        label = subsetBankA()$Variable[9]
-      )
-    }
-  )
-  observeEvent(
-    eventExpr = c(input$retryA),
-    handlerExpr = {
-      updateRadioButtons(
-        session = session,
-        inputId = "level1Q10",
-        label = subsetBankA()$Variable[10]
-      )
-    }
-  )
-  observeEvent(
-    eventExpr = c(input$retryA),
-    handlerExpr = {
-      updateRadioButtons(
-        session = session,
-        inputId = "level1Q11",
-        label = subsetBankA()$Variable[11]
-      )
-    }
-  )
-  observeEvent(
-    eventExpr = c(input$retryA),
-    handlerExpr = {
-      updateRadioButtons(
-        session = session,
-        inputId = "level1Q12",
-        label = subsetBankA()$Variable[12]
-      )
-    }
-  )
-  
-  ### Check Answers ----
-  observeEvent(
-    eventExpr = input$submitA,
-    handlerExpr = {
-      attempts$level1 <- attempts$level1 + 1
-      observeEvent(input$retryA, {
-        output$level1Q1 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$level1A1 <- renderUI({
-          if (!is.null(input$level1Q1)) {
-            valid <- any(trimws(input$level1Q1) == quanDis)
-            if (valid) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitA,
-    handlerExpr = {
-      observeEvent(input$retryA, {
-        output$level1Q2 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$level1A2 <- renderUI({
-          if (!is.null(input$level1Q2)) {
-            valid <- any(trimws(input$level1Q2) == quanDis)
-            if (valid) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitA,
-    handlerExpr = {
-      observeEvent(input$retryA, {
-        output$level1Q3 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$level1A3 <- renderUI({
-          if (!is.null(input$level1Q3)) {
-            valid <- any(trimws(input$level1Q3) == quanDis)
-            if (valid) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitA,
-    handlerExpr = {
-      observeEvent(input$retryA, {
-        output$level1Q4 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$level1A4 <- renderUI({
-          if (!is.null(input$level1Q4)) {
-            valid <- any(trimws(input$level1Q4) == quanDis)
-            if (valid) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitA,
-    handlerExpr = {
-      observeEvent(input$retryA, {
-        output$level1Q5 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$level1A5 <- renderUI({
-          if (!is.null(input$level1Q5)) {
-            valid <- any(trimws(input$level1Q5) == quanDis)
-            if (valid) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitA,
-    handlerExpr = {
-      observeEvent(input$retryA, {
-        output$level1Q6 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$level1A6 <- renderUI({
-          if (!is.null(input$level1Q6)) {
-            valid <- any(trimws(input$level1Q6) == quanDis)
-            if (valid) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitA,
-    handlerExpr = {
-      observeEvent(input$retryA, {
-        output$level1Q7 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$level1A7 <- renderUI({
-          if (!is.null(input$level1Q7)) {
-            valid <- any(trimws(input$level1Q7) == quanDis)
-            if (valid) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitA,
-    handlerExpr = {
-      observeEvent(input$retryA, {
-        output$level1Q8 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$level1A8 <- renderUI({
-          if (!is.null(input$level1Q8)) {
-            valid <- any(trimws(input$level1Q8) == quanDis)
-            if (valid) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitA,
-    handlerExpr = {
-      observeEvent(input$retryA, {
-        output$level1Q9 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$level1A9 <- renderUI({
-          if (!is.null(input$level1Q9)) {
-            valid <- any(trimws(input$level1Q9) == quanDis)
-            if (valid) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitA,
-    handlerExpr = {
-      observeEvent(input$retryA, {
-        output$level1Q10 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$level1A10 <- renderUI({
-          if (!is.null(input$level1Q10)) {
-            valid <- any(trimws(input$level1Q10) == quanDis)
-            if (valid) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitA,
-    handlerExpr = {
-      observeEvent(input$retryA, {
-        output$level1Q11 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$level1A11 <- renderUI({
-          if (!is.null(input$level1Q11)) {
-            valid <- any(trimws(input$level1Q11) == quanDis)
-            if (valid) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitA,
-    handlerExpr = {
-      observeEvent(input$retryA, {
-        output$level1Q12 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$level1A12 <- renderUI({
-          if (!is.null(input$level1Q1)) {
-            valid <- any(trimws(input$level1Q12) == quanDis)
-            if (valid) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  
-  
-  # this is what is breaking it rn
-  #observeEvent(
-    #eventExpr = input$submitA,
-    #handlerExpr = {
-      #attempts$level1 <- attempts$level1 + 1
-      #if (input$level1Q1 == subsetBankA()$Type[1]) {
-        #renderIcon(icon = "correct", width = 30)
-      #} else {
-        #renderIcon(icon = "incorrect", width = 30)
-      #}
-    #}
-  #)
-  
-  
+
     ## Init Bank A ----
   numbers <- reactiveValues(dis = c(), cont = c(), nom = c(), ord = c())
   initBankA <- function() {
@@ -1365,102 +960,137 @@ server <- function(input, output, session) {
     numbers$nom <- sample(37:56, 4)
     numbers$ord <- sample(57:71, 4)
 
-    output$disID1 <- renderText({
-      bank[numbers$dis[1], 2]
-    })
-
-    output$disID2 <- renderText({
-      bank[numbers$dis[2], 2]
-    })
-
-    output$disID3 <- renderText({
-      bank[numbers$dis[3], 2]
-    })
-
-    output$disName1 <- renderText({
-      bank[numbers$dis[1], 3]
-    })
-
-    output$disName2 <- renderText({
-      bank[numbers$dis[2], 3]
-    })
-
-    output$disName3 <- renderText({
-      bank[numbers$dis[3], 3]
-    })
-
-
-    output$contID1 <- renderText({
-      bank[numbers$cont[1], 2]
-    })
-
-    output$contID2 <- renderText({
-      bank[numbers$cont[2], 2]
-    })
-
-    output$contID3 <- renderText({
-      bank[numbers$cont[3], 2]
-    })
-
-    output$contName1 <- renderText({
-      bank[numbers$cont[1], 3]
-    })
-
-    output$contName2 <- renderText({
-      bank[numbers$cont[2], 3]
-    })
-
-    output$contName3 <- renderText({
-      bank[numbers$cont[3], 3]
-    })
-
-    output$nomID1 <- renderText({
-      bank[numbers$nom[1], 2]
-    })
-
-    output$nomID2 <- renderText({
-      bank[numbers$nom[2], 2]
-    })
-
-    output$nomID3 <- renderText({
-      bank[numbers$nom[3], 2]
-    })
-
-    output$nomName1 <- renderText({
-      bank[numbers$nom[1], 3]
-    })
-
-    output$nomName2 <- renderText({
-      bank[numbers$nom[2], 3]
-    })
-
-    output$nomName3 <- renderText({
-      bank[numbers$nom[3], 3]
-    })
-
-    output$ordID1 <- renderText({
-      bank[numbers$ord[1], 2]
-    })
-
-    output$ordID2 <- renderText({
-      bank[numbers$ord[2], 2]
-    })
-
-    output$ordID3 <- renderText({
-      bank[numbers$ord[3], 2]
-    })
-
-    output$ordName1 <- renderText({
-      bank[numbers$ord[1], 3]
-    })
-
-    output$ordName2 <- renderText({
-      bank[numbers$ord[2], 3]
-    })
-
-    output$ordName3 <- renderText({
-      bank[numbers$ord[3], 3]
-    })
+    subsetBankA <- reactiveVal(
+      value = {
+        subsetBankA <- bank %>%
+          group_by(Type) %>%
+          slice_sample(n = 4)
+        
+        randOrderL1 <- sample(x = 1:16, size = 16, replace = FALSE)
+        subsetBankA[randOrderL1,]
+      }
+    )
+    
+    observeEvent(
+      eventExpr = c(input$retryA),
+      handlerExpr = {
+        updateRadioButtons(
+          session = session,
+          inputId = "level1Q1",
+          label = subsetBankA()$Variable[1]
+        )
+      }
+    )
+    observeEvent(
+      eventExpr = c(input$retryA),
+      handlerExpr = {
+        updateRadioButtons(
+          session = session,
+          inputId = "level1Q2",
+          label = subsetBankA()$Variable[2]
+        )
+      }
+    )
+    observeEvent(
+      eventExpr = c(input$retryA),
+      handlerExpr = {
+        updateRadioButtons(
+          session = session,
+          inputId = "level1Q3",
+          label = subsetBankA()$Variable[3]
+        )
+      }
+    )
+    observeEvent(
+      eventExpr = c(input$retryA),
+      handlerExpr = {
+        updateRadioButtons(
+          session = session,
+          inputId = "level1Q4",
+          label = subsetBankA()$Variable[4]
+        )
+      }
+    )
+    observeEvent(
+      eventExpr = c(input$retryA),
+      handlerExpr = {
+        updateRadioButtons(
+          session = session,
+          inputId = "level1Q5",
+          label = subsetBankA()$Variable[5]
+        )
+      }
+    )
+    observeEvent(
+      eventExpr = c(input$retryA),
+      handlerExpr = {
+        updateRadioButtons(
+          session = session,
+          inputId = "level1Q6",
+          label = subsetBankA()$Variable[6]
+        )
+      }
+    )
+    observeEvent(
+      eventExpr = c(input$retryA),
+      handlerExpr = {
+        updateRadioButtons(
+          session = session,
+          inputId = "level1Q7",
+          label = subsetBankA()$Variable[7]
+        )
+      }
+    )
+    observeEvent(
+      eventExpr = c(input$retryA),
+      handlerExpr = {
+        updateRadioButtons(
+          session = session,
+          inputId = "level1Q8",
+          label = subsetBankA()$Variable[8]
+        )
+      }
+    )
+    observeEvent(
+      eventExpr = c(input$retryA),
+      handlerExpr = {
+        updateRadioButtons(
+          session = session,
+          inputId = "level1Q9",
+          label = subsetBankA()$Variable[9]
+        )
+      }
+    )
+    observeEvent(
+      eventExpr = c(input$retryA),
+      handlerExpr = {
+        updateRadioButtons(
+          session = session,
+          inputId = "level1Q10",
+          label = subsetBankA()$Variable[10]
+        )
+      }
+    )
+    observeEvent(
+      eventExpr = c(input$retryA),
+      handlerExpr = {
+        updateRadioButtons(
+          session = session,
+          inputId = "level1Q11",
+          label = subsetBankA()$Variable[11]
+        )
+      }
+    )
+    observeEvent(
+      eventExpr = c(input$retryA),
+      handlerExpr = {
+        updateRadioButtons(
+          session = session,
+          inputId = "level1Q12",
+          label = subsetBankA()$Variable[12]
+        )
+      }
+    )
   }
 
   ## Init Bank B ----
@@ -1921,235 +1551,275 @@ server <- function(input, output, session) {
   qualOrdinal <- "Qualitative and Ordinal"
   qualNominal <- "Qualitative and Nominal"
   
-  # observeEvent(input$submitA, {
-  #   observeEvent(input$retryA, {
-  #     output$answer1 <- renderUI({
-  #       img(src = NULL, width = 30)
-  #     })
-  #   })
-  #   observe({
-  #     output$answer1 <- renderUI({
-  #       if (!is.null(input$group1)) {
-  #         valid <- any(trimws(input$group1) == quanDis)
-  #         if (valid) {
-  #           renderIcon(icon = "correct", width = 30)
-  #         } else {
-  #           renderIcon(icon = "incorrect", width = 30)
-  #         }
-  #       }
-  #     })
-  #   })
-  # })
-  # 
-  # observeEvent(input$submitA, {
-  #   observeEvent(input$retryA, {
-  #     output$answer2 <- renderUI({
-  #       img(src = NULL, width = 30)
-  #     })
-  #   })
-  #   observe({
-  #     output$answer2 <- renderUI({
-  #       if (!is.null(input$group2)) {
-  #         valid <- any(trimws(input$group2) == quanDis)
-  #         if (valid) {
-  #           renderIcon(icon = "correct", width = 30)
-  #         } else {
-  #           renderIcon(icon = "incorrect", width = 30)
-  #         }
-  #       }
-  #     })
-  #   })
-  # })
-  # observeEvent(input$submitA, {
-  #   observeEvent(input$retryA, {
-  #     output$answer3 <- renderUI({
-  #       img(src = NULL, width = 30)
-  #     })
-  #   })
-  #   observe({
-  #     output$answer3 <- renderUI({
-  #       if (!is.null(input$group3)) {
-  #         valid <- any(trimws(input$group3) == qualNom)
-  #         if (valid) {
-  #           renderIcon(icon = "correct", width = 30)
-  #         } else {
-  #           renderIcon(icon = "incorrect", width = 30)
-  #         }
-  #       }
-  #     })
-  #   })
-  # })
-  # observeEvent(input$submitA, {
-  #   observeEvent(input$retryA, {
-  #     output$answer4 <- renderUI({
-  #       img(src = NULL, width = 30)
-  #     })
-  #   })
-  #   observe({
-  #     output$answer4 <- renderUI({
-  #       if (!is.null(input$group4)) {
-  #         valid <- any(trimws(input$group4) == quanCont)
-  #         if (valid) {
-  #           renderIcon(icon = "correct", width = 30)
-  #         } else {
-  #           renderIcon(icon = "incorrect", width = 30)
-  #         }
-  #       }
-  #     })
-  #   })
-  # })
-  # observeEvent(input$submitA, {
-  #   observeEvent(input$retryA, {
-  #     output$answer5 <- renderUI({
-  #       img(src = NULL, width = 30)
-  #     })
-  #   })
-  #   observe({
-  #     output$answer5 <- renderUI({
-  #       if (!is.null(input$group5)) {
-  #         valid <- any(trimws(input$group5) == quanDis)
-  #         if (valid) {
-  #           renderIcon(icon = "correct", width = 30)
-  #         } else {
-  #           renderIcon(icon = "incorrect", width = 30)
-  #         }
-  #       }
-  #     })
-  #   })
-  # })
-  # observeEvent(input$submitA, {
-  #   observeEvent(input$retryA, {
-  #     output$answer6 <- renderUI({
-  #       img(src = NULL, width = 30)
-  #     })
-  #   })
-  #   observe({
-  #     output$answer6 <- renderUI({
-  #       if (!is.null(input$group6)) {
-  #         valid <- any(trimws(input$group6) == quanCont)
-  #         if (valid) {
-  #           renderIcon(icon = "correct", width = 30)
-  #         } else {
-  #           renderIcon(icon = "incorrect", width = 30)
-  #         }
-  #       }
-  #     })
-  #   })
-  # })
-  # observeEvent(input$submitA, {
-  #   observeEvent(input$retryA, {
-  #     output$answer7 <- renderUI({
-  #       img(src = NULL, width = 30)
-  #     })
-  #   })
-  #   observe({
-  #     output$answer7 <- renderUI({
-  #       if (!is.null(input$group7)) {
-  #         valid <- any(trimws(input$group7) == qualNom)
-  #         if (valid) {
-  #           renderIcon(icon = "correct", width = 30)
-  #         } else {
-  #           renderIcon(icon = "incorrect", width = 30)
-  #         }
-  #       }
-  #     })
-  #   })
-  # })
-  # observeEvent(input$submitA, {
-  #   observeEvent(input$retryA, {
-  #     output$answer8 <- renderUI({
-  #       img(src = NULL, width = 30)
-  #     })
-  #   })
-  #   observe({
-  #     output$answer8 <- renderUI({
-  #       if (!is.null(input$group8)) {
-  #         valid <- any(trimws(input$group8) == qualOrd)
-  #         if (valid) {
-  #           renderIcon(icon = "correct", width = 30)
-  #         } else {
-  #           renderIcon(icon = "incorrect", width = 30)
-  #         }
-  #       }
-  #     })
-  #   })
-  # })
-  # observeEvent(input$submitA, {
-  #   observeEvent(input$retryA, {
-  #     output$answer9 <- renderUI({
-  #       img(src = NULL, width = 30)
-  #     })
-  #   })
-  #   observe({
-  #     output$answer9 <- renderUI({
-  #       if (!is.null(input$group9)) {
-  #         valid <- any(trimws(input$group9) == quanCont)
-  #         if (valid) {
-  #           renderIcon(icon = "correct", width = 30)
-  #         } else {
-  #           renderIcon(icon = "incorrect", width = 30)
-  #         }
-  #       }
-  #     })
-  #   })
-  # })
-  # observeEvent(input$submitA, {
-  #   observeEvent(input$retryA, {
-  #     output$answer10 <- renderUI({
-  #       img(src = NULL, width = 30)
-  #     })
-  #   })
-  #   observe({
-  #     output$answer10 <- renderUI({
-  #       if (!is.null(input$group10)) {
-  #         valid <- any(trimws(input$group10) == qualOrd)
-  #         if (valid) {
-  #           renderIcon(icon = "correct", width = 30)
-  #         } else {
-  #           renderIcon(icon = "incorrect", width = 30)
-  #         }
-  #       }
-  #     })
-  #   })
-  # })
-  # observeEvent(input$submitA, {
-  #   observeEvent(input$retryA, {
-  #     output$answer11 <- renderUI({
-  #       img(src = NULL, width = 30)
-  #     })
-  #   })
-  #   observe({
-  #     output$answer11 <- renderUI({
-  #       if (!is.null(input$group11)) {
-  #         valid <- any(trimws(input$group11) == qualNom)
-  #         if (valid) {
-  #           renderIcon(icon = "correct", width = 30)
-  #         } else {
-  #           renderIcon(icon = "incorrect", width = 30)
-  #         }
-  #       }
-  #     })
-  #   })
-  # })
-  # observeEvent(input$submitA, {
-  #   observeEvent(input$retryA, {
-  #     output$answer12 <- renderUI({
-  #       img(src = NULL, width = 30)
-  #     })
-  #   })
-  #   observe({
-  #     output$answer12 <- renderUI({
-  #       if (!is.null(input$group12)) {
-  #         valid <- any(trimws(input$group12) == qualOrd)
-  #         if (valid) {
-  #           renderIcon(icon = "correct", width = 30)
-  #         } else {
-  #           renderIcon(icon = "incorrect", width = 30)
-  #         }
-  #       }
-  #     })
-  #   })
-  # })
+  ### Check Answers ----
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      observeEvent(input$retryA, {
+        output$level1Q1 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$level1A1 <- renderUI({
+          if (!is.null(input$level1Q1)) {
+            valid <- any(trimws(input$level1Q1) == quanDis)
+            if (valid) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      observeEvent(input$retryA, {
+        output$level1Q2 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$level1A2 <- renderUI({
+          if (!is.null(input$level1Q2)) {
+            valid <- any(trimws(input$level1Q2) == quanDis)
+            if (valid) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      observeEvent(input$retryA, {
+        output$level1Q3 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$level1A3 <- renderUI({
+          if (!is.null(input$level1Q3)) {
+            valid <- any(trimws(input$level1Q3) == quanDis)
+            if (valid) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      observeEvent(input$retryA, {
+        output$level1Q4 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$level1A4 <- renderUI({
+          if (!is.null(input$level1Q4)) {
+            valid <- any(trimws(input$level1Q4) == quanDis)
+            if (valid) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      observeEvent(input$retryA, {
+        output$level1Q5 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$level1A5 <- renderUI({
+          if (!is.null(input$level1Q5)) {
+            valid <- any(trimws(input$level1Q5) == quanDis)
+            if (valid) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      observeEvent(input$retryA, {
+        output$level1Q6 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$level1A6 <- renderUI({
+          if (!is.null(input$level1Q6)) {
+            valid <- any(trimws(input$level1Q6) == quanDis)
+            if (valid) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      observeEvent(input$retryA, {
+        output$level1Q7 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$level1A7 <- renderUI({
+          if (!is.null(input$level1Q7)) {
+            valid <- any(trimws(input$level1Q7) == quanDis)
+            if (valid) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      observeEvent(input$retryA, {
+        output$level1Q8 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$level1A8 <- renderUI({
+          if (!is.null(input$level1Q8)) {
+            valid <- any(trimws(input$level1Q8) == quanDis)
+            if (valid) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      observeEvent(input$retryA, {
+        output$level1Q9 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$level1A9 <- renderUI({
+          if (!is.null(input$level1Q9)) {
+            valid <- any(trimws(input$level1Q9) == quanDis)
+            if (valid) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      observeEvent(input$retryA, {
+        output$level1Q10 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$level1A10 <- renderUI({
+          if (!is.null(input$level1Q10)) {
+            valid <- any(trimws(input$level1Q10) == quanDis)
+            if (valid) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      observeEvent(input$retryA, {
+        output$level1Q11 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$level1A11 <- renderUI({
+          if (!is.null(input$level1Q11)) {
+            valid <- any(trimws(input$level1Q11) == quanDis)
+            if (valid) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      observeEvent(input$retryA, {
+        output$level1Q12 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$level1A12 <- renderUI({
+          if (!is.null(input$level1Q1)) {
+            valid <- any(trimws(input$level1Q12) == quanDis)
+            if (valid) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  
+  
+  # this is what is breaking it rn
+  #observeEvent(
+  #eventExpr = input$submitA,
+  #handlerExpr = {
+  #attempts$level1 <- attempts$level1 + 1
+  #if (input$level1Q1 == subsetBankA()$Type[1]) {
+  #renderIcon(icon = "correct", width = 30)
+  #} else {
+  #renderIcon(icon = "incorrect", width = 30)
+  #}
+  #}
+  #)
+  
   ### Below is me trying to figure out how to not get the icons changed 
   observeEvent(
     eventExpr = input$submitA, 

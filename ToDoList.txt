@@ -2,7 +2,6 @@
 Fix scores 
 Fix button layouts
 Fix icons after submit
-Level 4 icons
 Fix headings/words
 Take new ss
 Get rid of all shiny DND code (reference not in)
