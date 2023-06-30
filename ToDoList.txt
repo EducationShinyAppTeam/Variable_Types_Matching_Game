@@ -4,7 +4,7 @@ Fix button layouts
 Previous button issue
 Fix icons after submit
 Take new ss
-Get rid of all shiny DND code (reference not in)
+Add dplyr reference
 Add alt text!
 Continue to generalize/write out code
 
