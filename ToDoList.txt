@@ -1,10 +1,9 @@
 # Things Needed for This Version
-Fix scores (SCORING LEVEL 1!!!!!!)
 Fix button layouts
 Previous button issue
-Fix icons after submit
+Fix icons after submit (level 2)
+toLvl4 not working? 
 Take new ss
-Add dplyr reference
 Add alt text!
 Continue to generalize/write out code
 

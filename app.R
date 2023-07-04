@@ -15,10 +15,10 @@ bankA <- read.csv(file = "questionBank.csv", stringsAsFactors = FALSE)
 bankB <- read.csv(file = "questionBankB.csv", stringsAsFactors = FALSE)
 bankC <- read.csv(file = "questionBankC.csv", stringsAsFactors = FALSE)
 bankD <- read.csv(file = "questionBankD.csv", stringsAsFactors = FALSE)
-level1Choices <- c("Qualitative and Nominal" = "QualNominal",
-                   "Qualitative and Ordinal" = "QualOrdinal", 
-                   "Quantitative and Discrete" = "QuanDiscrete", 
-                   "Quantitative and Continuous" = "QuanContinuous")
+level1Choices <- c("Quantitative and Discrete" = "QuanDiscrete", 
+                   "Quantitative and Continuous" = "QuanContinuous",
+                   "Qualitative and Nominal" = "QualNominal",
+                   "Qualitative and Ordinal" = "QualOrdinal")
 level2Choices <- c("","A", "B", "C", "D")
 
 # Define UI ----
@@ -797,6 +797,12 @@ ui <- list(
             Widgets for Shiny. (v0.7.6). Avaliable from 
             https://cran.r-project.org/web/packages/shinyWidgets/index.html"
           ),
+          p(
+            class = "hangingindent",
+            "Wickham, H., François, R., Henry, L., Müller, K., and Vaughan, D.
+            (2023). dplyr: A grammar of data manipulation. (v1.1.2). [R Package].
+            Available from https://CRAN.R-project.org/package=dplyr"
+          ),
           br(),
           br(),
           br(),
@@ -951,6 +957,79 @@ server <- function(input, output, session) {
         inputId = "levels",
         selected = "g")
     })
+  
+  ## Submit Observers ----
+  observeEvent(input$submitA, {
+    updateButton(session, "submitA", disabled = TRUE)
+  })
+  
+  observeEvent(input$retryA, {
+    updateButton(session, "submitA", disabled = FALSE)
+  })
+  
+  observeEvent(input$submitB, {
+    updateButton(session, "submitB", disabled = TRUE)
+  })
+  
+  observeEvent(input$clearB, {
+    updateButton(session, "submitB", disabled = FALSE)
+  })
+  
+  observeEvent(input$submitC, {
+    updateButton(session, "submitC", disabled = TRUE)
+  })
+  
+  observe({
+    if (length(index_list$listc) == 1) {
+      updateButton(session, "newQLvl3", disabled = TRUE)
+      updateButton(session, "submitC", disabled = TRUE)
+      shinyalert("Oops!", "You have used up all the tries. Please click 'previous' then click 'next' to re-enter this level to try again", type = "error")
+    }
+  })
+  
+  observe({
+    if (length(index_listD$listD) == 1) {
+      updateButton(session, "newQLvl4", disabled = TRUE)
+      updateButton(session, "submitD", disabled = TRUE)
+      shinyalert("Oops!", "You have used up all the tries. Please click 'previous' then click 'next' to re-enter this level to try again", type = "error")
+    }
+  })
+  
+  observeEvent(input$submitC, {
+    updateButton(session, "newQLvl3", disabled = FALSE)
+  })
+  
+  observeEvent(input$previous4, {
+    updateButton(session, "submitC", disabled = FALSE)
+  })
+  
+  observeEvent(input$newQLvl3, {
+    updateButton(session, "submitC", disabled = FALSE)
+  })
+  
+  observeEvent(input$newQLvl3, {
+    updateButton(session, "newQLvl3", disabled = TRUE)
+  })
+  
+  observeEvent(input$submitD, {
+    updateButton(session, "submitD", disabled = TRUE)
+  })
+  
+  observeEvent(input$submitD, {
+    updateButton(session, "newQLvl4", disabled = FALSE)
+  })
+  
+  observeEvent(input$previous5, {
+    updateButton(session, "submitD", disabled = FALSE)
+  })
+  
+  observeEvent(input$newQLvl4, {
+    updateButton(session, "submitD", disabled = FALSE)
+  })
+  
+  observeEvent(input$newQLvl4, {
+    updateButton(session, "newQLvl4", disabled = TRUE)
+  })
   
   ## Level 1 ----
   initBankA <- function() {
@@ -1258,9 +1337,6 @@ server <- function(input, output, session) {
           }
         }
       })
-    
-    
-  
   
   ### Scoring and Update Buttons ----
   observeEvent(input$retryA, {
@@ -1293,7 +1369,7 @@ server <- function(input, output, session) {
   })
   }
   
-  ## Init Bank B ----
+  ## Level 2 ----
   numbersB <- reactiveValues(disB = c(), contB = c(), nomB = c(), ordB = c(), indexB = c(), questionB = data.frame())
   initBankB <- function() {
     numbersB$disB <- sample(1:13, 1)
@@ -1303,7 +1379,8 @@ server <- function(input, output, session) {
 
     numbersB$indexB <- sample(c("A", "B", "C", "D"), 4)
     numbersB$questionB <- cbind(bankB[c(numbersB$disB, numbersB$contB, numbersB$nomB, numbersB$ordB), ], numbersB$indexB)
-
+    
+  ### Labels ----
     output$imgQ1 <- renderText({
       paste("A.", numbersB$questionB[numbersB$questionB[5] == "A", 4])
     })
@@ -1331,13 +1408,177 @@ server <- function(input, output, session) {
     output$imgQ4 <- renderText({
       paste("D.", numbersB$questionB[numbersB$questionB[5] == "D", 4])
     })
-
+    
     output$image4 <- renderUI({
       img(src = numbersB$questionB[numbersB$questionB[5] == "D", 3], width = "95%", height = "95%")
     })
   }
+  
+  ### Validation ----
+  observeEvent(
+    eventExpr = input$submitB,
+    handlerExpr = {
+      attempts$level2 <- attempts$level2 + 1
+      observeEvent(input$clearB, {
+        output$lvl2A1 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$lvl2A1 <- renderUI({
+          if (!is.null(input$lvl2Q1)) {
+            if (input$lvl2Q1 == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitB, 
+    handlerExpr = {
+      observeEvent(input$clearB, {
+        output$lvl2A2 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$lvl2A2 <- renderUI({
+          if (!is.null(input$lvl2Q2)) {
+            if (input$lvl2Q2 == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitB,
+    handlerExpr = {
+      observeEvent(input$clearB, {
+        output$lvl2A3 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$lvl2A3 <- renderUI({
+          if (!is.null(input$lvl2Q3)) {
+            if (input$lvl2Q3 == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  observeEvent(
+    eventExpr = input$submitB, 
+    handlerExpr = {
+      observeEvent(input$clearB, {
+        output$lvl2A4 <- renderUI({
+          img(src = NULL, width = 30)
+        })
+      })
+      observe({
+        output$lvl2A4 <- renderUI({
+          if (!is.null(input$lvl2Q4)) {
+            if (input$lvl2Q4 == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  
+  ### Scoring and Update Buttons----
+  observeEvent(input$submitB, {
+    image1 <- numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]
+    image2 <- numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]
+    image3 <- numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]
+    image4 <- numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]
+    
+    score5 <- c()
+    
+    for (i in input$lvl2Q1) {
+      if (i == image1) {
+        score5 <- c(score5, 5)
+      } else {
+        score5 <- c(score5, 0)
+      }
+    }
+    for (i in input$lvl2Q2) {
+      if (i == image2) {
+        score5 <- c(score5, 5)
+      } else {
+        score5 <- c(score5, 0)
+      }
+    }
+    for (i in input$lvl2Q3) {
+      if (i == image3) {
+        score5 <- c(score5, 5)
+      } else {
+        score5 <- c(score5, 0)
+      }
+    }
+    for (i in input$lvl2Q4) {
+      if (i == image4) {
+        score5 <- c(score5, 5)
+      } else {
+        score5 <- c(score5, 0)
+      }
+    }
+    
+    total <- sum(score5)
+    
+    response <- list(
+      "Quantitative_Discrete" = c(image1, input$lvl2Q1),
+      "Quantitative_Continuous" = c(image2, input$lvl2Q2),
+      "Qualitative_Nominal" = c(image3, input$lvl2Q3),
+      "Qualitative_Ordinal" = c(image4, input$lvl2Q4)
+    )
+    
+    stmt <- boastUtils::generateStatement(
+      session,
+      verb = "answered",
+      object = "level2",
+      description = "Identify in Plots",
+      interactionType = "matching",
+      response = jsonlite::toJSON(response),
+      success = total == 20
+    )
+    
+    boastUtils::storeStatement(session, stmt)
+    
+    summation$summationB[input$submitB] <- total
+  })
+  values <- reactiveValues(
+    count = 0
+  )
+  observeEvent(input$submitB, {
+    if (summation$summationB[input$submitB] == 20) {
+      updateButton(session, "toBtwnLvls", disabled = FALSE)
+    }
+    else {
+      updateButton(session, "toBtwnLvls", disabled = TRUE)
+    }
+  })
+  
+  output$scoreA <- renderPrint({
+    cat("Current score of this level is", summation$summationA[input$submitA])
+  })
+  
+  output$scoreB <- renderPrint({
+    cat("Current score of this level is", max(summation$summationB))
+  })
 
-  ## Init Bank C ----
+  ## Level 3 ----
   index <- reactiveValues(index = 18)
 
   index_list <- reactiveValues(listc = sample(1:17, 17, replace = FALSE))
@@ -1351,7 +1592,7 @@ server <- function(input, output, session) {
       selected = "e")
     index_list$listc <- c(index_list$listc, sample(1:17, 17, replace = FALSE))
   })
-
+  ### Labels ----
   observeEvent(
     eventExpr = input$toBtwnLvls,
     handlerExpr = {
@@ -1508,8 +1749,182 @@ server <- function(input, output, session) {
       h3(bankC[36, 4])
     }
   })
+  
+  ### Validate ----
+  observeEvent(
+    eventExpr = input$submitC,
+    handlerExpr = {
+      attempts$level3 <- attempts$level3 + 1
+      observeEvent(
+        eventExpr = input$newQLvl3,
+        handlerExpr = {
+          output$markc1 <- renderUI(
+            img(src = NULL,width = 30)
+          )
+        })
+      observe({
+        eventExpr = output$markc1 <- renderUI(expr = {
+          if (!is.null(input$explC)) {
+            if (any(input$explC == key1[index$exp_index,1])) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  
+  observeEvent(
+    eventExpr = input$submitC,
+    handlerExpr = {
+      observeEvent(
+        eventExpr = input$newQLvl3,
+        handlerExpr = {
+          output$markc2 <- renderUI(
+            img(src = NULL,width = 30)
+          )
+        })
+      observe({
+        eventExpr = output$markc2 <- renderUI(expr = {
+          if (!is.null(input$respC)) {
+            if (any(input$respC == key1[index$res_index,1])) {
+              renderIcon(icon = "correct", width = 30)
+            } else {
+              renderIcon(icon = "incorrect", width = 30)
+            }
+          }
+        })
+      })
+    })
+  
+  observeEvent(
+    eventExpr = input$newQLvl3,
+    handlerExpr = {
+      reset(id = "expl3")
+      reset(id = "resp3")
+      reset(id = "submit")
+    }
+  )
+  
+  ### Scoring and Update Buttons ----
+  summationC <- reactiveValues(correct1 = c(0), started = FALSE)
+  
+  observeEvent(
+    eventExpr = input$toBtwnLvls, 
+    handlerExpr = {
+      summationC$started <- TRUE
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$newQLvl3, 
+    handlerExpr = {
+      summationC$started <- TRUE
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitC, 
+    handlerExpr = {
+      summationC$started <- TRUE
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitC,
+    handlerExpr = {
+      success <- FALSE
+      for (i in c(input$explC)) {
+        success <- any(input$explC == key1[index$exp_index, 1]) & any(input$respC == key1[index$res_index, 1])
+        if (success) {
+          summationC$correct1 <- c(summationC$correct1, 1)
+        } else {
+          summationC$correct1 <- c(summationC$correct1, 0)
+        }
+      }
+      
+      total <- sum(c(summationC$correct1))
+      
+      response <- list(
+        "Explanatory" = input$explC,
+        "Response" = input$respC
+      )
+      
+      stmt <- boastUtils::generateStatement(
+        session,
+        verb = "answered",
+        object = "level3",
+        description = "Explanatory and Response Variables",
+        interactionType = "choice",
+        response = jsonlite::toJSON(response),
+        success = success
+      )
+      
+      boastUtils::storeStatement(session, stmt)
+      
+      summation$summationC[input$submitC] <- total
+    })
+  
+  output$correctC <- renderPrint({
+    if (sum(c(summationC$correct1)) == 0) {
+      cat("You have earned 0 points")
+    }
+    else {
+      cat("You have earned", summation$summationC[input$submitC], "points")
+    }
+  })
+  
+  observeEvent(
+    eventExpr = input$submitC,
+    handlerExpr = {
+      if (summation$summationC[input$submitC] >= 5) {
+        updateButton(
+          session = session, 
+          inputId = "toLvl4", 
+          disabled = FALSE)
+        updateButton(
+          session = session,
+          inputId = "newQLvl3",
+          disabled = TRUE)
+      }
+    })
+  
+  ### Progress Bar ----
+  observe(
+    if (sum(c(summationC$correct1)) == 1) {
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = 20
+      )
+    }
+    else if (sum(c(summationC$correct1)) == 2) {
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = 40
+      )
+    }
+    else if (sum(c(summationC$correct1)) == 3) {
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = 60
+      )
+    }
+    else if (sum(c(summationC$correct1)) == 4) {
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = "80"
+      )
+    }
+    else if (sum(c(summationC$correct1)) == 5) {
+      output$barLevel3 <- updateProgressBar(
+        id = "barLevel3",
+        value = 100
+      )
+    }
+  )
 
-  ## Init Bank D ----
+  ## Level 4 ----
   index2 <- reactiveValues(index2 = 9)
 
   index_listD <- reactiveValues(listD = sample(1:8, 8, replace = FALSE))
@@ -1523,7 +1938,7 @@ server <- function(input, output, session) {
         selected = "f")
       index_listD$listD <- c(index_listD$listD, sample(1:8, 8, replace = FALSE))
     })
-
+  ### Labels ----
   observeEvent(
     eventExpr = input$toLvl4,
     handlerExpr = {
@@ -1664,467 +2079,7 @@ server <- function(input, output, session) {
       h3(bankD[27, 3])
     }
   })
-
-  ## Submit Observers ----
-  observeEvent(input$submitA, {
-    updateButton(session, "submitA", disabled = TRUE)
-  })
-
-  observeEvent(input$retryA, {
-    updateButton(session, "submitA", disabled = FALSE)
-  })
-
-  observeEvent(input$submitB, {
-    updateButton(session, "submitB", disabled = TRUE)
-  })
-
-  observeEvent(input$clearB, {
-    updateButton(session, "submitB", disabled = FALSE)
-  })
-
-  observeEvent(input$submitC, {
-    updateButton(session, "submitC", disabled = TRUE)
-  })
-
-  observe({
-    if (length(index_list$listc) == 1) {
-      updateButton(session, "newQLvl3", disabled = TRUE)
-      updateButton(session, "submitC", disabled = TRUE)
-      shinyalert("Oops!", "You have used up all the tries. Please click 'previous' then click 'next' to re-enter this level to try again", type = "error")
-    }
-  })
-
-  observe({
-    if (length(index_listD$listD) == 1) {
-      updateButton(session, "newQLvl4", disabled = TRUE)
-      updateButton(session, "submitD", disabled = TRUE)
-      shinyalert("Oops!", "You have used up all the tries. Please click 'previous' then click 'next' to re-enter this level to try again", type = "error")
-    }
-  })
-
-  observeEvent(input$submitC, {
-    updateButton(session, "newQLvl3", disabled = FALSE)
-  })
-
-  observeEvent(input$previous4, {
-    updateButton(session, "submitC", disabled = FALSE)
-  })
-
-  observeEvent(input$newQLvl3, {
-    updateButton(session, "submitC", disabled = FALSE)
-  })
-
-  observeEvent(input$newQLvl3, {
-    updateButton(session, "newQLvl3", disabled = TRUE)
-  })
-
-  observeEvent(input$submitD, {
-    updateButton(session, "submitD", disabled = TRUE)
-  })
-
-  observeEvent(input$submitD, {
-    updateButton(session, "newQLvl4", disabled = FALSE)
-  })
-
-  observeEvent(input$previous5, {
-    updateButton(session, "submitD", disabled = FALSE)
-  })
-
-  observeEvent(input$newQLvl4, {
-    updateButton(session, "submitD", disabled = FALSE)
-  })
-
-  observeEvent(input$newQLvl4, {
-    updateButton(session, "newQLvl4", disabled = TRUE)
-  })
-
-  ## Validation ----
-  ### Validate Level 1 ----
-    # moved to init bank A for now
-
-
-  #### Scoring 
-  summation <- reactiveValues(summationA = c(rep(0, 20)), summationB = c(rep(0, 20)), summationC = c(rep(0, 20)), summationD = c(rep(0, 20)), summationScore = c(rep(0, 20)))
-  
-  observeEvent(input$submitA, {
-    
-    score1 <- c()
-    score2 <- c()
-    score3 <- c()
-    score4 <- c()
-
-    # for (i in c(input$lvl1Q1)) {
-    #   valid <- any(trimws(input$lvl1Q1) == subsetBankA()$Type[1])
-    #   if (valid) {
-    #     score1 <- c(score1, 1)
-    #   } else {
-    #     score1 <- c(score1, 0)
-    #   }
-    # }
-    
-    
-    total <- sum(c(score1, score2, score3, score4))
-    
-    # response <- list(
-    #   "Quantitative_Discrete" = c(trimws(input$group1), trimws(input$group2), trimws(input$group5)),
-    #   "Quantitative_Continuous" = c(trimws(input$group4), trimws(input$group9), trimws(input$group6)),
-    #   "Qualitative_Nominal" = c(trimws(input$group7), trimws(input$group3), trimws(input$group11)),
-    #   "Qualitative_Ordinal" = c(trimws(input$group10), trimws(input$group8), trimws(input$group12))
-    # )
-    
-    stmt <- boastUtils::generateStatement(
-      session,
-      verb = "answered",
-      object = "level1",
-      description = "Drag the variables into the categories they belong to.",
-      interactionType = "matching",
-      response = jsonlite::toJSON(response),
-      success = total == 30
-    )
-    
-    boastUtils::storeStatement(session, stmt)
-    
-    summation$summationA[input$submitA] <- total
-  })
-
-  ### Validate Level 2 ----
-  observeEvent(
-    eventExpr = input$submitB,
-    handlerExpr = {
-      attempts$level2 <- attempts$level2 + 1
-      observeEvent(input$clearB, {
-        output$lvl2A1 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$lvl2A1 <- renderUI({
-          if (!is.null(input$lvl2Q1)) {
-            if (input$lvl2Q1 == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitB, 
-    handlerExpr = {
-      observeEvent(input$clearB, {
-        output$lvl2A2 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$lvl2A2 <- renderUI({
-          if (!is.null(input$lvl2Q2)) {
-            if (input$lvl2Q2 == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitB,
-    handlerExpr = {
-      observeEvent(input$clearB, {
-        output$lvl2A3 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$lvl2A3 <- renderUI({
-          if (!is.null(input$lvl2Q3)) {
-            if (input$lvl2Q3 == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitB, 
-    handlerExpr = {
-      observeEvent(input$clearB, {
-        output$lvl2A4 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$lvl2A4 <- renderUI({
-          if (!is.null(input$lvl2Q4)) {
-            if (input$lvl2Q4 == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-
-  observeEvent(input$submitB, {
-    image1 <- numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]
-    image2 <- numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]
-    image3 <- numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]
-    image4 <- numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]
-
-    score5 <- c()
-
-    for (i in input$lvl2Q1) {
-      if (i == image1) {
-        score5 <- c(score5, 5)
-      } else {
-        score5 <- c(score5, 0)
-      }
-    }
-    for (i in input$lvl2Q2) {
-      if (i == image2) {
-        score5 <- c(score5, 5)
-      } else {
-        score5 <- c(score5, 0)
-      }
-    }
-    for (i in input$lvl2Q3) {
-      if (i == image3) {
-        score5 <- c(score5, 5)
-      } else {
-        score5 <- c(score5, 0)
-      }
-    }
-    for (i in input$lvl2Q4) {
-      if (i == image4) {
-        score5 <- c(score5, 5)
-      } else {
-        score5 <- c(score5, 0)
-      }
-    }
-
-    total <- sum(score5)
-
-    response <- list(
-      "Quantitative_Discrete" = c(image1, input$lvl2Q1),
-      "Quantitative_Continuous" = c(image2, input$lvl2Q2),
-      "Qualitative_Nominal" = c(image3, input$lvl2Q3),
-      "Qualitative_Ordinal" = c(image4, input$lvl2Q4)
-    )
-
-    stmt <- boastUtils::generateStatement(
-      session,
-      verb = "answered",
-      object = "level2",
-      description = "Identify in Plots",
-      interactionType = "matching",
-      response = jsonlite::toJSON(response),
-      success = total == 20
-    )
-
-    boastUtils::storeStatement(session, stmt)
-
-    summation$summationB[input$submitB] <- total
-  })
-  values <- reactiveValues(
-    count = 0
-  )
-  observeEvent(input$submitB, {
-    if (summation$summationB[input$submitB] == 20) {
-      updateButton(session, "toBtwnLvls", disabled = FALSE)
-    }
-    else {
-      updateButton(session, "toBtwnLvls", disabled = TRUE)
-    }
-  })
-
-  output$scoreA <- renderPrint({
-    cat("Current score of this level is", summation$summationA[input$submitA])
-  })
-
-  output$scoreB <- renderPrint({
-    cat("Current score of this level is", max(summation$summationB))
-  })
-
-  ### Validate Level 3 ----
-  observeEvent(
-    eventExpr = input$submitC,
-    handlerExpr = {
-      attempts$level3 <- attempts$level3 + 1
-      observeEvent(
-        eventExpr = input$newQLvl3,
-        handlerExpr = {
-          output$markc1 <- renderUI(
-            img(src = NULL,width = 30)
-          )
-        })
-      observe({
-        eventExpr = output$markc1 <- renderUI(expr = {
-          if (!is.null(input$explC)) {
-            if (any(input$explC == key1[index$exp_index,1])) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  
-  observeEvent(
-    eventExpr = input$submitC,
-    handlerExpr = {
-      observeEvent(
-        eventExpr = input$newQLvl3,
-        handlerExpr = {
-          output$markc2 <- renderUI(
-            img(src = NULL,width = 30)
-          )
-        })
-      observe({
-        eventExpr = output$markc2 <- renderUI(expr = {
-          if (!is.null(input$respC)) {
-            if (any(input$respC == key1[index$res_index,1])) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  
-  observeEvent(
-    eventExpr = input$newQLvl3,
-    handlerExpr = {
-      reset(id = "expl3")
-      reset(id = "resp3")
-      reset(id = "submit")
-    }
-  )
-
-  ##### Scoring 
-  summationC <- reactiveValues(correct1 = c(0), started = FALSE)
-
-  observeEvent(
-    eventExpr = input$toBtwnLvls, 
-    handlerExpr = {
-      summationC$started <- TRUE
-    }
-  )
-
-  observeEvent(
-    eventExpr = input$newQLvl3, 
-    handlerExpr = {
-      summationC$started <- TRUE
-    }
-  )
-
-  observeEvent(
-    eventExpr = input$submitC, 
-    handlerExpr = {
-      summationC$started <- TRUE
-    }
-  )
-
-  observeEvent(
-    eventExpr = input$submitC,
-    handlerExpr = {
-      success <- FALSE
-      for (i in c(input$explC)) {
-        success <- any(input$explC == key1[index$exp_index, 1]) & any(input$respC == key1[index$res_index, 1])
-        if (success) {
-          summationC$correct1 <- c(summationC$correct1, 1)
-        } else {
-          summationC$correct1 <- c(summationC$correct1, 0)
-        }
-      }
-
-    total <- sum(c(summationC$correct1))
-
-    response <- list(
-      "Explanatory" = input$explC,
-      "Response" = input$respC
-    )
-
-    stmt <- boastUtils::generateStatement(
-      session,
-      verb = "answered",
-      object = "level3",
-      description = "Explanatory and Response Variables",
-      interactionType = "choice",
-      response = jsonlite::toJSON(response),
-      success = success
-    )
-
-    boastUtils::storeStatement(session, stmt)
-
-    summation$summationC[input$submitC] <- total
-  })
-
-  output$correctC <- renderPrint({
-    if (sum(c(summationC$correct1)) == 0) {
-      cat("You have earned 0 points")
-    }
-    else {
-      cat("You have earned", summation$summationC[input$submitC], "points")
-    }
-  })
-
-  observeEvent(
-    eventExpr = input$submitC,
-    handlerExpr = {
-      if (summation$summationC[input$submitC] >= 5) {
-        updateButton(
-          session = session, 
-          inputId = "toLvl4", 
-          disabled = FALSE)
-        updateButton(
-          session = session,
-          inputId = "newQLvl3",
-          disabled = TRUE)
-      }
-    })
-  
-  ##### Progress Bar ----
-  observe(
-    if (sum(c(summationC$correct1)) == 1) {
-      output$barLevel3 <- updateProgressBar(
-        id = "barLevel3",
-        value = 20
-      )
-    }
-    else if (sum(c(summationC$correct1)) == 2) {
-      output$barLevel3 <- updateProgressBar(
-        id = "barLevel3",
-        value = 40
-      )
-    }
-    else if (sum(c(summationC$correct1)) == 3) {
-      output$barLevel3 <- updateProgressBar(
-        id = "barLevel3",
-        value = 60
-      )
-    }
-    else if (sum(c(summationC$correct1)) == 4) {
-      output$barLevel3 <- updateProgressBar(
-        id = "barLevel3",
-        value = "80"
-      )
-    }
-    else if (sum(c(summationC$correct1)) == 5) {
-      output$barLevel3 <- updateProgressBar(
-        id = "barLevel3",
-        value = 100
-      )
-    }
-  )
-
-  ### Validate Level 4 ----
+  ### Validate  ----
   observeEvent(input$submitD, {
     attempts$level4 <- attempts$level4 + 1
     observeEvent(input$newQLvl4, {
@@ -2132,7 +2087,6 @@ server <- function(input, output, session) {
         img(src = NULL, width = 30)
       })
     })
-    
     observe({
       output$markd1 <- renderUI({
         if (!is.null(input$expla)) {
@@ -2145,7 +2099,6 @@ server <- function(input, output, session) {
       })
     })
   })
-  
   observeEvent(input$submitD, {
     observeEvent(input$newQLvl4, {
       output$markd2 <- renderUI({
@@ -2202,7 +2155,7 @@ server <- function(input, output, session) {
       })
     })
   })
-
+  
   observeEvent(
     eventExpr = input$newQLvl4,
     handlerExpr = {
@@ -2212,10 +2165,10 @@ server <- function(input, output, session) {
     }
   )
   
-  ### Scoring 
+  ### Scoring and Update Buttons ----
   summationD <- reactiveValues(correct1D = c(0), started = FALSE)
   test <- reactiveValues(A = FALSE, B = FALSE, C = TRUE)
-
+  
   observeEvent(
     eventExpr = input$submitD, 
     handlerExpr = {
@@ -2267,7 +2220,7 @@ server <- function(input, output, session) {
     }
   })
   
-  ##### Progress Bar ----
+  ### Progress Bar ----
   observe(
     if (sum(c(summationD$correct1D)) == 1) {
       output$barLevel4 <- updateProgressBar(
@@ -2300,8 +2253,37 @@ server <- function(input, output, session) {
       )
     }
   )
+  ## Validation ----
+  ### Validate Level 1 ----
+
+  #### GET RID OF THIS (SAFELY)
+  summation <- reactiveValues(summationA = c(rep(0, 20)), summationB = c(rep(0, 20)), summationC = c(rep(0, 20)), summationD = c(rep(0, 20)), summationScore = c(rep(0, 20)))
   
-  ### Scoring ----
+  observeEvent(input$submitA, {
+    
+    score1 <- c()
+    score2 <- c()
+    score3 <- c()
+    score4 <- c()
+    
+    total <- sum(c(score1, score2, score3, score4))
+    
+    stmt <- boastUtils::generateStatement(
+      session,
+      verb = "answered",
+      object = "level1",
+      description = "Drag the variables into the categories they belong to.",
+      interactionType = "matching",
+      response = jsonlite::toJSON(response),
+      success = total == 30
+    )
+    
+    boastUtils::storeStatement(session, stmt)
+    
+    summation$summationA[input$submitA] <- total
+  })
+
+  ### Results ----
   attempts <- reactiveValues(
     level1 = 0,
     level2 = 0,
