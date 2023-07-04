@@ -887,7 +887,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = input$toBtwnLvls,
     handlerExpr = {
@@ -952,9 +952,10 @@ server <- function(input, output, session) {
         selected = "g")
     })
   
-    ## Init Bank A ----
+  ## Level 1 ----
   initBankA <- function() {
-
+    scoreLevelA <- reactiveVal(0)
+    
     subsetBankA <- reactiveVal(
       value = {
         subsetBankA <- bankA %>%
@@ -966,262 +967,7 @@ server <- function(input, output, session) {
       }
     )
     
-    ### Validation ---
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        attempts$level1 <- attempts$level1 + 1
-        observeEvent(input$retryA, {
-          output$lvl1Q1 <- renderUI({
-            img(src = NULL, width = 30)
-          })
-        })
-        observe({
-          output$lvl1A1 <- renderUI({
-            if (!is.null(input$lvl1Q1)) {
-              valid <- any(trimws(input$lvl1Q1) == subsetBankA()$Type[1])
-              if (valid) {
-                renderIcon(icon = "correct", width = 30)
-              } else {
-                renderIcon(icon = "incorrect", width = 30)
-              }
-            }
-          })
-        })
-      })
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        observeEvent(input$retryA, {
-          output$lvl1Q2 <- renderUI({
-            img(src = NULL, width = 30)
-          })
-        })
-        observe({
-          output$lvl1A2 <- renderUI({
-            if (!is.null(input$lvl1Q2)) {
-              valid <- any(trimws(input$lvl1Q2) == subsetBankA()$Type[2])
-              if (valid) {
-                renderIcon(icon = "correct", width = 30)
-              } else {
-                renderIcon(icon = "incorrect", width = 30)
-              }
-            }
-          })
-        })
-      })
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        observeEvent(input$retryA, {
-          output$lvl1Q3 <- renderUI({
-            img(src = NULL, width = 30)
-          })
-        })
-        observe({
-          output$lvl1A3 <- renderUI({
-            if (!is.null(input$lvl1Q3)) {
-              valid <- any(trimws(input$lvl1Q3) == subsetBankA()$Type[3])
-              if (valid) {
-                renderIcon(icon = "correct", width = 30)
-              } else {
-                renderIcon(icon = "incorrect", width = 30)
-              }
-            }
-          })
-        })
-      })
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        observeEvent(input$retryA, {
-          output$lvl1Q4 <- renderUI({
-            img(src = NULL, width = 30)
-          })
-        })
-        observe({
-          output$lvl1A4 <- renderUI({
-            if (!is.null(input$lvl1Q4)) {
-              valid <- any(trimws(input$lvl1Q4) == subsetBankA()$Type[4])
-              if (valid) {
-                renderIcon(icon = "correct", width = 30)
-              } else {
-                renderIcon(icon = "incorrect", width = 30)
-              }
-            }
-          })
-        })
-      })
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        observeEvent(input$retryA, {
-          output$lvl1Q5 <- renderUI({
-            img(src = NULL, width = 30)
-          })
-        })
-        observe({
-          output$lvl1A5 <- renderUI({
-            if (!is.null(input$lvl1Q5)) {
-              valid <- any(trimws(input$lvl1Q5) == subsetBankA()$Type[5])
-              if (valid) {
-                renderIcon(icon = "correct", width = 30)
-              } else {
-                renderIcon(icon = "incorrect", width = 30)
-              }
-            }
-          })
-        })
-      })
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        observeEvent(input$retryA, {
-          output$lvl1Q6 <- renderUI({
-            img(src = NULL, width = 30)
-          })
-        })
-        observe({
-          output$lvl1A6 <- renderUI({
-            if (!is.null(input$lvl1Q6)) {
-              valid <- any(trimws(input$lvl1Q6) == subsetBankA()$Type[6])
-              if (valid) {
-                renderIcon(icon = "correct", width = 30)
-              } else {
-                renderIcon(icon = "incorrect", width = 30)
-              }
-            }
-          })
-        })
-      })
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        observeEvent(input$retryA, {
-          output$lvl1Q7 <- renderUI({
-            img(src = NULL, width = 30)
-          })
-        })
-        observe({
-          output$lvl1A7 <- renderUI({
-            if (!is.null(input$lvl1Q7)) {
-              valid <- any(trimws(input$lvl1Q7) == subsetBankA()$Type[7])
-              if (valid) {
-                renderIcon(icon = "correct", width = 30)
-              } else {
-                renderIcon(icon = "incorrect", width = 30)
-              }
-            }
-          })
-        })
-      })
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        observeEvent(input$retryA, {
-          output$lvl1Q8 <- renderUI({
-            img(src = NULL, width = 30)
-          })
-        })
-        observe({
-          output$lvl1A8 <- renderUI({
-            if (!is.null(input$lvl1Q8)) {
-              valid <- any(trimws(input$lvl1Q8) == subsetBankA()$Type[8])
-              if (valid) {
-                renderIcon(icon = "correct", width = 30)
-              } else {
-                renderIcon(icon = "incorrect", width = 30)
-              }
-            }
-          })
-        })
-      })
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        observeEvent(input$retryA, {
-          output$lvl1Q9 <- renderUI({
-            img(src = NULL, width = 30)
-          })
-        })
-        observe({
-          output$lvl1A9 <- renderUI({
-            if (!is.null(input$lvl1Q9)) {
-              valid <- any(trimws(input$lvl1Q9) == subsetBankA()$Type[9])
-              if (valid) {
-                renderIcon(icon = "correct", width = 30)
-              } else {
-                renderIcon(icon = "incorrect", width = 30)
-              }
-            }
-          })
-        })
-      })
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        observeEvent(input$retryA, {
-          output$lvl1Q10 <- renderUI({
-            img(src = NULL, width = 30)
-          })
-        })
-        observe({
-          output$lvl1A10 <- renderUI({
-            if (!is.null(input$lvl1Q10)) {
-              valid <- any(trimws(input$lvl1Q10) == subsetBankA()$Type[10])
-              if (valid) {
-                renderIcon(icon = "correct", width = 30)
-              } else {
-                renderIcon(icon = "incorrect", width = 30)
-              }
-            }
-          })
-        })
-      })
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        observeEvent(input$retryA, {
-          output$lvl1Q11 <- renderUI({
-            img(src = NULL, width = 30)
-          })
-        })
-        observe({
-          output$lvl1A11 <- renderUI({
-            if (!is.null(input$lvl1Q11)) {
-              valid <- any(trimws(input$lvl1Q11) == subsetBankA()$Type[11])
-              if (valid) {
-                renderIcon(icon = "correct", width = 30)
-              } else {
-                renderIcon(icon = "incorrect", width = 30)
-              }
-            }
-          })
-        })
-      })
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        observeEvent(input$retryA, {
-          output$lvl1Q12 <- renderUI({
-            img(src = NULL, width = 30)
-          })
-        })
-        observe({
-          output$lvl1A12 <- renderUI({
-            if (!is.null(input$lvl1Q12)) {
-              valid <- any(trimws(input$lvl1Q12) == subsetBankA()$Type[12])
-              if (valid) {
-                renderIcon(icon = "correct", width = 30)
-              } else {
-                renderIcon(icon = "incorrect", width = 30)
-              }
-            }
-          })
-        })
-      })
-    
-    ### Labels
+    ### Labels ----
     observeEvent(
       eventExpr = c(input$retryA),
       handlerExpr = {
@@ -1342,8 +1088,211 @@ server <- function(input, output, session) {
         )
       }
     )
+    ### Validation ----
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        attempts$level1 <- attempts$level1 + 1
+        if (!is.null(input$lvl1Q1)) {
+          valid <- any(trimws(input$lvl1Q1) == subsetBankA()$Type[1])
+          if (valid) {
+            scoreLevelA(scoreLevelA() + 2.5)
+            output$lvl1A1 <- renderIcon(icon = "correct", width = 30)
+          } else {
+            scoreLevelA(scoreLevelA() + 0)
+            output$lvl1A1 <- renderIcon(icon = "incorrect", width = 30)
+          }
+        }
+      })
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        if (!is.null(input$lvl1Q2)) {
+          valid <- any(trimws(input$lvl1Q2) == subsetBankA()$Type[2])
+          if (valid) {
+            scoreLevelA(scoreLevelA() + 2.5)
+            output$lvl1A2 <- renderIcon(icon = "correct", width = 30)
+          } else {
+            scoreLevelA(scoreLevelA() + 0)
+            output$lvl1A2 <- renderIcon(icon = "incorrect", width = 30)
+          }
+        }
+      })
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        if (!is.null(input$lvl1Q3)) {
+          valid <- any(trimws(input$lvl1Q3) == subsetBankA()$Type[3])
+          if (valid) {
+            scoreLevelA(scoreLevelA() + 2.5)
+            output$lvl1A3 <- renderIcon(icon = "correct", width = 30)
+          } else {
+            scoreLevelA(scoreLevelA() + 0)
+            output$lvl1A3 <- renderIcon(icon = "incorrect", width = 30)
+          }
+        }
+      })
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        if (!is.null(input$lvl1Q4)) {
+          valid <- any(trimws(input$lvl1Q4) == subsetBankA()$Type[4])
+          if (valid) {
+            scoreLevelA(scoreLevelA() + 2.5)
+            output$lvl1A4 <- renderIcon(icon = "correct", width = 30)
+          } else {
+            scoreLevelA(scoreLevelA() + 0)
+            output$lvl1A4 <- renderIcon(icon = "incorrect", width = 30)
+          }
+        }
+      })
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        if (!is.null(input$lvl1Q5)) {
+          valid <- any(trimws(input$lvl1Q5) == subsetBankA()$Type[5])
+          if (valid) {
+            scoreLevelA(scoreLevelA() + 2.5)
+            output$lvl1A5 <- renderIcon(icon = "correct", width = 30)
+          } else {
+            scoreLevelA(scoreLevelA() + 0)
+            output$lvl1A5 <- renderIcon(icon = "incorrect", width = 30)
+          }
+        }
+      })
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        if (!is.null(input$lvl1Q6)) {
+          valid <- any(trimws(input$lvl1Q6) == subsetBankA()$Type[6])
+          if (valid) {
+            scoreLevelA(scoreLevelA() + 2.5)
+            output$lvl1A6 <- renderIcon(icon = "correct", width = 30)
+          } else {
+            scoreLevelA(scoreLevelA() + 0)
+            output$lvl1A6 <- renderIcon(icon = "incorrect", width = 30)
+          }
+        }
+      })
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        if (!is.null(input$lvl1Q7)) {
+          valid <- any(trimws(input$lvl1Q7) == subsetBankA()$Type[7])
+          if (valid) {
+            scoreLevelA(scoreLevelA() + 2.5)
+            output$lvl1A7 <- renderIcon(icon = "correct", width = 30)
+          } else {
+            scoreLevelA(scoreLevelA() + 0)
+            output$lvl1A7 <- renderIcon(icon = "incorrect", width = 30)
+          }
+        }
+      })
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        if (!is.null(input$lvl1Q8)) {
+          valid <- any(trimws(input$lvl1Q8) == subsetBankA()$Type[8])
+          if (valid) {
+            scoreLevelA(scoreLevelA() + 2.5)
+            output$lvl1A8 <- renderIcon(icon = "correct", width = 30)
+          } else {
+            scoreLevelA(scoreLevelA() + 0)
+            output$lvl1A8 <- renderIcon(icon = "incorrect", width = 30)
+          }
+        }
+      })
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        if (!is.null(input$lvl1Q9)) {
+          valid <- any(trimws(input$lvl1Q9) == subsetBankA()$Type[9])
+          if (valid) {
+            scoreLevelA(scoreLevelA() + 2.5)
+            output$lvl1A9 <- renderIcon(icon = "correct", width = 30)
+          } else {
+            scoreLevelA(scoreLevelA() + 0)
+            output$lvl1A9 <- renderIcon(icon = "incorrect", width = 30)
+          }
+        }
+      })
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        if (!is.null(input$lvl1Q10)) {
+          valid <- any(trimws(input$lvl1Q10) == subsetBankA()$Type[10])
+          if (valid) {
+            scoreLevelA(scoreLevelA() + 2.5)
+            output$lvl1A10 <- renderIcon(icon = "correct", width = 30)
+          } else {
+            scoreLevelA(scoreLevelA() + 0)
+            output$lvl1A10 <- renderIcon(icon = "incorrect", width = 30)
+          }
+        }
+      })
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        if (!is.null(input$lvl1Q11)) {
+          valid <- any(trimws(input$lvl1Q11) == subsetBankA()$Type[11])
+          if (valid) {
+            scoreLevelA(scoreLevelA() + 2.5)
+            output$lvl1A11 <- renderIcon(icon = "correct", width = 30)
+          } else {
+            scoreLevelA(scoreLevelA() + 0)
+            output$lvl1A11 <- renderIcon(icon = "incorrect", width = 30)
+          }
+        }
+      })
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        if (!is.null(input$lvl1Q12)) {
+          valid <- any(trimws(input$lvl1Q12) == subsetBankA()$Type[12])
+          if (valid) {
+            scoreLevelA(scoreLevelA() + 2.5)
+            output$lvl1A12 <- renderIcon(icon = "correct", width = 30)
+          } else {
+            scoreLevelA(scoreLevelA() + 0)
+            output$lvl1A12 <- renderIcon(icon = "incorrect", width = 30)
+          }
+        }
+      })
+    
+    
+  
+  
+  ### Scoring and Update Buttons ----
+  observeEvent(input$retryA, {
+    output$lvl1A1 <- renderIcon()
+    output$lvl1A2 <- renderIcon()
+    output$lvl1A3 <- renderIcon()
+    output$lvl1A4 <- renderIcon()
+    output$lvl1A5 <- renderIcon()
+    output$lvl1A6 <- renderIcon()
+    output$lvl1A7 <- renderIcon()
+    output$lvl1A8 <- renderIcon()
+    output$lvl1A9 <- renderIcon()
+    output$lvl1A10 <- renderIcon()
+    output$lvl1A11 <- renderIcon()
+    output$lvl1A12 <- renderIcon()
+    scoreLevelA(0)
+    updateButton(
+      session = session,
+      inputId = "submitA",
+      disabled = FALSE
+    )
+  })
+  output$scoreA <- renderText({
+    paste("You have", scoreLevelA(), "points.")
+  })
+  observeEvent(input$submitA, {
+    if (scoreLevelA() >= 30) {
+      updateButton(session, "toLvl2", disabled = FALSE)
+    }
+  })
   }
-
+  
   ## Init Bank B ----
   numbersB <- reactiveValues(disB = c(), contB = c(), nomB = c(), ordB = c(), indexB = c(), questionB = data.frame())
   initBankB <- function() {
@@ -1792,22 +1741,8 @@ server <- function(input, output, session) {
   ## Validation ----
   ### Validate Level 1 ----
     # moved to init bank A for now
-  
-  ## Below is me trying to figure out how to not get the icons changed
-  # observeEvent(
-  #   eventExpr = input$retryA,
-  #   handlerExpr = {
-  #     observeEvent(
-  #       eventExpr = c(input$lvl1Q1,input$lvl1Qp2,input$lvl1Q3,input$lvl1Q4,input$lvl1Q5,
-  #                     input$lvl1Q6,input$lvl1Q7,input$lvl1Q8,input$lvl1Q9,input$lvl1Q10,
-  #                     input$lvl1Q11,input$lvl1Q12),
-  #       handlerExpr = {
-  #         output$answer12 <- renderUI({
-  #           img(src = NULL, width = 30)
-  #         })
-  #       })
-  #   })
-  #     
+
+
   #### Scoring 
   summation <- reactiveValues(summationA = c(rep(0, 20)), summationB = c(rep(0, 20)), summationC = c(rep(0, 20)), summationD = c(rep(0, 20)), summationScore = c(rep(0, 20)))
   
@@ -1818,14 +1753,14 @@ server <- function(input, output, session) {
     score3 <- c()
     score4 <- c()
 
-    for (i in c(input$lvl1Q1)) {
-      valid <- any(trimws(input$lvl1Q1) == subsetBankA()$Type[1])
-      if (valid) {
-        score1 <- c(score1, 1)
-      } else {
-        score1 <- c(score1, 0)
-      }
-    }
+    # for (i in c(input$lvl1Q1)) {
+    #   valid <- any(trimws(input$lvl1Q1) == subsetBankA()$Type[1])
+    #   if (valid) {
+    #     score1 <- c(score1, 1)
+    #   } else {
+    #     score1 <- c(score1, 0)
+    #   }
+    # }
     
     
     total <- sum(c(score1, score2, score3, score4))
@@ -1998,11 +1933,6 @@ server <- function(input, output, session) {
   values <- reactiveValues(
     count = 0
   )
-  observeEvent(input$submitA, {
-    if (summation$summationA[input$submitA] >= 30) {
-      updateButton(session, "toLvl2", disabled = FALSE)
-    }
-  })
   observeEvent(input$submitB, {
     if (summation$summationB[input$submitB] == 20) {
       updateButton(session, "toBtwnLvls", disabled = FALSE)
