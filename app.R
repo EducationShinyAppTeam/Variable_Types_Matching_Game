@@ -312,7 +312,7 @@ ui <- list(
               fluidRow(
                 column(
                   width = 1,
-                  offset = 1,
+                  offset = 5,
                   bsButton(
                     inputId = "retryA",
                     label = "Retry"
@@ -320,7 +320,6 @@ ui <- list(
                 ),
                 column(
                   width = 1,
-                  offset = 3,
                   conditionalPanel(
                     "(input.lvl1Q1 != '') & (input.lvl1Q1 != null) &
                     (input.lvl1Q2 != '') & (input.lvl1Q2 != null) &
@@ -444,6 +443,7 @@ ui <- list(
               fluidRow(
                 column(
                   width = 1,
+                  offset = 1,
                   bsButton(
                     inputId = "previous2",
                     label = "Previous"
@@ -451,15 +451,14 @@ ui <- list(
                 ),
                 column(
                   width = 1,
-                  offset = 2,
+                  offset = 3,
                   bsButton(
-                    inputId = "RetryB",
+                    inputId = "retryB",
                     label = "Retry"
                   )
                 ),
                 column(
-                  width = 1, 
-                  offset = 2, 
+                  width = 1,
                   conditionalPanel(
                     "(input.lvl2Q1!='') & (input.lvl2Q2!='') & (input.lvl2Q3!='') 
                     & (input.lvl2Q4!='')",
@@ -470,7 +469,7 @@ ui <- list(
                 ),
                 column(
                   width = 1,
-                  offset = 4,
+                  offset = 3,
                   bsButton(
                     inputId = "toBtwnLvls",
                     label = "Next Level",
@@ -515,7 +514,7 @@ ui <- list(
               fluidRow(
                 column(
                   width = 1,
-                  offset = 4,
+                  offset = 5,
                   bsButton(
                     inputId = "splitToFinish",
                     label = "Finish"
@@ -523,7 +522,6 @@ ui <- list(
                 ),
                 column(
                   width = 1,
-                  offset = 1,
                   bsButton(
                     inputId = "toLvl3",
                     label = "Next Level"
@@ -590,18 +588,17 @@ ui <- list(
                   ),
                   column(
                     width = 1, 
-                    offset = 1,
-                    conditionalPanel(
-                      "(input.explC!='') & (input.respC!='')",
+                    offset = 3,
+                    #conditionalPanel(
+                      #"(input.explC!='') & (input.respC!='')",
                       bsButton(
                         inputId = "submitC",
                         label = "Submit",
                       )
-                    )
+                    #)
                   ),
                   column(
                     width = 1,
-                    offset = 2,
                     bsButton(
                       inputId = "newQLvl3",
                       label = "New Question"
@@ -609,7 +606,7 @@ ui <- list(
                   ),
                   column(
                     width = 1,
-                    offset = 2,
+                    offset = 3,
                     bsButton(
                       inputId = "toLvl4",
                       label = "Next Level",
@@ -698,7 +695,7 @@ ui <- list(
                   ),
                   column(
                     width = 1, 
-                    offset = 1, 
+                    offset = 3, 
                     conditionalPanel(
                       "(input.expla!='') & (input.resp!='') & (input.conf!='')",
                       bsButton(inputId = "submitD", label = "Submit")
@@ -706,7 +703,6 @@ ui <- list(
                   ),
                   column(
                     width = 1,
-                    offset = 2,
                     bsButton(
                       inputId = "newQLvl4",
                       label = "New Question"
@@ -714,7 +710,7 @@ ui <- list(
                   ),
                   column(
                     width = 1,
-                    offset = 2,
+                    offset = 3,
                     bsButton(
                       inputId = "finish",
                       label = "Results",
@@ -971,7 +967,7 @@ server <- function(input, output, session) {
     updateButton(session, "submitB", disabled = TRUE)
   })
   
-  observeEvent(input$RetryB, {
+  observeEvent(input$retryB, {
     updateButton(session, "submitB", disabled = FALSE)
   })
   

@@ -1,7 +1,5 @@
 # Things Needed for This Version
-Fix button layouts
 Previous button issue
-Take new ss
 Add alt text!
 Continue to generalize/write out code
 
