@@ -453,7 +453,7 @@ ui <- list(
                   width = 1,
                   offset = 2,
                   bsButton(
-                    inputId = "clearB",
+                    inputId = "RetryB",
                     label = "Retry"
                   )
                 ),
@@ -971,7 +971,7 @@ server <- function(input, output, session) {
     updateButton(session, "submitB", disabled = TRUE)
   })
   
-  observeEvent(input$clearB, {
+  observeEvent(input$RetryB, {
     updateButton(session, "submitB", disabled = FALSE)
   })
   
@@ -1419,85 +1419,56 @@ server <- function(input, output, session) {
     eventExpr = input$submitB,
     handlerExpr = {
       attempts$level2 <- attempts$level2 + 1
-      observeEvent(input$clearB, {
-        output$lvl2A1 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$lvl2A1 <- renderUI({
-          if (!is.null(input$lvl2Q1)) {
-            if (input$lvl2Q1 == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
-    })
-  observeEvent(
-    eventExpr = input$submitB, 
-    handlerExpr = {
-      observeEvent(input$clearB, {
-        output$lvl2A2 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$lvl2A2 <- renderUI({
-          if (!is.null(input$lvl2Q2)) {
-            if (input$lvl2Q2 == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
+      if (!is.null(input$lvl2Q1)) {
+        if (input$lvl2Q1 == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
+          output$lvl2A1 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          output$lvl2A1 <- renderIcon(icon = "incorrect", width = 30)
+        }
+      }
     })
   observeEvent(
     eventExpr = input$submitB,
     handlerExpr = {
-      observeEvent(input$clearB, {
-        output$lvl2A3 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$lvl2A3 <- renderUI({
-          if (!is.null(input$lvl2Q3)) {
-            if (input$lvl2Q3 == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
+      if (!is.null(input$lvl2Q2)) {
+        if (input$lvl2Q2 == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
+          output$lvl2A2 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          output$lvl2A2 <- renderIcon(icon = "incorrect", width = 30)
+        }
+      }
     })
   observeEvent(
-    eventExpr = input$submitB, 
+    eventExpr = input$submitB,
     handlerExpr = {
-      observeEvent(input$clearB, {
-        output$lvl2A4 <- renderUI({
-          img(src = NULL, width = 30)
-        })
-      })
-      observe({
-        output$lvl2A4 <- renderUI({
-          if (!is.null(input$lvl2Q4)) {
-            if (input$lvl2Q4 == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
-              renderIcon(icon = "correct", width = 30)
-            } else {
-              renderIcon(icon = "incorrect", width = 30)
-            }
-          }
-        })
-      })
+      if (!is.null(input$lvl2Q3)) {
+        if (input$lvl2Q3 == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
+          output$lvl2A3 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          output$lvl2A3 <- renderIcon(icon = "incorrect", width = 30)
+        }
+      }
+    })
+  observeEvent(
+    eventExpr = input$submitB,
+    handlerExpr = {
+      if (!is.null(input$lvl2Q4)) {
+        if (input$lvl2Q4 == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
+          output$lvl2A4 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          output$lvl2A4 <- renderIcon(icon = "incorrect", width = 30)
+        }
+      }
     })
   
   ### Scoring and Update Buttons----
+  observeEvent(input$retryB, {
+    output$lvl2A1 <- renderIcon()
+    output$lvl2A2 <- renderIcon()
+    output$lvl2A3 <- renderIcon()
+    output$lvl2A4 <- renderIcon()
+  })
+  
   observeEvent(input$submitB, {
     image1 <- numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]
     image2 <- numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]
@@ -1886,7 +1857,7 @@ server <- function(input, output, session) {
         updateButton(
           session = session,
           inputId = "newQLvl3",
-          disabled = TRUE)
+          disabled = FALSE)
       }
     })
   

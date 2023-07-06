@@ -1,8 +1,6 @@
 # Things Needed for This Version
 Fix button layouts
 Previous button issue
-Fix icons after submit (level 2)
-toLvl4 not working? 
 Take new ss
 Add alt text!
 Continue to generalize/write out code
