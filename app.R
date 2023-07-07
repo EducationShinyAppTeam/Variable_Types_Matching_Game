@@ -11,7 +11,7 @@ library(dplyr)
 source("variableFlowChart.R")
 
 # Load Question Banks and Choices ----
-bankA <- read.csv(file = "questionBank.csv", stringsAsFactors = FALSE)
+bankA <- read.csv(file = "questionBankA.csv", stringsAsFactors = FALSE)
 bankB <- read.csv(file = "questionBankB.csv", stringsAsFactors = FALSE)
 bankC <- read.csv(file = "questionBankC.csv", stringsAsFactors = FALSE)
 bankD <- read.csv(file = "questionBankD.csv", stringsAsFactors = FALSE)
