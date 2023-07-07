@@ -1,5 +1,4 @@
 # Things Needed for This Version
-Previous button issue
 Add alt text!
 Continue to generalize/write out code
 

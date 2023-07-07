@@ -445,7 +445,7 @@ ui <- list(
                   width = 1,
                   offset = 1,
                   bsButton(
-                    inputId = "previous2",
+                    inputId = "prevLvl1",
                     label = "Previous"
                   )
                 ),
@@ -513,8 +513,15 @@ ui <- list(
               br(),
               fluidRow(
                 column(
+                  width = 1, 
+                  offset = 4,
+                  bsButton(
+                    inputId = "prevLvl2",
+                    label = "Previous"
+                  )
+                ),
+                column(
                   width = 1,
-                  offset = 5,
                   bsButton(
                     inputId = "splitToFinish",
                     label = "Finish"
@@ -858,7 +865,7 @@ server <- function(input, output, session) {
   })
 
   observeEvent(
-    eventExpr = input$previous2,
+    eventExpr = input$prevLvl1,
     handlerExpr = {
       updateTabsetPanel(
         session = session,
@@ -880,7 +887,7 @@ server <- function(input, output, session) {
   )
   
   observeEvent(
-    eventExpr = input$previous3,
+    eventExpr = input$prevLvl2,
     handlerExpr = {
       updateTabsetPanel(
         session = session,
@@ -979,7 +986,8 @@ server <- function(input, output, session) {
     if (length(index_list$listc) == 1) {
       updateButton(session, "newQLvl3", disabled = TRUE)
       updateButton(session, "submitC", disabled = TRUE)
-      shinyalert("Oops!", "You have used up all the tries. Please click 'previous' then click 'next' to re-enter this level to try again", type = "error")
+      shinyalert("Oops!", "You have used up all the tries. Please click 'previous'
+                 then click 'next level' to re-enter this level to try again", type = "error")
     }
   })
   
@@ -987,7 +995,8 @@ server <- function(input, output, session) {
     if (length(index_listD$listD) == 1) {
       updateButton(session, "newQLvl4", disabled = TRUE)
       updateButton(session, "submitD", disabled = TRUE)
-      shinyalert("Oops!", "You have used up all the tries. Please click 'previous' then click 'next' to re-enter this level to try again", type = "error")
+      shinyalert("Oops!", "You have used up all the tries. Please click 'previous'
+                 then click 'next level' to re-enter this level to try again", type = "error")
     }
   })
   
@@ -1556,10 +1565,10 @@ server <- function(input, output, session) {
     updateTabsetPanel(
       session = session, 
       inputId = "levels", 
-      selected = "e")
+      selected = "d")
     index_list$listc <- c(index_list$listc, sample(1:17, 17, replace = FALSE))
   })
-  ### Labels ----
+  
   observeEvent(
     eventExpr = input$toBtwnLvls,
     handlerExpr = {
@@ -1587,6 +1596,7 @@ server <- function(input, output, session) {
 
   key1 <- as.matrix(bankC[1:36, 1])
 
+  ### Labels ----
   output$questionC <- renderUI({
     if (index$index == 1) {
       h3(bankC[1, 5])
@@ -1902,7 +1912,7 @@ server <- function(input, output, session) {
       updateTabsetPanel(
         session = session, 
         inputId = "levels", 
-        selected = "f")
+        selected = "e")
       index_listD$listD <- c(index_listD$listD, sample(1:8, 8, replace = FALSE))
     })
   ### Labels ----
