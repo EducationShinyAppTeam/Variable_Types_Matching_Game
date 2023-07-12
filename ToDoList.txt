@@ -1,5 +1,4 @@
 # Things Needed for This Version
-Add alt text!
 Continue to generalize/write out code
 
 # Ideas for Future Development

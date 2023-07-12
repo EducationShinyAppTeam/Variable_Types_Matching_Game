@@ -19,7 +19,10 @@ level1Choices <- c("Quantitative and Discrete" = "QuanDiscrete",
                    "Quantitative and Continuous" = "QuanContinuous",
                    "Qualitative and Nominal" = "QualNominal",
                    "Qualitative and Ordinal" = "QualOrdinal")
-level2Choices <- c("","A", "B", "C", "D")
+level2Choices <- c(" ", "Quantitative and Discrete" = "QuanDiscrete", 
+                   "Quantitative and Continuous" = "QuanContinuous",
+                   "Qualitative and Nominal" = "QualNominal",
+                   "Qualitative and Ordinal" = "QualOrdinal")
 
 # Define UI ----
 ui <- list(
@@ -101,7 +104,7 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 6/15/2021 by TM.")
+            div(class = "updated", "Last Update: 7/10/2023 by TM.")
           )
         ),
         ### Prerequisites ----
@@ -390,8 +393,8 @@ ui <- list(
                     width = 6,
                     selectInput(
                       inputId = "lvl2Q1",
-                      label = "Quantitative and Discrete",
-                      choices = level2Choices,
+                      label = "Question 1",
+                      choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A1")
                   ),
@@ -399,8 +402,8 @@ ui <- list(
                     width = 6,
                     selectInput(
                       inputId = "lvl2Q2",
-                      label = "Quantitative and Continuous",
-                      choices = level2Choices,
+                      label = "Question 2",
+                      choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A2")
                   )
@@ -410,8 +413,8 @@ ui <- list(
                     width = 6,
                     selectInput(
                       inputId = "lvl2Q3",
-                      label = "Qualitative and Nominal",
-                      choices = level2Choices,
+                      label = "Question 3",
+                      choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A3")
                   ),
@@ -419,8 +422,8 @@ ui <- list(
                     width = 6,
                     selectInput(
                       inputId = "lvl2Q4",
-                      label = "Qualitative and Ordinal",
-                      choices = level2Choices,
+                      label = "QUestion 4",
+                      choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A4")
                   )
@@ -1375,49 +1378,65 @@ server <- function(input, output, session) {
   }
   
   ## Level 2 ----
-  numbersB <- reactiveValues(disB = c(), contB = c(), nomB = c(), ordB = c(), indexB = c(), questionB = data.frame())
   initBankB <- function() {
-    numbersB$disB <- sample(1:13, 1)
-    numbersB$contB <- sample(14:39, 1)
-    numbersB$nomB <- sample(40:58, 1)
-    numbersB$ordB <- sample(59:74, 1)
-
-    numbersB$indexB <- sample(c("A", "B", "C", "D"), 4)
-    numbersB$questionB <- cbind(bankB[c(numbersB$disB, numbersB$contB, numbersB$nomB, numbersB$ordB), ], numbersB$indexB)
+    scoreLevelB <- reactiveVal(0)
     
-  ### Labels ----
+    subsetBankB <- reactiveVal(
+      value = {
+        subsetBankB <- bankB %>%
+          group_by(Type) %>%
+          slice_sample(n = 1)
+        
+        randOrderL1 <- sample(x = 1:4, size = 4, replace = FALSE)
+        subsetBankB[randOrderL1,]
+      }
+    )
+    
+  ### Labels/Images
     output$imgQ1 <- renderText({
-      paste("A.", numbersB$questionB[numbersB$questionB[5] == "A", 4])
+      paste("1.", subsetBankB()$Question[1])
     })
-
     output$image1 <- renderUI({
-      img(src = numbersB$questionB[numbersB$questionB[5] == "A", 3], width = "95%", height = "95%", style = "text-align: center")
+      img(src = subsetBankB()$Variable[1],
+          alt = subsetBankB()$Alt[1],
+          width = "95%",
+          height = "95%", 
+          style = "text-align: center")
     })
-
+    
     output$imgQ2 <- renderText({
-      paste("B.", numbersB$questionB[numbersB$questionB[5] == "B", 4])
+      paste("2.", subsetBankB()$Question[2])
     })
-
     output$image2 <- renderUI({
-      img(src = numbersB$questionB[numbersB$questionB[5] == "B", 3], width = "95%", height = "95%")
+      img(src = subsetBankB()$Variable[2],
+          alt = subsetBankB()$Alt[2],
+          width = "95%",
+          height = "95%", 
+          style = "text-align: center")
     })
 
     output$imgQ3 <- renderText({
-      paste("C.", numbersB$questionB[numbersB$questionB[5] == "C", 4])
+      paste("3.", subsetBankB()$Question[3])
     })
 
     output$image3 <- renderUI({
-      img(src = numbersB$questionB[numbersB$questionB[5] == "C", 3], width = "95%", height = "95%")
+      img(src = subsetBankB()$Variable[3],
+          alt = subsetBankB()$Alt[3],
+          width = "95%",
+          height = "95%", 
+          style = "text-align: center")
     })
 
     output$imgQ4 <- renderText({
-      paste("D.", numbersB$questionB[numbersB$questionB[5] == "D", 4])
+      paste("4.", subsetBankB()$Question[4])
     })
-    
     output$image4 <- renderUI({
-      img(src = numbersB$questionB[numbersB$questionB[5] == "D", 3], width = "95%", height = "95%")
+      img(src = subsetBankB()$Variable[4],
+          alt = subsetBankB()$Alt[4],
+          width = "95%",
+          height = "95%", 
+          style = "text-align: center")
     })
-  }
   
   ### Validation ----
   observeEvent(
@@ -1425,9 +1444,12 @@ server <- function(input, output, session) {
     handlerExpr = {
       attempts$level2 <- attempts$level2 + 1
       if (!is.null(input$lvl2Q1)) {
-        if (input$lvl2Q1 == numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]) {
+        valid <- any(trimws(input$lvl2Q1) == subsetBankB()$Type[1])
+        if (valid) {
+          scoreLevelB(scoreLevelB() + 5)
           output$lvl2A1 <- renderIcon(icon = "correct", width = 30)
         } else {
+          scoreLevelB(scoreLevelB() + 0)
           output$lvl2A1 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
@@ -1436,9 +1458,12 @@ server <- function(input, output, session) {
     eventExpr = input$submitB,
     handlerExpr = {
       if (!is.null(input$lvl2Q2)) {
-        if (input$lvl2Q2 == numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]) {
+        valid <- any(trimws(input$lvl2Q2) == subsetBankB()$Type[2])
+        if (valid) {
+          scoreLevelB(scoreLevelB() + 5)
           output$lvl2A2 <- renderIcon(icon = "correct", width = 30)
         } else {
+          scoreLevelB(scoreLevelB() + 0)
           output$lvl2A2 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
@@ -1447,9 +1472,12 @@ server <- function(input, output, session) {
     eventExpr = input$submitB,
     handlerExpr = {
       if (!is.null(input$lvl2Q3)) {
-        if (input$lvl2Q3 == numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]) {
+        valid <- any(trimws(input$lvl2Q3) == subsetBankB()$Type[3])
+        if (valid) {
+          scoreLevelB(scoreLevelB() + 5)
           output$lvl2A3 <- renderIcon(icon = "correct", width = 30)
         } else {
+          scoreLevelB(scoreLevelB() + 0)
           output$lvl2A3 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
@@ -1458,9 +1486,12 @@ server <- function(input, output, session) {
     eventExpr = input$submitB,
     handlerExpr = {
       if (!is.null(input$lvl2Q4)) {
-        if (input$lvl2Q4 == numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]) {
+        valid <- any(trimws(input$lvl2Q4) == subsetBankB()$Type[4])
+        if (valid) {
+          scoreLevelB(scoreLevelB() + 5)
           output$lvl2A4 <- renderIcon(icon = "correct", width = 30)
         } else {
+          scoreLevelB(scoreLevelB() + 0)
           output$lvl2A4 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
@@ -1472,87 +1503,22 @@ server <- function(input, output, session) {
     output$lvl2A2 <- renderIcon()
     output$lvl2A3 <- renderIcon()
     output$lvl2A4 <- renderIcon()
+    scoreLevelB(0)
   })
-  
+
   observeEvent(input$submitB, {
-    image1 <- numbersB$questionB[numbersB$questionB[1] == "QuanDiscrete", 5]
-    image2 <- numbersB$questionB[numbersB$questionB[1] == "QuanContinuous", 5]
-    image3 <- numbersB$questionB[numbersB$questionB[1] == "QualNominal", 5]
-    image4 <- numbersB$questionB[numbersB$questionB[1] == "QualOrdinal", 5]
-    
-    score5 <- c()
-    
-    for (i in input$lvl2Q1) {
-      if (i == image1) {
-        score5 <- c(score5, 5)
-      } else {
-        score5 <- c(score5, 0)
-      }
-    }
-    for (i in input$lvl2Q2) {
-      if (i == image2) {
-        score5 <- c(score5, 5)
-      } else {
-        score5 <- c(score5, 0)
-      }
-    }
-    for (i in input$lvl2Q3) {
-      if (i == image3) {
-        score5 <- c(score5, 5)
-      } else {
-        score5 <- c(score5, 0)
-      }
-    }
-    for (i in input$lvl2Q4) {
-      if (i == image4) {
-        score5 <- c(score5, 5)
-      } else {
-        score5 <- c(score5, 0)
-      }
-    }
-    
-    total <- sum(score5)
-    
-    response <- list(
-      "Quantitative_Discrete" = c(image1, input$lvl2Q1),
-      "Quantitative_Continuous" = c(image2, input$lvl2Q2),
-      "Qualitative_Nominal" = c(image3, input$lvl2Q3),
-      "Qualitative_Ordinal" = c(image4, input$lvl2Q4)
-    )
-    
-    stmt <- boastUtils::generateStatement(
-      session,
-      verb = "answered",
-      object = "level2",
-      description = "Identify in Plots",
-      interactionType = "matching",
-      response = jsonlite::toJSON(response),
-      success = total == 20
-    )
-    
-    boastUtils::storeStatement(session, stmt)
-    
-    summation$summationB[input$submitB] <- total
-  })
-  values <- reactiveValues(
-    count = 0
-  )
-  observeEvent(input$submitB, {
-    if (summation$summationB[input$submitB] == 20) {
+    if (scoreLevelB() >= 20) {
       updateButton(session, "toBtwnLvls", disabled = FALSE)
     }
     else {
       updateButton(session, "toBtwnLvls", disabled = TRUE)
     }
   })
-  
-  output$scoreA <- renderPrint({
-    cat("Current score of this level is", summation$summationA[input$submitA])
+
+  output$scoreB <- renderText({
+    paste("You have", scoreLevelB(), "points.")
   })
-  
-  output$scoreB <- renderPrint({
-    cat("Current score of this level is", max(summation$summationB))
-  })
+  }
 
   ## Level 3 ----
   index <- reactiveValues(index = 18)
@@ -2230,35 +2196,6 @@ server <- function(input, output, session) {
       )
     }
   )
-  ## Validation ----
-  ### Validate Level 1 ----
-
-  #### GET RID OF THIS (SAFELY)
-  summation <- reactiveValues(summationA = c(rep(0, 20)), summationB = c(rep(0, 20)), summationC = c(rep(0, 20)), summationD = c(rep(0, 20)), summationScore = c(rep(0, 20)))
-  
-  observeEvent(input$submitA, {
-    
-    score1 <- c()
-    score2 <- c()
-    score3 <- c()
-    score4 <- c()
-    
-    total <- sum(c(score1, score2, score3, score4))
-    
-    stmt <- boastUtils::generateStatement(
-      session,
-      verb = "answered",
-      object = "level1",
-      description = "Drag the variables into the categories they belong to.",
-      interactionType = "matching",
-      response = jsonlite::toJSON(response),
-      success = total == 30
-    )
-    
-    boastUtils::storeStatement(session, stmt)
-    
-    summation$summationA[input$submitA] <- total
-  })
 
   ### Results ----
   attempts <- reactiveValues(
