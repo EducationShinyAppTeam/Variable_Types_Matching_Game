@@ -8,8 +8,6 @@ library(shinyWidgets)
 library(boastUtils)
 library(dplyr)
 
-source("variableFlowChart.R")
-
 # Load Question Banks and Choices ----
 bankA <- read.csv(file = "questionBankA.csv", stringsAsFactors = FALSE)
 bankB <- read.csv(file = "questionBankB.csv", stringsAsFactors = FALSE)
@@ -128,10 +126,17 @@ ui <- list(
                       an unlimited number of values within a range, they do not need 
                       to be fixed.")
             ),
-            div(
-              style = "text-align: center;",
-              variableFlowChart
-            ),
+            br(),
+            tags$figure(
+              class = "center-figure",
+              tags$img(
+                src = "variableFlowChart.png",
+                width = "100%",
+                alt = "Flow chart with three tiers. The top is variables and it 
+                goes into quantitaive (which can be can be discrete or continuous) 
+                and qualitative (which can be nominal or ordinal) variables."
+              )
+            )
           ),
           box(
             title = strong("Explanatory, Response, and Confounding Variables"),

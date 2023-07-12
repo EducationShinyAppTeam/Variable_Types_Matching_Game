@@ -1,5 +1,6 @@
 # Things Needed for This Version
-Continue to generalize/write out code
+1. Continue to generalize/write out code
+2. css files? 
 
 # Ideas for Future Development
 - 
