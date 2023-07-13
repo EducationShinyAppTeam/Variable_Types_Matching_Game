@@ -832,25 +832,25 @@ ui <- list(
 # Define Server ----
 server <- function(input, output, session) {
 
-  ## Set timer with start, stop, restart, stop, and termination; and show the timer
-  time <- reactiveValues(inc = 0, timer = reactiveTimer(1000), started = FALSE)
-
-  ## Setup questions and begin timer
-  startGame <- function() {
-
-    # Check if game has already been started
-    if (!time$started) {
-
-      # Bank A
-      initBankA()
-
-      # Bank B
-      initBankB()
-
-      # Start timer
-      time$started <- TRUE
-    }
-  }
+  # ## Set timer with start, stop, restart, stop, and termination; and show the timer
+  # time <- reactiveValues(inc = 0, timer = reactiveTimer(1000), started = FALSE)
+  # 
+  # ## Setup questions and begin timer
+  # startGame <- function() {
+  # 
+  #   # Check if game has already been started
+  #   if (!time$started) {
+  # 
+  #     # Bank A
+  #     initBankA()
+  # 
+  #     # Bank B
+  #     initBankB()
+  # 
+  #     # Start timer
+  #     time$started <- TRUE
+  #   }
+  # }
 
   ## Buttons  ----
   observeEvent(input$goToGame, {
@@ -860,7 +860,6 @@ server <- function(input, output, session) {
       selected = "game"
     )
   })
-  
   observeEvent(
     eventExpr = input$info,
     handlerExpr = {
@@ -872,11 +871,10 @@ server <- function(input, output, session) {
       )
     }
   )
-
-  observeEvent(input$reset_button, {
-    js$reset()
-  })
-
+# 
+#   observeEvent(input$reset_button, {
+#     js$reset()
+#   })
   observeEvent(
     eventExpr = input$prevLvl1,
     handlerExpr = {
@@ -887,7 +885,6 @@ server <- function(input, output, session) {
       )
     }
   )
-  
   observeEvent(
     eventExpr = input$toLvl2,
     handlerExpr = {
@@ -898,7 +895,6 @@ server <- function(input, output, session) {
       )
     }
   )
-  
   observeEvent(
     eventExpr = input$prevLvl2,
     handlerExpr = {
@@ -909,7 +905,6 @@ server <- function(input, output, session) {
       )
     }
   )
-
   observeEvent(
     eventExpr = input$toBtwnLvls,
     handlerExpr = {
@@ -920,7 +915,6 @@ server <- function(input, output, session) {
       )
     }
   )
-  
   observeEvent(
     eventExpr = input$toLvl3,
     handlerExpr = {
@@ -931,7 +925,6 @@ server <- function(input, output, session) {
       )
     }
   )
-  
   observeEvent(
     eventExpr = input$btwnToFinish,
     handlerExpr = {
@@ -942,7 +935,6 @@ server <- function(input, output, session) {
       )
     }
   )
-  
   observeEvent(
     eventExpr = input$toLvl4,
     handlerExpr = {
@@ -953,7 +945,6 @@ server <- function(input, output, session) {
       )
     }
   )
-  
   observeEvent(
     eventExpr = input$finish, 
     handlerExpr = {
@@ -975,82 +966,186 @@ server <- function(input, output, session) {
     })
   
   ## Submit Observers ----
-  observeEvent(input$submitA, {
-    updateButton(session, "submitA", disabled = TRUE)
-  })
-  
-  observeEvent(input$retryA, {
-    updateButton(session, "submitA", disabled = FALSE)
-  })
-  
-  observeEvent(input$submitB, {
-    updateButton(session, "submitB", disabled = TRUE)
-  })
-  
-  observeEvent(input$retryB, {
-    updateButton(session, "submitB", disabled = FALSE)
-  })
-  
-  observeEvent(input$submitC, {
-    updateButton(session, "submitC", disabled = TRUE)
-  })
-  
+  observeEvent(
+    eventExpr = input$submitA, 
+    handlerExpr = {
+      updateButton(
+        session = session,
+        inputId = "submitA",
+        disabled = TRUE
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = input$retryA, 
+    handlerExpr = {
+      updateButton(
+        session = session, 
+        inputId = "submitA", 
+        disabled = FALSE
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitB, 
+    handlerExpr = {
+      updateButton(
+        sesion = session, 
+        inputId = "submitB", 
+        disabled = TRUE
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = input$retryB, 
+    handlerExpr = {
+      updateButton(
+        session = session, inputId = "submitB",
+        disabled = FALSE
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitC, 
+    handlerExpr = {
+      updateButton(
+        session = session, 
+        inputId = "submitC", 
+        disabled = TRUE
+      )
+    }
+  )
   observe({
     if (length(index_list$listc) == 1) {
-      updateButton(session, "newQLvl3", disabled = TRUE)
-      updateButton(session, "submitC", disabled = TRUE)
-      shinyalert("Oops!", "You have used up all the tries. Please click 'previous'
-                 then click 'next level' to re-enter this level to try again", type = "error")
+      updateButton(
+        session = session, 
+        inputId = "newQLvl3",
+        disabled = TRUE
+      )
+      updateButton(
+        session = session, 
+        inputId = "submitC",
+        disabled = TRUE
+      )
+      shinyalert(
+        title = "Oops!",
+        text = "You have used up all the tries. Please click 'previous' then
+        click 'next level' to re-enter this level to try again",
+        type = "error")
     }
   })
-  
   observe({
     if (length(index_listD$listD) == 1) {
-      updateButton(session, "newQLvl4", disabled = TRUE)
-      updateButton(session, "submitD", disabled = TRUE)
-      shinyalert("Oops!", "You have used up all the tries. Please click 'previous'
-                 then click 'next level' to re-enter this level to try again", type = "error")
+      updateButton(
+        session = session, 
+        inputId = "newQLvl4",
+        disabled = TRUE
+      )
+      updateButton(
+        session = session,
+        inputId = "submitD", 
+        disabled = TRUE
+      )
+      shinyalert(
+        title = "Oops!",
+        text = "You have used up all the tries. Please click 'previous'
+        then click 'next level' to re-enter this level to try again", 
+        type = "error")
     }
   })
-  
-  observeEvent(input$submitC, {
-    updateButton(session, "newQLvl3", disabled = FALSE)
-  })
-  
-  observeEvent(input$prevBtwnLvls, {
-    updateButton(session, "submitC", disabled = FALSE)
-  })
-  
-  observeEvent(input$newQLvl3, {
-    updateButton(session, "submitC", disabled = FALSE)
-  })
-  
-  observeEvent(input$newQLvl3, {
-    updateButton(session, "newQLvl3", disabled = TRUE)
-  })
-  
-  observeEvent(input$submitD, {
-    updateButton(session, "submitD", disabled = TRUE)
-  })
-  
-  observeEvent(input$submitD, {
-    updateButton(session, "newQLvl4", disabled = FALSE)
-  })
-  
-  observeEvent(input$prevLvl3, {
-    updateButton(session, "submitD", disabled = FALSE)
-  })
-  
-  observeEvent(input$newQLvl4, {
-    updateButton(session, "submitD", disabled = FALSE)
-  })
-  
-  observeEvent(input$newQLvl4, {
-    updateButton(session, "newQLvl4", disabled = TRUE)
-  })
+  observeEvent(
+    eventExpr = input$submitC, 
+    handlerExpr = {
+      updateButton(
+        session = session, 
+        inputId = "newQLvl3", 
+        disabled = FALSE
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = input$prevBtwnLvls, 
+    handlerExpr = {
+      updateButton(
+        session = session, 
+        inputId = "submitC", 
+        disabled = FALSE
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = input$newQLvl3,
+    handlerExpr = {
+      updateButton(
+        session = session,
+        inputId = "submitC",
+        disabled = FALSE
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = input$newQLvl3,
+    handlerExpr = {
+      updateButton(
+        session = session, 
+        inputId = "newQLvl3",
+        disabled = TRUE
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitD,
+    handlerExpr = {
+      updateButton(
+        session = session,
+        inputId = "submitD", 
+        disabled = TRUE
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = input$submitD, 
+    handlerExpr = {
+      updateButton(
+        session = session,
+        inputId = "newQLvl4",
+        disabled = FALSE
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = input$prevLvl3, 
+    handlerExpr = {
+      updateButton(
+        session = session, 
+        inputId = "submitD",
+        disabled = FALSE
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = input$newQLvl4, 
+    handlerExpr = {
+      updateButton(
+        session = session, 
+        inputId = "submitD", 
+        disabled = FALSE
+      )
+    }
+  )
+  observeEvent(
+    eventExpr = input$newQLvl4, 
+    handlerExpr = {
+      updateButton(
+        session = session, 
+        inputId = "newQLvl4",
+        disabled = TRUE
+      ) 
+    }
+  )
   
   ## Level 1 ----
-  initBankA <- function() {
+  #initBankA <- function() {
     scoreLevelA <- reactiveVal(0)
     
     subsetBankA <- reactiveVal(
@@ -1385,10 +1480,10 @@ server <- function(input, output, session) {
       updateButton(session, "toLvl2", disabled = FALSE)
     }
   })
-  }
+  #}
   
   ## Level 2 ----
-  initBankB <- function() {
+  #initBankB <- function() {
     scoreLevelB <- reactiveVal(0)
     
     subsetBankB <- reactiveVal(
@@ -1528,7 +1623,7 @@ server <- function(input, output, session) {
   output$scoreB <- renderText({
     paste("You have", scoreLevelB(), "points.")
   })
-  }
+  #}
 
   ## Level 3 ----
   index <- reactiveValues(index = 18)
@@ -2251,15 +2346,15 @@ server <- function(input, output, session) {
     }
   )
 
-  # Listen for game start events
-  observeEvent(
-    eventExpr = input$pages,
-    handlerExpr = {
-      if (input$pages == "game") {
-        startGame()
-      }
-    }
-  )
-}
+#   # Listen for game start events
+#   observeEvent(
+#     eventExpr = input$pages,
+#     handlerExpr = {
+#       if (input$pages == "game") {
+#         startGame()
+#       }
+#     }
+#   )
+ }
 
 boastUtils::boastApp(ui = ui, server = server)
