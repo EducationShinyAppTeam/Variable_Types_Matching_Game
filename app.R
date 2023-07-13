@@ -207,7 +207,7 @@ ui <- list(
                     selected = character(0)
                   ),
                 ),
-                column(width = 1,uiOutput(outputId = "lvl1A2")),
+                column(width = 1, uiOutput(outputId = "lvl1A2")),
                 column(
                   width = 3,
                   radioButtons(
@@ -217,8 +217,8 @@ ui <- list(
                     selected = character(0)
                   ),
                 ),
-                column(width = 1,uiOutput(outputId = "lvl1A3")),
-              ),
+                column(width = 1, uiOutput(outputId = "lvl1A3")),
+              ), 
               fluidRow(
                 column(
                   width = 3,
@@ -229,7 +229,7 @@ ui <- list(
                     selected = character(0)
                   ),
                 ),
-                column(width = 1,uiOutput(outputId = "lvl1A4")),
+                column(width = 1, uiOutput(outputId = "lvl1A4")),
                 column(
                   width = 3,
                   radioButtons(
@@ -239,7 +239,7 @@ ui <- list(
                     selected = character(0)
                   ),
                 ),
-                column(width = 1,uiOutput(outputId = "lvl1A5")),
+                column(width = 1, uiOutput(outputId = "lvl1A5")),
                 column(
                   width = 3,
                   radioButtons(
@@ -249,7 +249,7 @@ ui <- list(
                     selected = character(0)
                   ),
                 ),
-                column(width = 1,uiOutput(outputId = "lvl1A6")),
+                column(width = 1, uiOutput(outputId = "lvl1A6")),
               ),
               fluidRow(
                 column(
@@ -261,7 +261,7 @@ ui <- list(
                     selected = character(0)
                   ),
                 ),
-                column(width = 1,uiOutput(outputId = "lvl1A7")),
+                column(width = 1, uiOutput(outputId = "lvl1A7")),
                 column(
                   width = 3,
                   radioButtons(
@@ -271,7 +271,7 @@ ui <- list(
                     selected = character(0)
                   ),
                 ),
-                column(width = 1,uiOutput(outputId = "lvl1A8")),
+                column(width = 1, uiOutput(outputId = "lvl1A8")),
                 column(
                   width = 3,
                   radioButtons(
@@ -281,7 +281,7 @@ ui <- list(
                     selected = character(0)
                   ),
                 ),
-                column(width = 1,uiOutput(outputId = "lvl1A9")),
+                column(width = 1, uiOutput(outputId = "lvl1A9")),
               ),
               fluidRow(
                 column(
@@ -293,7 +293,7 @@ ui <- list(
                     selected = character(0)
                   ),
                 ),
-                column(width = 1,uiOutput(outputId = "lvl1A10")),
+                column(width = 1, uiOutput(outputId = "lvl1A10")),
                 column(
                   width = 3,
                   radioButtons(
@@ -303,7 +303,7 @@ ui <- list(
                     selected = character(0)
                   ),
                 ),
-                column(width = 1,uiOutput(outputId = "lvl1A11")),
+                column(width = 1, uiOutput(outputId = "lvl1A11")),
                 column(
                   width = 3,
                   radioButtons(
@@ -313,7 +313,7 @@ ui <- list(
                     selected = character(0)
                   ),
                 ),
-                column(width = 1,uiOutput(outputId = "lvl1A12")),
+                column(width = 1, uiOutput(outputId = "lvl1A12")),
               ),
               br(),
               ##### Buttons ----
@@ -360,8 +360,9 @@ ui <- list(
               conditionalPanel(
                 "input.submitA != 0",
                 fluidRow(
-                  wellPanel(h3("You must score 30 points to move onto the next level."),
-                            verbatimTextOutput("scoreA")
+                  wellPanel(
+                    h3("You must score 30 points to move onto the next level."),
+                    verbatimTextOutput("scoreA")
                   )
                 )
               )
@@ -436,14 +437,14 @@ ui <- list(
               ),
               br(),
               fluidRow(
-                wellPanel(div(style = "position: relative; top:-5px;"),
-                          div(style = "position:relative; text-align:center; top: -15px;", h4(textOutput("imgQ3"))),
-                          div(style = "position:relative; top: -15px;", uiOutput("image3", class = "picSize")),
+                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ3"))),
+                          uiOutput("image3", class = "picSize"),
+                          div(style = "position: relative; top:-15px;"),
                           class = "col-lg-6 col-md-12 wellBorder"
                 ),
-                wellPanel(div(style = "position: relative; top:-5px;"),
-                          div(style = "position:relative; text-align:center; top: -15px;", h4(textOutput("imgQ4"))),
-                          div(style = "position:relative; top: -15px;", uiOutput("image4", class = "picSize")),
+                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ4"))),
+                          uiOutput("image4", class = "picSize"),
+                          div(style = "position: relative; top:-15px;"),
                           class = "col-lg-6 col-md-12 wellBorder"
                 )
               ),
@@ -489,8 +490,9 @@ ui <- list(
               conditionalPanel(
                 "input.submitB != 0",
                 fluidRow(
-                  wellPanel(h3("You must score 20 points to move onto the next level."),
-                            verbatimTextOutput("scoreB"),
+                  wellPanel(
+                    h3("You must score 20 points to move onto the next level."),
+                    verbatimTextOutput("scoreB"),
                   )
                 )
               )
@@ -531,7 +533,7 @@ ui <- list(
                 column(
                   width = 1,
                   bsButton(
-                    inputId = "splitToFinish",
+                    inputId = "btwnToFinish",
                     label = "Finish"
                   )
                 ),
@@ -559,7 +561,10 @@ ui <- list(
                 style = "margin-left:15px"),
               hr(),
               wellPanel(
-                fluidRow(uiOutput("questionC"), br())
+                fluidRow(
+                  uiOutput("questionC"), 
+                  br()
+                )
               ),
               hr(),
               fluidRow(
@@ -590,46 +595,46 @@ ui <- list(
               ),
               br(),
               ##### Buttons ----
-              # conditionalPanel(
-              #   "input.toBtwnLvls != 0",
+              conditionalPanel(
+                "input.toBtwnLvls != 0",
                 fluidRow(
                   column(
                     width = 1, 
                     offset = 1,
                     bsButton(
-                      inputId = "previous4",
+                      inputId = "prevBtwnLvls",
                       label = "Previous",
                     )
-                  ),
-                  column(
-                    width = 1, 
-                    offset = 3,
-                    #conditionalPanel(
-                      #"(input.explC!='') & (input.respC!='')",
-                      bsButton(
-                        inputId = "submitC",
-                        label = "Submit",
-                      )
-                    #)
-                  ),
-                  column(
-                    width = 1,
-                    bsButton(
-                      inputId = "newQLvl3",
-                      label = "New Question"
-                    )
-                  ),
-                  column(
-                    width = 1,
-                    offset = 3,
-                    bsButton(
-                      inputId = "toLvl4",
-                      label = "Next Level",
-                      disabled = TRUE
-                    )
-                  ),
-               # ),
+                  )
                 ),
+                column(
+                  width = 1, 
+                  offset = 3,
+                  conditionalPanel(
+                    "(input.explC!='') & (input.respC!='')",
+                    bsButton(
+                      inputId = "submitC",
+                      label = "Submit",
+                    )
+                  )
+                ),
+                column(
+                  width = 1,
+                  bsButton(
+                    inputId = "newQLvl3",
+                    label = "New Question"
+                  )
+                ),
+                column(
+                  width = 1,
+                  offset = 3,
+                  bsButton(
+                    inputId = "toLvl4",
+                    label = "Next Level",
+                    disabled = TRUE
+                  )
+                ),
+              ),
               hr(),
               fluidRow(
                 progressBar(
@@ -697,14 +702,14 @@ ui <- list(
               ),
               br(),
               ##### Buttons ----
-             # conditionalPanel(
-             #   "input.toLvl4 != 0",
+              conditionalPanel(
+                "input.toLvl4 != 0",
                 fluidRow(
                   column(
                     width = 1, 
                     offset = 1,
                     bsButton(
-                      inputId = "previous5",
+                      inputId = "prevLvl3",
                       label = "Previous",
                     )
                   ),
@@ -734,7 +739,7 @@ ui <- list(
                   )
                 ),
                 hr(),
-           #   ),
+              ),
               fluidRow(
                 progressBar(
                   id = "barLevel4",
@@ -928,7 +933,7 @@ server <- function(input, output, session) {
   )
   
   observeEvent(
-    eventExpr = input$splitToFinish,
+    eventExpr = input$btwnToFinish,
     handlerExpr = {
       updateTabsetPanel(
         session = session,
@@ -1012,7 +1017,7 @@ server <- function(input, output, session) {
     updateButton(session, "newQLvl3", disabled = FALSE)
   })
   
-  observeEvent(input$previous4, {
+  observeEvent(input$prevBtwnLvls, {
     updateButton(session, "submitC", disabled = FALSE)
   })
   
@@ -1032,7 +1037,7 @@ server <- function(input, output, session) {
     updateButton(session, "newQLvl4", disabled = FALSE)
   })
   
-  observeEvent(input$previous5, {
+  observeEvent(input$prevLvl3, {
     updateButton(session, "submitD", disabled = FALSE)
   })
   
@@ -1531,7 +1536,7 @@ server <- function(input, output, session) {
   index_list <- reactiveValues(listc = sample(1:17, 17, replace = FALSE))
 
   observeEvent(
-    eventExpr = input$previous4, 
+    eventExpr = input$prevBtwnLvls, 
     handlerExpr = {
     updateTabsetPanel(
       session = session, 
@@ -1878,7 +1883,7 @@ server <- function(input, output, session) {
   index_listD <- reactiveValues(listD = sample(1:8, 8, replace = FALSE))
 
   observeEvent(
-    eventExpr = input$previous5, 
+    eventExpr = input$prevLvl3, 
     handlerExpr = {
       updateTabsetPanel(
         session = session, 
