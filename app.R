@@ -48,7 +48,7 @@ ui <- list(
       width = 250,
       sidebarMenu(
         id = "pages",
-        menuItem("Overview", tabName = "overview", icon = icon("tachometer-alt")),
+        menuItem("Overview", tabName = "overview", icon = icon("gauge-high")),
         menuItem("Prerequisites", tabName = "prerequisite", icon = icon("book")),
         menuItem("Game", tabName = "game", icon = icon("gamepad")),
         menuItem("References", tabName = "references", icon = icon("leanpub"))
@@ -84,7 +84,7 @@ ui <- list(
               inputId = "goToGame",
               label = "Game!",
               icon = icon("bolt"),
-              size = "large",
+              size = "large"
             )
           ),
           br(),
@@ -94,7 +94,8 @@ ui <- list(
             "This app was developed and coded by Yuxin Zhang, Luxin Wang, &
             Thomas McIntyre. Special thanks to Robert P. Carey III and
             Alex Chen for help on some programming issues. We'd also like to
-            thank Mike Fleck for help with the flow diagram.",
+            thank Mike Fleck for help with the qualitative and quantitaive 
+            variables flow diagram.",
             br(),
             br(),
             "Cite this app as:",
@@ -102,7 +103,7 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 7/10/2023 by TM.")
+            div(class = "updated", "Last Update: 7/14/2023 by TM.")
           )
         ),
         ### Prerequisites ----
@@ -173,7 +174,7 @@ ui <- list(
           h2("Game"),
           tabsetPanel(
             id = "levels",
-            #type = "hidden",
+            type = "hidden",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
@@ -184,7 +185,7 @@ ui <- list(
                 p("To move onto the next level, you need correctly match all 12 variables.
                   To submit, you must answer all questions. If you get one wrong, 
                   click retry to try again."),
-                style = "margin-left:15px",
+                style = "margin-left:15px"
               ),
               hr(),
               fluidRow(
@@ -195,7 +196,7 @@ ui <- list(
                     label = " ",
                     choices = level1Choices,
                     selected = character(0)
-                  ),
+                  )
                 ),
                 column(width = 1, uiOutput(outputId = "lvl1A1")),
                 column(
@@ -205,7 +206,7 @@ ui <- list(
                     label = " ",
                     choices = level1Choices,
                     selected = character(0)
-                  ),
+                  )
                 ),
                 column(width = 1, uiOutput(outputId = "lvl1A2")),
                 column(
@@ -215,9 +216,9 @@ ui <- list(
                     label = " ",
                     choices = level1Choices,
                     selected = character(0)
-                  ),
+                  )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A3")),
+                column(width = 1, uiOutput(outputId = "lvl1A3"))
               ), 
               fluidRow(
                 column(
@@ -227,7 +228,7 @@ ui <- list(
                     label = " ",
                     choices = level1Choices,
                     selected = character(0)
-                  ),
+                  )
                 ),
                 column(width = 1, uiOutput(outputId = "lvl1A4")),
                 column(
@@ -237,7 +238,7 @@ ui <- list(
                     label = " ",
                     choices = level1Choices,
                     selected = character(0)
-                  ),
+                  )
                 ),
                 column(width = 1, uiOutput(outputId = "lvl1A5")),
                 column(
@@ -247,9 +248,9 @@ ui <- list(
                     label = " ",
                     choices = level1Choices,
                     selected = character(0)
-                  ),
+                  )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A6")),
+                column(width = 1, uiOutput(outputId = "lvl1A6"))
               ),
               fluidRow(
                 column(
@@ -259,7 +260,7 @@ ui <- list(
                     label = " ",
                     choices = level1Choices,
                     selected = character(0)
-                  ),
+                  )
                 ),
                 column(width = 1, uiOutput(outputId = "lvl1A7")),
                 column(
@@ -269,7 +270,7 @@ ui <- list(
                     label = " ",
                     choices = level1Choices,
                     selected = character(0)
-                  ),
+                  )
                 ),
                 column(width = 1, uiOutput(outputId = "lvl1A8")),
                 column(
@@ -279,9 +280,9 @@ ui <- list(
                     label = " ",
                     choices = level1Choices,
                     selected = character(0)
-                  ),
+                  )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A9")),
+                column(width = 1, uiOutput(outputId = "lvl1A9"))
               ),
               fluidRow(
                 column(
@@ -291,7 +292,7 @@ ui <- list(
                     label = " ",
                     choices = level1Choices,
                     selected = character(0)
-                  ),
+                  )
                 ),
                 column(width = 1, uiOutput(outputId = "lvl1A10")),
                 column(
@@ -301,7 +302,7 @@ ui <- list(
                     label = " ",
                     choices = level1Choices,
                     selected = character(0)
-                  ),
+                  )
                 ),
                 column(width = 1, uiOutput(outputId = "lvl1A11")),
                 column(
@@ -311,9 +312,9 @@ ui <- list(
                     label = " ",
                     choices = level1Choices,
                     selected = character(0)
-                  ),
+                  )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A12")),
+                column(width = 1, uiOutput(outputId = "lvl1A12"))
               ),
               br(),
               ##### Buttons ----
@@ -344,7 +345,7 @@ ui <- list(
                     bsButton(
                       inputId = "submitA", 
                       label = "Submit")
-                  ),
+                  )
                 ),
                 column(
                   width = 1,
@@ -377,7 +378,7 @@ ui <- list(
                        to the variable type."),
                 p("To move onto the next level, you need to get all 4 questions correct.
                 To submit, you must answer all questions. If you get one wrong, click retry to try again."),
-                style = "margin-left:15px",
+                style = "margin-left:15px"
               ),
               hr(),
               fluidRow(
@@ -492,7 +493,7 @@ ui <- list(
                 fluidRow(
                   wellPanel(
                     h3("You must score 20 points to move onto the next level."),
-                    verbatimTextOutput("scoreB"),
+                    verbatimTextOutput("scoreB")
                   )
                 )
               )
@@ -516,7 +517,7 @@ ui <- list(
                 wellPanel(
                   h3("Results:"),
                   verbatimTextOutput("level1ScoreResults1"),
-                  verbatimTextOutput("level2ScoreResults1"),
+                  verbatimTextOutput("level2ScoreResults1")
                 )
               ),
               br(),
@@ -603,37 +604,37 @@ ui <- list(
                     offset = 1,
                     bsButton(
                       inputId = "prevBtwnLvls",
-                      label = "Previous",
+                      label = "Previous"
                     )
-                  )
-                ),
-                column(
-                  width = 1, 
-                  offset = 3,
-                  conditionalPanel(
-                    "(input.explC!='') & (input.respC!='')",
+                  ),
+                  column(
+                    width = 1, 
+                    offset = 3,
+                    conditionalPanel(
+                      "(input.explC!='') & (input.respC!='')",
+                      bsButton(
+                        inputId = "submitC",
+                        label = "Submit"
+                      )
+                    )
+                  ),
+                  column(
+                    width = 1,
                     bsButton(
-                      inputId = "submitC",
-                      label = "Submit",
+                      inputId = "newQLvl3",
+                      label = "New Question"
+                    )
+                  ),
+                  column(
+                    width = 1,
+                    offset = 3,
+                    bsButton(
+                      inputId = "toLvl4",
+                      label = "Next Level",
+                      disabled = TRUE
                     )
                   )
-                ),
-                column(
-                  width = 1,
-                  bsButton(
-                    inputId = "newQLvl3",
-                    label = "New Question"
-                  )
-                ),
-                column(
-                  width = 1,
-                  offset = 3,
-                  bsButton(
-                    inputId = "toLvl4",
-                    label = "Next Level",
-                    disabled = TRUE
-                  )
-                ),
+                )
               ),
               hr(),
               fluidRow(
@@ -710,7 +711,7 @@ ui <- list(
                     offset = 1,
                     bsButton(
                       inputId = "prevLvl3",
-                      label = "Previous",
+                      label = "Previous"
                     )
                   ),
                   column(
@@ -738,7 +739,7 @@ ui <- list(
                     )
                   )
                 ),
-                hr(),
+                hr()
               ),
               fluidRow(
                 progressBar(
@@ -760,9 +761,9 @@ ui <- list(
                   verbatimTextOutput("level1ScoreResults2"),
                   verbatimTextOutput("level2ScoreResults2"),
                   verbatimTextOutput("level3Score"),
-                  verbatimTextOutput("level4Score"),
+                  verbatimTextOutput("level4Score")
                 )
-              ),
+              )
             )
           )
         ),
@@ -831,27 +832,6 @@ ui <- list(
 
 # Define Server ----
 server <- function(input, output, session) {
-  
-  # ## Set timer with start, stop, restart, stop, and termination; and show the timer
-  # time <- reactiveValues(inc = 0, timer = reactiveTimer(1000), started = FALSE)
-  # 
-  # ## Setup questions and begin timer
-  # startGame <- function() {
-  # 
-  #   # Check if game has already been started
-  #   if (!time$started) {
-  # 
-  #     # Bank A
-  #     initBankA()
-  # 
-  #     # Bank B
-  #     initBankB()
-  # 
-  #     # Start timer
-  #     time$started <- TRUE
-  #   }
-  # }
-  
   ## Buttons  ----
   observeEvent(input$goToGame, {
     updateTabItems(
@@ -872,11 +852,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  
-  # 
-  #   observeEvent(input$reset_button, {
-  #     js$reset()
-  #   })
+
   observeEvent(
     eventExpr = input$prevLvl1,
     handlerExpr = {
@@ -972,7 +948,9 @@ server <- function(input, output, session) {
         session = session, 
         inputId = "levels",
         selected = "g")
-    })
+    }
+  )
+  
   ## Submit Observers ----
   observeEvent(
     eventExpr = input$submitA, 
@@ -1169,7 +1147,6 @@ server <- function(input, output, session) {
   )
   
   ## Level 1 ----
-  #initBankA <- function() {
   scoreLevelA <- reactiveVal(0)
   
   subsetBankA <- reactiveVal(
@@ -1552,10 +1529,8 @@ server <- function(input, output, session) {
       }
     }
   )
-  #}
   
   ## Level 2 ----
-  #initBankB <- function() {
   scoreLevelB <- reactiveVal(0)
   
   subsetBankB <- reactiveVal(
@@ -1568,7 +1543,8 @@ server <- function(input, output, session) {
       subsetBankB[randOrderL2,]
     }
   )
-  ### Labels/Images
+  
+  ### Labels/Images ----
   output$imgQ1 <- renderText(
     expr = {
       paste("1.", subsetBankB()$Question[1])
@@ -1732,8 +1708,7 @@ server <- function(input, output, session) {
       paste("You have", scoreLevelB(), "points.")
     }
   )
-  #}
-  
+
   ## Level 3 ----
   index <- reactiveValues(index = 18)
   
@@ -1973,6 +1948,7 @@ server <- function(input, output, session) {
   )
   
   ### Scoring and Update Buttons ----
+  summation <- reactiveValues( summationC = c(rep(0, 20)), summationD = c(rep(0, 20)))
   summationC <- reactiveValues(correct1 = c(0), started = FALSE)
   
   observeEvent(
@@ -2342,32 +2318,6 @@ server <- function(input, output, session) {
       })
     })
   
-  # observeEvent(
-  #   eventExpr = input$submitD, 
-  #   handlerExpr = {
-  #     observeEvent(input$newQLvl4, {
-  #       output$markd3 <- renderUI(
-  #         expr = {
-  #           img(src = NULL, width = 30)
-  #         }
-  #       )
-  #     }
-  #     )
-  #     observe({
-  #       output$markd3 <- renderUI(
-  #         expr = {
-  #           if (!is.null(input$conf)) {
-  #             if (any(input$conf == key2[index2$confou, 1])) {
-  #               renderIcon(icon = "correct", width = 30)
-  #             } else {
-  #               renderIcon(icon = "incorrect", width = 30)
-  #             }
-  #           }
-  #         }
-  #       )
-  #     })
-  #   })
-  
   observeEvent(
     eventExpr = input$newQLvl4,
     handlerExpr = {
@@ -2519,30 +2469,6 @@ server <- function(input, output, session) {
       cat("It took", max(attempts$level4), "questions to complete level 4.")
     }
   )
-  
-  #### End Validation ----
-  
-  # Check button
-  observeEvent(
-    eventExpr = input$check,
-    handlerExpr = {
-      updateButton(
-        session = session,
-        inputId = "check",
-        disabled = TRUE
-      )
-    }
-  )
-  
-  #   # Listen for game start events
-  #   observeEvent(
-  #     eventExpr = input$pages,
-  #     handlerExpr = {
-  #       if (input$pages == "game") {
-  #         startGame()
-  #       }
-  #     }
-  #   )
 }
 
 boastUtils::boastApp(ui = ui, server = server)
