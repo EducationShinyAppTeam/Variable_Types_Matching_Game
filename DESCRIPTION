@@ -1,7 +1,7 @@
 Title: Variable Types Matching Game
 ShortName: Variable Types
-Date: 2021-09-15
-Lifecycle: experimental
+Date: 2023-07-15
+Lifecycle: maturing
 Authors@R: c(
     person(given = "Yuxin", family = "Zhang", role = c("cre", "aut")),
     person(given = "Luxin", family = "Wang", role = c("cre", "aut")),
@@ -10,7 +10,8 @@ Authors@R: c(
     person(given = "Robert", family = "Carey", email = "rpc5102@psu.edu", role = c("ctb")),
     person(given = "Mike", family = "Fleck", role = c("ctb")),
     person(given = "Dennis", family = "Pearl", role = c("aut")),
-    person(given = "Neil", family = "Hatfield", role = c("aut"))
+    person(given = "Neil", family = "Hatfield", role = c("aut")),
+    person(given = "Taryn", family = "McHugh", role = c("aut"))
   )
 Chapter: Data Gathering
 Description: Identify variable types by nature of measurement (quantitative (numeric) discrete, quantitative continuous, qualitative (categorical) nominal, and qualitative ordinal variables) and by role in the analysis (explanatory, response, and confounding).
