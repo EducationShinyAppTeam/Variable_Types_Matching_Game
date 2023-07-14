@@ -1,7 +1,7 @@
 Title: Variable Types Matching Game
 ShortName: Variable Types
 Date: 2023-07-15
-Lifecycle: maturing
+Lifecycle: experimental
 Authors@R: c(
     person(given = "Yuxin", family = "Zhang", role = c("cre", "aut")),
     person(given = "Luxin", family = "Wang", role = c("cre", "aut")),
