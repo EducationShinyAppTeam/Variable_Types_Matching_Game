@@ -177,7 +177,7 @@ ui <- list(
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
-               value = "b",
+              value = "b",
               titlePanel("Matching Qualitative and Quantitaive Variables"),
               fluidRow(
                 p("Correctly match the variable type to each variable."),
@@ -585,7 +585,7 @@ ui <- list(
                     inputId = "respC",
                     label = uiOutput("varRES"),
                     c("", "Neither", "Explanatory", "Response")
-                    ), 
+                  ), 
                   uiOutput("markc2")
                 )
               ),
@@ -657,7 +657,7 @@ ui <- list(
                 p("Once you have made your choices hit submit answer, then 
                   click new question for the next question."),
                 style = "margin-left:15px"
-                ),
+              ),
               hr(),
               wellPanel(
                 fluidRow(uiOutput("questionD"))
@@ -831,7 +831,7 @@ ui <- list(
 
 # Define Server ----
 server <- function(input, output, session) {
-
+  
   # ## Set timer with start, stop, restart, stop, and termination; and show the timer
   # time <- reactiveValues(inc = 0, timer = reactiveTimer(1000), started = FALSE)
   # 
@@ -851,7 +851,7 @@ server <- function(input, output, session) {
   #     time$started <- TRUE
   #   }
   # }
-
+  
   ## Buttons  ----
   observeEvent(input$goToGame, {
     updateTabItems(
@@ -873,10 +873,10 @@ server <- function(input, output, session) {
     }
   )
   
-# 
-#   observeEvent(input$reset_button, {
-#     js$reset()
-#   })
+  # 
+  #   observeEvent(input$reset_button, {
+  #     js$reset()
+  #   })
   observeEvent(
     eventExpr = input$prevLvl1,
     handlerExpr = {
@@ -1170,464 +1170,464 @@ server <- function(input, output, session) {
   
   ## Level 1 ----
   #initBankA <- function() {
-    scoreLevelA <- reactiveVal(0)
-    
-    subsetBankA <- reactiveVal(
-      value = {
-        subsetBankA <- bankA %>%
-          group_by(Type) %>%
-          slice_sample(n = 4)
-        
-        randOrderL1 <- sample(x = 1:16, size = 16, replace = FALSE)
-        subsetBankA[randOrderL1,]
-      }
-    )
-    ### Labels ----
-    observeEvent(
-      eventExpr = c(input$retryA),
-      handlerExpr = {
-        updateRadioButtons(
-          session = session,
-          inputId = "lvl1Q1",
-          label = subsetBankA()$Variable[1]
-        )
-      }
-    )
-    
-    observeEvent(
-      eventExpr = c(input$retryA),
-      handlerExpr = {
-        updateRadioButtons(
-          session = session,
-          inputId = "lvl1Q2",
-          label = subsetBankA()$Variable[2]
-        )
-      }
-    )
-    
-    observeEvent(
-      eventExpr = c(input$retryA),
-      handlerExpr = {
-        updateRadioButtons(
-          session = session,
-          inputId = "lvl1Q3",
-          label = subsetBankA()$Variable[3]
-        )
-      }
-    )
-    
-    observeEvent(
-      eventExpr = c(input$retryA),
-      handlerExpr = {
-        updateRadioButtons(
-          session = session,
-          inputId = "lvl1Q4",
-          label = subsetBankA()$Variable[4]
-        )
-      }
-    )
-    
-    observeEvent(
-      eventExpr = c(input$retryA),
-      handlerExpr = {
-        updateRadioButtons(
-          session = session,
-          inputId = "lvl1Q5",
-          label = subsetBankA()$Variable[5]
-        )
-      }
-    )
-    
-    observeEvent(
-      eventExpr = c(input$retryA),
-      handlerExpr = {
-        updateRadioButtons(
-          session = session,
-          inputId = "lvl1Q6",
-          label = subsetBankA()$Variable[6]
-        )
-      }
-    )
-    
-    observeEvent(
-      eventExpr = c(input$retryA),
-      handlerExpr = {
-        updateRadioButtons(
-          session = session,
-          inputId = "lvl1Q7",
-          label = subsetBankA()$Variable[7]
-        )
-      }
-    )
-    
-    observeEvent(
-      eventExpr = c(input$retryA),
-      handlerExpr = {
-        updateRadioButtons(
-          session = session,
-          inputId = "lvl1Q8",
-          label = subsetBankA()$Variable[8]
-        )
-      }
-    )
-    
-    observeEvent(
-      eventExpr = c(input$retryA),
-      handlerExpr = {
-        updateRadioButtons(
-          session = session,
-          inputId = "lvl1Q9",
-          label = subsetBankA()$Variable[9]
-        )
-      }
-    )
-    
-    observeEvent(
-      eventExpr = c(input$retryA),
-      handlerExpr = {
-        updateRadioButtons(
-          session = session,
-          inputId = "lvl1Q10",
-          label = subsetBankA()$Variable[10]
-        )
-      }
-    )
-    
-    observeEvent(
-      eventExpr = c(input$retryA),
-      handlerExpr = {
-        updateRadioButtons(
-          session = session,
-          inputId = "lvl1Q11",
-          label = subsetBankA()$Variable[11]
-        )
-      }
-    )
-    
-    observeEvent(
-      eventExpr = c(input$retryA),
-      handlerExpr = {
-        updateRadioButtons(
-          session = session,
-          inputId = "lvl1Q12",
-          label = subsetBankA()$Variable[12]
-        )
-      }
-    )
-    
-    ### Validation ----
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        attempts$level1 <- attempts$level1 + 1
-        if (!is.null(input$lvl1Q1)) {
-          valid <- any(trimws(input$lvl1Q1) == subsetBankA()$Type[1])
-          if (valid) {
-            scoreLevelA(scoreLevelA() + 2.5)
-            output$lvl1A1 <- renderIcon(icon = "correct", width = 30)
-          } else {
-            scoreLevelA(scoreLevelA() + 0)
-            output$lvl1A1 <- renderIcon(icon = "incorrect", width = 30)
-          }
+  scoreLevelA <- reactiveVal(0)
+  
+  subsetBankA <- reactiveVal(
+    value = {
+      subsetBankA <- bankA %>%
+        group_by(Type) %>%
+        slice_sample(n = 4)
+      
+      randOrderL1 <- sample(x = 1:16, size = 16, replace = FALSE)
+      subsetBankA[randOrderL1,]
+    }
+  )
+  ### Labels ----
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "lvl1Q1",
+        label = subsetBankA()$Variable[1]
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "lvl1Q2",
+        label = subsetBankA()$Variable[2]
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "lvl1Q3",
+        label = subsetBankA()$Variable[3]
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "lvl1Q4",
+        label = subsetBankA()$Variable[4]
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "lvl1Q5",
+        label = subsetBankA()$Variable[5]
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "lvl1Q6",
+        label = subsetBankA()$Variable[6]
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "lvl1Q7",
+        label = subsetBankA()$Variable[7]
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "lvl1Q8",
+        label = subsetBankA()$Variable[8]
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "lvl1Q9",
+        label = subsetBankA()$Variable[9]
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "lvl1Q10",
+        label = subsetBankA()$Variable[10]
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "lvl1Q11",
+        label = subsetBankA()$Variable[11]
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = c(input$retryA),
+    handlerExpr = {
+      updateRadioButtons(
+        session = session,
+        inputId = "lvl1Q12",
+        label = subsetBankA()$Variable[12]
+      )
+    }
+  )
+  
+  ### Validation ----
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      attempts$level1 <- attempts$level1 + 1
+      if (!is.null(input$lvl1Q1)) {
+        valid <- any(trimws(input$lvl1Q1) == subsetBankA()$Type[1])
+        if (valid) {
+          scoreLevelA(scoreLevelA() + 2.5)
+          output$lvl1A1 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A1 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    )
-    
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        if (!is.null(input$lvl1Q2)) {
-          valid <- any(trimws(input$lvl1Q2) == subsetBankA()$Type[2])
-          if (valid) {
-            scoreLevelA(scoreLevelA() + 2.5)
-            output$lvl1A2 <- renderIcon(icon = "correct", width = 30)
-          } else {
-            scoreLevelA(scoreLevelA() + 0)
-            output$lvl1A2 <- renderIcon(icon = "incorrect", width = 30)
-          }
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (!is.null(input$lvl1Q2)) {
+        valid <- any(trimws(input$lvl1Q2) == subsetBankA()$Type[2])
+        if (valid) {
+          scoreLevelA(scoreLevelA() + 2.5)
+          output$lvl1A2 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A2 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    )
-    
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        if (!is.null(input$lvl1Q3)) {
-          valid <- any(trimws(input$lvl1Q3) == subsetBankA()$Type[3])
-          if (valid) {
-            scoreLevelA(scoreLevelA() + 2.5)
-            output$lvl1A3 <- renderIcon(icon = "correct", width = 30)
-          } else {
-            scoreLevelA(scoreLevelA() + 0)
-            output$lvl1A3 <- renderIcon(icon = "incorrect", width = 30)
-          }
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (!is.null(input$lvl1Q3)) {
+        valid <- any(trimws(input$lvl1Q3) == subsetBankA()$Type[3])
+        if (valid) {
+          scoreLevelA(scoreLevelA() + 2.5)
+          output$lvl1A3 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A3 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    )
-    
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        if (!is.null(input$lvl1Q4)) {
-          valid <- any(trimws(input$lvl1Q4) == subsetBankA()$Type[4])
-          if (valid) {
-            scoreLevelA(scoreLevelA() + 2.5)
-            output$lvl1A4 <- renderIcon(icon = "correct", width = 30)
-          } else {
-            scoreLevelA(scoreLevelA() + 0)
-            output$lvl1A4 <- renderIcon(icon = "incorrect", width = 30)
-          }
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (!is.null(input$lvl1Q4)) {
+        valid <- any(trimws(input$lvl1Q4) == subsetBankA()$Type[4])
+        if (valid) {
+          scoreLevelA(scoreLevelA() + 2.5)
+          output$lvl1A4 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A4 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    )
-    
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        if (!is.null(input$lvl1Q5)) {
-          valid <- any(trimws(input$lvl1Q5) == subsetBankA()$Type[5])
-          if (valid) {
-            scoreLevelA(scoreLevelA() + 2.5)
-            output$lvl1A5 <- renderIcon(icon = "correct", width = 30)
-          } else {
-            scoreLevelA(scoreLevelA() + 0)
-            output$lvl1A5 <- renderIcon(icon = "incorrect", width = 30)
-          }
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (!is.null(input$lvl1Q5)) {
+        valid <- any(trimws(input$lvl1Q5) == subsetBankA()$Type[5])
+        if (valid) {
+          scoreLevelA(scoreLevelA() + 2.5)
+          output$lvl1A5 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A5 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    )
-    
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        if (!is.null(input$lvl1Q6)) {
-          valid <- any(trimws(input$lvl1Q6) == subsetBankA()$Type[6])
-          if (valid) {
-            scoreLevelA(scoreLevelA() + 2.5)
-            output$lvl1A6 <- renderIcon(icon = "correct", width = 30)
-          } else {
-            scoreLevelA(scoreLevelA() + 0)
-            output$lvl1A6 <- renderIcon(icon = "incorrect", width = 30)
-          }
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (!is.null(input$lvl1Q6)) {
+        valid <- any(trimws(input$lvl1Q6) == subsetBankA()$Type[6])
+        if (valid) {
+          scoreLevelA(scoreLevelA() + 2.5)
+          output$lvl1A6 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A6 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    )
-    
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        if (!is.null(input$lvl1Q7)) {
-          valid <- any(trimws(input$lvl1Q7) == subsetBankA()$Type[7])
-          if (valid) {
-            scoreLevelA(scoreLevelA() + 2.5)
-            output$lvl1A7 <- renderIcon(icon = "correct", width = 30)
-          } else {
-            scoreLevelA(scoreLevelA() + 0)
-            output$lvl1A7 <- renderIcon(icon = "incorrect", width = 30)
-          }
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (!is.null(input$lvl1Q7)) {
+        valid <- any(trimws(input$lvl1Q7) == subsetBankA()$Type[7])
+        if (valid) {
+          scoreLevelA(scoreLevelA() + 2.5)
+          output$lvl1A7 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A7 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    )
-    
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        if (!is.null(input$lvl1Q8)) {
-          valid <- any(trimws(input$lvl1Q8) == subsetBankA()$Type[8])
-          if (valid) {
-            scoreLevelA(scoreLevelA() + 2.5)
-            output$lvl1A8 <- renderIcon(icon = "correct", width = 30)
-          } else {
-            scoreLevelA(scoreLevelA() + 0)
-            output$lvl1A8 <- renderIcon(icon = "incorrect", width = 30)
-          }
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (!is.null(input$lvl1Q8)) {
+        valid <- any(trimws(input$lvl1Q8) == subsetBankA()$Type[8])
+        if (valid) {
+          scoreLevelA(scoreLevelA() + 2.5)
+          output$lvl1A8 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A8 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    )
-    
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        if (!is.null(input$lvl1Q9)) {
-          valid <- any(trimws(input$lvl1Q9) == subsetBankA()$Type[9])
-          if (valid) {
-            scoreLevelA(scoreLevelA() + 2.5)
-            output$lvl1A9 <- renderIcon(icon = "correct", width = 30)
-          } else {
-            scoreLevelA(scoreLevelA() + 0)
-            output$lvl1A9 <- renderIcon(icon = "incorrect", width = 30)
-          }
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (!is.null(input$lvl1Q9)) {
+        valid <- any(trimws(input$lvl1Q9) == subsetBankA()$Type[9])
+        if (valid) {
+          scoreLevelA(scoreLevelA() + 2.5)
+          output$lvl1A9 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A9 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    )
-    
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        if (!is.null(input$lvl1Q10)) {
-          valid <- any(trimws(input$lvl1Q10) == subsetBankA()$Type[10])
-          if (valid) {
-            scoreLevelA(scoreLevelA() + 2.5)
-            output$lvl1A10 <- renderIcon(icon = "correct", width = 30)
-          } else {
-            scoreLevelA(scoreLevelA() + 0)
-            output$lvl1A10 <- renderIcon(icon = "incorrect", width = 30)
-          }
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (!is.null(input$lvl1Q10)) {
+        valid <- any(trimws(input$lvl1Q10) == subsetBankA()$Type[10])
+        if (valid) {
+          scoreLevelA(scoreLevelA() + 2.5)
+          output$lvl1A10 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A10 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    )
-    
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        if (!is.null(input$lvl1Q11)) {
-          valid <- any(trimws(input$lvl1Q11) == subsetBankA()$Type[11])
-          if (valid) {
-            scoreLevelA(scoreLevelA() + 2.5)
-            output$lvl1A11 <- renderIcon(icon = "correct", width = 30)
-          } else {
-            scoreLevelA(scoreLevelA() + 0)
-            output$lvl1A11 <- renderIcon(icon = "incorrect", width = 30)
-          }
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (!is.null(input$lvl1Q11)) {
+        valid <- any(trimws(input$lvl1Q11) == subsetBankA()$Type[11])
+        if (valid) {
+          scoreLevelA(scoreLevelA() + 2.5)
+          output$lvl1A11 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A11 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    )
-    
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        if (!is.null(input$lvl1Q12)) {
-          valid <- any(trimws(input$lvl1Q12) == subsetBankA()$Type[12])
-          if (valid) {
-            scoreLevelA(scoreLevelA() + 2.5)
-            output$lvl1A12 <- renderIcon(icon = "correct", width = 30)
-          } else {
-            scoreLevelA(scoreLevelA() + 0)
-            output$lvl1A12 <- renderIcon(icon = "incorrect", width = 30)
-          }
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (!is.null(input$lvl1Q12)) {
+        valid <- any(trimws(input$lvl1Q12) == subsetBankA()$Type[12])
+        if (valid) {
+          scoreLevelA(scoreLevelA() + 2.5)
+          output$lvl1A12 <- renderIcon(icon = "correct", width = 30)
+        } else {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A12 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    )
-    
-    ### Scoring and Update Buttons ----
-    observeEvent(
-      eventExpr = input$retryA, 
-      handlerExpr = {
-        output$lvl1A1 <- renderIcon()
-        output$lvl1A2 <- renderIcon()
-        output$lvl1A3 <- renderIcon()
-        output$lvl1A4 <- renderIcon()
-        output$lvl1A5 <- renderIcon()
-        output$lvl1A6 <- renderIcon()
-        output$lvl1A7 <- renderIcon()
-        output$lvl1A8 <- renderIcon()
-        output$lvl1A9 <- renderIcon()
-        output$lvl1A10 <- renderIcon()
-        output$lvl1A11 <- renderIcon()
-        output$lvl1A12 <- renderIcon()
-        scoreLevelA(0)
+    }
+  )
+  
+  ### Scoring and Update Buttons ----
+  observeEvent(
+    eventExpr = input$retryA, 
+    handlerExpr = {
+      output$lvl1A1 <- renderIcon()
+      output$lvl1A2 <- renderIcon()
+      output$lvl1A3 <- renderIcon()
+      output$lvl1A4 <- renderIcon()
+      output$lvl1A5 <- renderIcon()
+      output$lvl1A6 <- renderIcon()
+      output$lvl1A7 <- renderIcon()
+      output$lvl1A8 <- renderIcon()
+      output$lvl1A9 <- renderIcon()
+      output$lvl1A10 <- renderIcon()
+      output$lvl1A11 <- renderIcon()
+      output$lvl1A12 <- renderIcon()
+      scoreLevelA(0)
+      updateButton(
+        session = session,
+        inputId = "submitA",
+        disabled = FALSE
+      )
+    }
+  )
+  
+  output$scoreA <- renderText(
+    expr = {
+      paste("You have", scoreLevelA(), "points.")
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$submitA,
+    handlerExpr = {
+      if (scoreLevelA() >= 30) {
         updateButton(
           session = session,
-          inputId = "submitA",
+          inputId = "toLvl2",
           disabled = FALSE
         )
       }
-    )
-    
-    output$scoreA <- renderText(
-      expr = {
-        paste("You have", scoreLevelA(), "points.")
-      }
-    )
-    
-    observeEvent(
-      eventExpr = input$submitA,
-      handlerExpr = {
-        if (scoreLevelA() >= 30) {
-          updateButton(
-            session = session,
-            inputId = "toLvl2",
-            disabled = FALSE
-          )
-        }
-      }
-    )
-    #}
-    
-    ## Level 2 ----
-    #initBankB <- function() {
-    scoreLevelB <- reactiveVal(0)
-    
-    subsetBankB <- reactiveVal(
-      value = {
-        subsetBankB <- bankB %>%
-          group_by(Type) %>%
-          slice_sample(n = 1)
-        
-        randOrderL2 <- sample(x = 1:4, size = 4, replace = FALSE)
-        subsetBankB[randOrderL2,]
-      }
-    )
-    ### Labels/Images
-    output$imgQ1 <- renderText(
-      expr = {
-        paste("1.", subsetBankB()$Question[1])
-      }
-    )
-    output$image1 <- renderUI(
-      expr = {
-        img(src = subsetBankB()$Variable[1],
-            alt = subsetBankB()$Alt[1],
-            width = "95%",
-            height = "95%", 
-            style = "text-align: center")
-      }
-    )
-    
-    output$imgQ2 <- renderText(
-      expr = {
-        paste("2.", subsetBankB()$Question[2])
-      }
-    )
-    output$image2 <- renderUI(
-      expr = {
-        img(src = subsetBankB()$Variable[2],
-            alt = subsetBankB()$Alt[2],
-            width = "95%",
-            height = "95%", 
-            style = "text-align: center")
-      }
-    )
-    
-    output$imgQ3 <- renderText(
-      expr = {
-        paste("3.", subsetBankB()$Question[3])
-      }
-    )
-    output$image3 <- renderUI(
-      expr = {
-        img(src = subsetBankB()$Variable[3],
-            alt = subsetBankB()$Alt[3],
-            width = "95%",
-            height = "95%", 
-            style = "text-align: center")
-      }
-    )
-    
-    output$imgQ4 <- renderText(
-      expr = {
-        paste("4.", subsetBankB()$Question[4])
-      }
-    )
-    output$image4 <- renderUI(
-      expr = {
-        img(src = subsetBankB()$Variable[4],
-            alt = subsetBankB()$Alt[4],
-            width = "95%",
-            height = "95%", 
-            style = "text-align: center")
-      }
-    )
+    }
+  )
+  #}
+  
+  ## Level 2 ----
+  #initBankB <- function() {
+  scoreLevelB <- reactiveVal(0)
+  
+  subsetBankB <- reactiveVal(
+    value = {
+      subsetBankB <- bankB %>%
+        group_by(Type) %>%
+        slice_sample(n = 1)
+      
+      randOrderL2 <- sample(x = 1:4, size = 4, replace = FALSE)
+      subsetBankB[randOrderL2,]
+    }
+  )
+  ### Labels/Images
+  output$imgQ1 <- renderText(
+    expr = {
+      paste("1.", subsetBankB()$Question[1])
+    }
+  )
+  output$image1 <- renderUI(
+    expr = {
+      img(src = subsetBankB()$Variable[1],
+          alt = subsetBankB()$Alt[1],
+          width = "95%",
+          height = "95%", 
+          style = "text-align: center")
+    }
+  )
+  
+  output$imgQ2 <- renderText(
+    expr = {
+      paste("2.", subsetBankB()$Question[2])
+    }
+  )
+  output$image2 <- renderUI(
+    expr = {
+      img(src = subsetBankB()$Variable[2],
+          alt = subsetBankB()$Alt[2],
+          width = "95%",
+          height = "95%", 
+          style = "text-align: center")
+    }
+  )
+  
+  output$imgQ3 <- renderText(
+    expr = {
+      paste("3.", subsetBankB()$Question[3])
+    }
+  )
+  output$image3 <- renderUI(
+    expr = {
+      img(src = subsetBankB()$Variable[3],
+          alt = subsetBankB()$Alt[3],
+          width = "95%",
+          height = "95%", 
+          style = "text-align: center")
+    }
+  )
+  
+  output$imgQ4 <- renderText(
+    expr = {
+      paste("4.", subsetBankB()$Question[4])
+    }
+  )
+  output$image4 <- renderUI(
+    expr = {
+      img(src = subsetBankB()$Variable[4],
+          alt = subsetBankB()$Alt[4],
+          width = "95%",
+          height = "95%", 
+          style = "text-align: center")
+    }
+  )
   
   ### Validation ----
   observeEvent(
@@ -1646,7 +1646,7 @@ server <- function(input, output, session) {
       }
     }
   )
-    
+  
   observeEvent(
     eventExpr = input$submitB,
     handlerExpr = {
@@ -1733,7 +1733,7 @@ server <- function(input, output, session) {
     }
   )
   #}
-
+  
   ## Level 3 ----
   index <- reactiveValues(index = 18)
   
@@ -1776,7 +1776,7 @@ server <- function(input, output, session) {
       )
     }
   )
-
+  
   key1 <- as.matrix(bankC[1:36, 1])
   ### Labels ----
   output$questionC <- renderUI(
@@ -2093,9 +2093,9 @@ server <- function(input, output, session) {
   )
   ## Level 4 ----
   index2 <- reactiveValues(index2 = 9)
-
+  
   index_listD <- reactiveValues(listD = sample(1:8, 8, replace = FALSE))
-
+  
   observeEvent(
     eventExpr = input$prevLvl3, 
     handlerExpr = {
@@ -2139,7 +2139,7 @@ server <- function(input, output, session) {
       )
     }
   )
-
+  
   key2 <- as.matrix(bankD[1:27, 1])
   
   output$questionD <- renderUI(
@@ -2199,7 +2199,7 @@ server <- function(input, output, session) {
       }
     }
   )
-
+  
   output$varRESD <- renderUI(
     expr = {
       if (index2$index2 == 1) {
@@ -2228,7 +2228,7 @@ server <- function(input, output, session) {
       }
     }
   )
-
+  
   output$varCOND <- renderUI(
     expr = {
       if (index2$index2 == 1) {
@@ -2477,7 +2477,7 @@ server <- function(input, output, session) {
       )
     }
   )
-
+  
   ### Results ----
   attempts <- reactiveValues(
     level1 = 0,
@@ -2521,7 +2521,7 @@ server <- function(input, output, session) {
   )
   
   #### End Validation ----
-
+  
   # Check button
   observeEvent(
     eventExpr = input$check,
@@ -2533,16 +2533,16 @@ server <- function(input, output, session) {
       )
     }
   )
-
-#   # Listen for game start events
-#   observeEvent(
-#     eventExpr = input$pages,
-#     handlerExpr = {
-#       if (input$pages == "game") {
-#         startGame()
-#       }
-#     }
-#   )
- }
+  
+  #   # Listen for game start events
+  #   observeEvent(
+  #     eventExpr = input$pages,
+  #     handlerExpr = {
+  #       if (input$pages == "game") {
+  #         startGame()
+  #       }
+  #     }
+  #   )
+}
 
 boastUtils::boastApp(ui = ui, server = server)
