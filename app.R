@@ -860,6 +860,7 @@ server <- function(input, output, session) {
       selected = "game"
     )
   })
+  
   observeEvent(
     eventExpr = input$info,
     handlerExpr = {
@@ -871,6 +872,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
 # 
 #   observeEvent(input$reset_button, {
 #     js$reset()
@@ -885,6 +887,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$toLvl2,
     handlerExpr = {
@@ -895,6 +898,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$prevLvl2,
     handlerExpr = {
@@ -905,6 +909,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$toBtwnLvls,
     handlerExpr = {
@@ -915,6 +920,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$toLvl3,
     handlerExpr = {
@@ -925,6 +931,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$btwnToFinish,
     handlerExpr = {
@@ -935,6 +942,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$toLvl4,
     handlerExpr = {
@@ -945,6 +953,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$finish, 
     handlerExpr = {
@@ -964,7 +973,6 @@ server <- function(input, output, session) {
         inputId = "levels",
         selected = "g")
     })
-  
   ## Submit Observers ----
   observeEvent(
     eventExpr = input$submitA, 
@@ -976,6 +984,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$retryA, 
     handlerExpr = {
@@ -986,25 +995,29 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$submitB, 
     handlerExpr = {
       updateButton(
-        sesion = session, 
+        session = session, 
         inputId = "submitB", 
         disabled = TRUE
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$retryB, 
     handlerExpr = {
       updateButton(
-        session = session, inputId = "submitB",
+        session = session,
+        inputId = "submitB",
         disabled = FALSE
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$submitC, 
     handlerExpr = {
@@ -1015,6 +1028,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observe({
     if (length(index_list$listc) == 1) {
       updateButton(
@@ -1034,6 +1048,7 @@ server <- function(input, output, session) {
         type = "error")
     }
   })
+  
   observe({
     if (length(index_listD$listD) == 1) {
       updateButton(
@@ -1053,6 +1068,7 @@ server <- function(input, output, session) {
         type = "error")
     }
   })
+  
   observeEvent(
     eventExpr = input$submitC, 
     handlerExpr = {
@@ -1063,6 +1079,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$prevBtwnLvls, 
     handlerExpr = {
@@ -1073,6 +1090,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$newQLvl3,
     handlerExpr = {
@@ -1083,6 +1101,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$newQLvl3,
     handlerExpr = {
@@ -1093,6 +1112,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$submitD,
     handlerExpr = {
@@ -1103,6 +1123,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$submitD, 
     handlerExpr = {
@@ -1113,6 +1134,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$prevLvl3, 
     handlerExpr = {
@@ -1123,6 +1145,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$newQLvl4, 
     handlerExpr = {
@@ -1133,6 +1156,7 @@ server <- function(input, output, session) {
       )
     }
   )
+  
   observeEvent(
     eventExpr = input$newQLvl4, 
     handlerExpr = {
@@ -1158,7 +1182,6 @@ server <- function(input, output, session) {
         subsetBankA[randOrderL1,]
       }
     )
-    
     ### Labels ----
     observeEvent(
       eventExpr = c(input$retryA),
@@ -1170,6 +1193,7 @@ server <- function(input, output, session) {
         )
       }
     )
+    
     observeEvent(
       eventExpr = c(input$retryA),
       handlerExpr = {
@@ -1180,6 +1204,7 @@ server <- function(input, output, session) {
         )
       }
     )
+    
     observeEvent(
       eventExpr = c(input$retryA),
       handlerExpr = {
@@ -1190,6 +1215,7 @@ server <- function(input, output, session) {
         )
       }
     )
+    
     observeEvent(
       eventExpr = c(input$retryA),
       handlerExpr = {
@@ -1200,6 +1226,7 @@ server <- function(input, output, session) {
         )
       }
     )
+    
     observeEvent(
       eventExpr = c(input$retryA),
       handlerExpr = {
@@ -1210,6 +1237,7 @@ server <- function(input, output, session) {
         )
       }
     )
+    
     observeEvent(
       eventExpr = c(input$retryA),
       handlerExpr = {
@@ -1220,6 +1248,7 @@ server <- function(input, output, session) {
         )
       }
     )
+    
     observeEvent(
       eventExpr = c(input$retryA),
       handlerExpr = {
@@ -1230,6 +1259,7 @@ server <- function(input, output, session) {
         )
       }
     )
+    
     observeEvent(
       eventExpr = c(input$retryA),
       handlerExpr = {
@@ -1240,6 +1270,7 @@ server <- function(input, output, session) {
         )
       }
     )
+    
     observeEvent(
       eventExpr = c(input$retryA),
       handlerExpr = {
@@ -1250,6 +1281,7 @@ server <- function(input, output, session) {
         )
       }
     )
+    
     observeEvent(
       eventExpr = c(input$retryA),
       handlerExpr = {
@@ -1260,6 +1292,7 @@ server <- function(input, output, session) {
         )
       }
     )
+    
     observeEvent(
       eventExpr = c(input$retryA),
       handlerExpr = {
@@ -1270,6 +1303,7 @@ server <- function(input, output, session) {
         )
       }
     )
+    
     observeEvent(
       eventExpr = c(input$retryA),
       handlerExpr = {
@@ -1280,6 +1314,7 @@ server <- function(input, output, session) {
         )
       }
     )
+    
     ### Validation ----
     observeEvent(
       eventExpr = input$submitA,
@@ -1295,7 +1330,9 @@ server <- function(input, output, session) {
             output$lvl1A1 <- renderIcon(icon = "incorrect", width = 30)
           }
         }
-      })
+      }
+    )
+    
     observeEvent(
       eventExpr = input$submitA,
       handlerExpr = {
@@ -1309,7 +1346,9 @@ server <- function(input, output, session) {
             output$lvl1A2 <- renderIcon(icon = "incorrect", width = 30)
           }
         }
-      })
+      }
+    )
+    
     observeEvent(
       eventExpr = input$submitA,
       handlerExpr = {
@@ -1323,7 +1362,9 @@ server <- function(input, output, session) {
             output$lvl1A3 <- renderIcon(icon = "incorrect", width = 30)
           }
         }
-      })
+      }
+    )
+    
     observeEvent(
       eventExpr = input$submitA,
       handlerExpr = {
@@ -1337,7 +1378,9 @@ server <- function(input, output, session) {
             output$lvl1A4 <- renderIcon(icon = "incorrect", width = 30)
           }
         }
-      })
+      }
+    )
+    
     observeEvent(
       eventExpr = input$submitA,
       handlerExpr = {
@@ -1351,7 +1394,9 @@ server <- function(input, output, session) {
             output$lvl1A5 <- renderIcon(icon = "incorrect", width = 30)
           }
         }
-      })
+      }
+    )
+    
     observeEvent(
       eventExpr = input$submitA,
       handlerExpr = {
@@ -1365,7 +1410,9 @@ server <- function(input, output, session) {
             output$lvl1A6 <- renderIcon(icon = "incorrect", width = 30)
           }
         }
-      })
+      }
+    )
+    
     observeEvent(
       eventExpr = input$submitA,
       handlerExpr = {
@@ -1379,7 +1426,9 @@ server <- function(input, output, session) {
             output$lvl1A7 <- renderIcon(icon = "incorrect", width = 30)
           }
         }
-      })
+      }
+    )
+    
     observeEvent(
       eventExpr = input$submitA,
       handlerExpr = {
@@ -1393,7 +1442,9 @@ server <- function(input, output, session) {
             output$lvl1A8 <- renderIcon(icon = "incorrect", width = 30)
           }
         }
-      })
+      }
+    )
+    
     observeEvent(
       eventExpr = input$submitA,
       handlerExpr = {
@@ -1407,7 +1458,9 @@ server <- function(input, output, session) {
             output$lvl1A9 <- renderIcon(icon = "incorrect", width = 30)
           }
         }
-      })
+      }
+    )
+    
     observeEvent(
       eventExpr = input$submitA,
       handlerExpr = {
@@ -1421,7 +1474,9 @@ server <- function(input, output, session) {
             output$lvl1A10 <- renderIcon(icon = "incorrect", width = 30)
           }
         }
-      })
+      }
+    )
+    
     observeEvent(
       eventExpr = input$submitA,
       handlerExpr = {
@@ -1435,7 +1490,9 @@ server <- function(input, output, session) {
             output$lvl1A11 <- renderIcon(icon = "incorrect", width = 30)
           }
         }
-      })
+      }
+    )
+    
     observeEvent(
       eventExpr = input$submitA,
       handlerExpr = {
@@ -1449,41 +1506,56 @@ server <- function(input, output, session) {
             output$lvl1A12 <- renderIcon(icon = "incorrect", width = 30)
           }
         }
-      })
-  
-  ### Scoring and Update Buttons ----
-  observeEvent(input$retryA, {
-    output$lvl1A1 <- renderIcon()
-    output$lvl1A2 <- renderIcon()
-    output$lvl1A3 <- renderIcon()
-    output$lvl1A4 <- renderIcon()
-    output$lvl1A5 <- renderIcon()
-    output$lvl1A6 <- renderIcon()
-    output$lvl1A7 <- renderIcon()
-    output$lvl1A8 <- renderIcon()
-    output$lvl1A9 <- renderIcon()
-    output$lvl1A10 <- renderIcon()
-    output$lvl1A11 <- renderIcon()
-    output$lvl1A12 <- renderIcon()
-    scoreLevelA(0)
-    updateButton(
-      session = session,
-      inputId = "submitA",
-      disabled = FALSE
+      }
     )
-  })
-  output$scoreA <- renderText({
-    paste("You have", scoreLevelA(), "points.")
-  })
-  observeEvent(input$submitA, {
-    if (scoreLevelA() >= 30) {
-      updateButton(session, "toLvl2", disabled = FALSE)
-    }
-  })
-  #}
-  
-  ## Level 2 ----
-  #initBankB <- function() {
+    
+    ### Scoring and Update Buttons ----
+    observeEvent(
+      eventExpr = input$retryA, 
+      handlerExpr = {
+        output$lvl1A1 <- renderIcon()
+        output$lvl1A2 <- renderIcon()
+        output$lvl1A3 <- renderIcon()
+        output$lvl1A4 <- renderIcon()
+        output$lvl1A5 <- renderIcon()
+        output$lvl1A6 <- renderIcon()
+        output$lvl1A7 <- renderIcon()
+        output$lvl1A8 <- renderIcon()
+        output$lvl1A9 <- renderIcon()
+        output$lvl1A10 <- renderIcon()
+        output$lvl1A11 <- renderIcon()
+        output$lvl1A12 <- renderIcon()
+        scoreLevelA(0)
+        updateButton(
+          session = session,
+          inputId = "submitA",
+          disabled = FALSE
+        )
+      }
+    )
+    
+    output$scoreA <- renderText(
+      expr = {
+        paste("You have", scoreLevelA(), "points.")
+      }
+    )
+    
+    observeEvent(
+      eventExpr = input$submitA,
+      handlerExpr = {
+        if (scoreLevelA() >= 30) {
+          updateButton(
+            session = session,
+            inputId = "toLvl2",
+            disabled = FALSE
+          )
+        }
+      }
+    )
+    #}
+    
+    ## Level 2 ----
+    #initBankB <- function() {
     scoreLevelB <- reactiveVal(0)
     
     subsetBankB <- reactiveVal(
@@ -1492,56 +1564,70 @@ server <- function(input, output, session) {
           group_by(Type) %>%
           slice_sample(n = 1)
         
-        randOrderL1 <- sample(x = 1:4, size = 4, replace = FALSE)
-        subsetBankB[randOrderL1,]
+        randOrderL2 <- sample(x = 1:4, size = 4, replace = FALSE)
+        subsetBankB[randOrderL2,]
+      }
+    )
+    ### Labels/Images
+    output$imgQ1 <- renderText(
+      expr = {
+        paste("1.", subsetBankB()$Question[1])
+      }
+    )
+    output$image1 <- renderUI(
+      expr = {
+        img(src = subsetBankB()$Variable[1],
+            alt = subsetBankB()$Alt[1],
+            width = "95%",
+            height = "95%", 
+            style = "text-align: center")
       }
     )
     
-  ### Labels/Images
-    output$imgQ1 <- renderText({
-      paste("1.", subsetBankB()$Question[1])
-    })
-    output$image1 <- renderUI({
-      img(src = subsetBankB()$Variable[1],
-          alt = subsetBankB()$Alt[1],
-          width = "95%",
-          height = "95%", 
-          style = "text-align: center")
-    })
+    output$imgQ2 <- renderText(
+      expr = {
+        paste("2.", subsetBankB()$Question[2])
+      }
+    )
+    output$image2 <- renderUI(
+      expr = {
+        img(src = subsetBankB()$Variable[2],
+            alt = subsetBankB()$Alt[2],
+            width = "95%",
+            height = "95%", 
+            style = "text-align: center")
+      }
+    )
     
-    output$imgQ2 <- renderText({
-      paste("2.", subsetBankB()$Question[2])
-    })
-    output$image2 <- renderUI({
-      img(src = subsetBankB()$Variable[2],
-          alt = subsetBankB()$Alt[2],
-          width = "95%",
-          height = "95%", 
-          style = "text-align: center")
-    })
-
-    output$imgQ3 <- renderText({
-      paste("3.", subsetBankB()$Question[3])
-    })
-
-    output$image3 <- renderUI({
-      img(src = subsetBankB()$Variable[3],
-          alt = subsetBankB()$Alt[3],
-          width = "95%",
-          height = "95%", 
-          style = "text-align: center")
-    })
-
-    output$imgQ4 <- renderText({
-      paste("4.", subsetBankB()$Question[4])
-    })
-    output$image4 <- renderUI({
-      img(src = subsetBankB()$Variable[4],
-          alt = subsetBankB()$Alt[4],
-          width = "95%",
-          height = "95%", 
-          style = "text-align: center")
-    })
+    output$imgQ3 <- renderText(
+      expr = {
+        paste("3.", subsetBankB()$Question[3])
+      }
+    )
+    output$image3 <- renderUI(
+      expr = {
+        img(src = subsetBankB()$Variable[3],
+            alt = subsetBankB()$Alt[3],
+            width = "95%",
+            height = "95%", 
+            style = "text-align: center")
+      }
+    )
+    
+    output$imgQ4 <- renderText(
+      expr = {
+        paste("4.", subsetBankB()$Question[4])
+      }
+    )
+    output$image4 <- renderUI(
+      expr = {
+        img(src = subsetBankB()$Variable[4],
+            alt = subsetBankB()$Alt[4],
+            width = "95%",
+            height = "95%", 
+            style = "text-align: center")
+      }
+    )
   
   ### Validation ----
   observeEvent(
@@ -1558,7 +1644,9 @@ server <- function(input, output, session) {
           output$lvl2A1 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    })
+    }
+  )
+    
   observeEvent(
     eventExpr = input$submitB,
     handlerExpr = {
@@ -1572,7 +1660,9 @@ server <- function(input, output, session) {
           output$lvl2A2 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    })
+    }
+  )
+  
   observeEvent(
     eventExpr = input$submitB,
     handlerExpr = {
@@ -1586,7 +1676,9 @@ server <- function(input, output, session) {
           output$lvl2A3 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    })
+    }
+  )
+  
   observeEvent(
     eventExpr = input$submitB,
     handlerExpr = {
@@ -1600,45 +1692,63 @@ server <- function(input, output, session) {
           output$lvl2A4 <- renderIcon(icon = "incorrect", width = 30)
         }
       }
-    })
+    }
+  )
   
   ### Scoring and Update Buttons----
-  observeEvent(input$retryB, {
-    output$lvl2A1 <- renderIcon()
-    output$lvl2A2 <- renderIcon()
-    output$lvl2A3 <- renderIcon()
-    output$lvl2A4 <- renderIcon()
-    scoreLevelB(0)
-  })
-
-  observeEvent(input$submitB, {
-    if (scoreLevelB() >= 20) {
-      updateButton(session, "toBtwnLvls", disabled = FALSE)
+  observeEvent(
+    eventExpr = input$retryB,
+    handlerExpr = {
+      output$lvl2A1 <- renderIcon()
+      output$lvl2A2 <- renderIcon()
+      output$lvl2A3 <- renderIcon()
+      output$lvl2A4 <- renderIcon()
+      scoreLevelB(0)
     }
-    else {
-      updateButton(session, "toBtwnLvls", disabled = TRUE)
+  )
+  
+  observeEvent(
+    eventExpr = input$submitB, 
+    handlerExpr = {
+      if (scoreLevelB() >= 20) {
+        updateButton(
+          session = session, 
+          inputId = "toBtwnLvls",
+          disabled = FALSE
+        )
+      }
+      else {
+        updateButton(
+          session = session, 
+          inputId = "toBtwnLvls", 
+          disabled = TRUE
+        )
+      }
     }
-  })
-
-  output$scoreB <- renderText({
-    paste("You have", scoreLevelB(), "points.")
-  })
+  )
+  
+  output$scoreB <- renderText(
+    expr = {
+      paste("You have", scoreLevelB(), "points.")
+    }
+  )
   #}
 
   ## Level 3 ----
   index <- reactiveValues(index = 18)
-
+  
   index_list <- reactiveValues(listc = sample(1:17, 17, replace = FALSE))
-
+  
   observeEvent(
     eventExpr = input$prevBtwnLvls, 
     handlerExpr = {
-    updateTabsetPanel(
-      session = session, 
-      inputId = "levels", 
-      selected = "d")
-    index_list$listc <- c(index_list$listc, sample(1:17, 17, replace = FALSE))
-  })
+      updateTabsetPanel(
+        session = session, 
+        inputId = "levels", 
+        selected = "d")
+      index_list$listc <- c(index_list$listc, sample(1:17, 17, replace = FALSE))
+    }
+  )
   
   observeEvent(
     eventExpr = input$toBtwnLvls,
@@ -1646,8 +1756,9 @@ server <- function(input, output, session) {
       index$index <- 18
       index$exp_index <- 2 * index$index - 1
       index$res_index <- 2 * index$index
-    })
-
+    }
+  )
+  
   observeEvent(
     eventExpr = input$newQLvl3,
     handlerExpr = {
@@ -1663,141 +1774,146 @@ server <- function(input, output, session) {
         inputId = "respC",
         selected = ""
       )
-    })
+    }
+  )
 
   key1 <- as.matrix(bankC[1:36, 1])
-
   ### Labels ----
-  output$questionC <- renderUI({
-    if (index$index == 1) {
-      h3(bankC[1, 5])
-    } else if (index$index == 2) {
-      h3(bankC[3, 5])
-    } else if (index$index == 3) {
-      h3(bankC[5, 5])
-    } else if (index$index == 4) {
-      h3(bankC[7, 5])
+  output$questionC <- renderUI(
+    expr = {
+      if (index$index == 1) {
+        h3(bankC[1, 5])
+      } else if (index$index == 2) {
+        h3(bankC[3, 5])
+      } else if (index$index == 3) {
+        h3(bankC[5, 5])
+      } else if (index$index == 4) {
+        h3(bankC[7, 5])
+      }
+      else if (index$index == 5) {
+        h3(bankC[9, 5])
+      } else if (index$index == 6) {
+        h3(bankC[11, 5])
+      } else if (index$index == 7) {
+        h3(bankC[13, 5])
+      } else if (index$index == 8) {
+        h3(bankC[15, 5])
+      }
+      else if (index$index == 9) {
+        h3(bankC[17, 5])
+      } else if (index$index == 10) {
+        h3(bankC[19, 5])
+      } else if (index$index == 11) {
+        h3(bankC[21, 5])
+      } else if (index$index == 12) {
+        h3(bankC[23, 5])
+      } else if (index$index == 13) {
+        h3(bankC[25, 5])
+      } else if (index$index == 14) {
+        h3(bankC[27, 5])
+      } else if (index$index == 15) {
+        h3(bankC[29, 5])
+      } else if (index$index == 16) {
+        h3(bankC[31, 5])
+      } else if (index$index == 17) {
+        h3(bankC[33, 5])
+      } else if (index$index == 18) {
+        h3(bankC[35, 5])
+      }
     }
-    else if (index$index == 5) {
-      h3(bankC[9, 5])
-    } else if (index$index == 6) {
-      h3(bankC[11, 5])
-    } else if (index$index == 7) {
-      h3(bankC[13, 5])
-    } else if (index$index == 8) {
-      h3(bankC[15, 5])
-    }
-    else if (index$index == 9) {
-      h3(bankC[17, 5])
-    } else if (index$index == 10) {
-      h3(bankC[19, 5])
-    } else if (index$index == 11) {
-      h3(bankC[21, 5])
-    } else if (index$index == 12) {
-      h3(bankC[23, 5])
-    } else if (index$index == 13) {
-      h3(bankC[25, 5])
-    } else if (index$index == 14) {
-      h3(bankC[27, 5])
-    } else if (index$index == 15) {
-      h3(bankC[29, 5])
-    } else if (index$index == 16) {
-      h3(bankC[31, 5])
-    } else if (index$index == 17) {
-      h3(bankC[33, 5])
-    } else if (index$index == 18) {
-      h3(bankC[35, 5])
-    }
-  })
-
-  output$varEXP <- renderUI({
-    if (index$index == 1) {
-      h3(bankC[1, 4])
-    } else if (index$index == 2) {
-      h3(bankC[3, 4])
-    } else if (index$index == 3) {
-      h3(bankC[5, 4])
-    } else if (index$index == 4) {
-      h3(bankC[7, 4])
-    }
-    else if (index$index == 5) {
-      h3(bankC[9, 4])
-    } else if (index$index == 6) {
-      h3(bankC[11, 4])
-    } else if (index$index == 7) {
-      h3(bankC[13, 4])
-    } else if (index$index == 8) {
-      h3(bankC[15, 4])
-    }
-    else if (index$index == 9) {
-      h3(bankC[17, 4])
-    } else if (index$index == 10) {
-      h3(bankC[19, 4])
-    } else if (index$index == 11) {
-      h3(bankC[21, 4])
-    } else if (index$index == 12) {
-      h3(bankC[23, 4])
-    }
-    else if (index$index == 13) {
-      h3(bankC[25, 4])
-    } else if (index$index == 14) {
-      h3(bankC[27, 4])
-    } else if (index$index == 15) {
-      h3(bankC[29, 4])
-    } else if (index$index == 16) {
-      h3(bankC[31, 4])
-    }
-    else if (index$index == 17) {
-      h3(bankC[33, 4])
-    } else if (index$index == 18) {
-      h3(bankC[35, 4])
-    }
-  })
-
-  output$varRES <- renderUI({
-    if (index$index == 1) {
-      h3(bankC[2, 4])
-    } else if (index$index == 2) {
-      h3(bankC[4, 4])
-    } else if (index$index == 3) {
-      h3(bankC[6, 4])
-    } else if (index$index == 4) {
-      h3(bankC[8, 4])
-    }
-    else if (index$index == 5) {
-      h3(bankC[10, 4])
-    } else if (index$index == 6) {
-      h3(bankC[12, 4])
-    } else if (index$index == 7) {
-      h3(bankC[14, 4])
-    } else if (index$index == 8) {
-      h3(bankC[16, 4])
-    }
-    else if (index$index == 9) {
-      h3(bankC[18, 4])
-    } else if (index$index == 10) {
-      h3(bankC[20, 4])
-    } else if (index$index == 11) {
-      h3(bankC[22, 4])
-    } else if (index$index == 12) {
-      h3(bankC[24, 4])
-    }
-    else if (index$index == 13) {
-      h3(bankC[26, 4])
-    } else if (index$index == 14) {
-      h3(bankC[28, 4])
-    } else if (index$index == 15) {
-      h3(bankC[30, 4])
-    } else if (index$index == 16) {
-      h3(bankC[32, 4])
-    }
-    else if (index$index == 17) {
-      h3(bankC[34, 4])
-    } else if (index$index == 18) {
-      h3(bankC[36, 4])
-    }
-  })
+  )
   
+  output$varEXP <- renderUI(
+    expr = {
+      if (index$index == 1) {
+        h3(bankC[1, 4])
+      } else if (index$index == 2) {
+        h3(bankC[3, 4])
+      } else if (index$index == 3) {
+        h3(bankC[5, 4])
+      } else if (index$index == 4) {
+        h3(bankC[7, 4])
+      }
+      else if (index$index == 5) {
+        h3(bankC[9, 4])
+      } else if (index$index == 6) {
+        h3(bankC[11, 4])
+      } else if (index$index == 7) {
+        h3(bankC[13, 4])
+      } else if (index$index == 8) {
+        h3(bankC[15, 4])
+      }
+      else if (index$index == 9) {
+        h3(bankC[17, 4])
+      } else if (index$index == 10) {
+        h3(bankC[19, 4])
+      } else if (index$index == 11) {
+        h3(bankC[21, 4])
+      } else if (index$index == 12) {
+        h3(bankC[23, 4])
+      }
+      else if (index$index == 13) {
+        h3(bankC[25, 4])
+      } else if (index$index == 14) {
+        h3(bankC[27, 4])
+      } else if (index$index == 15) {
+        h3(bankC[29, 4])
+      } else if (index$index == 16) {
+        h3(bankC[31, 4])
+      }
+      else if (index$index == 17) {
+        h3(bankC[33, 4])
+      } else if (index$index == 18) {
+        h3(bankC[35, 4])
+      }
+    }
+  )
+  
+  output$varRES <- renderUI(
+    expr = {
+      if (index$index == 1) {
+        h3(bankC[2, 4])
+      } else if (index$index == 2) {
+        h3(bankC[4, 4])
+      } else if (index$index == 3) {
+        h3(bankC[6, 4])
+      } else if (index$index == 4) {
+        h3(bankC[8, 4])
+      }
+      else if (index$index == 5) {
+        h3(bankC[10, 4])
+      } else if (index$index == 6) {
+        h3(bankC[12, 4])
+      } else if (index$index == 7) {
+        h3(bankC[14, 4])
+      } else if (index$index == 8) {
+        h3(bankC[16, 4])
+      }
+      else if (index$index == 9) {
+        h3(bankC[18, 4])
+      } else if (index$index == 10) {
+        h3(bankC[20, 4])
+      } else if (index$index == 11) {
+        h3(bankC[22, 4])
+      } else if (index$index == 12) {
+        h3(bankC[24, 4])
+      }
+      else if (index$index == 13) {
+        h3(bankC[26, 4])
+      } else if (index$index == 14) {
+        h3(bankC[28, 4])
+      } else if (index$index == 15) {
+        h3(bankC[30, 4])
+      } else if (index$index == 16) {
+        h3(bankC[32, 4])
+      }
+      else if (index$index == 17) {
+        h3(bankC[34, 4])
+      } else if (index$index == 18) {
+        h3(bankC[36, 4])
+      }
+    }
+  )
   ### Validate ----
   observeEvent(
     eventExpr = input$submitC,
@@ -1809,7 +1925,8 @@ server <- function(input, output, session) {
           output$markc1 <- renderUI(
             img(src = NULL,width = 30)
           )
-        })
+        }
+      )
       observe({
         eventExpr = output$markc1 <- renderUI(expr = {
           if (!is.null(input$explC)) {
@@ -1914,14 +2031,16 @@ server <- function(input, output, session) {
       summation$summationC[input$submitC] <- total
     })
   
-  output$correctC <- renderPrint({
-    if (sum(c(summationC$correct1)) == 0) {
-      cat("You have earned 0 points")
+  output$correctC <- renderPrint(
+    expr = {
+      if (sum(c(summationC$correct1)) == 0) {
+        cat("You have earned 0 points")
+      }
+      else {
+        cat("You have earned", summation$summationC[input$submitC], "points")
+      }
     }
-    else {
-      cat("You have earned", summation$summationC[input$submitC], "points")
-    }
-  })
+  )
   
   observeEvent(
     eventExpr = input$submitC,
@@ -1936,7 +2055,8 @@ server <- function(input, output, session) {
           inputId = "newQLvl3",
           disabled = FALSE)
       }
-    })
+    }
+  )
   
   ### Progress Bar ----
   observe(
@@ -1971,7 +2091,6 @@ server <- function(input, output, session) {
       )
     }
   )
-
   ## Level 4 ----
   index2 <- reactiveValues(index2 = 9)
 
@@ -1985,7 +2104,8 @@ server <- function(input, output, session) {
         inputId = "levels", 
         selected = "e")
       index_listD$listD <- c(index_listD$listD, sample(1:8, 8, replace = FALSE))
-    })
+    }
+  )
   ### Labels ----
   observeEvent(
     eventExpr = input$toLvl4,
@@ -1994,8 +2114,9 @@ server <- function(input, output, session) {
       index2$explan <- 3 * index2$index2 - 2
       index2$respon <- 3 * index2$index2 - 1
       index2$confou <- 3 * index2$index2
-    })
-
+    }
+  )
+  
   observeEvent(
     eventExpr = input$newQLvl4,
     handlerExpr = {
@@ -2016,193 +2137,236 @@ server <- function(input, output, session) {
         inputId = "expla",
         selected = ""
       )
-    })
+    }
+  )
 
   key2 <- as.matrix(bankD[1:27, 1])
+  
+  output$questionD <- renderUI(
+    expr = {
+      if (index2$index2 == 1) {
+        h3(bankD[1, 4])
+      } else if (index2$index2 == 2) {
+        h3(bankD[4, 4])
+      } else if (index2$index2 == 3) {
+        h3(bankD[7, 4])
+      } else if (index2$index2 == 4) {
+        h3(bankD[10, 4])
+      }
+      else if (index2$index2 == 5) {
+        h3(bankD[13, 4])
+      }
+      else if (index2$index2 == 6) {
+        h3(bankD[16, 4])
+      }
+      else if (index2$index2 == 7) {
+        h3(bankD[19, 4])
+      }
+      else if (index2$index2 == 8) {
+        h3(bankD[22, 4])
+      }
+      else if (index2$index2 == 9) {
+        h3(bankD[25, 4])
+      }
+    }
+  )
+  
+  output$varEXPD <- renderUI(
+    expr = {
+      if (index2$index2 == 1) {
+        h3(bankD[1, 3])
+      } else if (index2$index2 == 2) {
+        h3(bankD[4, 3])
+      } else if (index2$index2 == 3) {
+        h3(bankD[7, 3])
+      } else if (index2$index2 == 4) {
+        h3(bankD[10, 3])
+      }
+      else if (index2$index2 == 5) {
+        h3(bankD[13, 3])
+      }
+      else if (index2$index2 == 6) {
+        h3(bankD[16, 3])
+      }
+      else if (index2$index2 == 7) {
+        h3(bankD[19, 3])
+      }
+      else if (index2$index2 == 8) {
+        h3(bankD[22, 3])
+      }
+      else if (index2$index2 == 9) {
+        h3(bankD[25, 3])
+      }
+    }
+  )
 
-  output$questionD <- renderUI({
-    if (index2$index2 == 1) {
-      h3(bankD[1, 4])
-    } else if (index2$index2 == 2) {
-      h3(bankD[4, 4])
-    } else if (index2$index2 == 3) {
-      h3(bankD[7, 4])
-    } else if (index2$index2 == 4) {
-      h3(bankD[10, 4])
+  output$varRESD <- renderUI(
+    expr = {
+      if (index2$index2 == 1) {
+        h3(bankD[2, 3])
+      } else if (index2$index2 == 2) {
+        h3(bankD[5, 3])
+      } else if (index2$index2 == 3) {
+        h3(bankD[8, 3])
+      } else if (index2$index2 == 4) {
+        h3(bankD[11, 3])
+      }
+      else if (index2$index2 == 5) {
+        h3(bankD[14, 3])
+      }
+      else if (index2$index2 == 6) {
+        h3(bankD[17, 3])
+      }
+      else if (index2$index2 == 7) {
+        h3(bankD[20, 3])
+      }
+      else if (index2$index2 == 8) {
+        h3(bankD[23, 3])
+      }
+      else if (index2$index2 == 9) {
+        h3(bankD[26, 3])
+      }
     }
-    else if (index2$index2 == 5) {
-      h3(bankD[13, 4])
-    }
-    else if (index2$index2 == 6) {
-      h3(bankD[16, 4])
-    }
-    else if (index2$index2 == 7) {
-      h3(bankD[19, 4])
-    }
-    else if (index2$index2 == 8) {
-      h3(bankD[22, 4])
-    }
-    else if (index2$index2 == 9) {
-      h3(bankD[25, 4])
-    }
-  })
+  )
 
-  output$varEXPD <- renderUI({
-    if (index2$index2 == 1) {
-      h3(bankD[1, 3])
-    } else if (index2$index2 == 2) {
-      h3(bankD[4, 3])
-    } else if (index2$index2 == 3) {
-      h3(bankD[7, 3])
-    } else if (index2$index2 == 4) {
-      h3(bankD[10, 3])
+  output$varCOND <- renderUI(
+    expr = {
+      if (index2$index2 == 1) {
+        h3(bankD[3, 3])
+      } else if (index2$index2 == 2) {
+        h3(bankD[6, 3])
+      } else if (index2$index2 == 3) {
+        h3(bankD[9, 3])
+      } else if (index2$index2 == 4) {
+        h3(bankD[12, 3])
+      }
+      else if (index2$index2 == 5) {
+        h3(bankD[15, 3])
+      }
+      else if (index2$index2 == 6) {
+        h3(bankD[18, 3])
+      }
+      else if (index2$index2 == 7) {
+        h3(bankD[21, 3])
+      }
+      else if (index2$index2 == 8) {
+        h3(bankD[24, 3])
+      }
+      else if (index2$index2 == 9) {
+        h3(bankD[27, 3])
+      }
     }
-    else if (index2$index2 == 5) {
-      h3(bankD[13, 3])
-    }
-    else if (index2$index2 == 6) {
-      h3(bankD[16, 3])
-    }
-    else if (index2$index2 == 7) {
-      h3(bankD[19, 3])
-    }
-    else if (index2$index2 == 8) {
-      h3(bankD[22, 3])
-    }
-    else if (index2$index2 == 9) {
-      h3(bankD[25, 3])
-    }
-  })
-
-  output$varRESD <- renderUI({
-    if (index2$index2 == 1) {
-      h3(bankD[2, 3])
-    } else if (index2$index2 == 2) {
-      h3(bankD[5, 3])
-    } else if (index2$index2 == 3) {
-      h3(bankD[8, 3])
-    } else if (index2$index2 == 4) {
-      h3(bankD[11, 3])
-    }
-    else if (index2$index2 == 5) {
-      h3(bankD[14, 3])
-    }
-    else if (index2$index2 == 6) {
-      h3(bankD[17, 3])
-    }
-    else if (index2$index2 == 7) {
-      h3(bankD[20, 3])
-    }
-    else if (index2$index2 == 8) {
-      h3(bankD[23, 3])
-    }
-    else if (index2$index2 == 9) {
-      h3(bankD[26, 3])
-    }
-  })
-
-  output$varCOND <- renderUI({
-    if (index2$index2 == 1) {
-      h3(bankD[3, 3])
-    } else if (index2$index2 == 2) {
-      h3(bankD[6, 3])
-    } else if (index2$index2 == 3) {
-      h3(bankD[9, 3])
-    } else if (index2$index2 == 4) {
-      h3(bankD[12, 3])
-    }
-    else if (index2$index2 == 5) {
-      h3(bankD[15, 3])
-    }
-    else if (index2$index2 == 6) {
-      h3(bankD[18, 3])
-    }
-    else if (index2$index2 == 7) {
-      h3(bankD[21, 3])
-    }
-    else if (index2$index2 == 8) {
-      h3(bankD[24, 3])
-    }
-    else if (index2$index2 == 9) {
-      h3(bankD[27, 3])
-    }
-  })
+  )
+  
   ### Validate  ----
-  observeEvent(input$submitD, {
-    attempts$level4 <- attempts$level4 + 1
-    observeEvent(input$newQLvl4, {
-      output$markd1 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$markd1 <- renderUI({
-        if (!is.null(input$expla)) {
-          if (any(input$expla == key2[index2$explan, 1])) {
-            renderIcon(icon = "correct", width = 30)
-          } else {
-            renderIcon(icon = "incorrect", width = 30)
-          }
+  observeEvent(
+    eventExpr = input$submitD,
+    handlerExpr = {
+      attempts$level4 <- attempts$level4 + 1
+      observeEvent(
+        eventExpr = input$newQLvl4,
+        handlerExpr = {
+          output$markd1 <- renderUI(
+            expr = {
+              img(src = NULL, width = 30)
+            }
+          )
         }
-      })
-    })
-  })
-  observeEvent(input$submitD, {
-    observeEvent(input$newQLvl4, {
-      output$markd2 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$markd2 <- renderUI({
-        if (!is.null(input$resp)) {
-          if (any(input$resp == key2[index2$respon, 1])) {
-            renderIcon(icon = "correct", width = 30)
-          } else {
-            renderIcon(icon = "incorrect", width = 30)
+      )
+      observe({
+        output$markd1 <- renderUI(
+          expr = {
+            if (!is.null(input$expla)) {
+              if (any(input$expla == key2[index2$explan, 1])) {
+                renderIcon(icon = "correct", width = 30)
+              } else {
+                renderIcon(icon = "incorrect", width = 30)
+              }
+            }
           }
-        }
+        )
       })
     })
-  })
   
-  observeEvent(input$submitD, {
-    observeEvent(input$newQLvl4, {
-      output$markd3 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$markd3 <- renderUI({
-        if (!is.null(input$conf)) {
-          if (any(input$conf == key2[index2$confou, 1])) {
-            renderIcon(icon = "correct", width = 30)
-          } else {
-            renderIcon(icon = "incorrect", width = 30)
+  observeEvent(
+    eventExpr = input$submitD, 
+    handlerExpr = {
+      observeEvent(input$newQLvl4, {
+        output$markd2 <- renderUI(
+          expr = {
+            img(src = NULL, width = 30)
           }
-        }
+        )
+      }
+      )
+      observe({
+        output$markd2 <- renderUI(
+          expr = {
+            if (!is.null(input$resp)) {
+              if (any(input$resp == key2[index2$respon, 1])) {
+                renderIcon(icon = "correct", width = 30)
+              } else {
+                renderIcon(icon = "incorrect", width = 30)
+              }
+            }
+          }
+        )
       })
     })
-  })
   
-  observeEvent(input$submitD, {
-    observeEvent(input$newQLvl4, {
-      output$markd3 <- renderUI({
-        img(src = NULL, width = 30)
-      })
-    })
-    observe({
-      output$markd3 <- renderUI({
-        if (!is.null(input$conf)) {
-          if (any(input$conf == key2[index2$confou, 1])) {
-            renderIcon(icon = "correct", width = 30)
-          } else {
-            renderIcon(icon = "incorrect", width = 30)
-          }
+  observeEvent(
+    eventExpr = input$submitD,
+    handlerExpr = {
+      observeEvent(
+        eventExpr = input$newQLvl4,
+        handlerExpr = {
+          output$markd3 <- renderUI(
+            expr = {
+              img(src = NULL, width = 30)
+            }
+          )
         }
+      )
+      observe({
+        output$markd3 <- renderUI(
+          expr = {
+            if (!is.null(input$conf)) {
+              if (any(input$conf == key2[index2$confou, 1])) {
+                renderIcon(icon = "correct", width = 30)
+              } else {
+                renderIcon(icon = "incorrect", width = 30)
+              }
+            }
+          }
+        )
       })
     })
-  })
+  
+  # observeEvent(
+  #   eventExpr = input$submitD, 
+  #   handlerExpr = {
+  #     observeEvent(input$newQLvl4, {
+  #       output$markd3 <- renderUI(
+  #         expr = {
+  #           img(src = NULL, width = 30)
+  #         }
+  #       )
+  #     }
+  #     )
+  #     observe({
+  #       output$markd3 <- renderUI(
+  #         expr = {
+  #           if (!is.null(input$conf)) {
+  #             if (any(input$conf == key2[index2$confou, 1])) {
+  #               renderIcon(icon = "correct", width = 30)
+  #             } else {
+  #               renderIcon(icon = "incorrect", width = 30)
+  #             }
+  #           }
+  #         }
+  #       )
+  #     })
+  #   })
   
   observeEvent(
     eventExpr = input$newQLvl4,
@@ -2252,21 +2416,33 @@ server <- function(input, output, session) {
       boastUtils::storeStatement(session, stmt)
     })
   
-  output$correctD <- renderPrint({
-    if (sum(c(summationD$correct1D)) == 0) {
-      cat("You have earned 0 points")
+  output$correctD <- renderPrint(
+    expr = {
+      if (sum(c(summationD$correct1D)) == 0) {
+        cat("You have earned 0 points")
+      }
+      else {
+        cat("You have earned", sum(c(summationD$correct1D)), "points")
+      }
     }
-    else {
-      cat("You have earned", sum(c(summationD$correct1D)), "points")
-    }
-  })
+  )
   
-  observeEvent(input$submitD, {
-    if (sum(c(summationD$correct1D)) >= 5) {
-      updateButton(session, "finish", disabled = FALSE)
-      updateButton(session, "newQLvl4", disabled = FALSE)
+  observeEvent(
+    eventExpr = input$submitD, 
+    handlerExpr = {
+      if (sum(c(summationD$correct1D)) >= 5) {
+        updateButton(
+          session = session, 
+          inputId = "finish",
+          disabled = FALSE
+        )
+        updateButton(
+          session = session, 
+          inputId = "newQLvl4", 
+          disabled = FALSE)
+      }
     }
-  })
+  )
   
   ### Progress Bar ----
   observe(
@@ -2311,26 +2487,38 @@ server <- function(input, output, session) {
   )
   
   #### Results 1
-  output$level1ScoreResults1 <- renderPrint({
-    cat("It took", max(attempts$level1), "attempts to complete level 1.")
-  })
-  output$level2ScoreResults1 <- renderPrint({
-    cat("It took", max(attempts$level2), "attempts to complete level 2.")
-  })
+  output$level1ScoreResults1 <- renderPrint(
+    expr = {
+      cat("It took", max(attempts$level1), "attempts to complete level 1.")
+    }
+  )
+  output$level2ScoreResults1 <- renderPrint(
+    expr = {
+      cat("It took", max(attempts$level2), "attempts to complete level 2.")
+    }
+  )
   
   #### Results 2
-  output$level1ScoreResults2 <- renderPrint({
-    cat("It took", max(attempts$level1), "attempts to complete level 1.")
-  })
-  output$level2ScoreResults2 <- renderPrint({
-    cat("It took", max(attempts$level2), "attempts to complete level 2.")
-  })
-  output$level3Score <- renderPrint({
-    cat("It took", max(attempts$level3), "questions to complete level 3")
-  })
-  output$level4Score <- renderPrint({
-    cat("It took", max(attempts$level4), "questions to complete level 4.")
-  })
+  output$level1ScoreResults2 <- renderPrint(
+    {
+      cat("It took", max(attempts$level1), "attempts to complete level 1.")
+    }
+  )
+  output$level2ScoreResults2 <- renderPrint(
+    expr = {
+      cat("It took", max(attempts$level2), "attempts to complete level 2.")
+    }
+  )
+  output$level3Score <- renderPrint(
+    expr = {
+      cat("It took", max(attempts$level3), "questions to complete level 3")
+    }
+  )
+  output$level4Score <- renderPrint(
+    expr = {
+      cat("It took", max(attempts$level4), "questions to complete level 4.")
+    }
+  )
   
   #### End Validation ----
 
