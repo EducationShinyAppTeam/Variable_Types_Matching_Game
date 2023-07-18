@@ -95,7 +95,7 @@ ui <- list(
             Thomas McIntyre. Special thanks to Robert P. Carey III and
             Alex Chen for help on some programming issues. We'd also like to
             thank Mike Fleck for help with the qualitative and quantitaive 
-            variables flow diagram.",
+            variables flow diagram. This app was updated in 2023 by Taryn McHugh",
             br(),
             br(),
             "Cite this app as:",
@@ -414,7 +414,22 @@ ui <- list(
                     ),
                     uiOutput(outputId = "lvl2A2")
                   )
+                )
+              ),
+              br(),
+              fluidRow(
+                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ3"))),
+                          uiOutput("image3", class = "picSize"),
+                          div(style = "position: relative; top:-15px;"),
+                          class = "col-lg-6 col-md-12 wellBorder"
                 ),
+                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ4"))),
+                          uiOutput("image4", class = "picSize"),
+                          div(style = "position: relative; top:-15px;"),
+                          class = "col-lg-6 col-md-12 wellBorder"
+                )
+              ),
+              wellPanel(
                 fluidRow(
                   column(
                     width = 6,
@@ -429,24 +444,11 @@ ui <- list(
                     width = 6,
                     selectInput(
                       inputId = "lvl2Q4",
-                      label = "QUestion 4",
+                      label = "Question 4",
                       choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A4")
                   )
-                )
-              ),
-              br(),
-              fluidRow(
-                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ3"))),
-                          uiOutput("image3", class = "picSize"),
-                          div(style = "position: relative; top:-15px;"),
-                          class = "col-lg-6 col-md-12 wellBorder"
-                ),
-                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ4"))),
-                          uiOutput("image4", class = "picSize"),
-                          div(style = "position: relative; top:-15px;"),
-                          class = "col-lg-6 col-md-12 wellBorder"
                 )
               ),
               ##### Buttons ----
@@ -559,6 +561,8 @@ ui <- list(
                   before moving to the next level."), 
                 p("Once you have made your choices hit submit answer, then 
                          click new question for the next question"),
+                p("You have 16 attempts, if all 16 attempts are used, follow directions
+                  and retry the level."),
                 style = "margin-left:15px"),
               hr(),
               wellPanel(
@@ -657,6 +661,8 @@ ui <- list(
                   before moving to the next level."), 
                 p("Once you have made your choices hit submit answer, then 
                   click new question for the next question."),
+                p("You have 8 attempts, if all 8 attempts are used, follow directions
+                  and retry the level."),
                 style = "margin-left:15px"
               ),
               hr(),
@@ -900,6 +906,11 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = input$toLvl3,
     handlerExpr = {
+      summationC$correct1 <- c(0)
+      updateProgressBar(
+        id = "barLevel3",
+        value = 0
+      )
       updateTabsetPanel(
         session = session,
         inputId = "levels",
@@ -922,11 +933,17 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = input$toLvl4,
     handlerExpr = {
+      summationD$correct1D <- c(0)
+      updateProgressBar(
+        id = "barLevel4",
+        value = 0
+      )
       updateTabsetPanel(
         session = session,
         inputId = "levels",
         selected = 'f'
       )
+      
     }
   )
   
@@ -1021,7 +1038,7 @@ server <- function(input, output, session) {
       )
       shinyalert(
         title = "Oops!",
-        text = "You have used up all the tries. Please click 'previous' then
+        text = "You have used up all 16 tries. Please click 'previous' then
         click 'next level' to re-enter this level to try again",
         type = "error")
     }
@@ -1041,7 +1058,7 @@ server <- function(input, output, session) {
       )
       shinyalert(
         title = "Oops!",
-        text = "You have used up all the tries. Please click 'previous'
+        text = "You have used up all 8 tries. Please click 'previous'
         then click 'next level' to re-enter this level to try again", 
         type = "error")
     }
@@ -2428,7 +2445,7 @@ server <- function(input, output, session) {
     }
   )
   
-  ### Results ----
+  ## Results ----
   attempts <- reactiveValues(
     level1 = 0,
     level2 = 0,
@@ -2436,7 +2453,7 @@ server <- function(input, output, session) {
     level4 = 0
   )
   
-  #### Results 1
+  ### Results 1
   output$level1ScoreResults1 <- renderPrint(
     expr = {
       cat("It took", max(attempts$level1), "attempts to complete level 1.")
@@ -2448,7 +2465,7 @@ server <- function(input, output, session) {
     }
   )
   
-  #### Results 2
+  ### Results 2
   output$level1ScoreResults2 <- renderPrint(
     {
       cat("It took", max(attempts$level1), "attempts to complete level 1.")
