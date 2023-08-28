@@ -165,7 +165,7 @@ ui <- list(
                 alt = "flow chart that describes explanatory, response, and confounding
                   variables"
               )
-            )
+            ) 
           )
         ),
         ### Game ----
@@ -174,7 +174,7 @@ ui <- list(
           h2("Game"),
           tabsetPanel(
             id = "levels",
-            #type = "hidden",
+            type = "hidden",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
