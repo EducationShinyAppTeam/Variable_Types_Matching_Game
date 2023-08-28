@@ -18,7 +18,7 @@ Explanatory,var16,Q8,Number of practice questions,Teachers are curious if number
 Response,var17,Q9,Life expectancy,Scientists are collecting information on the species of mammals and their average with life expectancy. They are looking for the relationship between different mammals and how long can they live. 
 Explanatory,var18,Q9,Species of mammals,Scientists are collecting information on the species of mammals and their average with life expectancy. They are looking for the relationship between different mammals and how long can they live. 
 Response,var19,Q10,Final score,Stat 200 professors are looking into using the score on daily quizzes to predict a student's final score. 
-Explanatory,var20,Q10,Daily quize score,Stat 200 professors are looking into using the score on daily quizzes to predict a student's final score.
+Explanatory,var20,Q10,Daily quiz score,Stat 200 professors are looking into using the score on daily quizzes to predict a student's final score.
 Response,var21,Q11,Weight,Ana Renin has recorded the age and the weight of her baby for the first 6 months of her life. She has found a positive association between the variables.
 Explanatory,var22,Q11,Age,Ana Renin has recorded the age and the weight of her baby for the first 6 months of her life. She has found a positive association between the variables.
 Response,var23,Q12,Number of umbrellas,Records of sales of umbrellas and amount of rainfall suggests that there is a strong positive relationship between the two variables.

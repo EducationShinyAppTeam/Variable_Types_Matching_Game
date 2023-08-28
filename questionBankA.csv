@@ -2,7 +2,7 @@ Type,Var,Variable
 QuanDiscrete,Var1,Number of emails
 QuanDiscrete,Var2,Number of tires on a vehicle
 QuanDiscrete,Var3,House's number of bedrooms
-QuanDiscrete,Var4,"Family Size (1,2,3,...)"
+QuanDiscrete,Var4,Number of members in a family
 QuanDiscrete,Var5,Number of heads in 5 tosses
 QuanDiscrete,Var6,Sleep time to nearest hour
 QuanDiscrete,Var7,Height rounded to the nearest inch
@@ -58,7 +58,7 @@ QualNominal,Var56,"Type of schools (public, private)"
 QualOrdinal,Var57,"The Likert Scale (disagree, ... ,agree)"
 QualOrdinal,Var58,Soldier Rank
 QualOrdinal,Var59,"Air Pollution Index (0-50, ... ,300+)"
-QualOrdinal,Var60,"Age Group (<25, 25-50, 50-80, >80)"
+QualOrdinal,Var60,Age Groups
 QualOrdinal,Var61,"Grade in course (A,B,C,D,F)"
 QualOrdinal,Var62,Education Level
 QualOrdinal,Var63,Level of Satisfaction
@@ -69,4 +69,4 @@ QualOrdinal,Var67,Hurricane Category Level
 QualOrdinal,Var68,"Pain (none,moderate,extreme)"
 QualOrdinal,Var69,Stage of disease
 QualOrdinal,Var70,"T-shirt Size (S,M,L,XL)"
-QualOrdinal,Var71,"Smoking (<3times/d, ... , >10times/d)"
+QualOrdinal,Var71,"Smoking (<3times/day, ... , >10times/day)"
