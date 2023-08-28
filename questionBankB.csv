@@ -55,8 +55,8 @@ QualNominal,var53,img34.png,What is the type of variable in the legend?,Stacked 
 QualNominal,var54,img35.jpg,What is the type of variable on the X-axis?,Bar graph with company on the x axis. 
 QualNominal,var55,img36.png,What is the type of variable on the X-axis?,Bar graph with type of cheese on the x axis. 
 QualNominal,var56,img37.png,What is the type of variable in the legend?,Scatterplot with species in the legend.
-QualNominal,var57,img38.png,What is the type of variable on the X-axis?,Bar graph with company on the x axis. 
-QualNominal,var58,img39.jpg,What is the type of variable on the X-axis?,Bar graph with company on the x axis. 
+QualNominal,var57,img38.png,What is the type of variable on the X-axis?,Bar graph with company on the x axis.
+QualNominal,var58,img39.jpg,What is the type of variable on the X-axis?,Bar graph with company on the x axis. -3
 QualOrdinal,var59,img7.jpg,What is the type of variable on the X-axis?,Bar graph with height groups on the x axis and numver of students on the y axis.
 QualOrdinal,var60,img9.jpg,What is the type of variable on the X-axis?,Bar graph with amount of pressure categories on the x axis and number of students on the y axis.
 QualOrdinal,var61,img10.gif,What is the type of variable on the Y-axis?,Sideways Bar graph with number of minutes in groups on the y axis and number of students on the x axis.

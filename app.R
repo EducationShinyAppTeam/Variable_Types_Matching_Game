@@ -17,7 +17,7 @@ level1Choices <- c("Quantitative and Discrete" = "QuanDiscrete",
                    "Quantitative and Continuous" = "QuanContinuous",
                    "Qualitative and Nominal" = "QualNominal",
                    "Qualitative and Ordinal" = "QualOrdinal")
-level2Choices <- c(" ", "Quantitative and Discrete" = "QuanDiscrete", 
+level2Choices <- c("Select One", "Quantitative and Discrete" = "QuanDiscrete", 
                    "Quantitative and Continuous" = "QuanContinuous",
                    "Qualitative and Nominal" = "QualNominal",
                    "Qualitative and Ordinal" = "QualOrdinal")
@@ -71,7 +71,7 @@ ui <- list(
             the analysis (explanatory, response, and confounding)."),
           h2("Instructions"),
           tags$ol(
-            tags$li("View prerequisites as needed on the prerequsities tab."),
+            tags$li("View prerequisites as needed on the prerequisites tab."),
             tags$li("Then go to the game tab to start the game."),
             tags$li("Submit your answer only after finishing all the questions."),
             tags$li("You may go to the next level once all of your answers are correct 
@@ -103,8 +103,8 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 7/14/2023 by TM.")
-          )
+            div(class = "updated", "Last Update: 8/28/2023 by TM.")
+          ),
         ),
         ### Prerequisites ----
         tabItem(
@@ -122,7 +122,7 @@ ui <- list(
               tags$li("Ordinal Variables are qualitative variables that require 
                       a specific order or rank "),
               tags$li("Discrete Variables are quantitative (numerical) variables 
-                      that are whole numbers."),
+                      where you can make a fixed list of possible variables."),
               tags$li("Continuous Variables are quantitative variables that can take on
                       an unlimited number of values within a range, they do not need 
                       to be fixed.")
@@ -146,9 +146,9 @@ ui <- list(
             collapsed = TRUE,
             width = "100%",          
             tags$ul(
-              tags$li("Explanatory/Independent Variables are what is being changed 
-                      to see its effects on the response variable"),
-              tags$li("Response/Dependent Variables are what is being measured."),
+              tags$li("Explanatory/Independent Variables are what might explain 
+                      chnages in the response variable."),
+              tags$li("Response/Dependent Variables are what is the focus of the study."),
               tags$li("Confounding Variables are variables not in an experiment, 
                       but impacts the relationship between explanatory and response.")
             ),
@@ -174,7 +174,7 @@ ui <- list(
           h2("Game"),
           tabsetPanel(
             id = "levels",
-            type = "hidden",
+            #type = "hidden",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
@@ -322,9 +322,23 @@ ui <- list(
                 column(
                   width = 1,
                   offset = 5,
-                  bsButton(
-                    inputId = "retryA",
-                    label = "Retry"
+                  conditionalPanel(
+                    "(input.lvl1Q1 != '') & (input.lvl1Q1 != null) &
+                    (input.lvl1Q2 != '') & (input.lvl1Q2 != null) &
+                    (input.lvl1Q3 != '') & (input.lvl1Q3 != null) &
+                    (input.lvl1Q4 != '') & (input.lvl1Q4 != null) &
+                    (input.lvl1Q5 != '') & (input.lvl1Q5 != null) &
+                    (input.lvl1Q6 != '') & (input.lvl1Q6 != null) &
+                    (input.lvl1Q7 != '') & (input.lvl1Q7 != null) &
+                    (input.lvl1Q8 != '') & (input.lvl1Q8 != null) &
+                    (input.lvl1Q9 != '') & (input.lvl1Q9 != null) &
+                    (input.lvl1Q10 != '') & (input.lvl1Q10 != null) &
+                    (input.lvl1Q11 != '') & (input.lvl1Q11 != null) &
+                    (input.lvl1Q12 != '') & (input.lvl1Q12 != null)",
+                    bsButton(
+                      inputId = "retryA",
+                      label = "Retry"
+                    )
                   )
                 ),
                 column(
@@ -464,16 +478,24 @@ ui <- list(
                 column(
                   width = 1,
                   offset = 3,
-                  bsButton(
-                    inputId = "retryB",
-                    label = "Retry"
+                  conditionalPanel(
+                    "(input.lvl2Q1!='Select One') & (input.lvl2Q1!= null) &
+                    (input.lvl2Q2!='Select One') & (input.lvl2Q2!=null) &
+                    (input.lvl2Q3!='Select One') & (input.lvl2Q3!=null) &
+                    (input.lvl2Q4!='Select One') & (input.lvl2Q4!=null)",
+                    bsButton(
+                      inputId = "retryB",
+                      label = "Retry"
+                    )
                   )
                 ),
                 column(
                   width = 1,
                   conditionalPanel(
-                    "(input.lvl2Q1!='') & (input.lvl2Q2!='') & (input.lvl2Q3!='') 
-                    & (input.lvl2Q4!='')",
+                    "(input.lvl2Q1!='Select One') & (input.lvl2Q1!= null) &
+                    (input.lvl2Q2!='Select One') & (input.lvl2Q2!=null) &
+                    (input.lvl2Q3!='Select One') & (input.lvl2Q3!=null) &
+                    (input.lvl2Q4!='Select One') & (input.lvl2Q4!=null)",
                     bsButton(
                       inputId = "submitB", 
                       label = "Submit")
@@ -854,7 +876,8 @@ server <- function(input, output, session) {
         session = session,
         type = "info",
         title = "Information",
-        text = "Go through each level to apply examples of various variables."
+        text = "Go through each level to demonstrate your proficiency in distinguishing
+        between different variable types."
       )
     }
   )
