@@ -71,11 +71,12 @@ ui <- list(
             the analysis (explanatory, response, and confounding)."),
           h2("Instructions"),
           tags$ol(
-            tags$li("View prerequisites as needed on the prerequisites tab."),
-            tags$li("Then go to the game tab to start the game."),
-            tags$li("Submit your answer only after finishing all the questions."),
+            tags$li("View prerequisites as needed on the 'Prerequisites' tab."),
+            tags$li("Then, continue to the 'Game' tab to begin the game."),
+            tags$li("Submit your answer only after finishing all of the questions."),
             tags$li("You may go to the next level once all of your answers are correct 
-                    for level 1 and 2. For level 3 and 4 you must get 5 correct 
+                    for levels 1 and 2."),
+            tags$li("For levels 3 and 4, you must get 5 correct 
                     problems on each level to move on.")
           ),
           div(
@@ -95,7 +96,8 @@ ui <- list(
             Thomas McIntyre. Special thanks to Robert P. Carey III and
             Alex Chen for help on some programming issues. We'd also like to
             thank Mike Fleck for help with the qualitative and quantitaive 
-            variables flow diagram. This app was updated in 2023 by Taryn McHugh",
+            variables flow diagram. This app was updated in 2023 by Taryn McHugh
+            and in June 2024 by Nathan Pechulis.",
             br(),
             br(),
             "Cite this app as:",
@@ -103,24 +105,26 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 8/28/2023 by TM.")
+            div(class = "updated", "Last Update: 6/5/2024 by NP.")
           ),
         ),
         ### Prerequisites ----
         tabItem(
           tabName = "prerequisite",
           withMathJax(),
+          h2("Types of Variables"),
+          br(),
           box(
             title = strong("Quantitative and Qualitative Variables"),
             status = "primary",
             collapsible = TRUE,
-            collapsed = TRUE,
+            collapsed = FALSE,
             width = "100%",
             tags$ul(
               tags$li("Nominal Variables are qualitative (categorical) variables 
-                      that do not require a specific order or rank"),
+                      that do not require a specific order or rank."),
               tags$li("Ordinal Variables are qualitative variables that require 
-                      a specific order or rank "),
+                      a specific order or rank."),
               tags$li("Discrete Variables are quantitative (numerical) variables 
                       where you can make a fixed list of possible variables."),
               tags$li("Continuous Variables are quantitative variables that can take on
@@ -147,10 +151,10 @@ ui <- list(
             width = "100%",          
             tags$ul(
               tags$li("Explanatory/Independent Variables are what might explain 
-                      chnages in the response variable."),
+                      changes in the response variable."),
               tags$li("Response/Dependent Variables are what is the focus of the study."),
-              tags$li("Confounding Variables are variables not in an experiment, 
-                      but impacts the relationship between explanatory and response.")
+              tags$li("Confounding Variables are variables that are not in an experiment, 
+                      but impact the relationship between explanatory and response.")
             ),
             br(),
             p("In the figure below you can see that it looks like ice cream sales 
@@ -181,10 +185,9 @@ ui <- list(
               value = "b",
               titlePanel("Matching Qualitative and Quantitaive Variables"),
               fluidRow(
-                p("Correctly match the variable type to each variable."),
-                p("To move onto the next level, you need correctly match all 12 variables.
-                  To submit, you must answer all questions. If you get one wrong, 
-                  click retry to try again."),
+                p("To move onto the next level, you need to match all 12 variables to their
+                  correct variable types and categories. To submit your answers, you must answer all questions. 
+                  If you get any wrong, click 'Retry' to try again."),
                 style = "margin-left:15px"
               ),
               hr(),
@@ -389,9 +392,9 @@ ui <- list(
               titlePanel("Quantitative and Qualitative Variables in Plots"),
               fluidRow(
                 p("Match the variable defined in the instructions of each plot
-                       to the variable type."),
-                p("To move onto the next level, you need to get all 4 questions correct.
-                To submit, you must answer all questions. If you get one wrong, click retry to try again."),
+                   to the variable type until you get all 4 correct. 
+                   To submit, you must answer all questions. If you get one wrong, 
+                   click 'Retry' to try again."),
                 style = "margin-left:15px"
               ),
               hr(),
@@ -472,7 +475,7 @@ ui <- list(
                   offset = 1,
                   bsButton(
                     inputId = "prevLvl1",
-                    label = "Previous"
+                    label = "Previous Level"
                   )
                 ),
                 column(
@@ -552,7 +555,7 @@ ui <- list(
                   offset = 4,
                   bsButton(
                     inputId = "prevLvl2",
-                    label = "Previous"
+                    label = "Previous Level"
                   )
                 ),
                 column(
@@ -577,14 +580,11 @@ ui <- list(
               value = "e",
               titlePanel("Explanatory and Response Variables"),
               fluidRow(
-                p("Correctly identify the variables to each variable type depending on
-                  the context given."),
-                p("You must get both answers correct to earn 1 point and get 5 points 
-                  before moving to the next level."), 
-                p("Once you have made your choices hit submit answer, then 
-                         click new question for the next question"),
-                p("You have 16 attempts, if all 16 attempts are used, follow directions
-                  and retry the level."),
+                p("Correctly match each variable to the variable type depending on
+                  the context given. You must get both answers correct to earn 1 point and get 5 points 
+                  before moving to the next level. Once you have made your choices hit 'Submit', then 
+                  click 'New Question' for the next question. You have 16 attempts, if all 16 attempts are 
+                  used, follow directions and retry the level."),
                 style = "margin-left:15px"),
               hr(),
               wellPanel(
@@ -630,7 +630,7 @@ ui <- list(
                     offset = 1,
                     bsButton(
                       inputId = "prevBtwnLvls",
-                      label = "Previous"
+                      label = "Previous Level"
                     )
                   ),
                   column(
@@ -677,14 +677,12 @@ ui <- list(
               value = "f",
               titlePanel("Explanatory, Response, and Confounding Variables"),
               fluidRow(
-                p("Correctly identify the variables to each variable type 
-                  depending on the context given."),
-                p("You must get both answers correct to earn 1 point and get 5 points 
-                  before moving to the next level."), 
-                p("Once you have made your choices hit submit answer, then 
-                  click new question for the next question."),
-                p("You have 8 attempts, if all 8 attempts are used, follow directions
-                  and retry the level."),
+                p("Correctly match each variable to the variable type 
+                  depending on the context given. You must get all three answers 
+                  correct to earn 1 point and get 5 points before moving to the 
+                  next level. Once you have made your choices hit 'Submit', then 
+                  click 'New Question' for the next question. You have 8 attempts, 
+                  if all 8 attempts are used, follow directions and retry the level."),
                 style = "margin-left:15px"
               ),
               hr(),
@@ -739,7 +737,7 @@ ui <- list(
                     offset = 1,
                     bsButton(
                       inputId = "prevLvl3",
-                      label = "Previous"
+                      label = "Previous Level"
                     )
                   ),
                   column(
@@ -2047,17 +2045,6 @@ server <- function(input, output, session) {
       summation$summationC[input$submitC] <- total
     })
   
-  output$correctC <- renderPrint(
-    expr = {
-      if (sum(c(summationC$correct1)) == 0) {
-        cat("You have earned 0 points")
-      }
-      else {
-        cat("You have earned", summation$summationC[input$submitC], "points")
-      }
-    }
-  )
-  
   observeEvent(
     eventExpr = input$submitC,
     handlerExpr = {
@@ -2405,17 +2392,6 @@ server <- function(input, output, session) {
       
       boastUtils::storeStatement(session, stmt)
     })
-  
-  output$correctD <- renderPrint(
-    expr = {
-      if (sum(c(summationD$correct1D)) == 0) {
-        cat("You have earned 0 points")
-      }
-      else {
-        cat("You have earned", sum(c(summationD$correct1D)), "points")
-      }
-    }
-  )
   
   observeEvent(
     eventExpr = input$submitD, 
