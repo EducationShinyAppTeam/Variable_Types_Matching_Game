@@ -115,7 +115,7 @@ ui <- list(
           h2("Types of Variables"),
           br(),
           box(
-            title = strong("Quantitative and Qualitative Variables"),
+            title = strong("Quantitative vs Qualitative Variables"),
             status = "primary",
             collapsible = TRUE,
             collapsed = FALSE,
@@ -183,7 +183,7 @@ ui <- list(
             tabPanel(
               title = "Level 1",
               value = "b",
-              titlePanel("Matching Qualitative and Quantitaive Variables"),
+              titlePanel("Matching Qualitative and Quantitative Variables"),
               fluidRow(
                 p("To move onto the next level, you need to match all 12 variables to their
                   correct variable types and categories. To submit your answers, you must answer all questions. 
@@ -618,7 +618,7 @@ ui <- list(
               ),
               br(),
               fluidRow(
-                column(width = 4, offset = 3, textOutput("correctC"))
+                column(width = 4, offset = 3, textOutput("NumTries"))
               ),
               br(),
               ##### Buttons ----
@@ -725,7 +725,7 @@ ui <- list(
                 )
               ),
               fluidRow(
-                column(width = 3, offset = 3, textOutput("correctD"))
+                column(width = 3, offset = 3, textOutput("NumTriesLvl4"))
               ),
               br(),
               ##### Buttons ----
@@ -1059,8 +1059,8 @@ server <- function(input, output, session) {
       )
       shinyalert(
         title = "Oops!",
-        text = "You have used up all 16 tries. Please click 'previous' then
-        click 'next level' to re-enter this level to try again",
+        text = "You have used up all 16 tries. Please click 'Previous Level' then
+        click 'Next Level' to re-enter this level to try again",
         type = "error")
     }
   })
@@ -1079,8 +1079,8 @@ server <- function(input, output, session) {
       )
       shinyalert(
         title = "Oops!",
-        text = "You have used up all 8 tries. Please click 'previous'
-        then click 'next level' to re-enter this level to try again", 
+        text = "You have used up all 8 tries. Please click 'Previous Level'
+        then click 'Next Level' to re-enter this level to try again", 
         type = "error")
     }
   })
@@ -1204,7 +1204,7 @@ server <- function(input, output, session) {
       updateRadioButtons(
         session = session,
         inputId = "lvl1Q1",
-        label = subsetBankA()$Variable[1]
+        label = HTML(paste("<b>", subsetBankA()$Variable[1], "<b>"))
       )
     }
   )
@@ -1759,9 +1759,11 @@ server <- function(input, output, session) {
         session = session, 
         inputId = "levels", 
         selected = "d")
-      index_list$listc <- c(index_list$listc, sample(1:17, 17, replace = FALSE))
-    }
-  )
+      if (length(index_list$listc) < 17) {
+        index_list$listc <- c(index_list$listc, sample(1:17, 17, replace = FALSE))
+      } 
+      index_list$listc <- index_list$listc[1:17]
+    })
   
   observeEvent(
     eventExpr = input$toBtwnLvls,
@@ -2045,6 +2047,13 @@ server <- function(input, output, session) {
       summation$summationC[input$submitC] <- total
     })
   
+  output$NumTries <- renderPrint(
+    expr = {
+      tries_left = length(index_list$listc) - 1
+      cat("You have", tries_left, "tries left")
+    }
+  )
+  
   observeEvent(
     eventExpr = input$submitC,
     handlerExpr = {
@@ -2095,9 +2104,9 @@ server <- function(input, output, session) {
     }
   )
   ## Level 4 ----
-  index2 <- reactiveValues(index2 = 9)
+  index2 <- reactiveValues(index2 = 10)
   
-  index_listD <- reactiveValues(listD = sample(1:8, 8, replace = FALSE))
+  index_listD <- reactiveValues(listD = sample(1:9, 9, replace = FALSE))
   
   observeEvent(
     eventExpr = input$prevLvl3, 
@@ -2106,9 +2115,12 @@ server <- function(input, output, session) {
         session = session, 
         inputId = "levels", 
         selected = "e")
-      index_listD$listD <- c(index_listD$listD, sample(1:8, 8, replace = FALSE))
-    }
-  )
+      if (length(index_listD$listD) < 9) {
+        index_listD$listD <- c(index_listD$listD, sample(1:9, 9, replace = FALSE)) 
+      }
+      index_listD$listD <- index_listD$listD[1:9]
+    })
+  
   ### Labels ----
   observeEvent(
     eventExpr = input$toLvl4,
@@ -2409,6 +2421,14 @@ server <- function(input, output, session) {
       }
     }
   )
+  
+  output$NumTriesLvl4 <- renderPrint(
+    expr = {
+      tries_left = length(index_listD$listD) - 1
+      cat("You have", tries_left, "tries left")
+    }
+  )
+  
   
   ### Progress Bar ----
   observe(
