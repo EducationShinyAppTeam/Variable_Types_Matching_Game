@@ -105,7 +105,7 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 6/5/2024 by NP.")
+            div(class = "updated", "Last Update: 6/6/2024 by NP.")
           ),
         ),
         ### Prerequisites ----
@@ -175,7 +175,6 @@ ui <- list(
         ### Game ----
         tabItem(
           tabName = "game",
-          h2("Game"),
           tabsetPanel(
             id = "levels",
             type = "hidden",
@@ -184,12 +183,9 @@ ui <- list(
               title = "Level 1",
               value = "b",
               titlePanel("Matching Qualitative and Quantitative Variables"),
-              fluidRow(
-                p("To move onto the next level, you need to match all 12 variables to their
-                  correct variable types and categories. To submit your answers, you must answer all questions. 
-                  If you get any wrong, click 'Retry' to try again."),
-                style = "margin-left:15px"
-              ),
+              p("To move onto the next level, you need to match all 12 variables to their
+                correct variable types and categories. To submit your answers, you must answer all questions. 
+                If you get any wrong, click 'Retry' to try again."),
               hr(),
               fluidRow(
                 column(
@@ -379,8 +375,8 @@ ui <- list(
                 "input.submitA != 0",
                 fluidRow(
                   wellPanel(
-                    h3("You must score 30 points to move onto the next level."),
-                    verbatimTextOutput("scoreA")
+                    p(tags$strong("You must score 30 points to move onto the next level.")),
+                    textOutput("scoreA")
                   )
                 )
               )
@@ -390,21 +386,18 @@ ui <- list(
               title = "Level 2",
               value = "c",
               titlePanel("Quantitative and Qualitative Variables in Plots"),
-              fluidRow(
-                p("Match the variable defined in the instructions of each plot
+              p("Match the variable defined in the instructions of each plot
                    to the variable type until you get all 4 correct. 
                    To submit, you must answer all questions. If you get one wrong, 
                    click 'Retry' to try again."),
-                style = "margin-left:15px"
-              ),
               hr(),
               fluidRow(
-                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ1"))),
+                wellPanel(div(style = "text-align:center", p(textOutput("imgQ1"))),
                           uiOutput("image1", class = "picSize"),
                           div(style = "position: relative; top:-15px;"),
                           class = "col-lg-6 col-md-12 wellBorder"
                 ),
-                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ2"))),
+                wellPanel(div(style = "text-align:center", p(textOutput("imgQ2"))),
                           uiOutput("image2", class = "picSize"),
                           div(style = "position: relative; top:-15px;"),
                           class = "col-lg-6 col-md-12 wellBorder"
@@ -435,12 +428,12 @@ ui <- list(
               ),
               br(),
               fluidRow(
-                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ3"))),
+                wellPanel(div(style = "text-align:center", p(textOutput("imgQ3"))),
                           uiOutput("image3", class = "picSize"),
                           div(style = "position: relative; top:-15px;"),
                           class = "col-lg-6 col-md-12 wellBorder"
                 ),
-                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ4"))),
+                wellPanel(div(style = "text-align:center", p(textOutput("imgQ4"))),
                           uiOutput("image4", class = "picSize"),
                           div(style = "position: relative; top:-15px;"),
                           class = "col-lg-6 col-md-12 wellBorder"
@@ -519,8 +512,8 @@ ui <- list(
                 "input.submitB != 0",
                 fluidRow(
                   wellPanel(
-                    h3("You must score 20 points to move onto the next level."),
-                    verbatimTextOutput("scoreB")
+                    p(tags$strong("You must score 20 points to move onto the next level.")),
+                    textOutput("scoreB")
                   )
                 )
               )
@@ -529,22 +522,20 @@ ui <- list(
             tabPanel(
               title = "Concept Seperator",
               value = "d",
-              titlePanel("Upcoming Levels"),
-              fluidRow(
-                h3("Congrats on completing levels 1 and 2!"),
-                p("Levels 1 and 2 were all about qualitative and quantitative variables. 
+              titlePanel("Congrats on completing levels 1 and 2!"),
+              p("Levels 1 and 2 were all about qualitative and quantitative variables. 
                   There are two more levels after this that go over explanatory,
                   response, and confounding variables. If you feel ready, press 
                   'Next Level' to continue onto Level 3 and 4. If not, press 'Finish' 
                   to go back to the overview page."),
-                style = "margin-left:15px"
-              ),
               br(),
               fluidRow(
                 wellPanel(
                   h3("Results:"),
-                  verbatimTextOutput("level1ScoreResults1"),
-                  verbatimTextOutput("level2ScoreResults1")
+                  tags$ul(
+                    tags$li(textOutput("level1ScoreResults1")),
+                    tags$li(textOutput("level2ScoreResults1"))
+                  )
                 )
               ),
               br(),
@@ -579,13 +570,11 @@ ui <- list(
               title = "Level 3",
               value = "e",
               titlePanel("Explanatory and Response Variables"),
-              fluidRow(
-                p("Correctly match each variable to the variable type depending on
+              p("Correctly match each variable to the variable type depending on
                   the context given. You must get both answers correct to earn 1 point and get 5 points 
                   before moving to the next level. Once you have made your choices hit 'Submit', then 
                   click 'New Question' for the next question. You have 16 attempts, if all 16 attempts are 
                   used, follow directions and retry the level."),
-                style = "margin-left:15px"),
               hr(),
               wellPanel(
                 fluidRow(
@@ -676,15 +665,12 @@ ui <- list(
               title = "Level 4",
               value = "f",
               titlePanel("Explanatory, Response, and Confounding Variables"),
-              fluidRow(
-                p("Correctly match each variable to the variable type 
+              p("Correctly match each variable to the variable type 
                   depending on the context given. You must get all three answers 
                   correct to earn 1 point and get 5 points before moving to the 
                   next level. Once you have made your choices hit 'Submit', then 
                   click 'New Question' for the next question. You have 8 attempts, 
                   if all 8 attempts are used, follow directions and retry the level."),
-                style = "margin-left:15px"
-              ),
               hr(),
               wellPanel(
                 fluidRow(uiOutput("questionD"))
@@ -784,10 +770,12 @@ ui <- list(
               fluidRow(
                 wellPanel(
                   h3("Results:"),
-                  verbatimTextOutput("level1ScoreResults2"),
-                  verbatimTextOutput("level2ScoreResults2"),
-                  verbatimTextOutput("level3Score"),
-                  verbatimTextOutput("level4Score")
+                  tags$ul(
+                    tags$li(textOutput("level1ScoreResults2")),
+                    tags$li(textOutput("level2ScoreResults2")),
+                    tags$li(textOutput("level3Score")),
+                    tags$li(textOutput("level4Score"))
+                  )
                 )
               )
             )
@@ -1204,7 +1192,7 @@ server <- function(input, output, session) {
       updateRadioButtons(
         session = session,
         inputId = "lvl1Q1",
-        label = HTML(paste("<b>", subsetBankA()$Variable[1], "<b>"))
+        label = subsetBankA()$Variable[1]
       )
     }
   )
@@ -1797,43 +1785,43 @@ server <- function(input, output, session) {
   output$questionC <- renderUI(
     expr = {
       if (index$index == 1) {
-        h3(bankC[1, 5])
+        p(bankC[1, 5])
       } else if (index$index == 2) {
-        h3(bankC[3, 5])
+        p(bankC[3, 5])
       } else if (index$index == 3) {
-        h3(bankC[5, 5])
+        p(bankC[5, 5])
       } else if (index$index == 4) {
-        h3(bankC[7, 5])
+        p(bankC[7, 5])
       }
       else if (index$index == 5) {
-        h3(bankC[9, 5])
+        p(bankC[9, 5])
       } else if (index$index == 6) {
-        h3(bankC[11, 5])
+        p(bankC[11, 5])
       } else if (index$index == 7) {
-        h3(bankC[13, 5])
+        p(bankC[13, 5])
       } else if (index$index == 8) {
-        h3(bankC[15, 5])
+        p(bankC[15, 5])
       }
       else if (index$index == 9) {
-        h3(bankC[17, 5])
+        p(bankC[17, 5])
       } else if (index$index == 10) {
-        h3(bankC[19, 5])
+        p(bankC[19, 5])
       } else if (index$index == 11) {
-        h3(bankC[21, 5])
+        p(bankC[21, 5])
       } else if (index$index == 12) {
-        h3(bankC[23, 5])
+        p(bankC[23, 5])
       } else if (index$index == 13) {
-        h3(bankC[25, 5])
+        p(bankC[25, 5])
       } else if (index$index == 14) {
-        h3(bankC[27, 5])
+        p(bankC[27, 5])
       } else if (index$index == 15) {
-        h3(bankC[29, 5])
+        p(bankC[29, 5])
       } else if (index$index == 16) {
-        h3(bankC[31, 5])
+        p(bankC[31, 5])
       } else if (index$index == 17) {
-        h3(bankC[33, 5])
+        p(bankC[33, 5])
       } else if (index$index == 18) {
-        h3(bankC[35, 5])
+        p(bankC[35, 5])
       }
     }
   )
@@ -1841,45 +1829,45 @@ server <- function(input, output, session) {
   output$varEXP <- renderUI(
     expr = {
       if (index$index == 1) {
-        h3(bankC[1, 4])
+        p(tags$strong(bankC[1, 4]))
       } else if (index$index == 2) {
-        h3(bankC[3, 4])
+        p(tags$strong(bankC[3, 4]))
       } else if (index$index == 3) {
-        h3(bankC[5, 4])
+        p(tags$strong(bankC[5, 4]))
       } else if (index$index == 4) {
-        h3(bankC[7, 4])
+        p(tags$strong(bankC[7, 4]))
       }
       else if (index$index == 5) {
-        h3(bankC[9, 4])
+        p(tags$strong(bankC[9, 4]))
       } else if (index$index == 6) {
-        h3(bankC[11, 4])
+        p(tags$strong(bankC[11, 4]))
       } else if (index$index == 7) {
-        h3(bankC[13, 4])
+        p(tags$strong(bankC[13, 4]))
       } else if (index$index == 8) {
-        h3(bankC[15, 4])
+        p(tags$strong(bankC[15, 4]))
       }
       else if (index$index == 9) {
-        h3(bankC[17, 4])
+        p(tags$strong(bankC[17, 4]))
       } else if (index$index == 10) {
-        h3(bankC[19, 4])
+        p(tags$strong(bankC[19, 4]))
       } else if (index$index == 11) {
-        h3(bankC[21, 4])
+        p(tags$strong(bankC[21, 4]))
       } else if (index$index == 12) {
-        h3(bankC[23, 4])
+        p(tags$strong(bankC[23, 4]))
       }
       else if (index$index == 13) {
-        h3(bankC[25, 4])
+        p(tags$strong(bankC[25, 4]))
       } else if (index$index == 14) {
-        h3(bankC[27, 4])
+        p(tags$strong(bankC[27, 4]))
       } else if (index$index == 15) {
-        h3(bankC[29, 4])
+        p(tags$strong(bankC[29, 4]))
       } else if (index$index == 16) {
-        h3(bankC[31, 4])
+        p(tags$strong(bankC[31, 4]))
       }
       else if (index$index == 17) {
-        h3(bankC[33, 4])
+        p(tags$strong(bankC[33, 4]))
       } else if (index$index == 18) {
-        h3(bankC[35, 4])
+        p(tags$strong(bankC[35, 4]))
       }
     }
   )
@@ -1887,45 +1875,45 @@ server <- function(input, output, session) {
   output$varRES <- renderUI(
     expr = {
       if (index$index == 1) {
-        h3(bankC[2, 4])
+        p(tags$strong(bankC[2, 4]))
       } else if (index$index == 2) {
-        h3(bankC[4, 4])
+        p(tags$strong(bankC[4, 4]))
       } else if (index$index == 3) {
-        h3(bankC[6, 4])
+        p(tags$strong(bankC[6, 4]))
       } else if (index$index == 4) {
-        h3(bankC[8, 4])
+        p(tags$strong(bankC[8, 4]))
       }
       else if (index$index == 5) {
-        h3(bankC[10, 4])
+        p(tags$strong(bankC[10, 4]))
       } else if (index$index == 6) {
-        h3(bankC[12, 4])
+        p(tags$strong(bankC[12, 4]))
       } else if (index$index == 7) {
-        h3(bankC[14, 4])
+        p(tags$strong(bankC[14, 4]))
       } else if (index$index == 8) {
-        h3(bankC[16, 4])
+        p(tags$strong(bankC[16, 4]))
       }
       else if (index$index == 9) {
-        h3(bankC[18, 4])
+        p(tags$strong(bankC[18, 4]))
       } else if (index$index == 10) {
-        h3(bankC[20, 4])
+        p(tags$strong(bankC[20, 4]))
       } else if (index$index == 11) {
-        h3(bankC[22, 4])
+        p(tags$strong(bankC[22, 4]))
       } else if (index$index == 12) {
-        h3(bankC[24, 4])
+        p(tags$strong(bankC[24, 4]))
       }
       else if (index$index == 13) {
-        h3(bankC[26, 4])
+        p(tags$strong(bankC[26, 4]))
       } else if (index$index == 14) {
-        h3(bankC[28, 4])
+        p(tags$strong(bankC[28, 4]))
       } else if (index$index == 15) {
-        h3(bankC[30, 4])
+        p(tags$strong(bankC[30, 4]))
       } else if (index$index == 16) {
-        h3(bankC[32, 4])
+        p(tags$strong(bankC[32, 4]))
       }
       else if (index$index == 17) {
-        h3(bankC[34, 4])
+        p(tags$strong(bankC[34, 4]))
       } else if (index$index == 18) {
-        h3(bankC[36, 4])
+        p(tags$strong(bankC[36, 4]))
       }
     }
   )
@@ -2160,28 +2148,28 @@ server <- function(input, output, session) {
   output$questionD <- renderUI(
     expr = {
       if (index2$index2 == 1) {
-        h3(bankD[1, 4])
+        p(bankD[1, 4])
       } else if (index2$index2 == 2) {
-        h3(bankD[4, 4])
+        p(bankD[4, 4])
       } else if (index2$index2 == 3) {
-        h3(bankD[7, 4])
+        p(bankD[7, 4])
       } else if (index2$index2 == 4) {
-        h3(bankD[10, 4])
+        p(bankD[10, 4])
       }
       else if (index2$index2 == 5) {
-        h3(bankD[13, 4])
+        p(bankD[13, 4])
       }
       else if (index2$index2 == 6) {
-        h3(bankD[16, 4])
+        p(bankD[16, 4])
       }
       else if (index2$index2 == 7) {
-        h3(bankD[19, 4])
+        p(bankD[19, 4])
       }
       else if (index2$index2 == 8) {
-        h3(bankD[22, 4])
+        p(bankD[22, 4])
       }
       else if (index2$index2 == 9) {
-        h3(bankD[25, 4])
+        p(bankD[25, 4])
       }
     }
   )
@@ -2189,28 +2177,28 @@ server <- function(input, output, session) {
   output$varEXPD <- renderUI(
     expr = {
       if (index2$index2 == 1) {
-        h3(bankD[1, 3])
+        p(tags$strong(bankD[1, 3]))
       } else if (index2$index2 == 2) {
-        h3(bankD[4, 3])
+        p(tags$strong(bankD[4, 3]))
       } else if (index2$index2 == 3) {
-        h3(bankD[7, 3])
+        p(tags$strong(bankD[7, 3]))
       } else if (index2$index2 == 4) {
-        h3(bankD[10, 3])
+        p(tags$strong(bankD[10, 3]))
       }
       else if (index2$index2 == 5) {
-        h3(bankD[13, 3])
+        p(tags$strong(bankD[13, 3]))
       }
       else if (index2$index2 == 6) {
-        h3(bankD[16, 3])
+        p(tags$strong(bankD[16, 3]))
       }
       else if (index2$index2 == 7) {
-        h3(bankD[19, 3])
+        p(tags$strong(bankD[19, 3]))
       }
       else if (index2$index2 == 8) {
-        h3(bankD[22, 3])
+        p(tags$strong(bankD[22, 3]))
       }
       else if (index2$index2 == 9) {
-        h3(bankD[25, 3])
+        p(tags$strong(bankD[25, 3]))
       }
     }
   )
@@ -2218,28 +2206,28 @@ server <- function(input, output, session) {
   output$varRESD <- renderUI(
     expr = {
       if (index2$index2 == 1) {
-        h3(bankD[2, 3])
+        p(tags$strong(bankD[2, 3]))
       } else if (index2$index2 == 2) {
-        h3(bankD[5, 3])
+        p(tags$strong(bankD[5, 3]))
       } else if (index2$index2 == 3) {
-        h3(bankD[8, 3])
+        p(tags$strong(bankD[8, 3]))
       } else if (index2$index2 == 4) {
-        h3(bankD[11, 3])
+        p(tags$strong(bankD[11, 3]))
       }
       else if (index2$index2 == 5) {
-        h3(bankD[14, 3])
+        p(tags$strong(bankD[14, 3]))
       }
       else if (index2$index2 == 6) {
-        h3(bankD[17, 3])
+        p(tags$strong(bankD[17, 3]))
       }
       else if (index2$index2 == 7) {
-        h3(bankD[20, 3])
+        p(tags$strong(bankD[20, 3]))
       }
       else if (index2$index2 == 8) {
-        h3(bankD[23, 3])
+        p(tags$strong(bankD[23, 3]))
       }
       else if (index2$index2 == 9) {
-        h3(bankD[26, 3])
+        p(tags$strong(bankD[26, 3]))
       }
     }
   )
@@ -2247,28 +2235,28 @@ server <- function(input, output, session) {
   output$varCOND <- renderUI(
     expr = {
       if (index2$index2 == 1) {
-        h3(bankD[3, 3])
+        p(tags$strong(bankD[3, 3]))
       } else if (index2$index2 == 2) {
-        h3(bankD[6, 3])
+        p(tags$strong(bankD[6, 3]))
       } else if (index2$index2 == 3) {
-        h3(bankD[9, 3])
+        p(tags$strong(bankD[9, 3]))
       } else if (index2$index2 == 4) {
-        h3(bankD[12, 3])
+        p(tags$strong(bankD[12, 3]))
       }
       else if (index2$index2 == 5) {
-        h3(bankD[15, 3])
+        p(tags$strong(bankD[15, 3]))
       }
       else if (index2$index2 == 6) {
-        h3(bankD[18, 3])
+        p(tags$strong(bankD[18, 3]))
       }
       else if (index2$index2 == 7) {
-        h3(bankD[21, 3])
+        p(tags$strong(bankD[21, 3]))
       }
       else if (index2$index2 == 8) {
-        h3(bankD[24, 3])
+        p(tags$strong(bankD[24, 3]))
       }
       else if (index2$index2 == 9) {
-        h3(bankD[27, 3])
+        p(tags$strong(bankD[27, 3]))
       }
     }
   )
