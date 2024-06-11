@@ -67,8 +67,9 @@ ui <- list(
           h1("Variable Types Matching Game"),
           p("Identify variable types by nature of measurement (quantitative (numeric) 
             discrete, quantitative continuous, qualitative (categorical)
-            nominal, and qualitative ordinal variables) and by role in 
-            the analysis (explanatory, response, and confounding)."),
+            nominal, and qualitative ordinal variables) on the first two levels.
+            Then, identify variable types by role in the analysis (explanatory, 
+            response, and confounding) for the last two levels."),
           h2("Instructions"),
           tags$ol(
             tags$li("View prerequisites as needed on the 'Prerequisites' tab."),
@@ -105,7 +106,7 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 6/6/2024 by NP.")
+            div(class = "updated", "Last Update: 6/11/2024 by NP.")
           ),
         ),
         ### Prerequisites ----
@@ -177,7 +178,7 @@ ui <- list(
           tabName = "game",
           tabsetPanel(
             id = "levels",
-            type = "hidden",
+            type = "tabs",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
@@ -385,38 +386,40 @@ ui <- list(
             tabPanel(
               title = "Level 2",
               value = "c",
-              titlePanel("Quantitative and Qualitative Variables in Plots"),
+              h2("Quantitative and Qualitative Variables in Plots"),
               p("Match the variable defined in the instructions of each plot
                    to the variable type until you get all 4 correct. 
                    To submit, you must answer all questions. If you get one wrong, 
                    click 'Retry' to try again."),
               hr(),
               fluidRow(
-                wellPanel(div(style = "text-align:center", p(textOutput("imgQ1"))),
-                          uiOutput("image1", class = "picSize"),
-                          div(style = "position: relative; top:-15px;"),
-                          class = "col-lg-6 col-md-12 wellBorder"
+                column(
+                  width = 8,
+                  p(textOutput("imgQ1")),
+                    uiOutput("image1")
                 ),
-                wellPanel(div(style = "text-align:center", p(textOutput("imgQ2"))),
-                          uiOutput("image2", class = "picSize"),
-                          div(style = "position: relative; top:-15px;"),
-                          class = "col-lg-6 col-md-12 wellBorder"
-                )
-              ),
-              br(),
-              wellPanel(
-                fluidRow(
-                  column(
-                    width = 6,
+                column(
+                  width = 4,
+                  wellPanel(
                     selectInput(
                       inputId = "lvl2Q1",
                       label = "Question 1",
                       choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A1")
-                  ),
-                  column(
-                    width = 6,
+                  )
+                )
+              ),
+              br(),
+              fluidRow(
+                column(
+                  width = 8,
+                  p(textOutput("imgQ2")),
+                  uiOutput("image2")
+                ),
+                column(
+                  width = 4,
+                  wellPanel(
                     selectInput(
                       inputId = "lvl2Q2",
                       label = "Question 2",
@@ -428,30 +431,33 @@ ui <- list(
               ),
               br(),
               fluidRow(
-                wellPanel(div(style = "text-align:center", p(textOutput("imgQ3"))),
-                          uiOutput("image3", class = "picSize"),
-                          div(style = "position: relative; top:-15px;"),
-                          class = "col-lg-6 col-md-12 wellBorder"
+                column(
+                  width = 8,
+                  p(textOutput("imgQ3")),
+                  uiOutput("image3")
                 ),
-                wellPanel(div(style = "text-align:center", p(textOutput("imgQ4"))),
-                          uiOutput("image4", class = "picSize"),
-                          div(style = "position: relative; top:-15px;"),
-                          class = "col-lg-6 col-md-12 wellBorder"
-                )
-              ),
-              wellPanel(
-                fluidRow(
-                  column(
-                    width = 6,
+                column(
+                  width = 4,
+                  wellPanel(
                     selectInput(
                       inputId = "lvl2Q3",
                       label = "Question 3",
                       choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A3")
-                  ),
-                  column(
-                    width = 6,
+                  )
+                )
+              ),
+              br(),
+              fluidRow(
+                column(
+                  width = 8,
+                  p(textOutput("imgQ4")),
+                  uiOutput("image4")
+                ),
+                column(
+                  width = 4,
+                  wellPanel(
                     selectInput(
                       inputId = "lvl2Q4",
                       label = "Question 4",
@@ -461,6 +467,7 @@ ui <- list(
                   )
                 )
               ),
+              br(),
               ##### Buttons ----
               fluidRow(
                 column(
@@ -531,7 +538,7 @@ ui <- list(
               br(),
               fluidRow(
                 wellPanel(
-                  h3("Results:"),
+                  h3("Results"),
                   tags$ul(
                     tags$li(textOutput("level1ScoreResults1")),
                     tags$li(textOutput("level2ScoreResults1"))
@@ -551,6 +558,7 @@ ui <- list(
                 ),
                 column(
                   width = 1,
+                  offset = 1,
                   bsButton(
                     inputId = "btwnToFinish",
                     label = "Finish"
@@ -769,7 +777,7 @@ ui <- list(
               br(),
               fluidRow(
                 wellPanel(
-                  h3("Results:"),
+                  h3("Results"),
                   tags$ul(
                     tags$li(textOutput("level1ScoreResults2")),
                     tags$li(textOutput("level2ScoreResults2")),
@@ -1580,9 +1588,9 @@ server <- function(input, output, session) {
     expr = {
       img(src = subsetBankB()$Variable[1],
           alt = subsetBankB()$Alt[1],
-          width = "95%",
-          height = "95%", 
-          style = "text-align: center")
+          width = "85%",
+          #height = "95%", 
+          style = "text-align: center;")
     }
   )
   
@@ -1595,9 +1603,9 @@ server <- function(input, output, session) {
     expr = {
       img(src = subsetBankB()$Variable[2],
           alt = subsetBankB()$Alt[2],
-          width = "95%",
-          height = "95%", 
-          style = "text-align: center")
+          width = "85%",
+          #height = "95%", 
+          style = "text-align: center;")
     }
   )
   
@@ -1610,9 +1618,9 @@ server <- function(input, output, session) {
     expr = {
       img(src = subsetBankB()$Variable[3],
           alt = subsetBankB()$Alt[3],
-          width = "95%",
-          height = "95%", 
-          style = "text-align: center")
+          width = "85%",
+          #height = "95%", 
+          style = "text-align: center;")
     }
   )
   
@@ -1625,9 +1633,9 @@ server <- function(input, output, session) {
     expr = {
       img(src = subsetBankB()$Variable[4],
           alt = subsetBankB()$Alt[4],
-          width = "95%",
-          height = "95%", 
-          style = "text-align: center")
+          width = "85%",
+          #height = "95%", 
+          style = "text-align: center;")
     }
   )
   
@@ -2485,7 +2493,7 @@ server <- function(input, output, session) {
   )
   output$level3Score <- renderPrint(
     expr = {
-      cat("It took", max(attempts$level3), "questions to complete level 3")
+      cat("It took", max(attempts$level3), "questions to complete level 3.")
     }
   )
   output$level4Score <- renderPrint(
