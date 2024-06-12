@@ -178,7 +178,7 @@ ui <- list(
           tabName = "game",
           tabsetPanel(
             id = "levels",
-            type = "tabs",
+            type = "hidden",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
