@@ -13,10 +13,8 @@ bankA <- read.csv(file = "questionBankA.csv", stringsAsFactors = FALSE)
 bankB <- read.csv(file = "questionBankB.csv", stringsAsFactors = FALSE)
 bankC <- read.csv(file = "questionBankC.csv", stringsAsFactors = FALSE)
 bankD <- read.csv(file = "questionBankD.csv", stringsAsFactors = FALSE)
-level1Choices <- c("Quantitative and Discrete" = "QuanDiscrete", 
-                   "Quantitative and Continuous" = "QuanContinuous",
-                   "Qualitative and Nominal" = "QualNominal",
-                   "Qualitative and Ordinal" = "QualOrdinal")
+level1Choices <- c("Select One", "Quantitative", "Qualitative")
+level1Choicesp2 <- c("Select One", "Discrete", "Continuous", "Nominal", "Ordinal")
 level2Choices <- c("Select One", "Quantitative and Discrete" = "QuanDiscrete", 
                    "Quantitative and Continuous" = "QuanContinuous",
                    "Qualitative and Nominal" = "QualNominal",
@@ -178,7 +176,7 @@ ui <- list(
           tabName = "game",
           tabsetPanel(
             id = "levels",
-            type = "hidden",
+            type = "tabs",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
@@ -191,130 +189,210 @@ ui <- list(
               fluidRow(
                 column(
                   width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q1",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  wellPanel(
+                    selectInput(
+                      inputId = "lvl1Q1",
+                      label = " ",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q1p2",
+                      label = " ",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A1")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A1")),
                 column(
                   width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q2",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  offset = 1,
+                  wellPanel(
+                    selectInput(
+                      inputId = "lvl1Q2",
+                      label = " ",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q2p2",
+                      label = " ",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A2")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A2")),
                 column(
                   width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q3",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  offset = 1,
+                  wellPanel(
+                    selectInput(
+                      inputId = "lvl1Q3",
+                      label = " ",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q3p2",
+                      label = " ",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A3")
                   )
-                ),
-                column(width = 1, uiOutput(outputId = "lvl1A3"))
+                )
               ), 
               fluidRow(
                 column(
                   width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q4",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  wellPanel(
+                    selectInput(
+                      inputId = "lvl1Q4",
+                      label = " ",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q4p2",
+                      label = " ",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A4")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A4")),
                 column(
                   width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q5",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  offset = 1,
+                  wellPanel(
+                    selectInput(
+                      inputId = "lvl1Q5",
+                      label = " ",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q5p2",
+                      label = " ",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A5")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A5")),
                 column(
                   width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q6",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  offset = 1,
+                  wellPanel(
+                    selectInput(
+                      inputId = "lvl1Q6",
+                      label = " ",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q6p2",
+                      label = " ",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A6")
                   )
-                ),
-                column(width = 1, uiOutput(outputId = "lvl1A6"))
+                )
               ),
               fluidRow(
                 column(
                   width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q7",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  wellPanel(
+                    selectInput(
+                      inputId = "lvl1Q7",
+                      label = " ",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q7p2",
+                      label = " ",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A7")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A7")),
                 column(
                   width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q8",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  offset = 1,
+                  wellPanel(
+                    selectInput(
+                      inputId = "lvl1Q8",
+                      label = " ",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q8p2",
+                      label = " ",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A8")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A8")),
                 column(
                   width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q9",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  offset = 1,
+                  wellPanel(
+                    selectInput(
+                      inputId = "lvl1Q9",
+                      label = " ",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q9p2",
+                      label = " ",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A9")
                   )
-                ),
-                column(width = 1, uiOutput(outputId = "lvl1A9"))
+                )
               ),
               fluidRow(
                 column(
                   width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q10",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  wellPanel(
+                    selectInput(
+                      inputId = "lvl1Q10",
+                      label = " ",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q10p2",
+                      label = " ",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A10")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A10")),
                 column(
                   width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q11",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  offset = 1,
+                  wellPanel(
+                    selectInput(
+                      inputId = "lvl1Q11",
+                      label = " ",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q11p2",
+                      label = " ",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A11")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A11")),
                 column(
                   width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q12",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  offset = 1,
+                  wellPanel(
+                    selectInput(
+                      inputId = "lvl1Q12",
+                      label = " ",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q12p2",
+                      label = " ",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A12")
                   )
-                ),
-                column(width = 1, uiOutput(outputId = "lvl1A12"))
+                )
               ),
               br(),
               ##### Buttons ----
@@ -403,7 +481,7 @@ ui <- list(
                   wellPanel(
                     selectInput(
                       inputId = "lvl2Q1",
-                      label = "Question 1",
+                      label = "Graph 1",
                       choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A1")
@@ -422,7 +500,7 @@ ui <- list(
                   wellPanel(
                     selectInput(
                       inputId = "lvl2Q2",
-                      label = "Question 2",
+                      label = "Graph 2",
                       choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A2")
@@ -441,7 +519,7 @@ ui <- list(
                   wellPanel(
                     selectInput(
                       inputId = "lvl2Q3",
-                      label = "Question 3",
+                      label = "Graph 3",
                       choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A3")
@@ -460,7 +538,7 @@ ui <- list(
                   wellPanel(
                     selectInput(
                       inputId = "lvl2Q4",
-                      label = "Question 4",
+                      label = "Graph 4",
                       choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A4")
@@ -1186,7 +1264,7 @@ server <- function(input, output, session) {
   subsetBankA <- reactiveVal(
     value = {
       subsetBankA <- bankA %>%
-        group_by(Type) %>%
+        group_by(Type,Category) %>%
         slice_sample(n = 4)
       
       randOrderL1 <- sample(x = 1:16, size = 16, replace = FALSE)
@@ -1197,7 +1275,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
         inputId = "lvl1Q1",
         label = subsetBankA()$Variable[1]
@@ -1208,7 +1286,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
         inputId = "lvl1Q2",
         label = subsetBankA()$Variable[2]
@@ -1219,7 +1297,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
         inputId = "lvl1Q3",
         label = subsetBankA()$Variable[3]
@@ -1230,7 +1308,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
         inputId = "lvl1Q4",
         label = subsetBankA()$Variable[4]
@@ -1241,7 +1319,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
         inputId = "lvl1Q5",
         label = subsetBankA()$Variable[5]
@@ -1252,7 +1330,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
         inputId = "lvl1Q6",
         label = subsetBankA()$Variable[6]
@@ -1263,7 +1341,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
         inputId = "lvl1Q7",
         label = subsetBankA()$Variable[7]
@@ -1274,7 +1352,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
         inputId = "lvl1Q8",
         label = subsetBankA()$Variable[8]
@@ -1285,7 +1363,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
         inputId = "lvl1Q9",
         label = subsetBankA()$Variable[9]
@@ -1296,7 +1374,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
         inputId = "lvl1Q10",
         label = subsetBankA()$Variable[10]
@@ -1307,7 +1385,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
         inputId = "lvl1Q11",
         label = subsetBankA()$Variable[11]
@@ -1318,7 +1396,7 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
         inputId = "lvl1Q12",
         label = subsetBankA()$Variable[12]
@@ -1332,10 +1410,14 @@ server <- function(input, output, session) {
     handlerExpr = {
       attempts$level1 <- attempts$level1 + 1
       if (!is.null(input$lvl1Q1)) {
-        valid <- any(trimws(input$lvl1Q1) == subsetBankA()$Type[1])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q1) == subsetBankA()$Type[1])
+        validCat <- any(trimws(input$lvl1Q1p2) == subsetBankA()$Category[1])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A1 <- renderIcon(icon = "correct", width = 30)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A1 <- renderIcon(icon = "partial", width = 30)
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A1 <- renderIcon(icon = "incorrect", width = 30)
@@ -1348,10 +1430,14 @@ server <- function(input, output, session) {
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q2)) {
-        valid <- any(trimws(input$lvl1Q2) == subsetBankA()$Type[2])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q2) == subsetBankA()$Type[2])
+        validCat <- any(trimws(input$lvl1Q2p2) == subsetBankA()$Category[2])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A2 <- renderIcon(icon = "correct", width = 30)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A2 <- renderIcon(icon = "partial", width = 30)
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A2 <- renderIcon(icon = "incorrect", width = 30)
@@ -1364,10 +1450,14 @@ server <- function(input, output, session) {
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q3)) {
-        valid <- any(trimws(input$lvl1Q3) == subsetBankA()$Type[3])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q3) == subsetBankA()$Type[3])
+        validCat <- any(trimws(input$lvl1Q3p2) == subsetBankA()$Category[3])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A3 <- renderIcon(icon = "correct", width = 30)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A3 <- renderIcon(icon = "partial", width = 30)
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A3 <- renderIcon(icon = "incorrect", width = 30)
@@ -1380,10 +1470,14 @@ server <- function(input, output, session) {
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q4)) {
-        valid <- any(trimws(input$lvl1Q4) == subsetBankA()$Type[4])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q4) == subsetBankA()$Type[4])
+        validCat <- any(trimws(input$lvl1Q4p2) == subsetBankA()$Category[4])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A4 <- renderIcon(icon = "correct", width = 30)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A4 <- renderIcon(icon = "partial", width = 30)
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A4 <- renderIcon(icon = "incorrect", width = 30)
@@ -1396,10 +1490,14 @@ server <- function(input, output, session) {
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q5)) {
-        valid <- any(trimws(input$lvl1Q5) == subsetBankA()$Type[5])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q5) == subsetBankA()$Type[5])
+        validCat <- any(trimws(input$lvl1Q5p2) == subsetBankA()$Category[5])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A5 <- renderIcon(icon = "correct", width = 30)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A5 <- renderIcon(icon = "partial", width = 30)
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A5 <- renderIcon(icon = "incorrect", width = 30)
@@ -1412,10 +1510,14 @@ server <- function(input, output, session) {
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q6)) {
-        valid <- any(trimws(input$lvl1Q6) == subsetBankA()$Type[6])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q6) == subsetBankA()$Type[6])
+        validCat <- any(trimws(input$lvl1Q6p2) == subsetBankA()$Category[6])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A6 <- renderIcon(icon = "correct", width = 30)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A6 <- renderIcon(icon = "partial", width = 30)
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A6 <- renderIcon(icon = "incorrect", width = 30)
@@ -1428,10 +1530,14 @@ server <- function(input, output, session) {
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q7)) {
-        valid <- any(trimws(input$lvl1Q7) == subsetBankA()$Type[7])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q7) == subsetBankA()$Type[7])
+        validCat <- any(trimws(input$lvl1Q7p2) == subsetBankA()$Category[7])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A7 <- renderIcon(icon = "correct", width = 30)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A7 <- renderIcon(icon = "partial", width = 30)
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A7 <- renderIcon(icon = "incorrect", width = 30)
@@ -1444,10 +1550,14 @@ server <- function(input, output, session) {
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q8)) {
-        valid <- any(trimws(input$lvl1Q8) == subsetBankA()$Type[8])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q8) == subsetBankA()$Type[8])
+        validCat <- any(trimws(input$lvl1Q8p2) == subsetBankA()$Category[8])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A8 <- renderIcon(icon = "correct", width = 30)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A8 <- renderIcon(icon = "partial", width = 30)
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A8 <- renderIcon(icon = "incorrect", width = 30)
@@ -1460,11 +1570,15 @@ server <- function(input, output, session) {
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q9)) {
-        valid <- any(trimws(input$lvl1Q9) == subsetBankA()$Type[9])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q9) == subsetBankA()$Type[9])
+        validCat <- any(trimws(input$lvl1Q9p2) == subsetBankA()$Category[9])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A9 <- renderIcon(icon = "correct", width = 30)
-        } else {
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A9 <- renderIcon(icon = "partial", width = 30)
+        }else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A9 <- renderIcon(icon = "incorrect", width = 30)
         }
@@ -1476,10 +1590,14 @@ server <- function(input, output, session) {
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q10)) {
-        valid <- any(trimws(input$lvl1Q10) == subsetBankA()$Type[10])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q10) == subsetBankA()$Type[10])
+        validCat <- any(trimws(input$lvl1Q10p2) == subsetBankA()$Category[10])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A10 <- renderIcon(icon = "correct", width = 30)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A10 <- renderIcon(icon = "partial", width = 30)
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A10 <- renderIcon(icon = "incorrect", width = 30)
@@ -1492,10 +1610,14 @@ server <- function(input, output, session) {
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q11)) {
-        valid <- any(trimws(input$lvl1Q11) == subsetBankA()$Type[11])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q11) == subsetBankA()$Type[11])
+        validCat <- any(trimws(input$lvl1Q11p2) == subsetBankA()$Category[11])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A11 <- renderIcon(icon = "correct", width = 30)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A11 <- renderIcon(icon = "partial", width = 30)
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A11 <- renderIcon(icon = "incorrect", width = 30)
@@ -1508,10 +1630,14 @@ server <- function(input, output, session) {
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q12)) {
-        valid <- any(trimws(input$lvl1Q12) == subsetBankA()$Type[12])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q12) == subsetBankA()$Type[12])
+        validCat <- any(trimws(input$lvl1Q12p2) == subsetBankA()$Category[12])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A12 <- renderIcon(icon = "correct", width = 30)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 0)
+          output$lvl1A12 <- renderIcon(icon = "partial", width = 30)
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A12 <- renderIcon(icon = "incorrect", width = 30)
