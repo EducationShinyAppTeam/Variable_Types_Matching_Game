@@ -184,54 +184,58 @@ ui <- list(
               titlePanel("Matching Qualitative and Quantitative Variables"),
               p("To move onto the next level, you need to match all 12 variables to their
                 correct variable types and categories. To submit your answers, you must answer all questions. 
+                After submitting, icons will appear to show your results for each question; red means both parts
+                of your answer are wrong, yellow means it is partially correct, and 
+                green means it is entirely correct.
                 If you get any wrong, click 'Retry' to try again."),
               hr(),
               fluidRow(
                 column(
-                  width = 3,
+                  width = 4,
                   wellPanel(
+                    uiOutput("titleQ1"),
                     selectInput(
                       inputId = "lvl1Q1",
-                      label = " ",
+                      label = "Quantitative or Qualitative",
                       choices = level1Choices
                     ),
                     selectInput(
                       inputId = "lvl1Q1p2",
-                      label = " ",
+                      label = "Choose a Category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A1")
                   )
                 ),
                 column(
-                  width = 3,
-                  offset = 1,
+                  width = 4,
                   wellPanel(
+                    uiOutput("titleQ2"),
                     selectInput(
                       inputId = "lvl1Q2",
-                      label = " ",
+                      label = "Quantitative or Qualitative",
                       choices = level1Choices
                     ),
                     selectInput(
                       inputId = "lvl1Q2p2",
-                      label = " ",
+                      label = "Choose a Category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A2")
                   )
                 ),
                 column(
-                  width = 3,
-                  offset = 1,
+                  width = 4,
                   wellPanel(
+                    uiOutput("titleQ3"),
                     selectInput(
                       inputId = "lvl1Q3",
-                      label = " ",
+                      label = "Quantitative or Qualitative",
                       choices = level1Choices
                     ),
                     selectInput(
                       inputId = "lvl1Q3p2",
-                      label = " ",
+                      label = "Choose a Category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A3")
@@ -240,50 +244,51 @@ ui <- list(
               ), 
               fluidRow(
                 column(
-                  width = 3,
+                  width = 4,
                   wellPanel(
+                    uiOutput("titleQ4"),
                     selectInput(
                       inputId = "lvl1Q4",
-                      label = " ",
+                      label = "Quantitative or Qualitative",
                       choices = level1Choices
                     ),
                     selectInput(
                       inputId = "lvl1Q4p2",
-                      label = " ",
+                      label = "Choose a Category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A4")
                   )
                 ),
                 column(
-                  width = 3,
-                  offset = 1,
+                  width = 4,
                   wellPanel(
+                    uiOutput("titleQ5"),
                     selectInput(
                       inputId = "lvl1Q5",
-                      label = " ",
+                      label = "Quantitative or Qualitative",
                       choices = level1Choices
                     ),
                     selectInput(
                       inputId = "lvl1Q5p2",
-                      label = " ",
+                      label = "Choose a Category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A5")
                   )
                 ),
                 column(
-                  width = 3,
-                  offset = 1,
+                  width = 4,
                   wellPanel(
+                    uiOutput("titleQ6"),
                     selectInput(
                       inputId = "lvl1Q6",
-                      label = " ",
+                      label = "Quantitative or Qualitative",
                       choices = level1Choices
                     ),
                     selectInput(
                       inputId = "lvl1Q6p2",
-                      label = " ",
+                      label = "Choose a Category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A6")
@@ -292,50 +297,51 @@ ui <- list(
               ),
               fluidRow(
                 column(
-                  width = 3,
+                  width = 4,
                   wellPanel(
+                    uiOutput("titleQ7"),
                     selectInput(
                       inputId = "lvl1Q7",
-                      label = " ",
+                      label = "Quantitative or Qualitative",
                       choices = level1Choices
                     ),
                     selectInput(
                       inputId = "lvl1Q7p2",
-                      label = " ",
+                      label = "Choose a Category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A7")
                   )
                 ),
                 column(
-                  width = 3,
-                  offset = 1,
+                  width = 4,
                   wellPanel(
+                    uiOutput("titleQ8"),
                     selectInput(
                       inputId = "lvl1Q8",
-                      label = " ",
+                      label = "Quantitative or Qualitative",
                       choices = level1Choices
                     ),
                     selectInput(
                       inputId = "lvl1Q8p2",
-                      label = " ",
+                      label = "Choose a Category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A8")
                   )
                 ),
                 column(
-                  width = 3,
-                  offset = 1,
+                  width = 4,
                   wellPanel(
+                    uiOutput("titleQ9"),
                     selectInput(
                       inputId = "lvl1Q9",
-                      label = " ",
+                      label = "Quantitative or Qualitative",
                       choices = level1Choices
                     ),
                     selectInput(
                       inputId = "lvl1Q9p2",
-                      label = " ",
+                      label = "Choose a Category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A9")
@@ -344,50 +350,51 @@ ui <- list(
               ),
               fluidRow(
                 column(
-                  width = 3,
+                  width = 4,
                   wellPanel(
+                    uiOutput("titleQ10"),
                     selectInput(
                       inputId = "lvl1Q10",
-                      label = " ",
+                      label = "Quantitative or Qualitative",
                       choices = level1Choices
                     ),
                     selectInput(
                       inputId = "lvl1Q10p2",
-                      label = " ",
+                      label = "Choose a Category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A10")
                   )
                 ),
                 column(
-                  width = 3,
-                  offset = 1,
+                  width = 4,
                   wellPanel(
+                    uiOutput("titleQ11"),
                     selectInput(
                       inputId = "lvl1Q11",
-                      label = " ",
+                      label = "Quantitative or Qualitative",
                       choices = level1Choices
                     ),
                     selectInput(
                       inputId = "lvl1Q11p2",
-                      label = " ",
+                      label = "Choose a Category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A11")
                   )
                 ),
                 column(
-                  width = 3,
-                  offset = 1,
+                  width = 4,
                   wellPanel(
+                    uiOutput("titleQ12"),
                     selectInput(
                       inputId = "lvl1Q12",
-                      label = " ",
+                      label = "Quantitative or Qualitative",
                       choices = level1Choices
                     ),
                     selectInput(
                       inputId = "lvl1Q12p2",
-                      label = " ",
+                      label = "Choose a Category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A12")
@@ -401,18 +408,18 @@ ui <- list(
                   width = 1,
                   offset = 5,
                   conditionalPanel(
-                    "(input.lvl1Q1 != '') & (input.lvl1Q1 != null) &
-                    (input.lvl1Q2 != '') & (input.lvl1Q2 != null) &
-                    (input.lvl1Q3 != '') & (input.lvl1Q3 != null) &
-                    (input.lvl1Q4 != '') & (input.lvl1Q4 != null) &
-                    (input.lvl1Q5 != '') & (input.lvl1Q5 != null) &
-                    (input.lvl1Q6 != '') & (input.lvl1Q6 != null) &
-                    (input.lvl1Q7 != '') & (input.lvl1Q7 != null) &
-                    (input.lvl1Q8 != '') & (input.lvl1Q8 != null) &
-                    (input.lvl1Q9 != '') & (input.lvl1Q9 != null) &
-                    (input.lvl1Q10 != '') & (input.lvl1Q10 != null) &
-                    (input.lvl1Q11 != '') & (input.lvl1Q11 != null) &
-                    (input.lvl1Q12 != '') & (input.lvl1Q12 != null)",
+                    "(input.lvl1Q1 != 'Select One') & (input.lvl1Q1p2 != 'Select One') &
+                    (input.lvl1Q2 != 'Select One') & (input.lvl1Q2p2 != 'Select One') &
+                    (input.lvl1Q3 != 'Select One') & (input.lvl1Q3p2 != 'Select One') &
+                    (input.lvl1Q4 != 'Select One') & (input.lvl1Q4p2 != 'Select One') &
+                    (input.lvl1Q5 != 'Select One') & (input.lvl1Q5p2 != 'Select One') &
+                    (input.lvl1Q6 != 'Select One') & (input.lvl1Q6p2 != 'Select One') &
+                    (input.lvl1Q7 != 'Select One') & (input.lvl1Q7p2 != 'Select One') &
+                    (input.lvl1Q8 != 'Select One') & (input.lvl1Q8p2 != 'Select One') &
+                    (input.lvl1Q9 != 'Select One') & (input.lvl1Q9p2 != 'Select One') &
+                    (input.lvl1Q10 != 'Select One') & (input.lvl1Q10p2 != 'Select One') &
+                    (input.lvl1Q11 != 'Select One') & (input.lvl1Q11p2 != 'Select One') &
+                    (input.lvl1Q12 != 'Select One') & (input.lvl1Q12p2 != 'Select One')",
                     bsButton(
                       inputId = "retryA",
                       label = "Retry"
@@ -422,18 +429,18 @@ ui <- list(
                 column(
                   width = 1,
                   conditionalPanel(
-                    "(input.lvl1Q1 != '') & (input.lvl1Q1 != null) &
-                    (input.lvl1Q2 != '') & (input.lvl1Q2 != null) &
-                    (input.lvl1Q3 != '') & (input.lvl1Q3 != null) &
-                    (input.lvl1Q4 != '') & (input.lvl1Q4 != null) &
-                    (input.lvl1Q5 != '') & (input.lvl1Q5 != null) &
-                    (input.lvl1Q6 != '') & (input.lvl1Q6 != null) &
-                    (input.lvl1Q7 != '') & (input.lvl1Q7 != null) &
-                    (input.lvl1Q8 != '') & (input.lvl1Q8 != null) &
-                    (input.lvl1Q9 != '') & (input.lvl1Q9 != null) &
-                    (input.lvl1Q10 != '') & (input.lvl1Q10 != null) &
-                    (input.lvl1Q11 != '') & (input.lvl1Q11 != null) &
-                    (input.lvl1Q12 != '') & (input.lvl1Q12 != null)",
+                    "(input.lvl1Q1 != 'Select One') & (input.lvl1Q1p2 != 'Select One') &
+                    (input.lvl1Q2 != 'Select One') & (input.lvl1Q2p2 != 'Select One') &
+                    (input.lvl1Q3 != 'Select One') & (input.lvl1Q3p2 != 'Select One') &
+                    (input.lvl1Q4 != 'Select One') & (input.lvl1Q4p2 != 'Select One') &
+                    (input.lvl1Q5 != 'Select One') & (input.lvl1Q5p2 != 'Select One') &
+                    (input.lvl1Q6 != 'Select One') & (input.lvl1Q6p2 != 'Select One') &
+                    (input.lvl1Q7 != 'Select One') & (input.lvl1Q7p2 != 'Select One') &
+                    (input.lvl1Q8 != 'Select One') & (input.lvl1Q8p2 != 'Select One') &
+                    (input.lvl1Q9 != 'Select One') & (input.lvl1Q9p2 != 'Select One') &
+                    (input.lvl1Q10 != 'Select One') & (input.lvl1Q10p2 != 'Select One') &
+                    (input.lvl1Q11 != 'Select One') & (input.lvl1Q11p2 != 'Select One') &
+                    (input.lvl1Q12 != 'Select One') & (input.lvl1Q12p2 != 'Select One')",
                     bsButton(
                       inputId = "submitA", 
                       label = "Submit")
@@ -627,8 +634,8 @@ ui <- list(
               br(),
               fluidRow(
                 column(
-                  width = 1, 
-                  offset = 4,
+                  width = 2, 
+                  offset = 2,
                   bsButton(
                     inputId = "prevLvl2",
                     label = "Previous Level"
@@ -644,6 +651,7 @@ ui <- list(
                 ),
                 column(
                   width = 1,
+                  offset = 1,
                   bsButton(
                     inputId = "toLvl3",
                     label = "Next Level"
@@ -1277,8 +1285,7 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateSelectInput(
         session = session,
-        inputId = "lvl1Q1",
-        label = subsetBankA()$Variable[1]
+        inputId = "lvl1Q1"
       )
     }
   )
@@ -1288,8 +1295,7 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateSelectInput(
         session = session,
-        inputId = "lvl1Q2",
-        label = subsetBankA()$Variable[2]
+        inputId = "lvl1Q2"
       )
     }
   )
@@ -1299,8 +1305,7 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateSelectInput(
         session = session,
-        inputId = "lvl1Q3",
-        label = subsetBankA()$Variable[3]
+        inputId = "lvl1Q3"
       )
     }
   )
@@ -1310,8 +1315,7 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateSelectInput(
         session = session,
-        inputId = "lvl1Q4",
-        label = subsetBankA()$Variable[4]
+        inputId = "lvl1Q4"
       )
     }
   )
@@ -1321,8 +1325,7 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateSelectInput(
         session = session,
-        inputId = "lvl1Q5",
-        label = subsetBankA()$Variable[5]
+        inputId = "lvl1Q5"
       )
     }
   )
@@ -1332,8 +1335,7 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateSelectInput(
         session = session,
-        inputId = "lvl1Q6",
-        label = subsetBankA()$Variable[6]
+        inputId = "lvl1Q6"
       )
     }
   )
@@ -1343,8 +1345,7 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateSelectInput(
         session = session,
-        inputId = "lvl1Q7",
-        label = subsetBankA()$Variable[7]
+        inputId = "lvl1Q7"
       )
     }
   )
@@ -1354,8 +1355,7 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateSelectInput(
         session = session,
-        inputId = "lvl1Q8",
-        label = subsetBankA()$Variable[8]
+        inputId = "lvl1Q8"
       )
     }
   )
@@ -1365,8 +1365,7 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateSelectInput(
         session = session,
-        inputId = "lvl1Q9",
-        label = subsetBankA()$Variable[9]
+        inputId = "lvl1Q9"
       )
     }
   )
@@ -1376,8 +1375,7 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateSelectInput(
         session = session,
-        inputId = "lvl1Q10",
-        label = subsetBankA()$Variable[10]
+        inputId = "lvl1Q10"
       )
     }
   )
@@ -1387,8 +1385,7 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateSelectInput(
         session = session,
-        inputId = "lvl1Q11",
-        label = subsetBankA()$Variable[11]
+        inputId = "lvl1Q11"
       )
     }
   )
@@ -1398,9 +1395,80 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateSelectInput(
         session = session,
-        inputId = "lvl1Q12",
-        label = subsetBankA()$Variable[12]
+        inputId = "lvl1Q12"
       )
+    }
+  )
+  
+  output$titleQ1 <- renderUI(
+    expr = {
+      tags$strong(paste("1. ", subsetBankA()$Variable[1]))
+    }
+  )
+  
+  output$titleQ2 <- renderUI(
+    expr = {
+      tags$strong(paste("2. ", subsetBankA()$Variable[2]))
+    }
+  )
+  
+  output$titleQ3 <- renderUI(
+    expr = {
+      tags$strong(paste("3. ", subsetBankA()$Variable[3]))
+    }
+  )
+  
+  output$titleQ4 <- renderUI(
+    expr = {
+      tags$strong(paste("4. ", subsetBankA()$Variable[4]))
+    }
+  )
+  
+  output$titleQ5 <- renderUI(
+    expr = {
+      tags$strong(paste("5. ", subsetBankA()$Variable[5]))
+    }
+  )
+  
+  output$titleQ6 <- renderUI(
+    expr = {
+      tags$strong(paste("6. ", subsetBankA()$Variable[6]))
+    }
+  )
+  
+  output$titleQ7 <- renderUI(
+    expr = {
+      tags$strong(paste("7. ", subsetBankA()$Variable[7]))
+    }
+  )
+  
+  output$titleQ8 <- renderUI(
+    expr = {
+      tags$strong(paste("8. ", subsetBankA()$Variable[8]))
+    }
+  )
+  
+  output$titleQ9 <- renderUI(
+    expr = {
+      tags$strong(paste("9. ", subsetBankA()$Variable[9]))
+    }
+  )
+  
+  output$titleQ10 <- renderUI(
+    expr = {
+      tags$strong(paste("10. ", subsetBankA()$Variable[10]))
+    }
+  )
+  
+  output$titleQ11 <- renderUI(
+    expr = {
+      tags$strong(paste("11. ", subsetBankA()$Variable[11]))
+    }
+  )
+  
+  output$titleQ12 <- renderUI(
+    expr = {
+      tags$strong(paste("12. ", subsetBankA()$Variable[12]))
     }
   )
   

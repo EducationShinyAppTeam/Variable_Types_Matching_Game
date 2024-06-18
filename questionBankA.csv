@@ -32,10 +32,10 @@ Quantitative,Continuous,Var30,Width (inches)
 Quantitative,Continuous,Var31,BMI (Body Mass Index)
 Quantitative,Continuous,Var32,Density
 Quantitative,Continuous,Var33,Volume
-Quantitative,Continuous,Var34,PH value
+Quantitative,Continuous,Var34,pH value
 Quantitative,Continuous,Var35,Age
 Quantitative,Continuous,Var36,Stock quotes for a stock over days
-Qualitative,Nominal,Var37,U.S.State
+Qualitative,Nominal,Var37,U.S. State
 Qualitative,Nominal,Var38,Religion
 Qualitative,Nominal,Var39,Gender
 Qualitative,Nominal,Var40,Race
@@ -49,7 +49,7 @@ Qualitative,Nominal,Var47,Type of movies
 Qualitative,Nominal,Var48,Political Affiliations
 Qualitative,Nominal,Var49,Ethnicity
 Qualitative,Nominal,Var50,Occupation
-Qualitative,Nominal,Var51,Brand of Shoe
+Qualitative,Nominal,Var51,Brand of shoe
 Qualitative,Nominal,Var52,"Month (Jan, Feb, ... , Dec)"
 Qualitative,Nominal,Var53,School Mascot
 Qualitative,Nominal,Var54,Blood Type
