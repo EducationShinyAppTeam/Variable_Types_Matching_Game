@@ -13,9 +13,9 @@ bankA <- read.csv(file = "questionBankA.csv", stringsAsFactors = FALSE)
 bankB <- read.csv(file = "questionBankB.csv", stringsAsFactors = FALSE)
 bankC <- read.csv(file = "questionBankC.csv", stringsAsFactors = FALSE)
 bankD <- read.csv(file = "questionBankD.csv", stringsAsFactors = FALSE)
-level1Choices <- c("Select One", "Quantitative", "Qualitative")
-level1Choicesp2 <- c("Select One", "Discrete", "Continuous", "Nominal", "Ordinal")
-level2Choices <- c("Select One", "Quantitative and Discrete" = "QuanDiscrete", 
+level1Choices <- c("Select one", "Quantitative", "Qualitative")
+level1Choicesp2 <- c("Select one", "Discrete", "Continuous", "Nominal", "Ordinal")
+level2Choices <- c("Select one", "Quantitative and Discrete" = "QuanDiscrete", 
                    "Quantitative and Continuous" = "QuanContinuous",
                    "Qualitative and Nominal" = "QualNominal",
                    "Qualitative and Ordinal" = "QualOrdinal")
@@ -104,7 +104,7 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 6/11/2024 by NP.")
+            div(class = "updated", "Last Update: 6/19/2024 by NP.")
           ),
         ),
         ### Prerequisites ----
@@ -146,7 +146,7 @@ ui <- list(
             title = strong("Explanatory, Response, and Confounding Variables"),
             status = "primary",
             collapsible = TRUE,
-            collapsed = TRUE,
+            collapsed = FALSE,
             width = "100%",          
             tags$ul(
               tags$li("Explanatory/Independent Variables are what might explain 
@@ -176,16 +176,16 @@ ui <- list(
           tabName = "game",
           tabsetPanel(
             id = "levels",
-            type = "tabs",
+            type = "hidden",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
               value = "b",
               titlePanel("Matching Qualitative and Quantitative Variables"),
               p("To move onto the next level, you need to match all 12 variables to their
-                correct variable types and categories. To submit your answers, you must answer all questions. 
+                correct variable types. To submit your answers, you must answer all questions. 
                 After submitting, icons will appear to show your results for each question; red means both parts
-                of your answer are wrong, yellow means it is partially correct, and 
+                of your answer are wrong, yellow means it is partially correct (a hint will appear for partial), and 
                 green means it is entirely correct.
                 If you get any wrong, click 'Retry' to try again."),
               hr(),
@@ -201,7 +201,7 @@ ui <- list(
                     ),
                     selectInput(
                       inputId = "lvl1Q1p2",
-                      label = "Choose a Category",
+                      label = "Choose a category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A1")
@@ -218,7 +218,7 @@ ui <- list(
                     ),
                     selectInput(
                       inputId = "lvl1Q2p2",
-                      label = "Choose a Category",
+                      label = "Choose a category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A2")
@@ -235,7 +235,7 @@ ui <- list(
                     ),
                     selectInput(
                       inputId = "lvl1Q3p2",
-                      label = "Choose a Category",
+                      label = "Choose a category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A3")
@@ -254,7 +254,7 @@ ui <- list(
                     ),
                     selectInput(
                       inputId = "lvl1Q4p2",
-                      label = "Choose a Category",
+                      label = "Choose a category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A4")
@@ -271,7 +271,7 @@ ui <- list(
                     ),
                     selectInput(
                       inputId = "lvl1Q5p2",
-                      label = "Choose a Category",
+                      label = "Choose a category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A5")
@@ -288,7 +288,7 @@ ui <- list(
                     ),
                     selectInput(
                       inputId = "lvl1Q6p2",
-                      label = "Choose a Category",
+                      label = "Choose a category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A6")
@@ -307,7 +307,7 @@ ui <- list(
                     ),
                     selectInput(
                       inputId = "lvl1Q7p2",
-                      label = "Choose a Category",
+                      label = "Choose a category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A7")
@@ -324,7 +324,7 @@ ui <- list(
                     ),
                     selectInput(
                       inputId = "lvl1Q8p2",
-                      label = "Choose a Category",
+                      label = "Choose a category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A8")
@@ -341,7 +341,7 @@ ui <- list(
                     ),
                     selectInput(
                       inputId = "lvl1Q9p2",
-                      label = "Choose a Category",
+                      label = "Choose a category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A9")
@@ -360,7 +360,7 @@ ui <- list(
                     ),
                     selectInput(
                       inputId = "lvl1Q10p2",
-                      label = "Choose a Category",
+                      label = "Choose a category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A10")
@@ -377,7 +377,7 @@ ui <- list(
                     ),
                     selectInput(
                       inputId = "lvl1Q11p2",
-                      label = "Choose a Category",
+                      label = "Choose a category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A11")
@@ -394,7 +394,7 @@ ui <- list(
                     ),
                     selectInput(
                       inputId = "lvl1Q12p2",
-                      label = "Choose a Category",
+                      label = "Choose a category",
                       choices = level1Choicesp2
                     ),
                     uiOutput(outputId = "lvl1A12")
@@ -408,18 +408,18 @@ ui <- list(
                   width = 1,
                   offset = 5,
                   conditionalPanel(
-                    "(input.lvl1Q1 != 'Select One') & (input.lvl1Q1p2 != 'Select One') &
-                    (input.lvl1Q2 != 'Select One') & (input.lvl1Q2p2 != 'Select One') &
-                    (input.lvl1Q3 != 'Select One') & (input.lvl1Q3p2 != 'Select One') &
-                    (input.lvl1Q4 != 'Select One') & (input.lvl1Q4p2 != 'Select One') &
-                    (input.lvl1Q5 != 'Select One') & (input.lvl1Q5p2 != 'Select One') &
-                    (input.lvl1Q6 != 'Select One') & (input.lvl1Q6p2 != 'Select One') &
-                    (input.lvl1Q7 != 'Select One') & (input.lvl1Q7p2 != 'Select One') &
-                    (input.lvl1Q8 != 'Select One') & (input.lvl1Q8p2 != 'Select One') &
-                    (input.lvl1Q9 != 'Select One') & (input.lvl1Q9p2 != 'Select One') &
-                    (input.lvl1Q10 != 'Select One') & (input.lvl1Q10p2 != 'Select One') &
-                    (input.lvl1Q11 != 'Select One') & (input.lvl1Q11p2 != 'Select One') &
-                    (input.lvl1Q12 != 'Select One') & (input.lvl1Q12p2 != 'Select One')",
+                    "(input.lvl1Q1 != 'Select one') & (input.lvl1Q1p2 != 'Select one') &
+                    (input.lvl1Q2 != 'Select one') & (input.lvl1Q2p2 != 'Select one') &
+                    (input.lvl1Q3 != 'Select one') & (input.lvl1Q3p2 != 'Select one') &
+                    (input.lvl1Q4 != 'Select one') & (input.lvl1Q4p2 != 'Select one') &
+                    (input.lvl1Q5 != 'Select one') & (input.lvl1Q5p2 != 'Select one') &
+                    (input.lvl1Q6 != 'Select one') & (input.lvl1Q6p2 != 'Select one') &
+                    (input.lvl1Q7 != 'Select one') & (input.lvl1Q7p2 != 'Select one') &
+                    (input.lvl1Q8 != 'Select one') & (input.lvl1Q8p2 != 'Select one') &
+                    (input.lvl1Q9 != 'Select one') & (input.lvl1Q9p2 != 'Select one') &
+                    (input.lvl1Q10 != 'Select one') & (input.lvl1Q10p2 != 'Select one') &
+                    (input.lvl1Q11 != 'Select one') & (input.lvl1Q11p2 != 'Select one') &
+                    (input.lvl1Q12 != 'Select one') & (input.lvl1Q12p2 != 'Select one')",
                     bsButton(
                       inputId = "retryA",
                       label = "Retry"
@@ -429,18 +429,18 @@ ui <- list(
                 column(
                   width = 1,
                   conditionalPanel(
-                    "(input.lvl1Q1 != 'Select One') & (input.lvl1Q1p2 != 'Select One') &
-                    (input.lvl1Q2 != 'Select One') & (input.lvl1Q2p2 != 'Select One') &
-                    (input.lvl1Q3 != 'Select One') & (input.lvl1Q3p2 != 'Select One') &
-                    (input.lvl1Q4 != 'Select One') & (input.lvl1Q4p2 != 'Select One') &
-                    (input.lvl1Q5 != 'Select One') & (input.lvl1Q5p2 != 'Select One') &
-                    (input.lvl1Q6 != 'Select One') & (input.lvl1Q6p2 != 'Select One') &
-                    (input.lvl1Q7 != 'Select One') & (input.lvl1Q7p2 != 'Select One') &
-                    (input.lvl1Q8 != 'Select One') & (input.lvl1Q8p2 != 'Select One') &
-                    (input.lvl1Q9 != 'Select One') & (input.lvl1Q9p2 != 'Select One') &
-                    (input.lvl1Q10 != 'Select One') & (input.lvl1Q10p2 != 'Select One') &
-                    (input.lvl1Q11 != 'Select One') & (input.lvl1Q11p2 != 'Select One') &
-                    (input.lvl1Q12 != 'Select One') & (input.lvl1Q12p2 != 'Select One')",
+                    "(input.lvl1Q1 != 'Select one') & (input.lvl1Q1p2 != 'Select one') &
+                    (input.lvl1Q2 != 'Select one') & (input.lvl1Q2p2 != 'Select one') &
+                    (input.lvl1Q3 != 'Select one') & (input.lvl1Q3p2 != 'Select one') &
+                    (input.lvl1Q4 != 'Select one') & (input.lvl1Q4p2 != 'Select one') &
+                    (input.lvl1Q5 != 'Select one') & (input.lvl1Q5p2 != 'Select one') &
+                    (input.lvl1Q6 != 'Select one') & (input.lvl1Q6p2 != 'Select one') &
+                    (input.lvl1Q7 != 'Select one') & (input.lvl1Q7p2 != 'Select one') &
+                    (input.lvl1Q8 != 'Select one') & (input.lvl1Q8p2 != 'Select one') &
+                    (input.lvl1Q9 != 'Select one') & (input.lvl1Q9p2 != 'Select one') &
+                    (input.lvl1Q10 != 'Select one') & (input.lvl1Q10p2 != 'Select one') &
+                    (input.lvl1Q11 != 'Select one') & (input.lvl1Q11p2 != 'Select one') &
+                    (input.lvl1Q12 != 'Select one') & (input.lvl1Q12p2 != 'Select one')",
                     bsButton(
                       inputId = "submitA", 
                       label = "Submit")
@@ -1473,6 +1473,45 @@ server <- function(input, output, session) {
   )
   
   ### Validation ----
+  
+  # ordinalWrong_nominal would refer to a question where user put ordinal but nominal is correct
+  ordinalWrong_nominal <- ("Ordinal variables require a specific precedence/ranking between values.")
+  nominalWrong_ordinal <- ("Does this variable have an order within the data values?")
+  discreteWrong_continuous <- ("Are Discrete variables measured or physically countable in steps?")
+  continuousWrong_discrete <- ("Continuous variables can take on any decimal value within an interval.")
+  contdiscWrong_ordnom <- ("Note, Discrete and Continuous variables rely on numerical data values.")
+  ordnomWrong_contdisc <- ("Note, Ordinal and Nominal variables rely on categorical data values.")
+  qualWrong_quan <- ("Remember, a Qualitative variable has categorical data values.")
+  quanWrong_qual <- ("Remember, Quantitative variables have numerical data values.")
+  
+  lvl1Q1p2value <- reactiveVal(NULL)
+  lvl1Q2p2value <- reactiveVal(NULL)
+  lvl1Q3p2value <- reactiveVal(NULL)
+  lvl1Q4p2value <- reactiveVal(NULL)
+  lvl1Q5p2value <- reactiveVal(NULL)
+  lvl1Q6p2value <- reactiveVal(NULL)
+  lvl1Q7p2value <- reactiveVal(NULL)
+  lvl1Q8p2value <- reactiveVal(NULL)
+  lvl1Q9p2value <- reactiveVal(NULL)
+  lvl1Q10p2value <- reactiveVal(NULL)
+  lvl1Q11p2value <- reactiveVal(NULL)
+  lvl1Q12p2value <- reactiveVal(NULL)
+  
+  observeEvent(input$submitA, {
+    lvl1Q1p2value(trimws(input$lvl1Q1p2))
+    lvl1Q2p2value(trimws(input$lvl1Q2p2))
+    lvl1Q3p2value(trimws(input$lvl1Q3p2))
+    lvl1Q4p2value(trimws(input$lvl1Q4p2))
+    lvl1Q5p2value(trimws(input$lvl1Q5p2))
+    lvl1Q6p2value(trimws(input$lvl1Q6p2))
+    lvl1Q7p2value(trimws(input$lvl1Q7p2))
+    lvl1Q8p2value(trimws(input$lvl1Q8p2))
+    lvl1Q9p2value(trimws(input$lvl1Q9p2))
+    lvl1Q10p2value(trimws(input$lvl1Q10p2))
+    lvl1Q11p2value(trimws(input$lvl1Q11p2))
+    lvl1Q12p2value(trimws(input$lvl1Q12p2))
+    })
+  
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
@@ -1485,7 +1524,38 @@ server <- function(input, output, session) {
           output$lvl1A1 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A1 <- renderIcon(icon = "partial", width = 30)
+          output$lvl1A1 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 30)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[1] == "Quantitative" & validType & (lvl1Q1p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[1] == "Quantitative" & validType & (lvl1Q1p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[1] == "Qualitative" & validType & (lvl1Q1p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[1] == "Qualitative" & validType & (lvl1Q1p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[1] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[1] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[1] == "Quantitative" & validType & (lvl1Q1p2value() == 'Nominal' | lvl1Q1p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[1] == "Qualitative" & validType & (lvl1Q1p2value() == 'Discrete' | lvl1Q1p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A1 <- renderIcon(icon = "incorrect", width = 30)
@@ -1505,7 +1575,38 @@ server <- function(input, output, session) {
           output$lvl1A2 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A2 <- renderIcon(icon = "partial", width = 30)
+          output$lvl1A2 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 30)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[2] == "Quantitative" & validType & (lvl1Q2p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[2] == "Quantitative" & validType & (lvl1Q2p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[2] == "Qualitative" & validType & (lvl1Q2p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[2] == "Qualitative" & validType & (lvl1Q2p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[2] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[2] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[2] == "Quantitative" & validType & (lvl1Q2p2value() == 'Nominal' | lvl1Q2p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[2] == "Qualitative" & validType & (lvl1Q2p2value() == 'Discrete' | lvl1Q2p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A2 <- renderIcon(icon = "incorrect", width = 30)
@@ -1525,7 +1626,38 @@ server <- function(input, output, session) {
           output$lvl1A3 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A3 <- renderIcon(icon = "partial", width = 30)
+          output$lvl1A3 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 30)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[3] == "Quantitative" & validType & (lvl1Q3p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[3] == "Quantitative" & validType & (lvl1Q3p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[3] == "Qualitative" & validType & (lvl1Q3p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[3] == "Qualitative" & validType & (lvl1Q3p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[3] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[3] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[3] == "Quantitative" & validType & (lvl1Q3p2value() == 'Nominal' | lvl1Q3p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[3] == "Qualitative" & validType & (lvl1Q3p2value() == 'Discrete' | lvl1Q3p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A3 <- renderIcon(icon = "incorrect", width = 30)
@@ -1545,7 +1677,38 @@ server <- function(input, output, session) {
           output$lvl1A4 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A4 <- renderIcon(icon = "partial", width = 30)
+          output$lvl1A4 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 30)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[4] == "Quantitative" & validType & (lvl1Q4p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[4] == "Quantitative" & validType & (lvl1Q4p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[4] == "Qualitative" & validType & (lvl1Q4p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[4] == "Qualitative" & validType & (lvl1Q4p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[4] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[4] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[4] == "Quantitative" & validType & (lvl1Q4p2value() == 'Nominal' | lvl1Q4p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[4] == "Qualitative" & validType & (lvl1Q4p2value() == 'Discrete' | lvl1Q4p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A4 <- renderIcon(icon = "incorrect", width = 30)
@@ -1565,7 +1728,38 @@ server <- function(input, output, session) {
           output$lvl1A5 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A5 <- renderIcon(icon = "partial", width = 30)
+          output$lvl1A5 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 30)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[5] == "Quantitative" & validType & (lvl1Q5p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[5] == "Quantitative" & validType & (lvl1Q5p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[5] == "Qualitative" & validType & (lvl1Q5p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[5] == "Qualitative" & validType & (lvl1Q5p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[5] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[5] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[5] == "Quantitative" & validType & (lvl1Q5p2value() == 'Nominal' | lvl1Q5p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[5] == "Qualitative" & validType & (lvl1Q5p2value() == 'Discrete' | lvl1Q5p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A5 <- renderIcon(icon = "incorrect", width = 30)
@@ -1585,7 +1779,38 @@ server <- function(input, output, session) {
           output$lvl1A6 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A6 <- renderIcon(icon = "partial", width = 30)
+          output$lvl1A6 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 30)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[6] == "Quantitative" & validType & (lvl1Q6p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[6] == "Quantitative" & validType & (lvl1Q6p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[6] == "Qualitative" & validType & (lvl1Q6p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[6] == "Qualitative" & validType & (lvl1Q6p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[6] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[6] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[6] == "Quantitative" & validType & (lvl1Q6p2value() == 'Nominal' | lvl1Q6p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[6] == "Qualitative" & validType & (lvl1Q6p2value() == 'Discrete' | lvl1Q6p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A6 <- renderIcon(icon = "incorrect", width = 30)
@@ -1605,7 +1830,38 @@ server <- function(input, output, session) {
           output$lvl1A7 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A7 <- renderIcon(icon = "partial", width = 30)
+          output$lvl1A7 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 30)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[7] == "Quantitative" & validType & (lvl1Q7p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[7] == "Quantitative" & validType & (lvl1Q7p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[7] == "Qualitative" & validType & (lvl1Q7p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[7] == "Qualitative" & validType & (lvl1Q7p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[7] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[7] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[7] == "Quantitative" & validType & (lvl1Q7p2value() == 'Nominal' | lvl1Q7p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[7] == "Qualitative" & validType & (lvl1Q7p2value() == 'Discrete' | lvl1Q7p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A7 <- renderIcon(icon = "incorrect", width = 30)
@@ -1625,7 +1881,38 @@ server <- function(input, output, session) {
           output$lvl1A8 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A8 <- renderIcon(icon = "partial", width = 30)
+          output$lvl1A8 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 30)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[8] == "Quantitative" & validType & (lvl1Q8p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[8] == "Quantitative" & validType & (lvl1Q8p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[8] == "Qualitative" & validType & (lvl1Q8p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[8] == "Qualitative" & validType & (lvl1Q8p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[8] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[8] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[8] == "Quantitative" & validType & (lvl1Q8p2value() == 'Nominal' | lvl1Q8p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[8] == "Qualitative" & validType & (lvl1Q8p2value() == 'Discrete' | lvl1Q8p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A8 <- renderIcon(icon = "incorrect", width = 30)
@@ -1645,7 +1932,38 @@ server <- function(input, output, session) {
           output$lvl1A9 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A9 <- renderIcon(icon = "partial", width = 30)
+          output$lvl1A9 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 30)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[9] == "Quantitative" & validType & (lvl1Q9p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[9] == "Quantitative" & validType & (lvl1Q9p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[9] == "Qualitative" & validType & (lvl1Q9p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[9] == "Qualitative" & validType & (lvl1Q9p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[9] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[9] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[9] == "Quantitative" & validType & (lvl1Q9p2value() == 'Nominal' | lvl1Q9p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[9] == "Qualitative" & validType & (lvl1Q9p2value() == 'Discrete' | lvl1Q9p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         }else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A9 <- renderIcon(icon = "incorrect", width = 30)
@@ -1665,7 +1983,38 @@ server <- function(input, output, session) {
           output$lvl1A10 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A10 <- renderIcon(icon = "partial", width = 30)
+          output$lvl1A10 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 30)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[10] == "Quantitative" & validType & (lvl1Q10p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[10] == "Quantitative" & validType & (lvl1Q10p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[10] == "Qualitative" & validType & (lvl1Q10p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[10] == "Qualitative" & validType & (lvl1Q10p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[10] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[10] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[10] == "Quantitative" & validType & (lvl1Q10p2value() == 'Nominal' | lvl1Q10p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[10] == "Qualitative" & validType & (lvl1Q10p2value() == 'Discrete' | lvl1Q10p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A10 <- renderIcon(icon = "incorrect", width = 30)
@@ -1685,7 +2034,38 @@ server <- function(input, output, session) {
           output$lvl1A11 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A11 <- renderIcon(icon = "partial", width = 30)
+          output$lvl1A11 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 30)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[11] == "Quantitative" & validType & (lvl1Q11p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[11] == "Quantitative" & validType & (lvl1Q11p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[11] == "Qualitative" & validType & (lvl1Q11p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[11] == "Qualitative" & validType & (lvl1Q11p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[11] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[11] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[11] == "Quantitative" & validType & (lvl1Q11p2value() == 'Nominal' | lvl1Q11p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[11] == "Qualitative" & validType & (lvl1Q11p2value() == 'Discrete' | lvl1Q11p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A11 <- renderIcon(icon = "incorrect", width = 30)
@@ -1705,7 +2085,38 @@ server <- function(input, output, session) {
           output$lvl1A12 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A12 <- renderIcon(icon = "partial", width = 30)
+          output$lvl1A12 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 30)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[12] == "Quantitative" & validType & (lvl1Q12p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[12] == "Quantitative" & validType & (lvl1Q12p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[12] == "Qualitative" & validType & (lvl1Q12p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[12] == "Qualitative" & validType & (lvl1Q12p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[12] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[12] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[12] == "Quantitative" & validType & (lvl1Q12p2value() == 'Nominal' | lvl1Q12p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[12] == "Qualitative" & validType & (lvl1Q12p2value() == 'Discrete' | lvl1Q12p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
           output$lvl1A12 <- renderIcon(icon = "incorrect", width = 30)
@@ -1713,6 +2124,7 @@ server <- function(input, output, session) {
       }
     }
   )
+  
   
   ### Scoring and Update Buttons ----
   observeEvent(

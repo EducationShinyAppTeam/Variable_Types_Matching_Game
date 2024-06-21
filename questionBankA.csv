@@ -34,7 +34,7 @@ Quantitative,Continuous,Var32,Density
 Quantitative,Continuous,Var33,Volume
 Quantitative,Continuous,Var34,pH value
 Quantitative,Continuous,Var35,Age
-Quantitative,Continuous,Var36,Stock quotes for a stock over days
+Quantitative,Continuous,Var36,Stock price over several months
 Qualitative,Nominal,Var37,U.S. State
 Qualitative,Nominal,Var38,Religion
 Qualitative,Nominal,Var39,Gender
