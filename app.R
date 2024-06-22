@@ -104,7 +104,7 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 6/19/2024 by NP.")
+            div(class = "updated", "Last Update: 6/22/2024 by NP.")
           ),
         ),
         ### Prerequisites ----
@@ -1475,10 +1475,10 @@ server <- function(input, output, session) {
   ### Validation ----
   
   # ordinalWrong_nominal would refer to a question where user put ordinal but nominal is correct
-  ordinalWrong_nominal <- ("Ordinal variables require a specific precedence/ranking between values.")
-  nominalWrong_ordinal <- ("Does this variable have an order within the data values?")
+  ordinalWrong_nominal <- ("Ordinal variables require a specific ranking between values.")
+  nominalWrong_ordinal <- ("Does this variable have an order/hierarchy within the data values?")
   discreteWrong_continuous <- ("Are Discrete variables measured or physically countable in steps?")
-  continuousWrong_discrete <- ("Continuous variables can take on any decimal value within an interval.")
+  continuousWrong_discrete <- ("Continuous variables can take on any decimal value within an interval, is that true here?")
   contdiscWrong_ordnom <- ("Note, Discrete and Continuous variables rely on numerical data values.")
   ordnomWrong_contdisc <- ("Note, Ordinal and Nominal variables rely on categorical data values.")
   qualWrong_quan <- ("Remember, a Qualitative variable has categorical data values.")
