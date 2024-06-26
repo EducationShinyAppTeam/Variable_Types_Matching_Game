@@ -3,7 +3,7 @@ Quantitative,Discrete,Var1,Number of emails
 Quantitative,Discrete,Var2,Number of tires on a vehicle
 Quantitative,Discrete,Var3,House's number of bedrooms
 Quantitative,Discrete,Var4,Number of members in a family
-Quantitative,Discrete,Var5,Number of heads in 5 tosses
+Quantitative,Discrete,Var5,Number of heads in 5 coin tosses
 Quantitative,Discrete,Var6,Sleep time to nearest hour
 Quantitative,Discrete,Var7,Height rounded to the nearest inch
 Quantitative,Discrete,Var8,Result of rolling a die
@@ -23,7 +23,7 @@ Quantitative,Continuous,Var21,Distance to birth place
 Quantitative,Continuous,Var22,Average life span
 Quantitative,Continuous,Var23,Speed (mph)
 Quantitative,Continuous,Var24,Annual income
-Quantitative,Continuous,Var25,GDP
+Quantitative,Continuous,Var25,Inflation Rate
 Quantitative,Continuous,Var26,Mortality Rate
 Quantitative,Continuous,Var27,Humidity
 Quantitative,Continuous,Var28,Price
@@ -45,7 +45,7 @@ Qualitative,Nominal,Var43,Nationality
 Qualitative,Nominal,Var44,Marital Status
 Qualitative,Nominal,Var45,TV Channels
 Qualitative,Nominal,Var46,Genre of music
-Qualitative,Nominal,Var47,Type of movies
+Qualitative,Nominal,Var47,Types of movies
 Qualitative,Nominal,Var48,Political Affiliations
 Qualitative,Nominal,Var49,Ethnicity
 Qualitative,Nominal,Var50,Occupation

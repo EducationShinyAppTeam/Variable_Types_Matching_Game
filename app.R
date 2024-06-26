@@ -104,7 +104,7 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 6/22/2024 by NP.")
+            div(class = "updated", "Last Update: 6/26/2024 by NP.")
           ),
         ),
         ### Prerequisites ----
@@ -567,10 +567,10 @@ ui <- list(
                   width = 1,
                   offset = 3,
                   conditionalPanel(
-                    "(input.lvl2Q1!='Select One') & (input.lvl2Q1!= null) &
-                    (input.lvl2Q2!='Select One') & (input.lvl2Q2!=null) &
-                    (input.lvl2Q3!='Select One') & (input.lvl2Q3!=null) &
-                    (input.lvl2Q4!='Select One') & (input.lvl2Q4!=null)",
+                    "(input.lvl2Q1!='Select one') & (input.lvl2Q1!= null) &
+                    (input.lvl2Q2!='Select one') & (input.lvl2Q2!=null) &
+                    (input.lvl2Q3!='Select one') & (input.lvl2Q3!=null) &
+                    (input.lvl2Q4!='Select one') & (input.lvl2Q4!=null)",
                     bsButton(
                       inputId = "retryB",
                       label = "Retry"
@@ -580,10 +580,10 @@ ui <- list(
                 column(
                   width = 1,
                   conditionalPanel(
-                    "(input.lvl2Q1!='Select One') & (input.lvl2Q1!= null) &
-                    (input.lvl2Q2!='Select One') & (input.lvl2Q2!=null) &
-                    (input.lvl2Q3!='Select One') & (input.lvl2Q3!=null) &
-                    (input.lvl2Q4!='Select One') & (input.lvl2Q4!=null)",
+                    "(input.lvl2Q1!='Select one') & (input.lvl2Q1!= null) &
+                    (input.lvl2Q2!='Select one') & (input.lvl2Q2!=null) &
+                    (input.lvl2Q3!='Select one') & (input.lvl2Q3!=null) &
+                    (input.lvl2Q4!='Select one') & (input.lvl2Q4!=null)",
                     bsButton(
                       inputId = "submitB", 
                       label = "Submit")
@@ -701,7 +701,7 @@ ui <- list(
               ),
               br(),
               fluidRow(
-                column(width = 4, offset = 3, textOutput("NumTries"))
+                column(width = 4, offset = 1, textOutput("NumTries"))
               ),
               br(),
               ##### Buttons ----
@@ -763,15 +763,15 @@ ui <- list(
                   depending on the context given. You must get all three answers 
                   correct to earn 1 point and get 5 points before moving to the 
                   next level. Once you have made your choices hit 'Submit', then 
-                  click 'New Question' for the next question. You have 8 attempts, 
-                  if all 8 attempts are used, follow directions and retry the level."),
+                  click 'New Question' for the next question. You have 7 attempts, 
+                  if all 7 attempts are used, follow directions and retry the level."),
               hr(),
               wellPanel(
                 fluidRow(uiOutput("questionD"))
               ),
               fluidRow(
                 column(
-                  width = 5,
+                  width = 4,
                   offset = 1,
                   selectInput(
                     inputId = "resp", 
@@ -791,7 +791,9 @@ ui <- list(
                       "None of the above")
                   ), 
                   uiOutput("markd3")
-                ),
+                )
+              ),
+              fluidRow(
                 column(
                   width = 4,
                   offset = 1,
@@ -804,8 +806,9 @@ ui <- list(
                   uiOutput("markd1")
                 )
               ),
+              br(),
               fluidRow(
-                column(width = 3, offset = 3, textOutput("NumTriesLvl4"))
+                column(width = 3, offset = 1, textOutput("NumTriesLvl4"))
               ),
               br(),
               ##### Buttons ----
@@ -1142,7 +1145,7 @@ server <- function(input, output, session) {
       shinyalert(
         title = "Oops!",
         text = "You have used up all 16 tries. Please click 'Previous Level' then
-        click 'Next Level' to re-enter this level to try again",
+        click 'Next Level' to re-enter this level to try again.",
         type = "error")
     }
   })
@@ -1161,8 +1164,8 @@ server <- function(input, output, session) {
       )
       shinyalert(
         title = "Oops!",
-        text = "You have used up all 8 tries. Please click 'Previous Level'
-        then click 'Next Level' to re-enter this level to try again", 
+        text = "You have used up all 7 tries. Please click 'Previous Level'
+        then click 'Next Level' to re-enter this level to try again.", 
         type = "error")
     }
   })
@@ -1473,17 +1476,6 @@ server <- function(input, output, session) {
   )
   
   ### Validation ----
-  
-  # ordinalWrong_nominal would refer to a question where user put ordinal but nominal is correct
-  ordinalWrong_nominal <- ("Ordinal variables require a specific ranking between values.")
-  nominalWrong_ordinal <- ("Does this variable have an order/hierarchy within the data values?")
-  discreteWrong_continuous <- ("Are Discrete variables measured or physically countable in steps?")
-  continuousWrong_discrete <- ("Continuous variables can take on any decimal value within an interval, is that true here?")
-  contdiscWrong_ordnom <- ("Note, Discrete and Continuous variables rely on numerical data values.")
-  ordnomWrong_contdisc <- ("Note, Ordinal and Nominal variables rely on categorical data values.")
-  qualWrong_quan <- ("Remember, a Qualitative variable has categorical data values.")
-  quanWrong_qual <- ("Remember, Quantitative variables have numerical data values.")
-  
   lvl1Q1p2value <- reactiveVal(NULL)
   lvl1Q2p2value <- reactiveVal(NULL)
   lvl1Q3p2value <- reactiveVal(NULL)
@@ -1497,20 +1489,31 @@ server <- function(input, output, session) {
   lvl1Q11p2value <- reactiveVal(NULL)
   lvl1Q12p2value <- reactiveVal(NULL)
   
-  observeEvent(input$submitA, {
-    lvl1Q1p2value(trimws(input$lvl1Q1p2))
-    lvl1Q2p2value(trimws(input$lvl1Q2p2))
-    lvl1Q3p2value(trimws(input$lvl1Q3p2))
-    lvl1Q4p2value(trimws(input$lvl1Q4p2))
-    lvl1Q5p2value(trimws(input$lvl1Q5p2))
-    lvl1Q6p2value(trimws(input$lvl1Q6p2))
-    lvl1Q7p2value(trimws(input$lvl1Q7p2))
-    lvl1Q8p2value(trimws(input$lvl1Q8p2))
-    lvl1Q9p2value(trimws(input$lvl1Q9p2))
-    lvl1Q10p2value(trimws(input$lvl1Q10p2))
-    lvl1Q11p2value(trimws(input$lvl1Q11p2))
-    lvl1Q12p2value(trimws(input$lvl1Q12p2))
+  observeEvent(eventExpr = input$submitA, 
+               handlerExpr = {
+                 lvl1Q1p2value(trimws(input$lvl1Q1p2))
+                 lvl1Q2p2value(trimws(input$lvl1Q2p2))
+                 lvl1Q3p2value(trimws(input$lvl1Q3p2))
+                 lvl1Q4p2value(trimws(input$lvl1Q4p2))
+                 lvl1Q5p2value(trimws(input$lvl1Q5p2))
+                 lvl1Q6p2value(trimws(input$lvl1Q6p2))
+                 lvl1Q7p2value(trimws(input$lvl1Q7p2))
+                 lvl1Q8p2value(trimws(input$lvl1Q8p2))
+                 lvl1Q9p2value(trimws(input$lvl1Q9p2))
+                 lvl1Q10p2value(trimws(input$lvl1Q10p2))
+                 lvl1Q11p2value(trimws(input$lvl1Q11p2))
+                 lvl1Q12p2value(trimws(input$lvl1Q12p2))
     })
+  
+  # ordinalWrong_nominal would refer to a question where user put ordinal but nominal is correct
+  ordinalWrong_nominal <- ("Ordinal variables require a specific ranking between values.")
+  nominalWrong_ordinal <- ("Does this variable have an order/hierarchy within the data values?")
+  discreteWrong_continuous <- ("Can Discrete variables be any decimal value within an interval or are they counted in steps?")
+  continuousWrong_discrete <- ("Continuous variables can take on any decimal value within an interval, is that the case here?")
+  contdiscWrong_ordnom <- ("Note, Discrete and Continuous variables rely on numerical data values.")
+  ordnomWrong_contdisc <- ("Note, Ordinal and Nominal variables rely on categorical data values.")
+  qualWrong_quan <- ("Remember, a Qualitative variable has categorical data values.")
+  quanWrong_qual <- ("Remember, Quantitative variables have numerical data values.")
   
   observeEvent(
     eventExpr = input$submitA,
@@ -2706,9 +2709,9 @@ server <- function(input, output, session) {
     }
   )
   ## Level 4 ----
-  index2 <- reactiveValues(index2 = 10)
+  index2 <- reactiveValues(index2 = 9)
   
-  index_listD <- reactiveValues(listD = sample(1:9, 9, replace = FALSE))
+  index_listD <- reactiveValues(listD = sample(1:8, 8, replace = FALSE))
   
   observeEvent(
     eventExpr = input$prevLvl3, 
@@ -2717,10 +2720,10 @@ server <- function(input, output, session) {
         session = session, 
         inputId = "levels", 
         selected = "e")
-      if (length(index_listD$listD) < 9) {
-        index_listD$listD <- c(index_listD$listD, sample(1:9, 9, replace = FALSE)) 
+      if (length(index_listD$listD) < 8) {
+        index_listD$listD <- c(index_listD$listD, sample(1:8, 8, replace = FALSE)) 
       }
-      index_listD$listD <- index_listD$listD[1:9]
+      index_listD$listD <- index_listD$listD[1:8]
     })
   
   ### Labels ----
