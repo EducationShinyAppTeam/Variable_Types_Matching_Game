@@ -63,11 +63,10 @@ ui <- list(
           ### Overview ----
           tabName = "overview",
           h1("Variable Types Matching Game"),
-          p("Identify variable types by nature of measurement (quantitative (numeric) 
-            discrete, quantitative continuous, qualitative (categorical)
-            nominal, and qualitative ordinal variables) on the first two levels.
-            Then, identify variable types by role in the analysis (explanatory, 
-            response, and confounding) for the last two levels."),
+          p("Identify variable types by nature of measurement (quantitative 
+            discrete, quantitative continuous, qualitative nominal, and 
+            qualitative ordinal). Then, identify variable types 
+            by role in the analysis (explanatory, response, and confounding)."),
           h2("Instructions"),
           tags$ol(
             tags$li("View prerequisites as needed on the 'Prerequisites' tab."),
