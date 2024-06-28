@@ -175,7 +175,7 @@ ui <- list(
           tabName = "game",
           tabsetPanel(
             id = "levels",
-            type = "hidden",
+            type = "tabs",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
@@ -1525,7 +1525,7 @@ server <- function(input, output, session) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A1 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
-          scoreLevelA(scoreLevelA() + 0)
+          scoreLevelA(scoreLevelA() + 1)
           output$lvl1A1 <- renderUI({
             fluidRow(
               column(
@@ -1576,7 +1576,7 @@ server <- function(input, output, session) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A2 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
-          scoreLevelA(scoreLevelA() + 0)
+          scoreLevelA(scoreLevelA() + 1)
           output$lvl1A2 <- renderUI({
             fluidRow(
               column(
@@ -1627,7 +1627,7 @@ server <- function(input, output, session) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A3 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
-          scoreLevelA(scoreLevelA() + 0)
+          scoreLevelA(scoreLevelA() + 1)
           output$lvl1A3 <- renderUI({
             fluidRow(
               column(
@@ -1678,7 +1678,7 @@ server <- function(input, output, session) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A4 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
-          scoreLevelA(scoreLevelA() + 0)
+          scoreLevelA(scoreLevelA() + 1)
           output$lvl1A4 <- renderUI({
             fluidRow(
               column(
@@ -1729,7 +1729,7 @@ server <- function(input, output, session) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A5 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
-          scoreLevelA(scoreLevelA() + 0)
+          scoreLevelA(scoreLevelA() + 1)
           output$lvl1A5 <- renderUI({
             fluidRow(
               column(
@@ -1780,7 +1780,7 @@ server <- function(input, output, session) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A6 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
-          scoreLevelA(scoreLevelA() + 0)
+          scoreLevelA(scoreLevelA() + 1)
           output$lvl1A6 <- renderUI({
             fluidRow(
               column(
@@ -1831,7 +1831,7 @@ server <- function(input, output, session) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A7 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
-          scoreLevelA(scoreLevelA() + 0)
+          scoreLevelA(scoreLevelA() + 1)
           output$lvl1A7 <- renderUI({
             fluidRow(
               column(
@@ -1882,7 +1882,7 @@ server <- function(input, output, session) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A8 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
-          scoreLevelA(scoreLevelA() + 0)
+          scoreLevelA(scoreLevelA() + 1)
           output$lvl1A8 <- renderUI({
             fluidRow(
               column(
@@ -1933,7 +1933,7 @@ server <- function(input, output, session) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A9 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
-          scoreLevelA(scoreLevelA() + 0)
+          scoreLevelA(scoreLevelA() + 1)
           output$lvl1A9 <- renderUI({
             fluidRow(
               column(
@@ -1984,7 +1984,7 @@ server <- function(input, output, session) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A10 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
-          scoreLevelA(scoreLevelA() + 0)
+          scoreLevelA(scoreLevelA() + 1)
           output$lvl1A10 <- renderUI({
             fluidRow(
               column(
@@ -2035,7 +2035,7 @@ server <- function(input, output, session) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A11 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
-          scoreLevelA(scoreLevelA() + 0)
+          scoreLevelA(scoreLevelA() + 1)
           output$lvl1A11 <- renderUI({
             fluidRow(
               column(
@@ -2086,7 +2086,7 @@ server <- function(input, output, session) {
           scoreLevelA(scoreLevelA() + 2.5)
           output$lvl1A12 <- renderIcon(icon = "correct", width = 30)
         } else if (validType | validCat) {
-          scoreLevelA(scoreLevelA() + 0)
+          scoreLevelA(scoreLevelA() + 1)
           output$lvl1A12 <- renderUI({
             fluidRow(
               column(
