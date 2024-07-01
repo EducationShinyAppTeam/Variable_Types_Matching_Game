@@ -74,8 +74,8 @@ ui <- list(
             tags$li("Submit your answer only after finishing all of the questions."),
             tags$li("You may go to the next level once all of your answers are correct 
                     for levels 1 and 2."),
-            tags$li("For levels 3 and 4, you must get 5 correct 
-                    problems on each level to move on.")
+            tags$li("For levels 3 and 4, you must get five correct 
+                    answers on each level to move on.")
           ),
           div(
             style = "text-align: center;",
@@ -119,13 +119,13 @@ ui <- list(
             collapsed = FALSE,
             width = "100%",
             tags$ul(
-              tags$li("Nominal Variables are qualitative (categorical) variables 
+              tags$li("Nominal variables are qualitative (categorical) variables 
                       that do not require a specific order or rank."),
-              tags$li("Ordinal Variables are qualitative variables that require 
+              tags$li("Ordinal variables are qualitative variables that require 
                       a specific order or rank."),
-              tags$li("Discrete Variables are quantitative (numerical) variables 
+              tags$li("Discrete variables are quantitative (numerical) variables 
                       where you can make a fixed list of possible variables."),
-              tags$li("Continuous Variables are quantitative variables that can take on
+              tags$li("Continuous variables are quantitative variables that can take on
                       an unlimited number of values within a range, they do not need 
                       to be fixed.")
             ),
@@ -148,10 +148,10 @@ ui <- list(
             collapsed = FALSE,
             width = "100%",          
             tags$ul(
-              tags$li("Explanatory/Independent Variables are what might explain 
+              tags$li("Explanatory/Independent variables are what might explain 
                       changes in the response variable."),
-              tags$li("Response/Dependent Variables are what is the focus of the study."),
-              tags$li("Confounding Variables are variables that are not in an experiment, 
+              tags$li("Response/Dependent variables are what is the focus of the study."),
+              tags$li("Confounding variables are variables that are not in an experiment, 
                       but impact the relationship between explanatory and response.")
             ),
             br(),
@@ -175,7 +175,7 @@ ui <- list(
           tabName = "game",
           tabsetPanel(
             id = "levels",
-            type = "tabs",
+            type = "hidden",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
