@@ -103,7 +103,7 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 6/26/2024 by NP.")
+            div(class = "updated", "Last Update: 7/5/2024 by NP.")
           ),
         ),
         ### Prerequisites ----
@@ -124,7 +124,7 @@ ui <- list(
               tags$li("Ordinal variables are qualitative variables that require 
                       a specific order or rank."),
               tags$li("Discrete variables are quantitative (numerical) variables 
-                      where you can make a fixed list of possible variables."),
+                      where you can make a fixed list of possible values."),
               tags$li("Continuous variables are quantitative variables that can take on
                       an unlimited number of values within a range, they do not need 
                       to be fixed.")
@@ -151,8 +151,9 @@ ui <- list(
               tags$li("Explanatory/Independent variables are what might explain 
                       changes in the response variable."),
               tags$li("Response/Dependent variables are what is the focus of the study."),
-              tags$li("Confounding variables are variables that are not in an experiment, 
-                      but impact the relationship between explanatory and response.")
+              tags$li("Confounding variables are variables that influence both the 
+                      explanatory variable and the response (thus providing an alternate 
+                      explanation for their relationship)")
             ),
             br(),
             p("In the figure below you can see that it looks like ice cream sales 
@@ -2196,7 +2197,7 @@ server <- function(input, output, session) {
     expr = {
       img(src = subsetBankB()$Variable[1],
           alt = subsetBankB()$Alt[1],
-          width = "85%",
+          width = "65%",
           #height = "95%", 
           style = "text-align: center;")
     }
@@ -2211,7 +2212,7 @@ server <- function(input, output, session) {
     expr = {
       img(src = subsetBankB()$Variable[2],
           alt = subsetBankB()$Alt[2],
-          width = "85%",
+          width = "65%",
           #height = "95%", 
           style = "text-align: center;")
     }
@@ -2226,7 +2227,7 @@ server <- function(input, output, session) {
     expr = {
       img(src = subsetBankB()$Variable[3],
           alt = subsetBankB()$Alt[3],
-          width = "85%",
+          width = "65%",
           #height = "95%", 
           style = "text-align: center;")
     }
@@ -2241,7 +2242,7 @@ server <- function(input, output, session) {
     expr = {
       img(src = subsetBankB()$Variable[4],
           alt = subsetBankB()$Alt[4],
-          width = "85%",
+          width = "65%",
           #height = "95%", 
           style = "text-align: center;")
     }
@@ -3021,7 +3022,15 @@ server <- function(input, output, session) {
         updateButton(
           session = session, 
           inputId = "newQLvl4", 
-          disabled = FALSE)
+          disabled = FALSE
+          )
+        shinyalert(
+          title = "Good Job!",
+          text = "You have completed all four levels of the Variable
+          Types Matching Game. If you would like to continue playing
+          just press 'Previous Level' then 'Next Level' to re-enter
+          the level or refresh the page to restart the entire game.",
+          type = "success")
       }
     }
   )
