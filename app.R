@@ -81,7 +81,7 @@ ui <- list(
             style = "text-align: center;",
             bsButton(
               inputId = "goToGame",
-              label = "Game!",
+              label = "Game",
               icon = icon("bolt"),
               size = "large"
             )
@@ -3088,24 +3088,40 @@ server <- function(input, output, session) {
   ### Results 1
   output$level1ScoreResults1 <- renderPrint(
     expr = {
-      cat("It took", max(attempts$level1), "attempts to complete level 1.")
-    }
-  )
+      if (max(attempts$level1) == 1) {
+        cat("It took 1 attempt to complete level 1.")
+      } else {
+        cat("It took", max(attempts$level1), "attempts to complete level 1.")
+      }
+    })
+  
   output$level2ScoreResults1 <- renderPrint(
     expr = {
-      cat("It took", max(attempts$level2), "attempts to complete level 2.")
+      if (max(attempts$level2) == 1) {
+        cat("It took 1 attempt to complete level 2.")
+      } else {
+        cat("It took", max(attempts$level2), "attempts to complete level 2.")
+      }
     }
   )
   
   ### Results 2
   output$level1ScoreResults2 <- renderPrint(
     {
-      cat("It took", max(attempts$level1), "attempts to complete level 1.")
+      if (max(attempts$level1) == 1) {
+        cat("It took 1 attempt to complete level 1.")
+      } else {
+        cat("It took", max(attempts$level1), "attempts to complete level 1.")
+      }
     }
   )
   output$level2ScoreResults2 <- renderPrint(
     expr = {
-      cat("It took", max(attempts$level2), "attempts to complete level 2.")
+      if (max(attempts$level2) == 1) {
+        cat("It took 1 attempt to complete level 2.")
+      } else {
+        cat("It took", max(attempts$level2), "attempts to complete level 2.")
+      }
     }
   )
   output$level3Score <- renderPrint(
