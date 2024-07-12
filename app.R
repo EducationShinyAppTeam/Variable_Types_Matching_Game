@@ -36,8 +36,9 @@ ui <- list(
       tags$li(
         class = "dropdown",
         tags$a(
+          id = "home",
           href = "https://shinyapps.science.psu.edu/",
-          icon("home")
+          icon("house")
         )
       )
     ),
