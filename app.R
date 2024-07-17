@@ -72,9 +72,9 @@ ui <- list(
           h2("Instructions"),
           tags$ol(
             tags$li("View prerequisites as needed on the 'Prerequisites' tab."),
-            tags$li("Then, continue to the 'Variable Types' tab to begin the first challenge
+            tags$li("Then, continue to the 'Variable Types' tab to begin the first challenge,
                     which focuses on variable types by nature of measurement."),
-            tags$li("You must get all questions correct before moving on for this challenge."),
+            tags$li("You must get all questions correct on both levels before moving on for this challenge."),
             tags$li("Then, continue to the 'Variable Roles'
                     tab to test yourself about variable types by role in the analysis."),
             tags$li("There, you need to get five questions correct to move on for each level."),
@@ -179,7 +179,7 @@ ui <- list(
           tabName = "game",
           tabsetPanel(
             id = "levels",
-            type = "tabs",
+            type = "hidden",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
@@ -478,7 +478,8 @@ ui <- list(
               p("Match the variable defined in the instructions of each plot
                    to the variable type until you get all 4 correct. 
                    To submit, you must answer all questions. If you get one wrong, 
-                   click 'Retry' to try again."),
+                   click 'Retry' to try again. You can see your results after finishing
+                by clicking the 'Results' button."),
               hr(),
               fluidRow(
                 column(
@@ -619,10 +620,10 @@ ui <- list(
               value = "d",
               titlePanel("Congrats on completing levels 1 and 2!"),
               p("Levels 1 and 2 were all about qualitative and quantitative variables. 
-                  There are two more levels after this that go over explanatory,
-                  response, and confounding variables. If you feel ready, press 
-                  'Next Level' to continue onto Level 3 and 4. If not, press 'Finish' 
-                  to go back to the overview page."),
+                  There are two more levels in the next challenge that go over explanatory,
+                  response, and confounding variables. If you feel ready,
+                  navigate to the 'Variable Roles' tab to continue. If not, you can
+                refresh the page to restart the first challenge and continue practicing."),
               br(),
               fluidRow(
                 wellPanel(
@@ -668,16 +669,16 @@ ui <- list(
           tabName = "game2",
           tabsetPanel(
             id = "levels2",
-            type = "tabs",
+            type = "hidden",
             #### Level 3 ----
             tabPanel(
               title = "Level 3",
               value = "e",
               titlePanel("Explanatory and Response Variables"),
-              p("Correctly match each variable to the variable type depending on
-                  the context given. You must get both answers correct to earn 1 point and get 5 points 
-                  before moving to the next level. Once you have made your choices hit 'Submit', then 
-                  click 'New Question' for the next question. You have 16 attempts, if all 16 attempts are 
+              p("Start the challenge by clicking 'Begin Game'. Then, correctly match each variable to it's role depending on
+                  the context given. Once you have made your choices hit 'Submit', then 
+                  click 'New Question' for the next question. You must get both answers correct to earn 1 point and get 5 points 
+                  before moving to the next level. You have 16 attempts, if all 16 attempts are 
                   used, follow directions and retry the level."),
               hr(),
               wellPanel(
@@ -768,12 +769,12 @@ ui <- list(
               title = "Level 4",
               value = "f",
               titlePanel("Explanatory, Response, and Confounding Variables"),
-              p("Correctly match each variable to the variable type 
-                  depending on the context given. You must get all three answers 
+              p("Correctly match each variable to the variable role 
+                  depending on the context given. Once you have made your choices hit 'Submit', then 
+                  click 'New Question' for the next question. You must get all three answers 
                   correct to earn 1 point and get 5 points before moving to the 
-                  next level. Once you have made your choices hit 'Submit', then 
-                  click 'New Question' for the next question. You have 7 attempts, 
-                  if all 7 attempts are used, follow directions and retry the level."),
+                  next level. You have 7 attempts, if all 7 attempts are used, follow directions and 
+                  retry the level. When finished, you can click the 'Results' button to see your results."),
               hr(),
               wellPanel(
                 fluidRow(uiOutput("questionD"))
@@ -872,7 +873,7 @@ ui <- list(
             tabPanel(
               title = "Results",
               value = "g",
-              titlePanel("Congratulations! You finished the game."),
+              titlePanel("Congratulations! You finished the second challenge."),
               br(),
               fluidRow(
                 wellPanel(
@@ -1077,7 +1078,7 @@ server <- function(input, output, session) {
       
       updateTabsetPanel(
         session = session, 
-        inputId = "levels",
+        inputId = "levels2",
         selected = "g")
     }
   )
@@ -1152,8 +1153,8 @@ server <- function(input, output, session) {
       )
       shinyalert(
         title = "Oops!",
-        text = "You have used up all 16 tries. Please click 'Previous Level' then
-        click 'Next Level' to re-enter this level to try again.",
+        text = "You have used up all 16 tries. Please click 'Begin Game' to
+        reset the level and try again.",
         type = "error")
       updateButton(
         session = session, 
@@ -2392,16 +2393,11 @@ server <- function(input, output, session) {
   index_list <- reactiveValues(listc = sample(1:17, 17, replace = FALSE))
   
   observeEvent(
-    eventExpr = input$prevBtwnLvls, 
+    eventExpr = input$startChallenge2, 
     handlerExpr = {
-      updateTabsetPanel(
-        session = session, 
-        inputId = "levels", 
-        selected = "d")
       if (length(index_list$listc) < 17) {
         index_list$listc <- c(index_list$listc, sample(1:17, 17, replace = FALSE))
       } 
-      index_list$listc <- index_list$listc[1:17]
     })
   
   observeEvent(
@@ -3060,10 +3056,10 @@ server <- function(input, output, session) {
           )
         shinyalert(
           title = "Good Job!",
-          text = "You have completed all four levels of the Variable
+          text = "You have completed levels 3 and 4 of the Variable
           Types Matching Game. If you would like to continue playing
-          just press 'Previous Level' then 'Next Level' to re-enter
-          the level or refresh the page to restart the entire game.",
+          just press 'Previous Level' then 'Next Level' to restart
+          level 4 or refresh the page to restart the entire challenge.",
           type = "success")
       }
     }
