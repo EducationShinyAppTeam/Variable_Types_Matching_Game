@@ -49,7 +49,8 @@ ui <- list(
         id = "pages",
         menuItem("Overview", tabName = "overview", icon = icon("gauge-high")),
         menuItem("Prerequisites", tabName = "prerequisite", icon = icon("book")),
-        menuItem("Game", tabName = "game", icon = icon("gamepad")),
+        menuItem("Variable Types", tabName = "game", icon = icon("gamepad")),
+        menuItem("Variable Roles", tabName = "game2", icon = icon("gamepad")),
         menuItem("References", tabName = "references", icon = icon("leanpub"))
       ),
       tags$div(
@@ -71,12 +72,13 @@ ui <- list(
           h2("Instructions"),
           tags$ol(
             tags$li("View prerequisites as needed on the 'Prerequisites' tab."),
-            tags$li("Then, continue to the 'Game' tab to begin the game."),
-            tags$li("Submit your answer only after finishing all of the questions."),
-            tags$li("You may go to the next level once all of your answers are correct 
-                    for levels 1 and 2."),
-            tags$li("For levels 3 and 4, you must get five correct 
-                    answers on each level to move on.")
+            tags$li("Then, continue to the 'Variable Types' tab to begin the first challenge
+                    which focuses on variable types by nature of measurement."),
+            tags$li("You must get all questions correct before moving on for this challenge."),
+            tags$li("Then, continue to the 'Variable Roles'
+                    tab to test yourself about variable types by role in the analysis."),
+            tags$li("There, you need to get five questions correct to move on for each level."),
+            tags$li("Be sure to look at your results at the end of each challenge.")
           ),
           div(
             style = "text-align: center;",
@@ -172,12 +174,12 @@ ui <- list(
             ) 
           )
         ),
-        ### Game ----
+        ### Game 1 ----
         tabItem(
           tabName = "game",
           tabsetPanel(
             id = "levels",
-            type = "hidden",
+            type = "tabs",
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
@@ -595,7 +597,7 @@ ui <- list(
                   offset = 3,
                   bsButton(
                     inputId = "toBtwnLvls",
-                    label = "Next Level",
+                    label = "Results",
                     disabled = TRUE 
                   )
                 )
@@ -631,35 +633,42 @@ ui <- list(
                   )
                 )
               ),
-              br(),
-              br(),
-              fluidRow(
-                column(
-                  width = 2, 
-                  offset = 2,
-                  bsButton(
-                    inputId = "prevLvl2",
-                    label = "Previous Level"
-                  )
-                ),
-                column(
-                  width = 1,
-                  offset = 1,
-                  bsButton(
-                    inputId = "btwnToFinish",
-                    label = "Finish"
-                  )
-                ),
-                column(
-                  width = 1,
-                  offset = 1,
-                  bsButton(
-                    inputId = "toLvl3",
-                    label = "Next Level"
-                  )
-                )
-              )
-            ),
+              br()
+              # fluidRow(
+              #   column(
+              #     width = 2, 
+              #     offset = 2,
+              #     bsButton(
+              #       inputId = "prevLvl2",
+              #       label = "Previous Level"
+              #     )
+              #   ),
+              #   column(
+              #     width = 1,
+              #     offset = 1,
+              #     bsButton(
+              #       inputId = "btwnToFinish",
+              #       label = "Finish"
+              #     )
+              #   ),
+              #   column(
+              #     width = 1,
+              #     offset = 1,
+              #     bsButton(
+              #       inputId = "toLvl3",
+              #       label = "Next Level"
+              #     )
+              #   )
+              # )
+            )
+          )
+        ),
+        ### Game 2 ----
+        tabItem(
+          tabName = "game2",
+          tabsetPanel(
+            id = "levels2",
+            type = "tabs",
             #### Level 3 ----
             tabPanel(
               title = "Level 3",
@@ -706,43 +715,42 @@ ui <- list(
               ),
               br(),
               ##### Buttons ----
-              conditionalPanel(
-                "input.toBtwnLvls != 0",
-                fluidRow(
-                  column(
-                    width = 1, 
-                    offset = 1,
+              fluidRow(
+                column(
+                  width = 1, 
+                  offset = 1,
+                  bsButton( 
+                    inputId = "startChallenge2",
+                    label = "Begin Game"
+                  )
+                ),
+                column(
+                  width = 1, 
+                  offset = 3,
+                  conditionalPanel(
+                    "(input.explC!='') & (input.respC!='')",
                     bsButton(
-                      inputId = "prevBtwnLvls",
-                      label = "Previous Level"
-                    )
-                  ),
-                  column(
-                    width = 1, 
-                    offset = 3,
-                    conditionalPanel(
-                      "(input.explC!='') & (input.respC!='')",
-                      bsButton(
-                        inputId = "submitC",
-                        label = "Submit"
-                      )
-                    )
-                  ),
-                  column(
-                    width = 1,
-                    bsButton(
-                      inputId = "newQLvl3",
-                      label = "New Question"
-                    )
-                  ),
-                  column(
-                    width = 1,
-                    offset = 3,
-                    bsButton(
-                      inputId = "toLvl4",
-                      label = "Next Level",
+                      inputId = "submitC",
+                      label = "Submit",
                       disabled = TRUE
                     )
+                  )
+                ),
+                column(
+                  width = 1,
+                  bsButton(
+                    inputId = "newQLvl3",
+                    label = "New Question",
+                    disabled = TRUE
+                  )
+                ),
+                column(
+                  width = 1,
+                  offset = 3,
+                  bsButton(
+                    inputId = "toLvl4",
+                    label = "Next Level",
+                    disabled = TRUE
                   )
                 )
               ),
@@ -836,7 +844,8 @@ ui <- list(
                     width = 1,
                     bsButton(
                       inputId = "newQLvl4",
-                      label = "New Question"
+                      label = "New Question",
+                      disabled = TRUE
                     )
                   ),
                   column(
@@ -869,8 +878,6 @@ ui <- list(
                 wellPanel(
                   h3("Results"),
                   tags$ul(
-                    tags$li(textOutput("level1ScoreResults2")),
-                    tags$li(textOutput("level2ScoreResults2")),
                     tags$li(textOutput("level3Score")),
                     tags$li(textOutput("level4Score"))
                   )
@@ -1010,21 +1017,21 @@ server <- function(input, output, session) {
     }
   )
   
-  observeEvent(
-    eventExpr = input$toLvl3,
-    handlerExpr = {
-      summationC$correct1 <- c(0)
-      updateProgressBar(
-        id = "barLevel3",
-        value = 0
-      )
-      updateTabsetPanel(
-        session = session,
-        inputId = "levels",
-        selected = 'e'
-      )
-    }
-  )
+  # observeEvent(
+  #   eventExpr = input$toLvl3,
+  #   handlerExpr = {
+  #     summationC$correct1 <- c(0)
+  #     updateProgressBar(
+  #       id = "barLevel3",
+  #       value = 0
+  #     )
+  #     updateTabsetPanel(
+  #       session = session,
+  #       inputId = "levels",
+  #       selected = 'e'
+  #     )
+  #   }
+  # )
   
   observeEvent(
     eventExpr = input$btwnToFinish,
@@ -1047,7 +1054,7 @@ server <- function(input, output, session) {
       )
       updateTabsetPanel(
         session = session,
-        inputId = "levels",
+        inputId = "levels2",
         selected = 'f'
       )
       
@@ -1148,6 +1155,11 @@ server <- function(input, output, session) {
         text = "You have used up all 16 tries. Please click 'Previous Level' then
         click 'Next Level' to re-enter this level to try again.",
         type = "error")
+      updateButton(
+        session = session, 
+        inputId = "startChallenge2",
+        disabled = FALSE
+      )
     }
   })
   
@@ -1190,6 +1202,27 @@ server <- function(input, output, session) {
         inputId = "submitC", 
         disabled = FALSE
       )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$startChallenge2, 
+    handlerExpr = {
+      updateButton(
+        session = session, 
+        inputId = "submitC", 
+        disabled = FALSE
+      )
+      updateButton(
+        session = session, 
+        inputId = "startChallenge2", 
+        disabled = TRUE
+      )
+      summationC$correct1 <- c(0)
+          updateProgressBar(
+            id = "barLevel3",
+            value = 0
+          )
     }
   )
   
@@ -2372,7 +2405,7 @@ server <- function(input, output, session) {
     })
   
   observeEvent(
-    eventExpr = input$toBtwnLvls,
+    eventExpr = input$startChallenge2,
     handlerExpr = {
       index$index <- 18
       index$exp_index <- 2 * index$index - 1
@@ -2719,7 +2752,7 @@ server <- function(input, output, session) {
     handlerExpr = {
       updateTabsetPanel(
         session = session, 
-        inputId = "levels", 
+        inputId = "levels2", 
         selected = "e")
       if (length(index_listD$listD) < 8) {
         index_listD$listD <- c(index_listD$listD, sample(1:8, 8, replace = FALSE)) 
@@ -3107,24 +3140,6 @@ server <- function(input, output, session) {
   )
   
   ### Results 2
-  output$level1ScoreResults2 <- renderPrint(
-    {
-      if (max(attempts$level1) == 1) {
-        cat("It took 1 attempt to complete level 1.")
-      } else {
-        cat("It took", max(attempts$level1), "attempts to complete level 1.")
-      }
-    }
-  )
-  output$level2ScoreResults2 <- renderPrint(
-    expr = {
-      if (max(attempts$level2) == 1) {
-        cat("It took 1 attempt to complete level 2.")
-      } else {
-        cat("It took", max(attempts$level2), "attempts to complete level 2.")
-      }
-    }
-  )
   output$level3Score <- renderPrint(
     expr = {
       cat("It took", max(attempts$level3), "questions to complete level 3.")
