@@ -2370,6 +2370,11 @@ server <- function(input, output, session) {
           inputId = "toBtwnLvls",
           disabled = FALSE
         )
+        shinyalert(
+          title = "Good Job!",
+          text = "You have completed levels 1 and 2 of the Variable Types Matching Game. You can continue onto the next challenge 
+          or refresh the page to restart the game and continue practicing if needed.",
+          type = "success")
       }
       else {
         updateButton(
