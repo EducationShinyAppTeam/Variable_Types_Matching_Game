@@ -26,7 +26,7 @@ ui <- list(
     skin = "red",
     ## Header ----
     dashboardHeader(
-      title = "Variable Types",
+      title = "Variable Types & Roles",
       titleWidth = 250,
       tags$li(class = "dropdown", actionLink("info", icon("info"))),
       tags$li(
@@ -64,19 +64,19 @@ ui <- list(
         tabItem(
           ### Overview ----
           tabName = "overview",
-          h1("Variable Types Matching Game"),
+          h1("Variable Types and Roles Matching Game"),
           p("Identify variable types by nature of measurement (quantitative 
             discrete, quantitative continuous, qualitative nominal, and 
-            qualitative ordinal). Then, identify variable types 
+            qualitative ordinal). Then, identify variables 
             by role in the analysis (explanatory, response, and confounding)."),
           h2("Instructions"),
           tags$ol(
             tags$li("View prerequisites as needed on the 'Prerequisites' tab."),
-            tags$li("Then, continue to the 'Variable Types' tab to begin the first challenge,
+            tags$li("Continue to the 'Variable Types' tab to begin the first challenge,
                     which focuses on variable types by nature of measurement."),
             tags$li("You must get all questions correct on both levels before moving on for this challenge."),
-            tags$li("Then, continue to the 'Variable Roles'
-                    tab to test yourself about variable types by role in the analysis."),
+            tags$li("Then you can continue to the 'Variable Roles'
+                    tab to test yourself about variables by role in the analysis."),
             tags$li("There, you need to get five questions correct to move on for each level."),
             tags$li("Be sure to look at your results at the end of each challenge.")
           ),
@@ -96,7 +96,7 @@ ui <- list(
             "This app was developed and coded by Yuxin Zhang, Luxin Wang, &
             Thomas McIntyre. Special thanks to Robert P. Carey III and
             Alex Chen for help on some programming issues. We'd also like to
-            thank Mike Fleck for help with the qualitative and quantitaive 
+            thank Mike Fleck for help with the qualitative and quantitative 
             variables flow diagram. This app was updated in 2023 by Taryn McHugh
             and in June 2024 by Nathan Pechulis.",
             br(),
@@ -106,17 +106,17 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 7/5/2024 by NP.")
+            div(class = "updated", "Last Update: 07/22/2024 by NP.")
           ),
         ),
         ### Prerequisites ----
         tabItem(
           tabName = "prerequisite",
           withMathJax(),
-          h2("Types of Variables"),
+          h2("Variable Types vs Roles"),
           br(),
           box(
-            title = strong("Quantitative vs Qualitative Variables"),
+            title = strong("Variable Types - Quantitative vs Qualitative"),
             status = "primary",
             collapsible = TRUE,
             collapsed = FALSE,
@@ -145,7 +145,7 @@ ui <- list(
             )
           ),
           box(
-            title = strong("Explanatory, Response, and Confounding Variables"),
+            title = strong("Variable Roles - Explanatory, Response, or Confounding"),
             status = "primary",
             collapsible = TRUE,
             collapsed = FALSE,
@@ -164,10 +164,10 @@ ui <- list(
               has an impact on both the explanatory and response, making it look 
               like there is a relationship."),
             tags$figure(
-              class = "center-figure",
+              align = 'center',
               tags$img(
                 src = "ercChart.png",
-                width = "100%",
+                width = "75%",
                 alt = "flow chart that describes explanatory, response, and confounding
                   variables"
               )
@@ -180,6 +180,25 @@ ui <- list(
           tabsetPanel(
             id = "levels",
             type = "hidden",
+            #### Preliminary Screen 1 ----
+            tabPanel(
+              title = "Preliminary Screen 1",
+              value = "pre1",
+              titlePanel("Variable Types"),
+              p("This challenge will deal with Quantitative vs Qualitative variables and their
+                subcategories. Simply click the 'Begin Game' button below to start the first level. Good luck!"),
+              br(),
+              fluidRow(
+                column(
+                  width = 1, 
+                  offset = 1,
+                  bsButton( 
+                    inputId = "startChallenge1",
+                    label = "Begin Game"
+                  )
+                )
+              )
+            ),
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
@@ -670,12 +689,31 @@ ui <- list(
           tabsetPanel(
             id = "levels2",
             type = "hidden",
+            #### Preliminary Screen 2----
+            tabPanel(
+              title = "Preliminary Screen 2",
+              value = "pre2",
+              titlePanel("Variable Roles"),
+              p("This challenge will deal with Explanatory, Response, and Confounding variables.
+                Simply click 'Begin Game' to start level 3. Good luck!"),
+              br(),
+              fluidRow(
+                column(
+                  width = 1, 
+                  offset = 1,
+                  bsButton( 
+                    inputId = "startChallenge2",
+                    label = "Begin Game"
+                  )
+                )
+              )
+            ),
             #### Level 3 ----
             tabPanel(
               title = "Level 3",
               value = "e",
               titlePanel("Explanatory and Response Variables"),
-              p("Start the challenge by clicking 'Begin Game'. Then, correctly match each variable to it's role depending on
+              p("Correctly match each variable to it's role depending on
                   the context given. Once you have made your choices hit 'Submit', then 
                   click 'New Question' for the next question. You must get both answers correct to earn 1 point and get 5 points 
                   before moving to the next level. You have 16 attempts, if all 16 attempts are 
@@ -721,8 +759,9 @@ ui <- list(
                   width = 1, 
                   offset = 1,
                   bsButton( 
-                    inputId = "startChallenge2",
-                    label = "Begin Game"
+                    inputId = "restartlvl3",
+                    label = "Restart Level",
+                    disabled = TRUE
                   )
                 ),
                 column(
@@ -733,7 +772,6 @@ ui <- list(
                     bsButton(
                       inputId = "submitC",
                       label = "Submit",
-                      disabled = TRUE
                     )
                   )
                 ),
@@ -968,8 +1006,19 @@ server <- function(input, output, session) {
         session = session,
         type = "info",
         title = "Information",
-        text = "Go through each level to demonstrate your proficiency in distinguishing
-        between different variable types."
+        text = "Go through each challenge to demonstrate your proficiency in distinguishing
+        between different variable types and roles."
+      )
+    }
+  )
+  
+  observeEvent(
+    eventExpr = input$startChallenge1,
+    handlerExpr = {
+      updateTabsetPanel(
+        session = session,
+        inputId = "levels",
+        selected = 'b'
       )
     }
   )
@@ -1153,12 +1202,12 @@ server <- function(input, output, session) {
       )
       shinyalert(
         title = "Oops!",
-        text = "You have used up all 16 tries. Please click 'Begin Game' to
+        text = "You have used up all 16 tries. Please click 'Restart Level' to
         reset the level and try again.",
         type = "error")
       updateButton(
         session = session, 
-        inputId = "startChallenge2",
+        inputId = "restartlvl3",
         disabled = FALSE
       )
     }
@@ -1207,7 +1256,7 @@ server <- function(input, output, session) {
   )
   
   observeEvent(
-    eventExpr = input$startChallenge2, 
+    eventExpr = input$restartlvl3, 
     handlerExpr = {
       updateButton(
         session = session, 
@@ -1216,7 +1265,7 @@ server <- function(input, output, session) {
       )
       updateButton(
         session = session, 
-        inputId = "startChallenge2", 
+        inputId = "restartlvl3", 
         disabled = TRUE
       )
       summationC$correct1 <- c(0)
@@ -2372,7 +2421,7 @@ server <- function(input, output, session) {
         )
         shinyalert(
           title = "Good Job!",
-          text = "You have completed levels 1 and 2 of the Variable Types Matching Game. You can continue onto the next challenge 
+          text = "You have completed levels 1 and 2 of the Variable Types and Roles Matching Game. You can continue onto the next challenge 
           or refresh the page to restart the game and continue practicing if needed.",
           type = "success")
       }
@@ -2398,16 +2447,23 @@ server <- function(input, output, session) {
   index_list <- reactiveValues(listc = sample(1:17, 17, replace = FALSE))
   
   observeEvent(
-    eventExpr = input$startChallenge2, 
+    eventExpr = input$restartlvl3, 
     handlerExpr = {
       if (length(index_list$listc) < 17) {
-        index_list$listc <- c(index_list$listc, sample(1:17, 17, replace = FALSE))
+        index$index <- 18
+        index$exp_index <- 2 * index$index - 1
+        index$res_index <- 2 * index$index
+        index_list$listc <- c(index_list$listc, sample(1:16, 16, replace = FALSE))
       } 
     })
   
   observeEvent(
     eventExpr = input$startChallenge2,
     handlerExpr = {
+      updateTabsetPanel(
+        session = session, 
+        inputId = "levels2", 
+        selected = "e")
       index$index <- 18
       index$exp_index <- 2 * index$index - 1
       index$res_index <- 2 * index$index
@@ -3062,7 +3118,7 @@ server <- function(input, output, session) {
         shinyalert(
           title = "Good Job!",
           text = "You have completed levels 3 and 4 of the Variable
-          Types Matching Game. If you would like to continue playing
+          Types and Roles Matching Game. If you would like to continue playing
           just press 'Previous Level' then 'Next Level' to restart
           level 4 or refresh the page to restart the entire challenge.",
           type = "success")
