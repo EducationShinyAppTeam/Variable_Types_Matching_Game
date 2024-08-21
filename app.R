@@ -13,11 +13,9 @@ bankA <- read.csv(file = "questionBankA.csv", stringsAsFactors = FALSE)
 bankB <- read.csv(file = "questionBankB.csv", stringsAsFactors = FALSE)
 bankC <- read.csv(file = "questionBankC.csv", stringsAsFactors = FALSE)
 bankD <- read.csv(file = "questionBankD.csv", stringsAsFactors = FALSE)
-level1Choices <- c("Quantitative and Discrete" = "QuanDiscrete", 
-                   "Quantitative and Continuous" = "QuanContinuous",
-                   "Qualitative and Nominal" = "QualNominal",
-                   "Qualitative and Ordinal" = "QualOrdinal")
-level2Choices <- c("Select One", "Quantitative and Discrete" = "QuanDiscrete", 
+level1Choices <- c("Select one", "Quantitative", "Qualitative")
+level1Choicesp2 <- c("Select one", "Discrete", "Continuous", "Nominal", "Ordinal")
+level2Choices <- c("Select one", "Quantitative and Discrete" = "QuanDiscrete",
                    "Quantitative and Continuous" = "QuanContinuous",
                    "Qualitative and Nominal" = "QualNominal",
                    "Qualitative and Ordinal" = "QualOrdinal")
@@ -28,7 +26,7 @@ ui <- list(
     skin = "red",
     ## Header ----
     dashboardHeader(
-      title = "Variable Types",
+      title = "Variable Types & Roles",
       titleWidth = 250,
       tags$li(class = "dropdown", actionLink("info", icon("info"))),
       tags$li(
@@ -38,8 +36,9 @@ ui <- list(
       tags$li(
         class = "dropdown",
         tags$a(
+          id = "home",
           href = "https://shinyapps.science.psu.edu/",
-          icon("home")
+          icon("house")
         )
       )
     ),
@@ -50,7 +49,8 @@ ui <- list(
         id = "pages",
         menuItem("Overview", tabName = "overview", icon = icon("gauge-high")),
         menuItem("Prerequisites", tabName = "prerequisite", icon = icon("book")),
-        menuItem("Game", tabName = "game", icon = icon("gamepad")),
+        menuItem("Variable Types", tabName = "game", icon = icon("gamepad")),
+        menuItem("Variable Roles", tabName = "game2", icon = icon("gamepad")),
         menuItem("References", tabName = "references", icon = icon("leanpub"))
       ),
       tags$div(
@@ -64,25 +64,27 @@ ui <- list(
         tabItem(
           ### Overview ----
           tabName = "overview",
-          h1("Variable Types Matching Game"),
-          p("Identify variable types by nature of measurement (quantitative (numeric) 
-            discrete, quantitative continuous, qualitative (categorical)
-            nominal, and qualitative ordinal variables) and by role in 
-            the analysis (explanatory, response, and confounding)."),
+          h1("Variable Types and Roles Matching Game"),
+          p("Identify variable types by nature of measurement (quantitative
+            discrete, quantitative continuous, qualitative nominal, and
+            qualitative ordinal). Then, identify variables
+            by role in the analysis (explanatory, response, and confounding)."),
           h2("Instructions"),
           tags$ol(
-            tags$li("View prerequisites as needed on the prerequisites tab."),
-            tags$li("Then go to the game tab to start the game."),
-            tags$li("Submit your answer only after finishing all the questions."),
-            tags$li("You may go to the next level once all of your answers are correct 
-                    for level 1 and 2. For level 3 and 4 you must get 5 correct 
-                    problems on each level to move on.")
+            tags$li("View prerequisites as needed on the 'Prerequisites' tab."),
+            tags$li("Continue to the 'Variable Types' tab to begin the first challenge,
+                    which focuses on variable types by nature of measurement."),
+            tags$li("You must get all questions correct on both levels before moving on for this challenge."),
+            tags$li("Then you can continue to the 'Variable Roles'
+                    tab to test yourself about variables by role in the analysis."),
+            tags$li("There, you need to get five questions correct to move on for each level."),
+            tags$li("Be sure to look at your results at the end of each challenge.")
           ),
           div(
             style = "text-align: center;",
             bsButton(
               inputId = "goToGame",
-              label = "Game!",
+              label = "Game",
               icon = icon("bolt"),
               size = "large"
             )
@@ -94,8 +96,9 @@ ui <- list(
             "This app was developed and coded by Yuxin Zhang, Luxin Wang, &
             Thomas McIntyre. Special thanks to Robert P. Carey III and
             Alex Chen for help on some programming issues. We'd also like to
-            thank Mike Fleck for help with the qualitative and quantitaive 
-            variables flow diagram. This app was updated in 2023 by Taryn McHugh",
+            thank Mike Fleck for help with the qualitative and quantitative
+            variables flow diagram. This app was updated in 2023 by Taryn McHugh
+            and in June 2024 by Nathan Pechulis.",
             br(),
             br(),
             "Cite this app as:",
@@ -103,218 +106,317 @@ ui <- list(
             boastUtils::citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 8/28/2023 by TM.")
+            div(class = "updated", "Last Update: 07/22/2024 by NP.")
           ),
         ),
         ### Prerequisites ----
         tabItem(
           tabName = "prerequisite",
           withMathJax(),
+          h2("Variable Types vs Roles"),
+          br(),
           box(
-            title = strong("Quantitative and Qualitative Variables"),
+            title = strong("Variable Types: Quantitative vs Qualitative"),
             status = "primary",
             collapsible = TRUE,
-            collapsed = TRUE,
+            collapsed = FALSE,
             width = "100%",
             tags$ul(
-              tags$li("Nominal Variables are qualitative (categorical) variables 
-                      that do not require a specific order or rank"),
-              tags$li("Ordinal Variables are qualitative variables that require 
-                      a specific order or rank "),
-              tags$li("Discrete Variables are quantitative (numerical) variables 
-                      where you can make a fixed list of possible variables."),
-              tags$li("Continuous Variables are quantitative variables that can take on
-                      an unlimited number of values within a range, they do not need 
+              tags$li("Nominal variables are qualitative (categorical) variables
+                      that do not require a specific order or rank."),
+              tags$li("Ordinal variables are qualitative variables that require
+                      a specific order or rank."),
+              tags$li("Discrete variables are quantitative (numerical) variables
+                      where you can make a fixed list of possible values."),
+              tags$li("Continuous variables are quantitative variables that can take on
+                      an unlimited number of values within a range, they do not need
                       to be fixed.")
             ),
             br(),
             tags$figure(
-              class = "center-figure",
+              class = "centerFigure",
               tags$img(
                 src = "variableFlowChart.png",
                 width = "100%",
-                alt = "Flow chart with three tiers. The top is variables and it 
-                goes into quantitaive (which can be can be discrete or continuous) 
+                alt = "Flow chart with three tiers. The top is variables and it
+                goes into quantitaive (which can be can be discrete or continuous)
                 and qualitative (which can be nominal or ordinal) variables."
               )
             )
           ),
           box(
-            title = strong("Explanatory, Response, and Confounding Variables"),
+            title = strong("Variable Roles: Explanatory, Response, or Confounding"),
             status = "primary",
             collapsible = TRUE,
-            collapsed = TRUE,
-            width = "100%",          
+            collapsed = FALSE,
+            width = "100%",
             tags$ul(
-              tags$li("Explanatory/Independent Variables are what might explain 
-                      chnages in the response variable."),
-              tags$li("Response/Dependent Variables are what is the focus of the study."),
-              tags$li("Confounding Variables are variables not in an experiment, 
-                      but impacts the relationship between explanatory and response.")
+              tags$li("Explanatory/Independent variables are what might explain
+                      changes in the response variable."),
+              tags$li("Response/Dependent variables are what is the focus of the study."),
+              tags$li("Confounding variables are variables that influence both the
+                      explanatory variable and the response (thus providing an alternate
+                      explanation for their relationship)")
             ),
             br(),
-            p("In the figure below you can see that it looks like ice cream sales 
-              impacts the number of shark attacks. This is because the confounding variable 
-              has an impact on both the explanatory and response, making it look 
+            p("In the figure below you can see that it looks like ice cream sales
+              impacts the number of shark attacks. This is because the confounding variable
+              has an impact on both the explanatory and response, making it look
               like there is a relationship."),
             tags$figure(
-              class = "center-figure",
+              class = "centerFigure",
               tags$img(
                 src = "ercChart.png",
-                width = "100%",
+                width = "75%",
                 alt = "flow chart that describes explanatory, response, and confounding
                   variables"
               )
-            ) 
+            )
           )
         ),
-        ### Game ----
+        ### Game 1 ----
         tabItem(
           tabName = "game",
-          h2("Game"),
           tabsetPanel(
             id = "levels",
             type = "hidden",
+            #### Preliminary Screen 1 ----
+            tabPanel(
+              title = "Preliminary Screen 1",
+              value = "pre1",
+              titlePanel("Variable Types"),
+              p("This challenge will deal with Quantitative vs Qualitative variables and their
+                subcategories. Simply click the 'Begin Game' button below to start the first level. Good luck!"),
+              br(),
+              bsButton(
+                inputId = "startChallenge1",
+                label = "Begin Game",
+                size = "large"
+              )
+            ),
             #### Level 1 ----
             tabPanel(
               title = "Level 1",
               value = "b",
-              titlePanel("Matching Qualitative and Quantitaive Variables"),
-              fluidRow(
-                p("Correctly match the variable type to each variable."),
-                p("To move onto the next level, you need correctly match all 12 variables.
-                  To submit, you must answer all questions. If you get one wrong, 
-                  click retry to try again."),
-                style = "margin-left:15px"
-              ),
+              titlePanel("Matching Qualitative and Quantitative Variables"),
+              p("To move onto the next level, you need to match all 12 variables to their
+                correct variable types. To submit your answers, you must answer all questions.
+                After submitting, icons will appear to show your results for each question; red means both parts
+                of your answer are wrong, yellow means it is partially correct (a hint will appear for partial), and
+                green means it is entirely correct.
+                If you get any wrong, click 'Retry' to try again."),
               hr(),
               fluidRow(
                 column(
-                  width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q1",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  width = 4,
+                  wellPanel(
+                    uiOutput("titleQ1"),
+                    selectInput(
+                      inputId = "lvl1Q1",
+                      label = "Quantitative or Qualitative",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q1p2",
+                      label = "Choose a category",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A1")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A1")),
                 column(
-                  width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q2",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  width = 4,
+                  wellPanel(
+                    uiOutput("titleQ2"),
+                    selectInput(
+                      inputId = "lvl1Q2",
+                      label = "Quantitative or Qualitative",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q2p2",
+                      label = "Choose a category",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A2")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A2")),
                 column(
-                  width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q3",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  width = 4,
+                  wellPanel(
+                    uiOutput("titleQ3"),
+                    selectInput(
+                      inputId = "lvl1Q3",
+                      label = "Quantitative or Qualitative",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q3p2",
+                      label = "Choose a category",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A3")
                   )
-                ),
-                column(width = 1, uiOutput(outputId = "lvl1A3"))
-              ), 
-              fluidRow(
-                column(
-                  width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q4",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
-                  )
-                ),
-                column(width = 1, uiOutput(outputId = "lvl1A4")),
-                column(
-                  width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q5",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
-                  )
-                ),
-                column(width = 1, uiOutput(outputId = "lvl1A5")),
-                column(
-                  width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q6",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
-                  )
-                ),
-                column(width = 1, uiOutput(outputId = "lvl1A6"))
+                )
               ),
               fluidRow(
                 column(
-                  width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q7",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  width = 4,
+                  wellPanel(
+                    uiOutput("titleQ4"),
+                    selectInput(
+                      inputId = "lvl1Q4",
+                      label = "Quantitative or Qualitative",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q4p2",
+                      label = "Choose a category",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A4")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A7")),
                 column(
-                  width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q8",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  width = 4,
+                  wellPanel(
+                    uiOutput("titleQ5"),
+                    selectInput(
+                      inputId = "lvl1Q5",
+                      label = "Quantitative or Qualitative",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q5p2",
+                      label = "Choose a category",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A5")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A8")),
                 column(
-                  width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q9",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  width = 4,
+                  wellPanel(
+                    uiOutput("titleQ6"),
+                    selectInput(
+                      inputId = "lvl1Q6",
+                      label = "Quantitative or Qualitative",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q6p2",
+                      label = "Choose a category",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A6")
                   )
-                ),
-                column(width = 1, uiOutput(outputId = "lvl1A9"))
+                )
               ),
               fluidRow(
                 column(
-                  width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q10",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  width = 4,
+                  wellPanel(
+                    uiOutput("titleQ7"),
+                    selectInput(
+                      inputId = "lvl1Q7",
+                      label = "Quantitative or Qualitative",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q7p2",
+                      label = "Choose a category",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A7")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A10")),
                 column(
-                  width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q11",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  width = 4,
+                  wellPanel(
+                    uiOutput("titleQ8"),
+                    selectInput(
+                      inputId = "lvl1Q8",
+                      label = "Quantitative or Qualitative",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q8p2",
+                      label = "Choose a category",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A8")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A11")),
                 column(
-                  width = 3,
-                  radioButtons(
-                    inputId = "lvl1Q12",
-                    label = " ",
-                    choices = level1Choices,
-                    selected = character(0)
+                  width = 4,
+                  wellPanel(
+                    uiOutput("titleQ9"),
+                    selectInput(
+                      inputId = "lvl1Q9",
+                      label = "Quantitative or Qualitative",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q9p2",
+                      label = "Choose a category",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A9")
+                  )
+                )
+              ),
+              fluidRow(
+                column(
+                  width = 4,
+                  wellPanel(
+                    uiOutput("titleQ10"),
+                    selectInput(
+                      inputId = "lvl1Q10",
+                      label = "Quantitative or Qualitative",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q10p2",
+                      label = "Choose a category",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A10")
                   )
                 ),
-                column(width = 1, uiOutput(outputId = "lvl1A12"))
+                column(
+                  width = 4,
+                  wellPanel(
+                    uiOutput("titleQ11"),
+                    selectInput(
+                      inputId = "lvl1Q11",
+                      label = "Quantitative or Qualitative",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q11p2",
+                      label = "Choose a category",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A11")
+                  )
+                ),
+                column(
+                  width = 4,
+                  wellPanel(
+                    uiOutput("titleQ12"),
+                    selectInput(
+                      inputId = "lvl1Q12",
+                      label = "Quantitative or Qualitative",
+                      choices = level1Choices
+                    ),
+                    selectInput(
+                      inputId = "lvl1Q12p2",
+                      label = "Choose a category",
+                      choices = level1Choicesp2
+                    ),
+                    uiOutput(outputId = "lvl1A12")
+                  )
+                )
               ),
               br(),
               ##### Buttons ----
@@ -323,42 +425,45 @@ ui <- list(
                   width = 1,
                   offset = 5,
                   conditionalPanel(
-                    "(input.lvl1Q1 != '') & (input.lvl1Q1 != null) &
-                    (input.lvl1Q2 != '') & (input.lvl1Q2 != null) &
-                    (input.lvl1Q3 != '') & (input.lvl1Q3 != null) &
-                    (input.lvl1Q4 != '') & (input.lvl1Q4 != null) &
-                    (input.lvl1Q5 != '') & (input.lvl1Q5 != null) &
-                    (input.lvl1Q6 != '') & (input.lvl1Q6 != null) &
-                    (input.lvl1Q7 != '') & (input.lvl1Q7 != null) &
-                    (input.lvl1Q8 != '') & (input.lvl1Q8 != null) &
-                    (input.lvl1Q9 != '') & (input.lvl1Q9 != null) &
-                    (input.lvl1Q10 != '') & (input.lvl1Q10 != null) &
-                    (input.lvl1Q11 != '') & (input.lvl1Q11 != null) &
-                    (input.lvl1Q12 != '') & (input.lvl1Q12 != null)",
+                    "(input.lvl1Q1 != 'Select one') & (input.lvl1Q1p2 != 'Select one') &
+                    (input.lvl1Q2 != 'Select one') & (input.lvl1Q2p2 != 'Select one') &
+                    (input.lvl1Q3 != 'Select one') & (input.lvl1Q3p2 != 'Select one') &
+                    (input.lvl1Q4 != 'Select one') & (input.lvl1Q4p2 != 'Select one') &
+                    (input.lvl1Q5 != 'Select one') & (input.lvl1Q5p2 != 'Select one') &
+                    (input.lvl1Q6 != 'Select one') & (input.lvl1Q6p2 != 'Select one') &
+                    (input.lvl1Q7 != 'Select one') & (input.lvl1Q7p2 != 'Select one') &
+                    (input.lvl1Q8 != 'Select one') & (input.lvl1Q8p2 != 'Select one') &
+                    (input.lvl1Q9 != 'Select one') & (input.lvl1Q9p2 != 'Select one') &
+                    (input.lvl1Q10 != 'Select one') & (input.lvl1Q10p2 != 'Select one') &
+                    (input.lvl1Q11 != 'Select one') & (input.lvl1Q11p2 != 'Select one') &
+                    (input.lvl1Q12 != 'Select one') & (input.lvl1Q12p2 != 'Select one')",
                     bsButton(
                       inputId = "retryA",
-                      label = "Retry"
+                      label = "Retry",
+                      size = "large"
                     )
                   )
                 ),
                 column(
                   width = 1,
                   conditionalPanel(
-                    "(input.lvl1Q1 != '') & (input.lvl1Q1 != null) &
-                    (input.lvl1Q2 != '') & (input.lvl1Q2 != null) &
-                    (input.lvl1Q3 != '') & (input.lvl1Q3 != null) &
-                    (input.lvl1Q4 != '') & (input.lvl1Q4 != null) &
-                    (input.lvl1Q5 != '') & (input.lvl1Q5 != null) &
-                    (input.lvl1Q6 != '') & (input.lvl1Q6 != null) &
-                    (input.lvl1Q7 != '') & (input.lvl1Q7 != null) &
-                    (input.lvl1Q8 != '') & (input.lvl1Q8 != null) &
-                    (input.lvl1Q9 != '') & (input.lvl1Q9 != null) &
-                    (input.lvl1Q10 != '') & (input.lvl1Q10 != null) &
-                    (input.lvl1Q11 != '') & (input.lvl1Q11 != null) &
-                    (input.lvl1Q12 != '') & (input.lvl1Q12 != null)",
+                    "(input.lvl1Q1 != 'Select one') & (input.lvl1Q1p2 != 'Select one') &
+                    (input.lvl1Q2 != 'Select one') & (input.lvl1Q2p2 != 'Select one') &
+                    (input.lvl1Q3 != 'Select one') & (input.lvl1Q3p2 != 'Select one') &
+                    (input.lvl1Q4 != 'Select one') & (input.lvl1Q4p2 != 'Select one') &
+                    (input.lvl1Q5 != 'Select one') & (input.lvl1Q5p2 != 'Select one') &
+                    (input.lvl1Q6 != 'Select one') & (input.lvl1Q6p2 != 'Select one') &
+                    (input.lvl1Q7 != 'Select one') & (input.lvl1Q7p2 != 'Select one') &
+                    (input.lvl1Q8 != 'Select one') & (input.lvl1Q8p2 != 'Select one') &
+                    (input.lvl1Q9 != 'Select one') & (input.lvl1Q9p2 != 'Select one') &
+                    (input.lvl1Q10 != 'Select one') & (input.lvl1Q10p2 != 'Select one') &
+                    (input.lvl1Q11 != 'Select one') & (input.lvl1Q11p2 != 'Select one') &
+                    (input.lvl1Q12 != 'Select one') & (input.lvl1Q12p2 != 'Select one')",
                     bsButton(
-                      inputId = "submitA", 
-                      label = "Submit")
+                      inputId = "submitA",
+                      label = "Submit",
+                      size = "large"
+                    )
                   )
                 ),
                 column(
@@ -367,6 +472,8 @@ ui <- list(
                   bsButton(
                     inputId = "toLvl2",
                     label = "Next Level",
+                    size = "large",
+                    icon = icon("forward"),
                     disabled = TRUE
                   )
                 )
@@ -374,56 +481,52 @@ ui <- list(
               hr(),
               conditionalPanel(
                 "input.submitA != 0",
-                fluidRow(
-                  wellPanel(
-                    h3("You must score 30 points to move onto the next level."),
-                    verbatimTextOutput("scoreA")
-                  )
-                )
+                p(tags$strong("You must score 30 points to move onto the next level.")),
+                textOutput("scoreA")
               )
             ),
             #### Level 2 ----
             tabPanel(
               title = "Level 2",
               value = "c",
-              titlePanel("Quantitative and Qualitative Variables in Plots"),
-              fluidRow(
-                p("Match the variable defined in the instructions of each plot
-                       to the variable type."),
-                p("To move onto the next level, you need to get all 4 questions correct.
-                To submit, you must answer all questions. If you get one wrong, click retry to try again."),
-                style = "margin-left:15px"
-              ),
+              h2("Quantitative and Qualitative Variables in Plots"),
+              p("Match the variable defined in the instructions of each plot
+                   to the variable type until you get all 4 correct.
+                   To submit, you must answer all questions. If you get one wrong,
+                   click 'Retry' to try again. You can see your results after finishing
+                by clicking the 'Results' button."),
               hr(),
               fluidRow(
-                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ1"))),
-                          uiOutput("image1", class = "picSize"),
-                          div(style = "position: relative; top:-15px;"),
-                          class = "col-lg-6 col-md-12 wellBorder"
+                column(
+                  width = 8,
+                  p(textOutput("imgQ1")),
+                    uiOutput("image1")
                 ),
-                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ2"))),
-                          uiOutput("image2", class = "picSize"),
-                          div(style = "position: relative; top:-15px;"),
-                          class = "col-lg-6 col-md-12 wellBorder"
-                )
-              ),
-              br(),
-              wellPanel(
-                fluidRow(
-                  column(
-                    width = 6,
+                column(
+                  width = 4,
+                  wellPanel(
                     selectInput(
                       inputId = "lvl2Q1",
-                      label = "Question 1",
+                      label = "Graph 1",
                       choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A1")
-                  ),
-                  column(
-                    width = 6,
+                  )
+                )
+              ),
+              br(),
+              fluidRow(
+                column(
+                  width = 8,
+                  p(textOutput("imgQ2")),
+                  uiOutput("image2")
+                ),
+                column(
+                  width = 4,
+                  wellPanel(
                     selectInput(
                       inputId = "lvl2Q2",
-                      label = "Question 2",
+                      label = "Graph 2",
                       choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A2")
@@ -432,39 +535,43 @@ ui <- list(
               ),
               br(),
               fluidRow(
-                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ3"))),
-                          uiOutput("image3", class = "picSize"),
-                          div(style = "position: relative; top:-15px;"),
-                          class = "col-lg-6 col-md-12 wellBorder"
+                column(
+                  width = 8,
+                  p(textOutput("imgQ3")),
+                  uiOutput("image3")
                 ),
-                wellPanel(div(style = "text-align:center", h4(textOutput("imgQ4"))),
-                          uiOutput("image4", class = "picSize"),
-                          div(style = "position: relative; top:-15px;"),
-                          class = "col-lg-6 col-md-12 wellBorder"
-                )
-              ),
-              wellPanel(
-                fluidRow(
-                  column(
-                    width = 6,
+                column(
+                  width = 4,
+                  wellPanel(
                     selectInput(
                       inputId = "lvl2Q3",
-                      label = "Question 3",
+                      label = "Graph 3",
                       choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A3")
-                  ),
-                  column(
-                    width = 6,
+                  )
+                )
+              ),
+              br(),
+              fluidRow(
+                column(
+                  width = 8,
+                  p(textOutput("imgQ4")),
+                  uiOutput("image4")
+                ),
+                column(
+                  width = 4,
+                  wellPanel(
                     selectInput(
                       inputId = "lvl2Q4",
-                      label = "Question 4",
+                      label = "Graph 4",
                       choices = level2Choices
                     ),
                     uiOutput(outputId = "lvl2A4")
                   )
                 )
               ),
+              br(),
               ##### Buttons ----
               fluidRow(
                 column(
@@ -472,33 +579,38 @@ ui <- list(
                   offset = 1,
                   bsButton(
                     inputId = "prevLvl1",
-                    label = "Previous"
+                    label = "Previous Level",
+                    icon = icon("backward"),
+                    size = "large"
                   )
                 ),
                 column(
                   width = 1,
                   offset = 3,
                   conditionalPanel(
-                    "(input.lvl2Q1!='Select One') & (input.lvl2Q1!= null) &
-                    (input.lvl2Q2!='Select One') & (input.lvl2Q2!=null) &
-                    (input.lvl2Q3!='Select One') & (input.lvl2Q3!=null) &
-                    (input.lvl2Q4!='Select One') & (input.lvl2Q4!=null)",
+                    "(input.lvl2Q1!='Select one') & (input.lvl2Q1!= null) &
+                    (input.lvl2Q2!='Select one') & (input.lvl2Q2!=null) &
+                    (input.lvl2Q3!='Select one') & (input.lvl2Q3!=null) &
+                    (input.lvl2Q4!='Select one') & (input.lvl2Q4!=null)",
                     bsButton(
                       inputId = "retryB",
-                      label = "Retry"
+                      label = "Retry",
+                      size = "large"
                     )
                   )
                 ),
                 column(
                   width = 1,
                   conditionalPanel(
-                    "(input.lvl2Q1!='Select One') & (input.lvl2Q1!= null) &
-                    (input.lvl2Q2!='Select One') & (input.lvl2Q2!=null) &
-                    (input.lvl2Q3!='Select One') & (input.lvl2Q3!=null) &
-                    (input.lvl2Q4!='Select One') & (input.lvl2Q4!=null)",
+                    "(input.lvl2Q1!='Select one') & (input.lvl2Q1!= null) &
+                    (input.lvl2Q2!='Select one') & (input.lvl2Q2!=null) &
+                    (input.lvl2Q3!='Select one') & (input.lvl2Q3!=null) &
+                    (input.lvl2Q4!='Select one') & (input.lvl2Q4!=null)",
                     bsButton(
-                      inputId = "submitB", 
-                      label = "Submit")
+                      inputId = "submitB",
+                      label = "Submit",
+                      size = "large"
+                    )
                   )
                 ),
                 column(
@@ -506,67 +618,60 @@ ui <- list(
                   offset = 3,
                   bsButton(
                     inputId = "toBtwnLvls",
-                    label = "Next Level",
-                    disabled = TRUE 
+                    label = "Results",
+                    disabled = TRUE,
+                    size = "large"
                   )
                 )
               ),
               hr(),
               conditionalPanel(
                 "input.submitB != 0",
-                fluidRow(
-                  wellPanel(
-                    h3("You must score 20 points to move onto the next level."),
-                    verbatimTextOutput("scoreB")
-                  )
-                )
+                p(tags$strong("You must score 20 points to move onto the next level.")),
+                textOutput("scoreB")
               )
             ),
             #### Page In Between Concepts ----
             tabPanel(
               title = "Concept Seperator",
               value = "d",
-              titlePanel("Upcoming Levels"),
-              fluidRow(
-                h3("Congrats on completing levels 1 and 2!"),
-                p("Levels 1 and 2 were all about qualitative and quantitative variables. 
-                  There are two more levels after this that go over explanatory,
-                  response, and confounding variables. If you feel ready, press 
-                  'Next Level' to continue onto Level 3 and 4. If not, press 'Finish' 
-                  to go back to the overview page."),
-                style = "margin-left:15px"
-              ),
+              titlePanel("Congrats on completing levels 1 and 2!"),
+              p("Levels 1 and 2 were all about qualitative and quantitative variables.
+                  There are two more levels in the next challenge that go over explanatory,
+                  response, and confounding variables. If you feel ready,
+                  navigate to the 'Variable Roles' tab to continue. If not, you can
+                refresh the page to restart the first challenge and continue practicing."),
+              br(),
+              h3("Results"),
+              tags$ul(
+                tags$li(textOutput("level1ScoreResults1")),
+                tags$li(textOutput("level2ScoreResults1"))
+              )
+            )
+          )
+        ),
+        ### Game 2 ----
+        tabItem(
+          tabName = "game2",
+          tabsetPanel(
+            id = "levels2",
+            type = "hidden",
+            #### Preliminary Screen 2----
+            tabPanel(
+              title = "Preliminary Screen 2",
+              value = "pre2",
+              titlePanel("Variable Roles"),
+              p("This challenge will deal with Explanatory, Response, and Confounding variables.
+                Simply click 'Begin Game' to start level 3. Good luck!"),
               br(),
               fluidRow(
-                wellPanel(
-                  h3("Results:"),
-                  verbatimTextOutput("level1ScoreResults1"),
-                  verbatimTextOutput("level2ScoreResults1")
-                )
-              ),
-              br(),
-              br(),
-              fluidRow(
-                column(
-                  width = 1, 
-                  offset = 4,
-                  bsButton(
-                    inputId = "prevLvl2",
-                    label = "Previous"
-                  )
-                ),
-                column(
-                  width = 1,
-                  bsButton(
-                    inputId = "btwnToFinish",
-                    label = "Finish"
-                  )
-                ),
                 column(
                   width = 1,
+                  offset = 1,
                   bsButton(
-                    inputId = "toLvl3",
-                    label = "Next Level"
+                    inputId = "startChallenge2",
+                    label = "Begin Game",
+                    size = "large"
                   )
                 )
               )
@@ -576,23 +681,13 @@ ui <- list(
               title = "Level 3",
               value = "e",
               titlePanel("Explanatory and Response Variables"),
-              fluidRow(
-                p("Correctly identify the variables to each variable type depending on
-                  the context given."),
-                p("You must get both answers correct to earn 1 point and get 5 points 
-                  before moving to the next level."), 
-                p("Once you have made your choices hit submit answer, then 
-                         click new question for the next question"),
-                p("You have 16 attempts, if all 16 attempts are used, follow directions
-                  and retry the level."),
-                style = "margin-left:15px"),
+              p("Correctly match each variable to it's role depending on
+                  the context given. Once you have made your choices hit 'Submit', then
+                  click 'New Question' for the next question. You must get both answers correct to earn 1 point and get 5 points
+                  before moving to the next level. You have 16 attempts, if all 16 attempts are
+                  used, follow directions and retry the level."),
               hr(),
-              wellPanel(
-                fluidRow(
-                  uiOutput("questionC"), 
-                  br()
-                )
-              ),
+              uiOutput("questionC", class = "largerFont"),
               hr(),
               fluidRow(
                 column(
@@ -601,8 +696,8 @@ ui <- list(
                   selectInput(
                     inputId = "explC",
                     label = uiOutput("varEXP"),
-                    c("", "Neither", "Explanatory", "Response")
-                  ), 
+                    choices = c("", "Neither", "Explanatory", "Response")
+                  ),
                   uiOutput("markc1")
                 ),
                 column(
@@ -611,150 +706,153 @@ ui <- list(
                   selectInput(
                     inputId = "respC",
                     label = uiOutput("varRES"),
-                    c("", "Neither", "Explanatory", "Response")
-                  ), 
+                    choices = c("", "Neither", "Explanatory", "Response")
+                  ),
                   uiOutput("markc2")
                 )
               ),
               br(),
-              fluidRow(
-                column(width = 4, offset = 3, textOutput("correctC"))
-              ),
+              textOutput("NumTries"),
               br(),
               ##### Buttons ----
-              conditionalPanel(
-                "input.toBtwnLvls != 0",
-                fluidRow(
-                  column(
-                    width = 1, 
-                    offset = 1,
+              fluidRow(
+                column(
+                  width = 1,
+                  offset = 1,
+                  bsButton(
+                    inputId = "restartlvl3",
+                    label = "Restart Level",
+                    size = "large",
+                    disabled = TRUE
+                  )
+                ),
+                column(
+                  width = 1,
+                  offset = 3,
+                  conditionalPanel(
+                    "(input.explC!='') & (input.respC!='')",
                     bsButton(
-                      inputId = "prevBtwnLvls",
-                      label = "Previous"
+                      inputId = "submitC",
+                      label = "Submit",
+                      size = "large"
                     )
-                  ),
-                  column(
-                    width = 1, 
-                    offset = 3,
-                    conditionalPanel(
-                      "(input.explC!='') & (input.respC!='')",
-                      bsButton(
-                        inputId = "submitC",
-                        label = "Submit"
-                      )
-                    )
-                  ),
-                  column(
-                    width = 1,
-                    bsButton(
-                      inputId = "newQLvl3",
-                      label = "New Question"
-                    )
-                  ),
-                  column(
-                    width = 1,
-                    offset = 3,
-                    bsButton(
-                      inputId = "toLvl4",
-                      label = "Next Level",
-                      disabled = TRUE
-                    )
+                  )
+                ),
+                column(
+                  width = 1,
+                  bsButton(
+                    inputId = "newQLvl3",
+                    label = "New Question",
+                    size = "large",
+                    disabled = TRUE
+                  )
+                ),
+                column(
+                  width = 1,
+                  offset = 3,
+                  bsButton(
+                    inputId = "toLvl4",
+                    label = "Next Level",
+                    icon = icon("forward"),
+                    size = "large",
+                    disabled = TRUE
                   )
                 )
               ),
               hr(),
-              fluidRow(
-                progressBar(
-                  id = "barLevel3",
-                  value = 0,
-                  display_pct = TRUE
-                )
-              )
+              progressBar(
+                id = "barLevel3",
+                value = 0,
+                display_pct = TRUE,
+                status = "primary"
+              ),
             ),
             #### Level 4 ----
             tabPanel(
               title = "Level 4",
               value = "f",
               titlePanel("Explanatory, Response, and Confounding Variables"),
-              fluidRow(
-                p("Correctly identify the variables to each variable type 
-                  depending on the context given."),
-                p("You must get both answers correct to earn 1 point and get 5 points 
-                  before moving to the next level."), 
-                p("Once you have made your choices hit submit answer, then 
-                  click new question for the next question."),
-                p("You have 8 attempts, if all 8 attempts are used, follow directions
-                  and retry the level."),
-                style = "margin-left:15px"
-              ),
+              p("Correctly match each variable to the variable role
+                  depending on the context given. Once you have made your choices hit 'Submit', then
+                  click 'New Question' for the next question. You must get all three answers
+                  correct to earn 1 point and get 5 points before moving to the
+                  next level. You have 7 attempts, if all 7 attempts are used, follow directions and
+                  retry the level. When finished, you can click the 'Results' button to see your results."),
               hr(),
-              wellPanel(
-                fluidRow(uiOutput("questionD"))
-              ),
+              uiOutput("questionD", class = "largerFont"),
               fluidRow(
                 column(
-                  width = 5,
-                  offset = 1,
-                  selectInput(
-                    inputId = "resp", 
-                    label = uiOutput("varRESD"), 
-                    c( "", "Explanatory", "Response", "Confounding",
-                       "None of the above")
-                  ),
-                  uiOutput("markd2")
-                ),
-                column( 
                   width = 4,
                   offset = 1,
                   selectInput(
-                    inputId = "conf", 
-                    label = uiOutput("varCOND"), 
-                    c("", "Explanatory", "Response", "Confounding",
-                      "None of the above")
-                  ), 
-                  uiOutput("markd3")
+                    inputId = "resp",
+                    label = uiOutput("varRESD"),
+                    choices = c( "", "Explanatory", "Response", "Confounding",
+                                 "None of the above")
+                  ),
+                  uiOutput("markd2")
                 ),
+                column(
+                  width = 4,
+                  offset = 1,
+                  selectInput(
+                    inputId = "conf",
+                    label = uiOutput("varCOND"),
+                    choices = c("", "Explanatory", "Response", "Confounding",
+                                "None of the above")
+                  ),
+                  uiOutput("markd3")
+                )
+              ),
+              fluidRow(
                 column(
                   width = 4,
                   offset = 1,
                   selectInput(
                     inputId = "expla",
                     label = uiOutput("varEXPD"),
-                    c("", "Explanatory", "Response", "Confounding",
-                      "None of the above")
-                  ), 
+                    choices = c("", "Explanatory", "Response", "Confounding",
+                                "None of the above")
+                  ),
                   uiOutput("markd1")
                 )
               ),
-              fluidRow(
-                column(width = 3, offset = 3, textOutput("correctD"))
-              ),
+              br(),
+              textOutput("NumTriesLvl4"),
               br(),
               ##### Buttons ----
               conditionalPanel(
                 "input.toLvl4 != 0",
                 fluidRow(
                   column(
-                    width = 1, 
+                    width = 1,
                     offset = 1,
                     bsButton(
                       inputId = "prevLvl3",
-                      label = "Previous"
+                      label = "Previous Level",
+                      icon = icon("backward"),
+                      size = "large"
                     )
                   ),
                   column(
-                    width = 1, 
-                    offset = 3, 
+                    width = 1,
+                    offset = 3,
                     conditionalPanel(
                       "(input.expla!='') & (input.resp!='') & (input.conf!='')",
-                      bsButton(inputId = "submitD", label = "Submit")
+                      bsButton(
+                        inputId = "submitD",
+                        label = "Submit",
+                        size = "large"
+                      )
                     )
                   ),
                   column(
                     width = 1,
                     bsButton(
                       inputId = "newQLvl4",
-                      label = "New Question"
+                      label = "New Question",
+                      size = "large",
+                      disabled = TRUE
                     )
                   ),
                   column(
@@ -763,34 +861,30 @@ ui <- list(
                     bsButton(
                       inputId = "finish",
                       label = "Results",
+                      size = "large",
                       disabled = TRUE
                     )
                   )
                 ),
                 hr()
               ),
-              fluidRow(
-                progressBar(
-                  id = "barLevel4",
-                  value = 0,
-                  display_pct = TRUE
-                )
+              progressBar(
+                id = "barLevel4",
+                value = 0,
+                display_pct = TRUE,
+                status = "primary"
               )
             ),
             #### Results ----
             tabPanel(
               title = "Results",
               value = "g",
-              titlePanel("Congratulations! You finished the game."),
+              titlePanel("Congratulations! You finished the second challenge."),
               br(),
-              fluidRow(
-                wellPanel(
-                  h3("Results:"),
-                  verbatimTextOutput("level1ScoreResults2"),
-                  verbatimTextOutput("level2ScoreResults2"),
-                  verbatimTextOutput("level3Score"),
-                  verbatimTextOutput("level4Score")
-                )
+              h3("Results"),
+              tags$ul(
+                tags$li(textOutput("level3Score")),
+                tags$li(textOutput("level4Score"))
               )
             )
           )
@@ -801,7 +895,7 @@ ui <- list(
           h2("References"),
           p(
             class = "hangingindent",
-            "Attali, D. (2021). shinyjs: Easily Improve the User Experience of Your 
+            "Attali, D. (2021). shinyjs: Easily Improve the User Experience of Your
             Shiny Apps in Seconds. (v2.1). [R Package]. Avaliable from
             https://cran.r-project.org/package=shinyjs"
           ),
@@ -819,8 +913,8 @@ ui <- list(
           ),
           p(
             class = "hangingindent",
-            "Carey, R. and Hatfield, N.J. (2023). boastUtils: BOAST utilities. 
-            (v0.1.11.2). [R Package]. Avaliable from 
+            "Carey, R. and Hatfield, N.J. (2023). boastUtils: BOAST utilities.
+            (v0.1.11.2). [R Package]. Avaliable from
             https://github.com/EducationShinyappTeam/boastUtils"
           ),
           p(
@@ -831,15 +925,15 @@ ui <- list(
           ),
           p(
             class = "hangingindent",
-            "Chang W, Cheng J, Allaire J, Sievert C, Schloerke B, Xie Y, Allen J, 
-            McPherson J, Dipert A, Borges B (2023). shiny: Web Application Framework 
-            for R. R package version 1.7.4.9002. Avaliable from 
+            "Chang W, Cheng J, Allaire J, Sievert C, Schloerke B, Xie Y, Allen J,
+            McPherson J, Dipert A, Borges B (2023). shiny: Web Application Framework
+            for R. R package version 1.7.4.9002. Avaliable from
             https://CRAN.R-project.org/package=shiny"
           ),
           p(
             class = "hangingindent",
             "Perrier, V., Meyer, F., Granjon, D. (2023) shinyWidgets: Custom Input
-            Widgets for Shiny. (v0.7.6). Avaliable from 
+            Widgets for Shiny. (v0.7.6). Avaliable from
             https://cran.r-project.org/web/packages/shinyWidgets/index.html"
           ),
           p(
@@ -861,14 +955,17 @@ ui <- list(
 # Define Server ----
 server <- function(input, output, session) {
   ## Buttons  ----
-  observeEvent(input$goToGame, {
-    updateTabItems(
-      session = session,
-      inputId = "pages",
-      selected = "game"
-    )
-  })
-  
+  observeEvent(
+    eventExpr = input$goToGame,
+    handlerExpr = {
+      updateTabItems(
+        session = session,
+        inputId = "pages",
+        selected = "game"
+      )
+    }
+  )
+
   observeEvent(
     eventExpr = input$info,
     handlerExpr = {
@@ -876,8 +973,19 @@ server <- function(input, output, session) {
         session = session,
         type = "info",
         title = "Information",
-        text = "Go through each level to demonstrate your proficiency in distinguishing
-        between different variable types."
+        text = "Go through each challenge to demonstrate your proficiency in distinguishing
+        between different variable types and roles."
+      )
+    }
+  )
+
+  observeEvent(
+    eventExpr = input$startChallenge1,
+    handlerExpr = {
+      updateTabsetPanel(
+        session = session,
+        inputId = "levels",
+        selected = 'b'
       )
     }
   )
@@ -892,7 +1000,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = input$toLvl2,
     handlerExpr = {
@@ -903,7 +1011,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = input$prevLvl2,
     handlerExpr = {
@@ -914,7 +1022,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = input$toBtwnLvls,
     handlerExpr = {
@@ -925,23 +1033,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  
-  observeEvent(
-    eventExpr = input$toLvl3,
-    handlerExpr = {
-      summationC$correct1 <- c(0)
-      updateProgressBar(
-        id = "barLevel3",
-        value = 0
-      )
-      updateTabsetPanel(
-        session = session,
-        inputId = "levels",
-        selected = 'e'
-      )
-    }
-  )
-  
+
   observeEvent(
     eventExpr = input$btwnToFinish,
     handlerExpr = {
@@ -952,7 +1044,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = input$toLvl4,
     handlerExpr = {
@@ -963,17 +1055,16 @@ server <- function(input, output, session) {
       )
       updateTabsetPanel(
         session = session,
-        inputId = "levels",
+        inputId = "levels2",
         selected = 'f'
       )
-      
+
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$finish, 
+    eventExpr = input$finish,
     handlerExpr = {
-      
       stmt <- boastUtils::generateStatement(
         session,
         verb = "completed",
@@ -981,19 +1072,19 @@ server <- function(input, output, session) {
         description = "Challenge completed",
         completion = TRUE
       )
-      
+
       boastUtils::storeStatement(session, stmt)
-      
+
       updateTabsetPanel(
-        session = session, 
-        inputId = "levels",
+        session = session,
+        inputId = "levels2",
         selected = "g")
     }
   )
-  
+
   ## Submit Observers ----
   observeEvent(
-    eventExpr = input$submitA, 
+    eventExpr = input$submitA,
     handlerExpr = {
       updateButton(
         session = session,
@@ -1002,31 +1093,31 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$retryA, 
+    eventExpr = input$retryA,
     handlerExpr = {
       updateButton(
-        session = session, 
-        inputId = "submitA", 
+        session = session,
+        inputId = "submitA",
         disabled = FALSE
       )
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$submitB, 
+    eventExpr = input$submitB,
     handlerExpr = {
       updateButton(
-        session = session, 
-        inputId = "submitB", 
+        session = session,
+        inputId = "submitB",
         disabled = TRUE
       )
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$retryB, 
+    eventExpr = input$retryB,
     handlerExpr = {
       updateButton(
         session = session,
@@ -1035,80 +1126,106 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$submitC, 
+    eventExpr = input$submitC,
     handlerExpr = {
       updateButton(
-        session = session, 
-        inputId = "submitC", 
+        session = session,
+        inputId = "submitC",
         disabled = TRUE
       )
     }
   )
-  
+
   observe({
     if (length(index_list$listc) == 1) {
       updateButton(
-        session = session, 
+        session = session,
         inputId = "newQLvl3",
         disabled = TRUE
       )
       updateButton(
-        session = session, 
+        session = session,
         inputId = "submitC",
         disabled = TRUE
       )
       shinyalert(
         title = "Oops!",
-        text = "You have used up all 16 tries. Please click 'previous' then
-        click 'next level' to re-enter this level to try again",
+        text = "You have used up all 16 tries. Please click 'Restart Level' to
+        reset the level and try again.",
         type = "error")
+      updateButton(
+        session = session,
+        inputId = "restartlvl3",
+        disabled = FALSE
+      )
     }
   })
-  
+
   observe({
     if (length(index_listD$listD) == 1) {
       updateButton(
-        session = session, 
+        session = session,
         inputId = "newQLvl4",
         disabled = TRUE
       )
       updateButton(
         session = session,
-        inputId = "submitD", 
+        inputId = "submitD",
         disabled = TRUE
       )
       shinyalert(
         title = "Oops!",
-        text = "You have used up all 8 tries. Please click 'previous'
-        then click 'next level' to re-enter this level to try again", 
+        text = "You have used up all 7 tries. Please click 'Previous Level'
+        then click 'Next Level' to re-enter this level to try again.",
         type = "error")
     }
   })
-  
+
   observeEvent(
-    eventExpr = input$submitC, 
+    eventExpr = input$submitC,
     handlerExpr = {
       updateButton(
-        session = session, 
-        inputId = "newQLvl3", 
+        session = session,
+        inputId = "newQLvl3",
         disabled = FALSE
       )
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$prevBtwnLvls, 
+    eventExpr = input$prevBtwnLvls,
     handlerExpr = {
       updateButton(
-        session = session, 
-        inputId = "submitC", 
+        session = session,
+        inputId = "submitC",
         disabled = FALSE
       )
     }
   )
-  
+
+  observeEvent(
+    eventExpr = input$restartlvl3,
+    handlerExpr = {
+      updateButton(
+        session = session,
+        inputId = "submitC",
+        disabled = FALSE
+      )
+      updateButton(
+        session = session,
+        inputId = "restartlvl3",
+        disabled = TRUE
+      )
+      summationC$correct1 <- c(0)
+          updateProgressBar(
+            id = "barLevel3",
+            value = 0
+          )
+    }
+  )
+
   observeEvent(
     eventExpr = input$newQLvl3,
     handlerExpr = {
@@ -1119,31 +1236,31 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = input$newQLvl3,
     handlerExpr = {
       updateButton(
-        session = session, 
+        session = session,
         inputId = "newQLvl3",
         disabled = TRUE
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitD,
     handlerExpr = {
       updateButton(
         session = session,
-        inputId = "submitD", 
+        inputId = "submitD",
         disabled = TRUE
       )
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$submitD, 
+    eventExpr = input$submitD,
     handlerExpr = {
       updateButton(
         session = session,
@@ -1152,49 +1269,49 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$prevLvl3, 
+    eventExpr = input$prevLvl3,
     handlerExpr = {
       updateButton(
-        session = session, 
+        session = session,
         inputId = "submitD",
         disabled = FALSE
       )
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$newQLvl4, 
+    eventExpr = input$newQLvl4,
     handlerExpr = {
       updateButton(
-        session = session, 
-        inputId = "submitD", 
+        session = session,
+        inputId = "submitD",
         disabled = FALSE
       )
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$newQLvl4, 
+    eventExpr = input$newQLvl4,
     handlerExpr = {
       updateButton(
-        session = session, 
+        session = session,
         inputId = "newQLvl4",
         disabled = TRUE
-      ) 
+      )
     }
   )
-  
+
   ## Level 1 ----
   scoreLevelA <- reactiveVal(0)
-  
+
   subsetBankA <- reactiveVal(
     value = {
       subsetBankA <- bankA %>%
-        group_by(Type) %>%
+        group_by(Type,Category) %>%
         slice_sample(n = 4)
-      
+
       randOrderL1 <- sample(x = 1:16, size = 16, replace = FALSE)
       subsetBankA[randOrderL1,]
     }
@@ -1203,332 +1320,852 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
-        inputId = "lvl1Q1",
-        label = subsetBankA()$Variable[1]
+        inputId = "lvl1Q1"
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
-        inputId = "lvl1Q2",
-        label = subsetBankA()$Variable[2]
+        inputId = "lvl1Q2"
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
-        inputId = "lvl1Q3",
-        label = subsetBankA()$Variable[3]
+        inputId = "lvl1Q3"
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
-        inputId = "lvl1Q4",
-        label = subsetBankA()$Variable[4]
+        inputId = "lvl1Q4"
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
-        inputId = "lvl1Q5",
-        label = subsetBankA()$Variable[5]
+        inputId = "lvl1Q5"
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
-        inputId = "lvl1Q6",
-        label = subsetBankA()$Variable[6]
+        inputId = "lvl1Q6"
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
-        inputId = "lvl1Q7",
-        label = subsetBankA()$Variable[7]
+        inputId = "lvl1Q7"
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
-        inputId = "lvl1Q8",
-        label = subsetBankA()$Variable[8]
+        inputId = "lvl1Q8"
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
-        inputId = "lvl1Q9",
-        label = subsetBankA()$Variable[9]
+        inputId = "lvl1Q9"
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
-        inputId = "lvl1Q10",
-        label = subsetBankA()$Variable[10]
+        inputId = "lvl1Q10"
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
-        inputId = "lvl1Q11",
-        label = subsetBankA()$Variable[11]
+        inputId = "lvl1Q11"
       )
     }
   )
-  
+
   observeEvent(
     eventExpr = c(input$retryA),
     handlerExpr = {
-      updateRadioButtons(
+      updateSelectInput(
         session = session,
-        inputId = "lvl1Q12",
-        label = subsetBankA()$Variable[12]
+        inputId = "lvl1Q12"
       )
     }
   )
-  
+
+  output$titleQ1 <- renderUI(
+    expr = {
+      tags$strong(paste("1. ", subsetBankA()$Variable[1]))
+    }
+  )
+
+  output$titleQ2 <- renderUI(
+    expr = {
+      tags$strong(paste("2. ", subsetBankA()$Variable[2]))
+    }
+  )
+
+  output$titleQ3 <- renderUI(
+    expr = {
+      tags$strong(paste("3. ", subsetBankA()$Variable[3]))
+    }
+  )
+
+  output$titleQ4 <- renderUI(
+    expr = {
+      tags$strong(paste("4. ", subsetBankA()$Variable[4]))
+    }
+  )
+
+  output$titleQ5 <- renderUI(
+    expr = {
+      tags$strong(paste("5. ", subsetBankA()$Variable[5]))
+    }
+  )
+
+  output$titleQ6 <- renderUI(
+    expr = {
+      tags$strong(paste("6. ", subsetBankA()$Variable[6]))
+    }
+  )
+
+  output$titleQ7 <- renderUI(
+    expr = {
+      tags$strong(paste("7. ", subsetBankA()$Variable[7]))
+    }
+  )
+
+  output$titleQ8 <- renderUI(
+    expr = {
+      tags$strong(paste("8. ", subsetBankA()$Variable[8]))
+    }
+  )
+
+  output$titleQ9 <- renderUI(
+    expr = {
+      tags$strong(paste("9. ", subsetBankA()$Variable[9]))
+    }
+  )
+
+  output$titleQ10 <- renderUI(
+    expr = {
+      tags$strong(paste("10. ", subsetBankA()$Variable[10]))
+    }
+  )
+
+  output$titleQ11 <- renderUI(
+    expr = {
+      tags$strong(paste("11. ", subsetBankA()$Variable[11]))
+    }
+  )
+
+  output$titleQ12 <- renderUI(
+    expr = {
+      tags$strong(paste("12. ", subsetBankA()$Variable[12]))
+    }
+  )
+
   ### Validation ----
+  lvl1Q1p2value <- reactiveVal(NULL)
+  lvl1Q2p2value <- reactiveVal(NULL)
+  lvl1Q3p2value <- reactiveVal(NULL)
+  lvl1Q4p2value <- reactiveVal(NULL)
+  lvl1Q5p2value <- reactiveVal(NULL)
+  lvl1Q6p2value <- reactiveVal(NULL)
+  lvl1Q7p2value <- reactiveVal(NULL)
+  lvl1Q8p2value <- reactiveVal(NULL)
+  lvl1Q9p2value <- reactiveVal(NULL)
+  lvl1Q10p2value <- reactiveVal(NULL)
+  lvl1Q11p2value <- reactiveVal(NULL)
+  lvl1Q12p2value <- reactiveVal(NULL)
+
+  observeEvent(eventExpr = input$submitA,
+               handlerExpr = {
+                 lvl1Q1p2value(trimws(input$lvl1Q1p2))
+                 lvl1Q2p2value(trimws(input$lvl1Q2p2))
+                 lvl1Q3p2value(trimws(input$lvl1Q3p2))
+                 lvl1Q4p2value(trimws(input$lvl1Q4p2))
+                 lvl1Q5p2value(trimws(input$lvl1Q5p2))
+                 lvl1Q6p2value(trimws(input$lvl1Q6p2))
+                 lvl1Q7p2value(trimws(input$lvl1Q7p2))
+                 lvl1Q8p2value(trimws(input$lvl1Q8p2))
+                 lvl1Q9p2value(trimws(input$lvl1Q9p2))
+                 lvl1Q10p2value(trimws(input$lvl1Q10p2))
+                 lvl1Q11p2value(trimws(input$lvl1Q11p2))
+                 lvl1Q12p2value(trimws(input$lvl1Q12p2))
+    })
+
+  # ordinalWrong_nominal would refer to a question where user put ordinal but nominal is correct
+  ordinalWrong_nominal <- ("Ordinal variables require a specific ranking between values.")
+  nominalWrong_ordinal <- ("Does this variable have an order/hierarchy within the data values?")
+  discreteWrong_continuous <- ("Can Discrete variables be any decimal value within an interval or are they counted in steps?")
+  continuousWrong_discrete <- ("Continuous variables can take on any decimal value within an interval, is that the case here?")
+  contdiscWrong_ordnom <- ("Note, Discrete and Continuous variables rely on numerical data values.")
+  ordnomWrong_contdisc <- ("Note, Ordinal and Nominal variables rely on categorical data values.")
+  qualWrong_quan <- ("Remember, a Qualitative variable has categorical data values.")
+  quanWrong_qual <- ("Remember, Quantitative variables have numerical data values.")
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
       attempts$level1 <- attempts$level1 + 1
       if (!is.null(input$lvl1Q1)) {
-        valid <- any(trimws(input$lvl1Q1) == subsetBankA()$Type[1])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q1) == subsetBankA()$Type[1])
+        validCat <- any(trimws(input$lvl1Q1p2) == subsetBankA()$Category[1])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
-          output$lvl1A1 <- renderIcon(icon = "correct", width = 30)
+          output$lvl1A1 <- renderIcon(icon = "correct", width = 36)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 1)
+          output$lvl1A1 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 36)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[1] == "Quantitative" & validType & (lvl1Q1p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[1] == "Quantitative" & validType & (lvl1Q1p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[1] == "Qualitative" & validType & (lvl1Q1p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[1] == "Qualitative" & validType & (lvl1Q1p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[1] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[1] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[1] == "Quantitative" & validType & (lvl1Q1p2value() == 'Nominal' | lvl1Q1p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[1] == "Qualitative" & validType & (lvl1Q1p2value() == 'Discrete' | lvl1Q1p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A1 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl1A1 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q2)) {
-        valid <- any(trimws(input$lvl1Q2) == subsetBankA()$Type[2])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q2) == subsetBankA()$Type[2])
+        validCat <- any(trimws(input$lvl1Q2p2) == subsetBankA()$Category[2])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
-          output$lvl1A2 <- renderIcon(icon = "correct", width = 30)
+          output$lvl1A2 <- renderIcon(icon = "correct", width = 36)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 1)
+          output$lvl1A2 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 36)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[2] == "Quantitative" & validType & (lvl1Q2p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[2] == "Quantitative" & validType & (lvl1Q2p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[2] == "Qualitative" & validType & (lvl1Q2p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[2] == "Qualitative" & validType & (lvl1Q2p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[2] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[2] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[2] == "Quantitative" & validType & (lvl1Q2p2value() == 'Nominal' | lvl1Q2p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[2] == "Qualitative" & validType & (lvl1Q2p2value() == 'Discrete' | lvl1Q2p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A2 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl1A2 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q3)) {
-        valid <- any(trimws(input$lvl1Q3) == subsetBankA()$Type[3])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q3) == subsetBankA()$Type[3])
+        validCat <- any(trimws(input$lvl1Q3p2) == subsetBankA()$Category[3])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
-          output$lvl1A3 <- renderIcon(icon = "correct", width = 30)
+          output$lvl1A3 <- renderIcon(icon = "correct", width = 36)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 1)
+          output$lvl1A3 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 36)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[3] == "Quantitative" & validType & (lvl1Q3p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[3] == "Quantitative" & validType & (lvl1Q3p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[3] == "Qualitative" & validType & (lvl1Q3p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[3] == "Qualitative" & validType & (lvl1Q3p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[3] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[3] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[3] == "Quantitative" & validType & (lvl1Q3p2value() == 'Nominal' | lvl1Q3p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[3] == "Qualitative" & validType & (lvl1Q3p2value() == 'Discrete' | lvl1Q3p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A3 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl1A3 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q4)) {
-        valid <- any(trimws(input$lvl1Q4) == subsetBankA()$Type[4])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q4) == subsetBankA()$Type[4])
+        validCat <- any(trimws(input$lvl1Q4p2) == subsetBankA()$Category[4])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
-          output$lvl1A4 <- renderIcon(icon = "correct", width = 30)
+          output$lvl1A4 <- renderIcon(icon = "correct", width = 36)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 1)
+          output$lvl1A4 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 36)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[4] == "Quantitative" & validType & (lvl1Q4p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[4] == "Quantitative" & validType & (lvl1Q4p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[4] == "Qualitative" & validType & (lvl1Q4p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[4] == "Qualitative" & validType & (lvl1Q4p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[4] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[4] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[4] == "Quantitative" & validType & (lvl1Q4p2value() == 'Nominal' | lvl1Q4p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[4] == "Qualitative" & validType & (lvl1Q4p2value() == 'Discrete' | lvl1Q4p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A4 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl1A4 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q5)) {
-        valid <- any(trimws(input$lvl1Q5) == subsetBankA()$Type[5])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q5) == subsetBankA()$Type[5])
+        validCat <- any(trimws(input$lvl1Q5p2) == subsetBankA()$Category[5])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
-          output$lvl1A5 <- renderIcon(icon = "correct", width = 30)
+          output$lvl1A5 <- renderIcon(icon = "correct", width = 36)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 1)
+          output$lvl1A5 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 36)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[5] == "Quantitative" & validType & (lvl1Q5p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[5] == "Quantitative" & validType & (lvl1Q5p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[5] == "Qualitative" & validType & (lvl1Q5p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[5] == "Qualitative" & validType & (lvl1Q5p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[5] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[5] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[5] == "Quantitative" & validType & (lvl1Q5p2value() == 'Nominal' | lvl1Q5p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[5] == "Qualitative" & validType & (lvl1Q5p2value() == 'Discrete' | lvl1Q5p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A5 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl1A5 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q6)) {
-        valid <- any(trimws(input$lvl1Q6) == subsetBankA()$Type[6])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q6) == subsetBankA()$Type[6])
+        validCat <- any(trimws(input$lvl1Q6p2) == subsetBankA()$Category[6])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
-          output$lvl1A6 <- renderIcon(icon = "correct", width = 30)
+          output$lvl1A6 <- renderIcon(icon = "correct", width = 36)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 1)
+          output$lvl1A6 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 36)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[6] == "Quantitative" & validType & (lvl1Q6p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[6] == "Quantitative" & validType & (lvl1Q6p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[6] == "Qualitative" & validType & (lvl1Q6p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[6] == "Qualitative" & validType & (lvl1Q6p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[6] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[6] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[6] == "Quantitative" & validType & (lvl1Q6p2value() == 'Nominal' | lvl1Q6p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[6] == "Qualitative" & validType & (lvl1Q6p2value() == 'Discrete' | lvl1Q6p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A6 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl1A6 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q7)) {
-        valid <- any(trimws(input$lvl1Q7) == subsetBankA()$Type[7])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q7) == subsetBankA()$Type[7])
+        validCat <- any(trimws(input$lvl1Q7p2) == subsetBankA()$Category[7])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
-          output$lvl1A7 <- renderIcon(icon = "correct", width = 30)
+          output$lvl1A7 <- renderIcon(icon = "correct", width = 36)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 1)
+          output$lvl1A7 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 36)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[7] == "Quantitative" & validType & (lvl1Q7p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[7] == "Quantitative" & validType & (lvl1Q7p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[7] == "Qualitative" & validType & (lvl1Q7p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[7] == "Qualitative" & validType & (lvl1Q7p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[7] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[7] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[7] == "Quantitative" & validType & (lvl1Q7p2value() == 'Nominal' | lvl1Q7p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[7] == "Qualitative" & validType & (lvl1Q7p2value() == 'Discrete' | lvl1Q7p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A7 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl1A7 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q8)) {
-        valid <- any(trimws(input$lvl1Q8) == subsetBankA()$Type[8])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q8) == subsetBankA()$Type[8])
+        validCat <- any(trimws(input$lvl1Q8p2) == subsetBankA()$Category[8])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
-          output$lvl1A8 <- renderIcon(icon = "correct", width = 30)
+          output$lvl1A8 <- renderIcon(icon = "correct", width = 36)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 1)
+          output$lvl1A8 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 36)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[8] == "Quantitative" & validType & (lvl1Q8p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[8] == "Quantitative" & validType & (lvl1Q8p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[8] == "Qualitative" & validType & (lvl1Q8p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[8] == "Qualitative" & validType & (lvl1Q8p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[8] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[8] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[8] == "Quantitative" & validType & (lvl1Q8p2value() == 'Nominal' | lvl1Q8p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[8] == "Qualitative" & validType & (lvl1Q8p2value() == 'Discrete' | lvl1Q8p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A8 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl1A8 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q9)) {
-        valid <- any(trimws(input$lvl1Q9) == subsetBankA()$Type[9])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q9) == subsetBankA()$Type[9])
+        validCat <- any(trimws(input$lvl1Q9p2) == subsetBankA()$Category[9])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
-          output$lvl1A9 <- renderIcon(icon = "correct", width = 30)
-        } else {
+          output$lvl1A9 <- renderIcon(icon = "correct", width = 36)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 1)
+          output$lvl1A9 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 36)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[9] == "Quantitative" & validType & (lvl1Q9p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[9] == "Quantitative" & validType & (lvl1Q9p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[9] == "Qualitative" & validType & (lvl1Q9p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[9] == "Qualitative" & validType & (lvl1Q9p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[9] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[9] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[9] == "Quantitative" & validType & (lvl1Q9p2value() == 'Nominal' | lvl1Q9p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[9] == "Qualitative" & validType & (lvl1Q9p2value() == 'Discrete' | lvl1Q9p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
+        }else {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A9 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl1A9 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q10)) {
-        valid <- any(trimws(input$lvl1Q10) == subsetBankA()$Type[10])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q10) == subsetBankA()$Type[10])
+        validCat <- any(trimws(input$lvl1Q10p2) == subsetBankA()$Category[10])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
-          output$lvl1A10 <- renderIcon(icon = "correct", width = 30)
+          output$lvl1A10 <- renderIcon(icon = "correct", width = 36)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 1)
+          output$lvl1A10 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 36)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[10] == "Quantitative" & validType & (lvl1Q10p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[10] == "Quantitative" & validType & (lvl1Q10p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[10] == "Qualitative" & validType & (lvl1Q10p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[10] == "Qualitative" & validType & (lvl1Q10p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[10] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[10] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[10] == "Quantitative" & validType & (lvl1Q10p2value() == 'Nominal' | lvl1Q10p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[10] == "Qualitative" & validType & (lvl1Q10p2value() == 'Discrete' | lvl1Q10p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A10 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl1A10 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q11)) {
-        valid <- any(trimws(input$lvl1Q11) == subsetBankA()$Type[11])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q11) == subsetBankA()$Type[11])
+        validCat <- any(trimws(input$lvl1Q11p2) == subsetBankA()$Category[11])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
-          output$lvl1A11 <- renderIcon(icon = "correct", width = 30)
+          output$lvl1A11 <- renderIcon(icon = "correct", width = 36)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 1)
+          output$lvl1A11 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 36)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[11] == "Quantitative" & validType & (lvl1Q11p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[11] == "Quantitative" & validType & (lvl1Q11p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[11] == "Qualitative" & validType & (lvl1Q11p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[11] == "Qualitative" & validType & (lvl1Q11p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[11] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[11] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[11] == "Quantitative" & validType & (lvl1Q11p2value() == 'Nominal' | lvl1Q11p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[11] == "Qualitative" & validType & (lvl1Q11p2value() == 'Discrete' | lvl1Q11p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A11 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl1A11 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
       if (!is.null(input$lvl1Q12)) {
-        valid <- any(trimws(input$lvl1Q12) == subsetBankA()$Type[12])
-        if (valid) {
+        validType <- any(trimws(input$lvl1Q12) == subsetBankA()$Type[12])
+        validCat <- any(trimws(input$lvl1Q12p2) == subsetBankA()$Category[12])
+        if (validType & validCat) {
           scoreLevelA(scoreLevelA() + 2.5)
-          output$lvl1A12 <- renderIcon(icon = "correct", width = 30)
+          output$lvl1A12 <- renderIcon(icon = "correct", width = 36)
+        } else if (validType | validCat) {
+          scoreLevelA(scoreLevelA() + 1)
+          output$lvl1A12 <- renderUI({
+            fluidRow(
+              column(
+                width = 2,
+                align = "left",
+                renderIcon(icon = 'partial',
+                           width = 36)
+              ),
+              column(
+                width = 10,
+                align = "left",
+                if (subsetBankA()$Type[12] == "Quantitative" & validType & (lvl1Q12p2value() == 'Discrete')) {
+                  discreteWrong_continuous
+                } else if (subsetBankA()$Type[12] == "Quantitative" & validType & (lvl1Q12p2value() == 'Continuous')) {
+                  continuousWrong_discrete
+                } else if (subsetBankA()$Type[12] == "Qualitative" & validType & (lvl1Q12p2value() == 'Ordinal')) {
+                  ordinalWrong_nominal
+                } else if (subsetBankA()$Type[12] == "Qualitative" & validType & (lvl1Q12p2value() == 'Nominal')) {
+                  nominalWrong_ordinal
+                } else if (subsetBankA()$Type[12] == "Quantitative" & !validType) {
+                  qualWrong_quan
+                } else if (subsetBankA()$Type[12] == "Qualitative" & !validType) {
+                  quanWrong_qual
+                } else if (subsetBankA()$Type[12] == "Quantitative" & validType & (lvl1Q12p2value() == 'Nominal' | lvl1Q12p2value() == 'Ordinal')) {
+                  ordnomWrong_contdisc
+                } else if (subsetBankA()$Type[12] == "Qualitative" & validType & (lvl1Q12p2value() == 'Discrete' | lvl1Q12p2value() == 'Continuous')) {
+                  contdiscWrong_ordnom
+                }
+              )
+            )
+          }
+          )
         } else {
           scoreLevelA(scoreLevelA() + 0)
-          output$lvl1A12 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl1A12 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
+
   ### Scoring and Update Buttons ----
   observeEvent(
-    eventExpr = input$retryA, 
+    eventExpr = input$retryA,
     handlerExpr = {
       output$lvl1A1 <- renderIcon()
       output$lvl1A2 <- renderIcon()
@@ -1550,13 +2187,13 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   output$scoreA <- renderText(
     expr = {
       paste("You have", scoreLevelA(), "points.")
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitA,
     handlerExpr = {
@@ -1569,21 +2206,21 @@ server <- function(input, output, session) {
       }
     }
   )
-  
+
   ## Level 2 ----
   scoreLevelB <- reactiveVal(0)
-  
+
   subsetBankB <- reactiveVal(
     value = {
       subsetBankB <- bankB %>%
         group_by(Type) %>%
         slice_sample(n = 1)
-      
+
       randOrderL2 <- sample(x = 1:4, size = 4, replace = FALSE)
       subsetBankB[randOrderL2,]
     }
   )
-  
+
   ### Labels/Images ----
   output$imgQ1 <- renderText(
     expr = {
@@ -1594,12 +2231,12 @@ server <- function(input, output, session) {
     expr = {
       img(src = subsetBankB()$Variable[1],
           alt = subsetBankB()$Alt[1],
-          width = "95%",
-          height = "95%", 
-          style = "text-align: center")
+          width = "65%",
+          #height = "95%",
+          style = "text-align: center;")
     }
   )
-  
+
   output$imgQ2 <- renderText(
     expr = {
       paste("2.", subsetBankB()$Question[2])
@@ -1609,12 +2246,12 @@ server <- function(input, output, session) {
     expr = {
       img(src = subsetBankB()$Variable[2],
           alt = subsetBankB()$Alt[2],
-          width = "95%",
-          height = "95%", 
-          style = "text-align: center")
+          width = "65%",
+          #height = "95%",
+          style = "text-align: center;")
     }
   )
-  
+
   output$imgQ3 <- renderText(
     expr = {
       paste("3.", subsetBankB()$Question[3])
@@ -1624,12 +2261,12 @@ server <- function(input, output, session) {
     expr = {
       img(src = subsetBankB()$Variable[3],
           alt = subsetBankB()$Alt[3],
-          width = "95%",
-          height = "95%", 
-          style = "text-align: center")
+          width = "65%",
+          #height = "95%",
+          style = "text-align: center;")
     }
   )
-  
+
   output$imgQ4 <- renderText(
     expr = {
       paste("4.", subsetBankB()$Question[4])
@@ -1639,12 +2276,12 @@ server <- function(input, output, session) {
     expr = {
       img(src = subsetBankB()$Variable[4],
           alt = subsetBankB()$Alt[4],
-          width = "95%",
-          height = "95%", 
-          style = "text-align: center")
+          width = "65%",
+          #height = "95%",
+          style = "text-align: center;")
     }
   )
-  
+
   ### Validation ----
   observeEvent(
     eventExpr = input$submitB,
@@ -1654,15 +2291,15 @@ server <- function(input, output, session) {
         valid <- any(trimws(input$lvl2Q1) == subsetBankB()$Type[1])
         if (valid) {
           scoreLevelB(scoreLevelB() + 5)
-          output$lvl2A1 <- renderIcon(icon = "correct", width = 30)
+          output$lvl2A1 <- renderIcon(icon = "correct", width = 36)
         } else {
           scoreLevelB(scoreLevelB() + 0)
-          output$lvl2A1 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl2A1 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitB,
     handlerExpr = {
@@ -1670,15 +2307,15 @@ server <- function(input, output, session) {
         valid <- any(trimws(input$lvl2Q2) == subsetBankB()$Type[2])
         if (valid) {
           scoreLevelB(scoreLevelB() + 5)
-          output$lvl2A2 <- renderIcon(icon = "correct", width = 30)
+          output$lvl2A2 <- renderIcon(icon = "correct", width = 36)
         } else {
           scoreLevelB(scoreLevelB() + 0)
-          output$lvl2A2 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl2A2 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitB,
     handlerExpr = {
@@ -1686,15 +2323,15 @@ server <- function(input, output, session) {
         valid <- any(trimws(input$lvl2Q3) == subsetBankB()$Type[3])
         if (valid) {
           scoreLevelB(scoreLevelB() + 5)
-          output$lvl2A3 <- renderIcon(icon = "correct", width = 30)
+          output$lvl2A3 <- renderIcon(icon = "correct", width = 36)
         } else {
           scoreLevelB(scoreLevelB() + 0)
-          output$lvl2A3 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl2A3 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitB,
     handlerExpr = {
@@ -1702,15 +2339,15 @@ server <- function(input, output, session) {
         valid <- any(trimws(input$lvl2Q4) == subsetBankB()$Type[4])
         if (valid) {
           scoreLevelB(scoreLevelB() + 5)
-          output$lvl2A4 <- renderIcon(icon = "correct", width = 30)
+          output$lvl2A4 <- renderIcon(icon = "correct", width = 36)
         } else {
           scoreLevelB(scoreLevelB() + 0)
-          output$lvl2A4 <- renderIcon(icon = "incorrect", width = 30)
+          output$lvl2A4 <- renderIcon(icon = "incorrect", width = 36)
         }
       }
     }
   )
-  
+
   ### Scoring and Update Buttons----
   observeEvent(
     eventExpr = input$retryB,
@@ -1722,27 +2359,32 @@ server <- function(input, output, session) {
       scoreLevelB(0)
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$submitB, 
+    eventExpr = input$submitB,
     handlerExpr = {
       if (scoreLevelB() >= 20) {
         updateButton(
-          session = session, 
+          session = session,
           inputId = "toBtwnLvls",
           disabled = FALSE
         )
+        shinyalert(
+          title = "Good Job!",
+          text = "You have completed levels 1 and 2 of the Variable Types and Roles Matching Game. You can continue onto the next challenge
+          or refresh the page to restart the game and continue practicing if needed.",
+          type = "success")
       }
       else {
         updateButton(
-          session = session, 
-          inputId = "toBtwnLvls", 
+          session = session,
+          inputId = "toBtwnLvls",
           disabled = TRUE
         )
       }
     }
   )
-  
+
   output$scoreB <- renderText(
     expr = {
       paste("You have", scoreLevelB(), "points.")
@@ -1751,29 +2393,33 @@ server <- function(input, output, session) {
 
   ## Level 3 ----
   index <- reactiveValues(index = 18)
-  
+
   index_list <- reactiveValues(listc = sample(1:17, 17, replace = FALSE))
-  
+
   observeEvent(
-    eventExpr = input$prevBtwnLvls, 
+    eventExpr = input$restartlvl3,
+    handlerExpr = {
+      if (length(index_list$listc) < 17) {
+        index$index <- 18
+        index$exp_index <- 2 * index$index - 1
+        index$res_index <- 2 * index$index
+        index_list$listc <- c(index_list$listc, sample(1:16, 16, replace = FALSE))
+      }
+    })
+
+  observeEvent(
+    eventExpr = input$startChallenge2,
     handlerExpr = {
       updateTabsetPanel(
-        session = session, 
-        inputId = "levels", 
-        selected = "d")
-      index_list$listc <- c(index_list$listc, sample(1:17, 17, replace = FALSE))
-    }
-  )
-  
-  observeEvent(
-    eventExpr = input$toBtwnLvls,
-    handlerExpr = {
+        session = session,
+        inputId = "levels2",
+        selected = "e")
       index$index <- 18
       index$exp_index <- 2 * index$index - 1
       index$res_index <- 2 * index$index
     }
   )
-  
+
   observeEvent(
     eventExpr = input$newQLvl3,
     handlerExpr = {
@@ -1791,141 +2437,141 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   key1 <- as.matrix(bankC[1:36, 1])
   ### Labels ----
   output$questionC <- renderUI(
     expr = {
       if (index$index == 1) {
-        h3(bankC[1, 5])
+        p(bankC[1, 5])
       } else if (index$index == 2) {
-        h3(bankC[3, 5])
+        p(bankC[3, 5])
       } else if (index$index == 3) {
-        h3(bankC[5, 5])
+        p(bankC[5, 5])
       } else if (index$index == 4) {
-        h3(bankC[7, 5])
+        p(bankC[7, 5])
       }
       else if (index$index == 5) {
-        h3(bankC[9, 5])
+        p(bankC[9, 5])
       } else if (index$index == 6) {
-        h3(bankC[11, 5])
+        p(bankC[11, 5])
       } else if (index$index == 7) {
-        h3(bankC[13, 5])
+        p(bankC[13, 5])
       } else if (index$index == 8) {
-        h3(bankC[15, 5])
+        p(bankC[15, 5])
       }
       else if (index$index == 9) {
-        h3(bankC[17, 5])
+        p(bankC[17, 5])
       } else if (index$index == 10) {
-        h3(bankC[19, 5])
+        p(bankC[19, 5])
       } else if (index$index == 11) {
-        h3(bankC[21, 5])
+        p(bankC[21, 5])
       } else if (index$index == 12) {
-        h3(bankC[23, 5])
+        p(bankC[23, 5])
       } else if (index$index == 13) {
-        h3(bankC[25, 5])
+        p(bankC[25, 5])
       } else if (index$index == 14) {
-        h3(bankC[27, 5])
+        p(bankC[27, 5])
       } else if (index$index == 15) {
-        h3(bankC[29, 5])
+        p(bankC[29, 5])
       } else if (index$index == 16) {
-        h3(bankC[31, 5])
+        p(bankC[31, 5])
       } else if (index$index == 17) {
-        h3(bankC[33, 5])
+        p(bankC[33, 5])
       } else if (index$index == 18) {
-        h3(bankC[35, 5])
+        p(bankC[35, 5])
       }
     }
   )
-  
+
   output$varEXP <- renderUI(
     expr = {
       if (index$index == 1) {
-        h3(bankC[1, 4])
+        p(tags$strong(bankC[1, 4]))
       } else if (index$index == 2) {
-        h3(bankC[3, 4])
+        p(tags$strong(bankC[3, 4]))
       } else if (index$index == 3) {
-        h3(bankC[5, 4])
+        p(tags$strong(bankC[5, 4]))
       } else if (index$index == 4) {
-        h3(bankC[7, 4])
+        p(tags$strong(bankC[7, 4]))
       }
       else if (index$index == 5) {
-        h3(bankC[9, 4])
+        p(tags$strong(bankC[9, 4]))
       } else if (index$index == 6) {
-        h3(bankC[11, 4])
+        p(tags$strong(bankC[11, 4]))
       } else if (index$index == 7) {
-        h3(bankC[13, 4])
+        p(tags$strong(bankC[13, 4]))
       } else if (index$index == 8) {
-        h3(bankC[15, 4])
+        p(tags$strong(bankC[15, 4]))
       }
       else if (index$index == 9) {
-        h3(bankC[17, 4])
+        p(tags$strong(bankC[17, 4]))
       } else if (index$index == 10) {
-        h3(bankC[19, 4])
+        p(tags$strong(bankC[19, 4]))
       } else if (index$index == 11) {
-        h3(bankC[21, 4])
+        p(tags$strong(bankC[21, 4]))
       } else if (index$index == 12) {
-        h3(bankC[23, 4])
+        p(tags$strong(bankC[23, 4]))
       }
       else if (index$index == 13) {
-        h3(bankC[25, 4])
+        p(tags$strong(bankC[25, 4]))
       } else if (index$index == 14) {
-        h3(bankC[27, 4])
+        p(tags$strong(bankC[27, 4]))
       } else if (index$index == 15) {
-        h3(bankC[29, 4])
+        p(tags$strong(bankC[29, 4]))
       } else if (index$index == 16) {
-        h3(bankC[31, 4])
+        p(tags$strong(bankC[31, 4]))
       }
       else if (index$index == 17) {
-        h3(bankC[33, 4])
+        p(tags$strong(bankC[33, 4]))
       } else if (index$index == 18) {
-        h3(bankC[35, 4])
+        p(tags$strong(bankC[35, 4]))
       }
     }
   )
-  
+
   output$varRES <- renderUI(
     expr = {
       if (index$index == 1) {
-        h3(bankC[2, 4])
+        p(tags$strong(bankC[2, 4]))
       } else if (index$index == 2) {
-        h3(bankC[4, 4])
+        p(tags$strong(bankC[4, 4]))
       } else if (index$index == 3) {
-        h3(bankC[6, 4])
+        p(tags$strong(bankC[6, 4]))
       } else if (index$index == 4) {
-        h3(bankC[8, 4])
+        p(tags$strong(bankC[8, 4]))
       }
       else if (index$index == 5) {
-        h3(bankC[10, 4])
+        p(tags$strong(bankC[10, 4]))
       } else if (index$index == 6) {
-        h3(bankC[12, 4])
+        p(tags$strong(bankC[12, 4]))
       } else if (index$index == 7) {
-        h3(bankC[14, 4])
+        p(tags$strong(bankC[14, 4]))
       } else if (index$index == 8) {
-        h3(bankC[16, 4])
+        p(tags$strong(bankC[16, 4]))
       }
       else if (index$index == 9) {
-        h3(bankC[18, 4])
+        p(tags$strong(bankC[18, 4]))
       } else if (index$index == 10) {
-        h3(bankC[20, 4])
+        p(tags$strong(bankC[20, 4]))
       } else if (index$index == 11) {
-        h3(bankC[22, 4])
+        p(tags$strong(bankC[22, 4]))
       } else if (index$index == 12) {
-        h3(bankC[24, 4])
+        p(tags$strong(bankC[24, 4]))
       }
       else if (index$index == 13) {
-        h3(bankC[26, 4])
+        p(tags$strong(bankC[26, 4]))
       } else if (index$index == 14) {
-        h3(bankC[28, 4])
+        p(tags$strong(bankC[28, 4]))
       } else if (index$index == 15) {
-        h3(bankC[30, 4])
+        p(tags$strong(bankC[30, 4]))
       } else if (index$index == 16) {
-        h3(bankC[32, 4])
+        p(tags$strong(bankC[32, 4]))
       }
       else if (index$index == 17) {
-        h3(bankC[34, 4])
+        p(tags$strong(bankC[34, 4]))
       } else if (index$index == 18) {
-        h3(bankC[36, 4])
+        p(tags$strong(bankC[36, 4]))
       }
     }
   )
@@ -1938,7 +2584,7 @@ server <- function(input, output, session) {
         eventExpr = input$newQLvl3,
         handlerExpr = {
           output$markc1 <- renderUI(
-            img(src = NULL,width = 30)
+            img(src = NULL,width = 36)
           )
         }
       )
@@ -1946,15 +2592,15 @@ server <- function(input, output, session) {
         eventExpr = output$markc1 <- renderUI(expr = {
           if (!is.null(input$explC)) {
             if (any(input$explC == key1[index$exp_index,1])) {
-              renderIcon(icon = "correct", width = 30)
+              renderIcon(icon = "correct", width = 36)
             } else {
-              renderIcon(icon = "incorrect", width = 30)
+              renderIcon(icon = "incorrect", width = 36)
             }
           }
         })
       })
     })
-  
+
   observeEvent(
     eventExpr = input$submitC,
     handlerExpr = {
@@ -1962,22 +2608,22 @@ server <- function(input, output, session) {
         eventExpr = input$newQLvl3,
         handlerExpr = {
           output$markc2 <- renderUI(
-            img(src = NULL,width = 30)
+            img(src = NULL,width = 36)
           )
         })
       observe({
         eventExpr = output$markc2 <- renderUI(expr = {
           if (!is.null(input$respC)) {
             if (any(input$respC == key1[index$res_index,1])) {
-              renderIcon(icon = "correct", width = 30)
+              renderIcon(icon = "correct", width = 36)
             } else {
-              renderIcon(icon = "incorrect", width = 30)
+              renderIcon(icon = "incorrect", width = 36)
             }
           }
         })
       })
     })
-  
+
   observeEvent(
     eventExpr = input$newQLvl3,
     handlerExpr = {
@@ -1986,32 +2632,32 @@ server <- function(input, output, session) {
       reset(id = "submit")
     }
   )
-  
+
   ### Scoring and Update Buttons ----
   summation <- reactiveValues( summationC = c(rep(0, 20)), summationD = c(rep(0, 20)))
   summationC <- reactiveValues(correct1 = c(0), started = FALSE)
-  
+
   observeEvent(
-    eventExpr = input$toBtwnLvls, 
+    eventExpr = input$toBtwnLvls,
     handlerExpr = {
       summationC$started <- TRUE
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$newQLvl3, 
+    eventExpr = input$newQLvl3,
     handlerExpr = {
       summationC$started <- TRUE
     }
   )
-  
+
   observeEvent(
-    eventExpr = input$submitC, 
+    eventExpr = input$submitC,
     handlerExpr = {
       summationC$started <- TRUE
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitC,
     handlerExpr = {
@@ -2024,14 +2670,14 @@ server <- function(input, output, session) {
           summationC$correct1 <- c(summationC$correct1, 0)
         }
       }
-      
+
       total <- sum(c(summationC$correct1))
-      
+
       response <- list(
         "Explanatory" = input$explC,
         "Response" = input$respC
       )
-      
+
       stmt <- boastUtils::generateStatement(
         session,
         verb = "answered",
@@ -2041,30 +2687,26 @@ server <- function(input, output, session) {
         response = jsonlite::toJSON(response),
         success = success
       )
-      
+
       boastUtils::storeStatement(session, stmt)
-      
+
       summation$summationC[input$submitC] <- total
     })
-  
-  output$correctC <- renderPrint(
+
+  output$NumTries <- renderPrint(
     expr = {
-      if (sum(c(summationC$correct1)) == 0) {
-        cat("You have earned 0 points")
-      }
-      else {
-        cat("You have earned", summation$summationC[input$submitC], "points")
-      }
+      tries_left = length(index_list$listc) - 1
+      cat("You have", tries_left, "tries left")
     }
   )
-  
+
   observeEvent(
     eventExpr = input$submitC,
     handlerExpr = {
       if (summation$summationC[input$submitC] >= 5) {
         updateButton(
-          session = session, 
-          inputId = "toLvl4", 
+          session = session,
+          inputId = "toLvl4",
           disabled = FALSE)
         updateButton(
           session = session,
@@ -2073,7 +2715,7 @@ server <- function(input, output, session) {
       }
     }
   )
-  
+
   ### Progress Bar ----
   observe(
     if (sum(c(summationC$correct1)) == 1) {
@@ -2109,19 +2751,22 @@ server <- function(input, output, session) {
   )
   ## Level 4 ----
   index2 <- reactiveValues(index2 = 9)
-  
+
   index_listD <- reactiveValues(listD = sample(1:8, 8, replace = FALSE))
-  
+
   observeEvent(
-    eventExpr = input$prevLvl3, 
+    eventExpr = input$prevLvl3,
     handlerExpr = {
       updateTabsetPanel(
-        session = session, 
-        inputId = "levels", 
+        session = session,
+        inputId = "levels2",
         selected = "e")
-      index_listD$listD <- c(index_listD$listD, sample(1:8, 8, replace = FALSE))
-    }
-  )
+      if (length(index_listD$listD) < 8) {
+        index_listD$listD <- c(index_listD$listD, sample(1:8, 8, replace = FALSE))
+      }
+      index_listD$listD <- index_listD$listD[1:8]
+    })
+
   ### Labels ----
   observeEvent(
     eventExpr = input$toLvl4,
@@ -2132,7 +2777,7 @@ server <- function(input, output, session) {
       index2$confou <- 3 * index2$index2
     }
   )
-  
+
   observeEvent(
     eventExpr = input$newQLvl4,
     handlerExpr = {
@@ -2155,125 +2800,125 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   key2 <- as.matrix(bankD[1:27, 1])
-  
+
   output$questionD <- renderUI(
     expr = {
       if (index2$index2 == 1) {
-        h3(bankD[1, 4])
+        p(bankD[1, 4])
       } else if (index2$index2 == 2) {
-        h3(bankD[4, 4])
+        p(bankD[4, 4])
       } else if (index2$index2 == 3) {
-        h3(bankD[7, 4])
+        p(bankD[7, 4])
       } else if (index2$index2 == 4) {
-        h3(bankD[10, 4])
+        p(bankD[10, 4])
       }
       else if (index2$index2 == 5) {
-        h3(bankD[13, 4])
+        p(bankD[13, 4])
       }
       else if (index2$index2 == 6) {
-        h3(bankD[16, 4])
+        p(bankD[16, 4])
       }
       else if (index2$index2 == 7) {
-        h3(bankD[19, 4])
+        p(bankD[19, 4])
       }
       else if (index2$index2 == 8) {
-        h3(bankD[22, 4])
+        p(bankD[22, 4])
       }
       else if (index2$index2 == 9) {
-        h3(bankD[25, 4])
+        p(bankD[25, 4])
       }
     }
   )
-  
+
   output$varEXPD <- renderUI(
     expr = {
       if (index2$index2 == 1) {
-        h3(bankD[1, 3])
+        p(tags$strong(bankD[1, 3]))
       } else if (index2$index2 == 2) {
-        h3(bankD[4, 3])
+        p(tags$strong(bankD[4, 3]))
       } else if (index2$index2 == 3) {
-        h3(bankD[7, 3])
+        p(tags$strong(bankD[7, 3]))
       } else if (index2$index2 == 4) {
-        h3(bankD[10, 3])
+        p(tags$strong(bankD[10, 3]))
       }
       else if (index2$index2 == 5) {
-        h3(bankD[13, 3])
+        p(tags$strong(bankD[13, 3]))
       }
       else if (index2$index2 == 6) {
-        h3(bankD[16, 3])
+        p(tags$strong(bankD[16, 3]))
       }
       else if (index2$index2 == 7) {
-        h3(bankD[19, 3])
+        p(tags$strong(bankD[19, 3]))
       }
       else if (index2$index2 == 8) {
-        h3(bankD[22, 3])
+        p(tags$strong(bankD[22, 3]))
       }
       else if (index2$index2 == 9) {
-        h3(bankD[25, 3])
+        p(tags$strong(bankD[25, 3]))
       }
     }
   )
-  
+
   output$varRESD <- renderUI(
     expr = {
       if (index2$index2 == 1) {
-        h3(bankD[2, 3])
+        p(tags$strong(bankD[2, 3]))
       } else if (index2$index2 == 2) {
-        h3(bankD[5, 3])
+        p(tags$strong(bankD[5, 3]))
       } else if (index2$index2 == 3) {
-        h3(bankD[8, 3])
+        p(tags$strong(bankD[8, 3]))
       } else if (index2$index2 == 4) {
-        h3(bankD[11, 3])
+        p(tags$strong(bankD[11, 3]))
       }
       else if (index2$index2 == 5) {
-        h3(bankD[14, 3])
+        p(tags$strong(bankD[14, 3]))
       }
       else if (index2$index2 == 6) {
-        h3(bankD[17, 3])
+        p(tags$strong(bankD[17, 3]))
       }
       else if (index2$index2 == 7) {
-        h3(bankD[20, 3])
+        p(tags$strong(bankD[20, 3]))
       }
       else if (index2$index2 == 8) {
-        h3(bankD[23, 3])
+        p(tags$strong(bankD[23, 3]))
       }
       else if (index2$index2 == 9) {
-        h3(bankD[26, 3])
+        p(tags$strong(bankD[26, 3]))
       }
     }
   )
-  
+
   output$varCOND <- renderUI(
     expr = {
       if (index2$index2 == 1) {
-        h3(bankD[3, 3])
+        p(tags$strong(bankD[3, 3]))
       } else if (index2$index2 == 2) {
-        h3(bankD[6, 3])
+        p(tags$strong(bankD[6, 3]))
       } else if (index2$index2 == 3) {
-        h3(bankD[9, 3])
+        p(tags$strong(bankD[9, 3]))
       } else if (index2$index2 == 4) {
-        h3(bankD[12, 3])
+        p(tags$strong(bankD[12, 3]))
       }
       else if (index2$index2 == 5) {
-        h3(bankD[15, 3])
+        p(tags$strong(bankD[15, 3]))
       }
       else if (index2$index2 == 6) {
-        h3(bankD[18, 3])
+        p(tags$strong(bankD[18, 3]))
       }
       else if (index2$index2 == 7) {
-        h3(bankD[21, 3])
+        p(tags$strong(bankD[21, 3]))
       }
       else if (index2$index2 == 8) {
-        h3(bankD[24, 3])
+        p(tags$strong(bankD[24, 3]))
       }
       else if (index2$index2 == 9) {
-        h3(bankD[27, 3])
+        p(tags$strong(bankD[27, 3]))
       }
     }
   )
-  
+
   ### Validate  ----
   observeEvent(
     eventExpr = input$submitD,
@@ -2284,7 +2929,7 @@ server <- function(input, output, session) {
         handlerExpr = {
           output$markd1 <- renderUI(
             expr = {
-              img(src = NULL, width = 30)
+              img(src = NULL, width = 36)
             }
           )
         }
@@ -2294,23 +2939,23 @@ server <- function(input, output, session) {
           expr = {
             if (!is.null(input$expla)) {
               if (any(input$expla == key2[index2$explan, 1])) {
-                renderIcon(icon = "correct", width = 30)
+                renderIcon(icon = "correct", width = 36)
               } else {
-                renderIcon(icon = "incorrect", width = 30)
+                renderIcon(icon = "incorrect", width = 36)
               }
             }
           }
         )
       })
     })
-  
+
   observeEvent(
-    eventExpr = input$submitD, 
+    eventExpr = input$submitD,
     handlerExpr = {
       observeEvent(input$newQLvl4, {
         output$markd2 <- renderUI(
           expr = {
-            img(src = NULL, width = 30)
+            img(src = NULL, width = 36)
           }
         )
       }
@@ -2320,16 +2965,16 @@ server <- function(input, output, session) {
           expr = {
             if (!is.null(input$resp)) {
               if (any(input$resp == key2[index2$respon, 1])) {
-                renderIcon(icon = "correct", width = 30)
+                renderIcon(icon = "correct", width = 36)
               } else {
-                renderIcon(icon = "incorrect", width = 30)
+                renderIcon(icon = "incorrect", width = 36)
               }
             }
           }
         )
       })
     })
-  
+
   observeEvent(
     eventExpr = input$submitD,
     handlerExpr = {
@@ -2338,7 +2983,7 @@ server <- function(input, output, session) {
         handlerExpr = {
           output$markd3 <- renderUI(
             expr = {
-              img(src = NULL, width = 30)
+              img(src = NULL, width = 36)
             }
           )
         }
@@ -2348,16 +2993,16 @@ server <- function(input, output, session) {
           expr = {
             if (!is.null(input$conf)) {
               if (any(input$conf == key2[index2$confou, 1])) {
-                renderIcon(icon = "correct", width = 30)
+                renderIcon(icon = "correct", width = 36)
               } else {
-                renderIcon(icon = "incorrect", width = 30)
+                renderIcon(icon = "incorrect", width = 36)
               }
             }
           }
         )
       })
     })
-  
+
   observeEvent(
     eventExpr = input$newQLvl4,
     handlerExpr = {
@@ -2366,13 +3011,13 @@ server <- function(input, output, session) {
       reset(id = "conf")
     }
   )
-  
+
   ### Scoring and Update Buttons ----
   summationD <- reactiveValues(correct1D = c(0), started = FALSE)
   test <- reactiveValues(A = FALSE, B = FALSE, C = TRUE)
-  
+
   observeEvent(
-    eventExpr = input$submitD, 
+    eventExpr = input$submitD,
     handlerExpr = {
       success <- FALSE
       for (x in c(input$expla)) {
@@ -2383,16 +3028,16 @@ server <- function(input, output, session) {
           summationD$correct1D <- c(summationD$correct1D, 0)
         }
       }
-      
+
       total <- sum(c(summationD$correct1D))
-      
+
       ## TODO: FIX INPUT$CONF & INPUT$RESP VALUES ARE SWITCHED
       response <- list(
         "Explanatory" = input$expla,
         "Response" = input$conf,
         "Confounding" = input$resp
       )
-      
+
       stmt <- boastUtils::generateStatement(
         session,
         verb = "answered",
@@ -2402,38 +3047,43 @@ server <- function(input, output, session) {
         response = jsonlite::toJSON(response),
         success = success
       )
-      
+
       boastUtils::storeStatement(session, stmt)
     })
-  
-  output$correctD <- renderPrint(
-    expr = {
-      if (sum(c(summationD$correct1D)) == 0) {
-        cat("You have earned 0 points")
-      }
-      else {
-        cat("You have earned", sum(c(summationD$correct1D)), "points")
-      }
-    }
-  )
-  
+
   observeEvent(
-    eventExpr = input$submitD, 
+    eventExpr = input$submitD,
     handlerExpr = {
       if (sum(c(summationD$correct1D)) >= 5) {
         updateButton(
-          session = session, 
+          session = session,
           inputId = "finish",
           disabled = FALSE
         )
         updateButton(
-          session = session, 
-          inputId = "newQLvl4", 
-          disabled = FALSE)
+          session = session,
+          inputId = "newQLvl4",
+          disabled = FALSE
+          )
+        shinyalert(
+          title = "Good Job!",
+          text = "You have completed levels 3 and 4 of the Variable
+          Types and Roles Matching Game. If you would like to continue playing
+          just press 'Previous Level' then 'Next Level' to restart
+          level 4 or refresh the page to restart the entire challenge.",
+          type = "success")
       }
     }
   )
-  
+
+  output$NumTriesLvl4 <- renderPrint(
+    expr = {
+      tries_left = length(index_listD$listD) - 1
+      cat("You have", tries_left, "tries left")
+    }
+  )
+
+
   ### Progress Bar ----
   observe(
     if (sum(c(summationD$correct1D)) == 1) {
@@ -2467,7 +3117,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   ## Results ----
   attempts <- reactiveValues(
     level1 = 0,
@@ -2475,33 +3125,31 @@ server <- function(input, output, session) {
     level3 = 0,
     level4 = 0
   )
-  
+
   ### Results 1
   output$level1ScoreResults1 <- renderPrint(
     expr = {
-      cat("It took", max(attempts$level1), "attempts to complete level 1.")
-    }
-  )
+      if (max(attempts$level1) == 1) {
+        cat("It took 1 attempt to complete level 1.")
+      } else {
+        cat("It took", max(attempts$level1), "attempts to complete level 1.")
+      }
+    })
+
   output$level2ScoreResults1 <- renderPrint(
     expr = {
-      cat("It took", max(attempts$level2), "attempts to complete level 2.")
+      if (max(attempts$level2) == 1) {
+        cat("It took 1 attempt to complete level 2.")
+      } else {
+        cat("It took", max(attempts$level2), "attempts to complete level 2.")
+      }
     }
   )
-  
+
   ### Results 2
-  output$level1ScoreResults2 <- renderPrint(
-    {
-      cat("It took", max(attempts$level1), "attempts to complete level 1.")
-    }
-  )
-  output$level2ScoreResults2 <- renderPrint(
-    expr = {
-      cat("It took", max(attempts$level2), "attempts to complete level 2.")
-    }
-  )
   output$level3Score <- renderPrint(
     expr = {
-      cat("It took", max(attempts$level3), "questions to complete level 3")
+      cat("It took", max(attempts$level3), "questions to complete level 3.")
     }
   )
   output$level4Score <- renderPrint(

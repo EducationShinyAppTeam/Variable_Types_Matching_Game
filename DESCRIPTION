@@ -7,11 +7,12 @@ Authors@R: c(
     person(given = "Luxin", family = "Wang", role = c("cre", "aut")),
     person(given = "Thomas", family = "McIntyre", role = c("cre", "aut")),
     person(given = "Alex", family = "Chen", role = c("ctb")),
-    person(given = "Robert", family = "Carey", email = "rpc5102@psu.edu", role = c("ctb")),
+    person(given = "Robert", family = "Carey", role = c("ctb")),
     person(given = "Mike", family = "Fleck", role = c("ctb")),
     person(given = "Dennis", family = "Pearl", role = c("aut")),
-    person(given = "Neil", family = "Hatfield", role = c("aut")),
-    person(given = "Taryn", family = "McHugh", role = c("aut"))
+    person(given = "Neil", family = "Hatfield", email = "njh5464@psu.edu", role = c("aut")),
+    person(given = "Taryn", family = "McHugh", role = c("aut")),
+    person(given = "Nathan", family = "Pechulis", role = c("aut"))
   )
 Chapter: Data Gathering
 Description: Identify variable types by nature of measurement (quantitative (numeric) discrete, quantitative continuous, qualitative (categorical) nominal, and qualitative ordinal variables) and by role in the analysis (explanatory, response, and confounding).
