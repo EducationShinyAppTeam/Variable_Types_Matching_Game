@@ -1,5 +1,6 @@
 # Things Needed for This Version
-1. css files? 
+1. css files?
 
 # Ideas for Future Development
-- 
+1. Remove/reduce the use of conditional panels in the games to control the display of buttons.
+2. Clean up server code with the observes and nesting of renderIcon.
