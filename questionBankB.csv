@@ -1,75 +1,75 @@
-Type,Var,Variable,Question
-QuanDiscrete,var1,img1.jpg,What is the type of variable on the X-axis?
-QuanDiscrete,var2,img2.png,What is the type of variable on the X-axis?
-QuanDiscrete,var3,img3.jpg,What is the type of variable on the X-axis?
-QuanDiscrete,var4,img4.jpg,What is the type of variable on the X-axis?
-QuanDiscrete,var5,img5.jpg,What is the type of variable on the X-axis?
-QuanDiscrete,var6,img6.jpg,What is the type of variable on the X-axis?
-QuanDiscrete,var7,img7.jpg,What is the type of variable on the Y-axis?
-QuanDiscrete,var8,img8.gif,What is the type of variable on the X-axis?
-QuanDiscrete,var9,img9.jpg,What is the type of variable on the Y-axis?
-QuanDiscrete,var10,img10.gif,What is the type of variable on the X-axis?
-QuanDiscrete,var11,img11.gif,What is the type of variable on the X-axis?
-QuanDiscrete,var12,img12.jpg,What is the type of variable on the X-axis?
-QuanDiscrete,var13,img12.jpg,What is the type of the variable on the Y-axis?
-QuanContinuous,var14,img13.png,What is the type of variable shown in blue color?
-QuanContinuous,var15,img14.png,What is the type of variable on the X and Y-axis?
-QuanContinuous,var16,img15.png,What is the type of variable on the X-axis?
-QuanContinuous,var17,img15.png,What is the type of variable on the Y-axis?
-QuanContinuous,var18,img16.png,What is the type of variable on the X-axis?
-QuanContinuous,var19,img16.png,What is the type of variable on the Y-axis?
-QuanContinuous,var20,img17.gif,What is the type of variable on the Y-axis?
-QuanContinuous,var21,img18.png,What is the type of variable on the X and Y -axis?
-QuanContinuous,var22,img19.jpg,What is the type of variable on the Y-axis?
-QuanContinuous,var23,img20.jpg,What is the type of variable on the X and Y-axis?
-QuanContinuous,var24,img21.png,What Type of Variable is the total height of the bars?
-QuanContinuous,var25,img22.jpg,What is the type of variable in blue color?
-QuanContinuous,var26,img22.jpg,What is the type of variable in orange color?
-QuanContinuous,var27,img23.png,What is the type of variable on the X and Y-axis?
-QuanContinuous,var28,img24.png,What is the type of variable in blue?
-QuanContinuous,var29,img24.png,What is the type of variable in red?
-QuanContinuous,var30,img25.png,What is the type of variable on the Y-axis?
-QuanContinuous,var31,img1.jpg,What is the type of variable in red?
-QuanContinuous,var32,img1.jpg,What is the type of variable in blue?
-QuanContinuous,var33,img2.png,What is the type of the variable on the Y-axis?
-QuanContinuous,var34,img3.jpg,What is the type of the variable on the Y-axis?
-QuanContinuous,var35,img5.jpg,What is the type of the variable in orange?
-QuanContinuous,var36,img5.jpg,What is the type of the variable in blue?
-QuanContinuous,var37,img11.gif,What is the type of variable on the Y-axis?
-QuanContinuous,var38,img13.png,What is the type of variable shown in red color?
-QuanContinuous,var39,img23.png,What is the type of variable depth?
-QualNominal,var40,img14.png,What is the type of variable in legend?
-QualNominal,var41,img20.jpg,What is the type of variable in legend?
-QualNominal,var42,img21.png,What is the type of variable referenced in legend?
-QualNominal,var43,img3.jpg,"What type of variable is ""Control"" vs ""Treated""?"
-QualNominal,var44,img26.jpg,"What type of variable is ""Challengers"" vs ""Champions""?"
-QualNominal,var45,img27.jpg,What is the type of variable shown in the pie chart?
-QualNominal,var46,img28.png,What is the type of variable shown in the two plots?
-QualNominal,var47,img29.png,What is the type of variable on the X-axis?
-QualNominal,var48,img30.png,What is the type of variable tastes?
-QualNominal,var49,img31.png,What is the type of variable survived?
-QualNominal,var50,img31.png,What is the type of variable age?
-QualNominal,var51,img32.png,What is the type of variable on the X-axis?
-QualNominal,var52,img33.jpg,What is the variable type of investment type?
-QualNominal,var53,img34.png,What is the type of variable in the legend?
-QualNominal,var54,img35.jpg,What is the type of variable on the X-axis?
-QualNominal,var55,img36.png,What is the type of variable on the X-axis?
-QualNominal,var56,img37.png,What is the type of variable in the legend?
-QualNominal,var57,img38.png,What is the type of variable on the X-axis?
-QualNominal,var58,img39.jpg,What is the type of variable on the X-axis?
-QualOrdinal,var59,img7.jpg,What is the type of variable on the X-axis?
-QualOrdinal,var60,img9.jpg,What is the type of variable on the X-axis?
-QualOrdinal,var61,img10.gif,What is the type of variable on the Y-axis?
-QualOrdinal,var62,img19.jpg,What is the type of variable on the X-axis?
-QualOrdinal,var63,img23.png,What is the type of variable cut?
-QualOrdinal,var64,img25.png,What is the type of variable on the X-axis?
-QualOrdinal,var65,img40.png,What is the type of variable on the Y-axis?
-QualOrdinal,var66,img41.png,What is the type of variable in the legend?
-QualOrdinal,var67,img42.jpg,What is the variable type shown in the image?
-QualOrdinal,var68,img43.png,What is the type of variable importance?
-QualOrdinal,var69,img44.png,What is the type of variable in the legend?
-QualOrdinal,var70,img45.png,What is the type of variable on the x-axis?
-QualOrdinal,var71,img46.png,What is the type of variable on the y-axis?
-QualOrdinal,var72,img47.png,What is the type of variable in the legend?
-QualOrdinal,var73,img48.jpg,What is the type of variable on the x-axis?
-QualOrdinal,var74,img49.png,What is the type of variable on the y-axis?
+Type,Var,Variable,Question,Alt
+QuanDiscrete,var1,img1.jpg,What is the type of variable on the X-axis?,Bar graph with days on the x axis. FTD converstion is in blue and temperature is in red. 
+QuanDiscrete,var2,img2.png,What is the type of variable on the X-axis?,Bar graph with sum of two dice on the x axis and probability on the y axis.
+QuanDiscrete,var3,img3.jpg,What is the type of variable on the X-axis?,Graph with days elapsed on the x axis and percent survived on the y axis. The legend is type of treament.
+QuanDiscrete,var4,img4.jpg,What is the type of variable on the X-axis?,Probability Bar graph with sum of two rolls of dice on the x axis
+QuanDiscrete,var5,img5.jpg,What is the type of variable on the X-axis?,Bar graph with revenue in blue and Y-o-Y Growth(%) in orange. Year is on the x axis. 
+QuanDiscrete,var6,img6.jpg,What is the type of variable on the X-axis?,Bar graph with Scores (1-10) on the x axis
+QuanDiscrete,var7,img7.jpg,What is the type of variable on the Y-axis?,Bar graph with height groups on the x axis and numver of students on the y axis.
+QuanDiscrete,var8,img8.gif,What is the type of variable on the X-axis?,Probability Bar graph with number of orders (per week) on the x axis
+QuanDiscrete,var9,img9.jpg,What is the type of variable on the Y-axis?,Bar graph with amount of pressure categories on the x axis and number of students on the y axis.
+QuanDiscrete,var10,img10.gif,What is the type of variable on the X-axis?,Sideways Bar graph with number of minutes in groups on the y axis and number of students on the x axis.
+QuanDiscrete,var11,img11.gif,What is the type of variable on the X-axis?,Line chart with age in years on the x axis and height on the y axis.
+QuanDiscrete,var12,img12.jpg,What is the type of variable on the X-axis?,Bar graph with results (1-10) on the x axis and frequency on the y axis. 
+QuanDiscrete,var13,img12.jpg,What is the type of the variable on the Y-axis?,Bar graph with results (1-10) on the x axis and frequency on the y axis. 
+QuanContinuous,var14,img13.png,What is the type of variable shown in blue color?,Graph with revenue in blue and growth rate in red. 
+QuanContinuous,var15,img14.png,What is the type of variable on the X and Y axes?,"Bubble chart with categories (fruit, spices, vegetables) in the legend. Sales is on the x axis and cost is on the y axis. "
+QuanContinuous,var16,img15.png,What is the type of variable on the X-axis?,Dot graph with crop yield loss (0-100 scale) on the y axis and weed biomass (0-1000 scale) on the x axis
+QuanContinuous,var17,img15.png,What is the type of variable on the Y-axis?,Dot graph with crop yield loss (0-100 scale) on the y axis and weed biomass (0-1000 scale) on the x axis
+QuanContinuous,var18,img16.png,What is the type of variable on the X-axis?,Scatterplot with horsepower (0-500) on the x axis and weight (-6000+) on the y axis. 
+QuanContinuous,var19,img16.png,What is the type of variable on the Y-axis?,Scatterplot with horsepower (0-500) on the x axis and weight (-6000+) on the y axis. 
+QuanContinuous,var20,img17.gif,What is the type of variable on the Y-axis?,Scatterplot with GPA (2.7-3.9 scale) on the x axis
+QuanContinuous,var21,img18.png,What is the type of variable on the X and Y axes?,3D scatterplot with catalyst and temp on the x/z axis and yield on the y axis. 
+QuanContinuous,var22,img19.jpg,What is the type of variable on the Y-axis?,Bar graph with categorical aid on the x axis and percent change on the y axis. 
+QuanContinuous,var23,img20.jpg,What is the type of variable on the X and Y axes?,Bubble graph with market size on the x axis and growth rate (%) on the y axis. The bubbles are based on country.
+QuanContinuous,var24,img21.png,What Type of Variable is the total height of the bars?,Stacked Bar graph with market size as the total height of the bar. The sections are based on application in the market 
+QuanContinuous,var25,img22.jpg,What is the type of variable in blue color?,Bar graph with revenue in blue and Y-o-Y Growth(%) in orange. Year is on the x axis. 
+QuanContinuous,var26,img22.jpg,What is the type of variable in orange color?,Bar graph with revenue in blue and Y-o-Y Growth(%) in orange. Year is on the x axis. 
+QuanContinuous,var27,img23.png,What is the type of variable on the X and Y axes?,Scatterplot with carat on the x axis and price on the y axis. The color is depth ranging from 40-80. The ring is cut based on condition categories.
+QuanContinuous,var28,img24.png,What is the type of variable in blue?,ar graph with total server sales in blue and unit shipments in red. 
+QuanContinuous,var29,img24.png,What is the type of variable in red?,ar graph with total server sales in blue and unit shipments in red. 
+QuanContinuous,var30,img25.png,What is the type of variable on the Y-axis?,Bar graph with age group on the x axis and percent on the y axis. 
+QuanContinuous,var31,img1.jpg,What is the type of variable in red?,Bar graph with days on the x axis. FTD converstion is in blue and temperature is in red. 
+QuanContinuous,var32,img1.jpg,What is the type of variable in blue?,Bar graph with days on the x axis. FTD converstion is in blue and temperature is in red. 
+QuanContinuous,var33,img2.png,What is the type of the variable on the Y-axis?,Bar graph with sum of two dice on the x axis and probability on the y axis.
+QuanContinuous,var34,img3.jpg,What is the type of the variable on the Y-axis?,Graph with days elapsed on the x axis and percent survived on the y axis. 
+QuanContinuous,var35,img5.jpg,What is the type of the variable in orange?,Bar graph with revenue in blue and Y-o-Y Growth(%) in orange. Year is on the x axis. 
+QuanContinuous,var36,img5.jpg,What is the type of the variable in blue?,Bar graph with revenue in blue and Y-o-Y Growth(%) in orange. Year is on the x axis. 
+QuanContinuous,var37,img11.gif,What is the type of variable on the Y-axis?,Line chart with age in years on the x axis and height on the y axis.
+QuanContinuous,var38,img13.png,What is the type of variable shown in red color?,Graph with revenue in blue and growth rate in red. 
+QuanContinuous,var39,img23.png,What is the type of variable Depth?,Scatterplot with carat on the x axis and price on the y axis. The color is depth ranging from 40-80. The ring is cut based on condition categories.
+QualNominal,var40,img14.png,What is the type of variable in the legend?,"Bubble chart with categories (fruit, spices, vegetables) in the legend. Sales is on the x axis and cost is on the y axis. "
+QualNominal,var41,img20.jpg,What is the type of variable in the legend?,Bubble graph with market size on the x axis and growth rate (%) on the y axis. The bubbles are based on country.
+QualNominal,var42,img21.png,What is the type of variable referenced in the legend?,Stacked Bar graph with market size as the total height of the bar. The sections are based on application in the market 
+QualNominal,var43,img3.jpg,"What type of variable is ""Control"" vs ""Treated""?",Graph with days elapsed on the x axis and percent survived on the y axis. The legend is type of treament.
+QualNominal,var44,img26.jpg,"What type of variable is ""Challengers"" vs ""Champions""?",??
+QualNominal,var45,img27.jpg,What is the type of variable shown in the pie chart?,Pie chart of countries
+QualNominal,var46,img28.png,What is the type of variable shown in the two plots?,"Bar graph, pie chart, and frequency table with percentages of housing based on avaliability status. "
+QualNominal,var47,img29.png,What is the type of variable on the X-axis?,Side by side box plots with age on the x axis and gender in the legend. 
+QualNominal,var48,img30.png,What is the type of variable for these flavors?,Web with sample number in the legend and types of flavor as the options. 
+QualNominal,var49,img31.png,What is the type of variable Survived?,"Mosiac plot with class, age, sex, and survived categories."
+QualNominal,var50,img31.png,What is the type of variable Sex?,"Mosiac plot with class, age, sex, and survived categories."
+QualNominal,var51,img32.png,What is the type of variable on the X-axis?,Bar graph with area on the x axis. 
+QualNominal,var52,img33.jpg,What is the variable type of Investment Type?,Bubble chart with grid where each grid is an investment category.
+QualNominal,var53,img34.png,What is the type of variable in the legend?,Stacked Bar graph with each section based on company. 
+QualNominal,var54,img35.jpg,What is the type of variable on the X-axis?,Bar graph with company on the x axis. 
+QualNominal,var55,img36.png,What is the type of variable on the X-axis?,Bar graph with type of cheese on the x axis. 
+QualNominal,var56,img37.png,What is the type of variable in the legend?,Scatterplot with species in the legend.
+QualNominal,var57,img38.png,What is the type of variable on the X-axis?,Bar graph with company on the x axis.
+QualNominal,var58,img39.png,What is the type of variable on the X-axis?,Bar graph with company on the x axis.
+QualOrdinal,var59,img7.jpg,What is the type of variable on the X-axis?,Bar graph with height groups on the x axis and numver of students on the y axis.
+QualOrdinal,var60,img9.jpg,What is the type of variable on the X-axis?,Bar graph with amount of pressure categories on the x axis and number of students on the y axis.
+QualOrdinal,var61,img10.gif,What is the type of variable on the Y-axis?,Sideways Bar graph with number of minutes in groups on the y axis and number of students on the x axis.
+QualOrdinal,var62,img19.jpg,What is the type of variable on the X-axis?,Bar graph with categorical aid on the x axis and percent change on the y axis. 
+QualOrdinal,var63,img23.png,What is the type of variable Cut?,Scatterplot with carat on the x axis and price on the y axis. The color is depth ranging from 40-80. The ring is cut based on condition categories.
+QualOrdinal,var64,img25.png,What is the type of variable on the X-axis?,Bar graph with age group on the x axis and percent on the y axis. 
+QualOrdinal,var65,img40.png,What is the type of variable on the Y-axis?,Sideways stacked bar graph with agreement on the y axis.
+QualOrdinal,var66,img41.png,What is the type of variable in the legend?,Stacked bar graph with WebRTC usage in the legend.
+QualOrdinal,var67,img42.jpg,What is the variable type shown in the image?,Scale based on severity of hot. 
+QualOrdinal,var68,img43.png,What is the type of variable Importance?,Graphic with importance on a scale of 1-5.
+QualOrdinal,var69,img44.png,What is the type of variable in the legend?,Sideways stacked bar graph with agreement in the legend.
+QualOrdinal,var70,img45.png,What is the type of variable on the X-axis?,Dot graph with cancer stage on the x axis. 
+QualOrdinal,var71,img46.png,What is the type of variable on the Y-axis?,Graphic with the state of an object (fair-ideal) on the y axis. 
+QualOrdinal,var72,img47.png,What is the type of variable in the legend?,Stacked bar graph with agreement level in the legend.
+QualOrdinal,var73,img48.jpg,What is the type of variable on the X-axis?,Bar chart with grade on the x axis. 
+QualOrdinal,var74,img49.png,What is the type of variable on the Y-axis?,Sideways bar graph with level of education on the y axis. 

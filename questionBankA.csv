@@ -1,0 +1,72 @@
+Type,Category,Var,Variable
+Quantitative,Discrete,Var1,Number of emails
+Quantitative,Discrete,Var2,Number of tires on a vehicle
+Quantitative,Discrete,Var3,House's number of bedrooms
+Quantitative,Discrete,Var4,Number of members in a family
+Quantitative,Discrete,Var5,Number of heads in 5 coin tosses
+Quantitative,Discrete,Var6,Sleep time to nearest hour
+Quantitative,Discrete,Var7,Height rounded to the nearest inch
+Quantitative,Discrete,Var8,Result of rolling a die
+Quantitative,Discrete,Var9,Number of siblings
+Quantitative,Discrete,Var10,Number of classes enrolled
+Quantitative,Continuous,Var11,Birth rate of country
+Quantitative,Continuous,Var12,Heart Rate
+Quantitative,Continuous,Var13,Time
+Quantitative,Continuous,Var14,Distance
+Quantitative,Continuous,Var15,Temperature (Kelvin)
+Quantitative,Continuous,Var16,Rainfall (inches)
+Quantitative,Continuous,Var17,Height (inches)
+Quantitative,Continuous,Var18,Blood Pressure
+Quantitative,Continuous,Var19,Mileage (miles per gallon)
+Quantitative,Continuous,Var20,GPA
+Quantitative,Continuous,Var21,Distance to birth place
+Quantitative,Continuous,Var22,Average life span
+Quantitative,Continuous,Var23,Speed (mph)
+Quantitative,Continuous,Var24,Annual income
+Quantitative,Continuous,Var25,Inflation Rate
+Quantitative,Continuous,Var26,Mortality Rate
+Quantitative,Continuous,Var27,Humidity
+Quantitative,Continuous,Var28,Price
+Quantitative,Continuous,Var29,Length (cm)
+Quantitative,Continuous,Var30,Width (inches)
+Quantitative,Continuous,Var31,BMI (Body Mass Index)
+Quantitative,Continuous,Var32,Density
+Quantitative,Continuous,Var33,Volume
+Quantitative,Continuous,Var34,pH value
+Quantitative,Continuous,Var35,Age
+Quantitative,Continuous,Var36,Stock price over several months
+Qualitative,Nominal,Var37,U.S. State
+Qualitative,Nominal,Var38,Religion
+Qualitative,Nominal,Var39,Gender
+Qualitative,Nominal,Var40,Race
+Qualitative,Nominal,Var41,Eye Color
+Qualitative,Nominal,Var42,Type of cars
+Qualitative,Nominal,Var43,Nationality
+Qualitative,Nominal,Var44,Marital Status
+Qualitative,Nominal,Var45,TV Channels
+Qualitative,Nominal,Var46,Genre of music
+Qualitative,Nominal,Var47,Types of movies
+Qualitative,Nominal,Var48,Political Affiliations
+Qualitative,Nominal,Var49,Ethnicity
+Qualitative,Nominal,Var50,Occupation
+Qualitative,Nominal,Var51,Brand of shoe
+Qualitative,Nominal,Var52,"Month (Jan, Feb, ... , Dec)"
+Qualitative,Nominal,Var53,School Mascot
+Qualitative,Nominal,Var54,Blood Type
+Qualitative,Nominal,Var55,Yes or No
+Qualitative,Nominal,Var56,"Type of schools (public, private)"
+Qualitative,Ordinal,Var57,"The Likert Scale (disagree, ... ,agree)"
+Qualitative,Ordinal,Var58,Soldier Rank
+Qualitative,Ordinal,Var59,"Air Pollution Index (0-50, ... ,300+)"
+Qualitative,Ordinal,Var60,Age Groups
+Qualitative,Ordinal,Var61,"Grade in course (A,B,C,D,F)"
+Qualitative,Ordinal,Var62,Education Level
+Qualitative,Ordinal,Var63,Level of Satisfaction
+Qualitative,Ordinal,Var64,Film Rating (5-star scale)
+Qualitative,Ordinal,Var65,Social economic class
+Qualitative,Ordinal,Var66,Income Categories
+Qualitative,Ordinal,Var67,Hurricane Category Level
+Qualitative,Ordinal,Var68,"Pain (none,moderate,extreme)"
+Qualitative,Ordinal,Var69,Stage of disease
+Qualitative,Ordinal,Var70,"T-shirt Size (S,M,L,XL)"
+Qualitative,Ordinal,Var71,"Smoking (<3times/day, ... , >10times/day)"
