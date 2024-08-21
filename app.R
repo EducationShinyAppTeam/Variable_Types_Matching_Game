@@ -664,16 +664,10 @@ ui <- list(
               p("This challenge will deal with Explanatory, Response, and Confounding variables.
                 Simply click 'Begin Game' to start level 3. Good luck!"),
               br(),
-              fluidRow(
-                column(
-                  width = 1,
-                  offset = 1,
-                  bsButton(
-                    inputId = "startChallenge2",
-                    label = "Begin Game",
-                    size = "large"
-                  )
-                )
+              bsButton(
+                inputId = "startChallenge2",
+                label = "Begin Game",
+                size = "large"
               )
             ),
             #### Level 3 ----
